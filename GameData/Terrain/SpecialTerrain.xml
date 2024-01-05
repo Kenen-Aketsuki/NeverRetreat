@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TerrainData SYSTEM "TerrainData.dtd">
+<TerrainData>
+    <Terrain Type="SpecialTerrain" id="Ice">
+        <name>冰层</name>
+        <Data>
+            <enterCost>1</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="FrozenZone">
+        <name>冰刺区</name>
+        <Data>
+            <enterCost>2</enterCost>
+            <battleAdjust>
+                <adjust target="DEF" way="ADD" number="5" />
+            </battleAdjust>
+            <height>5</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="FlameZone">
+        <name>烈焰区</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="RRK" way="ADD" number="-3" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="ArcaneBarrier" atSide="True">
+        <name>奥术结界</name>
+        <Data>
+            <enterCost>NA</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>1000</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="Firewall" atSide="True">
+        <name>防火墙</name>
+        <Data>
+            <enterCost>NA</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>1000</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="PosDisorderZone">
+        <name>坐标紊乱区</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="DataDisorderZone">
+        <name>数据紊乱区</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ALL" number="0" />
+                <adjust target="RRK" way="ADD" number="-2" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="BreakFacility">
+        <name>破损设施</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="1" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+</TerrainData>

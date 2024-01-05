@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TerrainData SYSTEM "TerrainData.dtd">
+<TerrainData>
+    <Terrain Type="BasicTerrain" id="Mountain">
+        <name>山地</name>
+        <Data>
+            <enterCost>NA</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0"/>
+            </battleAdjust>
+            <height>500</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="BasicTerrain" id="PrimaryDevZone">
+        <name>初级开发区</name>
+        <Data>
+            <enterCost>1</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>5</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="BasicTerrain" id="LowBuilding">
+        <name>低密度建筑区</name>
+        <Data>
+            <enterCost>1</enterCost>
+            <battleAdjust>
+                <adjust target="DEF" way="ADD" number="3" />
+            </battleAdjust>
+            <height>15</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="BasicTerrain" id="MidBuilding">
+        <name>中密度建筑区</name>
+        <Data>
+            <enterCost>2</enterCost>
+            <battleAdjust>
+                <adjust target="RRK" way="ADD" number="-1" />
+            </battleAdjust>
+            <height>30</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="BasicTerrain" id="HighBuilding">
+        <name>高密度建筑区</name>
+        <Data>
+            <enterCost>3</enterCost>
+            <battleAdjust>
+                <adjust target="RRK" way="ADD" number="-2" />
+            </battleAdjust>
+            <height>50</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="BasicTerrain" id="Water">
+        <name>水域</name>
+        <Data>
+            <enterCost>NA</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="BasicTerrain" id="River" atSide="True">
+        <name>河流</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="ATK" way="MULTY" number="0.5" />
+                <adjust target="MOV" way="ALL" number="" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+</TerrainData>

@@ -43,10 +43,13 @@ public class Piece
         }
     }//真实移动力
 
+    public string PName { get { return Name; } }
+    public string PDesignation { get { return Designation; } }
+
     string Name;//名称
     string Designation;//番号
     ArmyBelong Belong;//部队从属
-    ArmyBelong Loyalty;//部队效忠对象
+    ArmyBelong LoyalTo;//部队效忠对象
 
     int Stability = 0;//判定是否为“正常”-“瘫痪”-“失能”
     int ConnectState = 0;//判定是否为 正常 - 失联 - 孤立

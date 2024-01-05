@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TerrainData SYSTEM "TerrainData.dtd">
+<TerrainData>
+    <Terrain Type="FixFacility" id="Road_1st" isRoad="True">
+        <name>一级道路</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-1" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="Road_2nd" isRoad="True">
+        <name>二级道路</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-2" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="Road_3rd" isRoad="True">
+        <name>三级道路</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-3" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="Rail" isRoad="True">
+        <name>铁路</name>
+        <Data>
+            <enterCost>1</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="MetroStation">
+        <name>地铁站</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-1" />
+            </battleAdjust>
+            <height>3</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="HunterGuild">
+        <name>猎人工会</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-2" />
+                <adjust target="RRK" way="ADD" number="1" />
+            </battleAdjust>
+            <height>10</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="Airpot">
+        <name>军民共用机场</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-1" />
+            </battleAdjust>
+            <height>3</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="FixFacility" id="StaticBarrierNode">
+        <name>安定结界节点</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>15</height>
+        </Data>
+    </Terrain>
+</TerrainData>
