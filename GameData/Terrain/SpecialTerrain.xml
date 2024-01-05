@@ -37,9 +37,10 @@
     <Terrain Type="SpecialTerrain" id="ArcaneBarrier" atSide="True">
         <name>奥术结界</name>
         <Data>
-            <enterCost>NA</enterCost>
-            <battleAdjust>
-                <adjust target="NA" way="NOPE" number="0" />
+            <enterCost>0</enterCost>
+            <battleAdjust target="Enimy">
+                <adjust target="MOV" way="NOPE" number="0" />
+                <adjust target="ATK" way="NOPE" number="0" />
             </battleAdjust>
             <height>1000</height>
         </Data>
@@ -49,8 +50,11 @@
         <name>防火墙</name>
         <Data>
             <enterCost>NA</enterCost>
-            <battleAdjust>
+            <battleAdjust target="Enimy">
                 <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <battleAdjust target="Friend">
+                <adjust target="ATK" way="ADD" number="+5" />
             </battleAdjust>
             <height>1000</height>
         </Data>

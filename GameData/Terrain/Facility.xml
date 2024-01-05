@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE TerrainData SYSTEM "TerrainData.dtd">
 <TerrainData>
+    <!-- 固定设施 -->
     <Terrain Type="FixFacility" id="Road_1st" isRoad="True">
         <name>一级道路</name>
         <Data>
@@ -87,6 +88,53 @@
                 <adjust target="NA" way="NOPE" number="0" />
             </battleAdjust>
             <height>15</height>
+        </Data>
+    </Terrain>
+
+    <!-- 临时设施 -->
+    <Terrain Type="TempFacility" id="Landmine" atSide="True">
+        <name>旧式雷场</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust target="All">
+                <adjust target="HP" way="ADD" number="-2" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="TempFacility" id="AFFLandmine" atSide="True">
+        <name>智能雷场</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust target="Enimy">
+                <adjust target="HP" way="ADD" number="-1" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="TempFacility" id="RoadBarrier">
+        <name>路障</name>
+        <Data>
+            <enterCost>NA</enterCost>
+            <battleAdjust>
+                <adjust target="ATK" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>2</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="TempFacility" id="DefenceArea">
+        <name>防御工事</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust target="Friend">
+                <adjust target="MOV" way="ADD" number="-10" />
+                <adjust target="RRK" way="ADD" number="2" />
+                <adjust target="STK" way="ADD" number="1" />
+            </battleAdjust>
+            <height>3</height>
         </Data>
     </Terrain>
 </TerrainData>
