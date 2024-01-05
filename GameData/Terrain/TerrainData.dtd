@@ -1,0 +1,12 @@
+<!ELEMENT TerrainData (Terrain+)>
+
+<!ELEMENT Terrain ()>
+<!ATTLIST Terrain Type (
+    BasicTerrain|
+    FixFacility|
+    TempFacility|
+    SpecialTerrain
+) #REQUIRED>
+
+<!ELEMENT name (#PCDATA)><!-- 地形名称-->
+<!ELEMENT TerrainData (#PCDATA)>

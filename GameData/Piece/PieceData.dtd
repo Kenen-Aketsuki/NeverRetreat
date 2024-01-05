@@ -1,0 +1,30 @@
+<!ELEMENT PieceInfo (Piece+)>
+
+<!ELEMENT Piece (name,belong,Datas,ability,enterForbidden?)>
+<!ATTLIST Piece designation ID #REQUIRED><!-- 番号 -->
+<!ATTLIST Piece isAir (True|False) "False"><!-- 是否为空中单位 -->
+<!ATTLIST Piece Belong (Human|ModCrash) "False"><!-- 是否为空中单位 -->
+
+<!ELEMENT name (#PCDATA)><!-- 棋子名称 -->
+<!ELEMENT Datas (ATK,cATK?,DEF,cDEF?,MOV,cMOV?,activeArea?,passiveArea?)><!-- 棋子数据 -->
+
+<!ELEMENT ATK (#PCDATA)>
+<!ELEMENT cATK (#PCDATA)>
+<!ELEMENT DEF (#PCDATA)>
+<!ELEMENT cDEF (#PCDATA)>
+<!ELEMENT MOV (#PCDATA)>
+<!ELEMENT cMOV (#PCDATA)>
+<!ELEMENT activeArea (#PCDATA)>
+<!ELEMENT passiveArea (#PCDATA)>
+
+<!ELEMENT ability EMPTY><!-- 棋子的能力 -->
+<!ATTLIST ability canBattle (True|False) #IMPLIED>
+<!ATTLIST ability canSupport (True|False) #IMPLIED>
+<!ATTLIST ability canAirBattle (True|False) #IMPLIED>
+<!ATTLIST ability canDoMagic (True|False) #IMPLIED>
+<!ATTLIST ability canFixMod (True|False) #IMPLIED>
+<!ATTLIST ability canBild (True|False) #IMPLIED>
+<!ATTLIST ability canMental (True|False) #IMPLIED>
+
+<!ELEMENT enterForbidden (forbidden+)><!-- 准入限制，不填默遵循规则限制-->
+<!ELEMENT forbidden (#PCDATA)>
