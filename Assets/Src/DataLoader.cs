@@ -8,7 +8,15 @@ public class DataLoader : MonoBehaviour
     void Start()
     {
         BasicUtility.DataInit();//紗墮方象
-
-        Debug.Log(FixSystemData.toString());
+        Debug.Log("！！！！！！");
+        foreach(KeyValuePair<string,BasicLandShape> land in FixSystemData.GlobalBasicTerrainList)
+        {
+            Debug.Log(land.Key + " ！ "+ (land.Value.Top != null).ToString());
+        }
+        Debug.Log("！！！！！！");
+        foreach (KeyValuePair<string, Facility> land in FixSystemData.GlobalFacilityList)
+        {
+            Debug.Log(land.Key + " ！ " + (land.Value.Top != null).ToString());
+        }
     }
 }

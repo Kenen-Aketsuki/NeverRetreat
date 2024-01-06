@@ -39,6 +39,12 @@ public static class BasicUtility
                             new Facility(node)
                             );
                         break;
+                    case "SpecialTerrain":
+                        FixSystemData.GlobalSpecialTerrainList.Add(
+                            node.Attributes["id"].Value,
+                            new Facility(node)
+                            );
+                        break;
                     default:
                         UnityEngine.Debug.Log(node.Attributes["id"].Value+"— SKIP");
                         break;
@@ -49,13 +55,13 @@ public static class BasicUtility
     }
 }
 
-enum ArmyBelong
+public enum ArmyBelong
 {
     Human,
     ModCrash
 }
 
-enum TerrainType
+public enum TerrainType
 {
     BasicTerrain,
     FixFacility,
@@ -63,7 +69,7 @@ enum TerrainType
     SpecialTerrain
 }
 
-enum FixData//可提供修正的数值项
+public enum FixData//可提供修正的数值项
 {
     ATK,//进攻方战力
     DEF,//防守方战力
@@ -72,7 +78,7 @@ enum FixData//可提供修正的数值项
     STK,//堆叠
     HP//造成伤害
 }
-enum FixWay//修正方式
+public enum FixWay//修正方式
 {
     ADD,//加减
     MULTY,//乘除

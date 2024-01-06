@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
 using System.Xml;
 using UnityEngine.Tilemaps;
 using System.IO;
 using UnityEngine;
-using Unity.VisualScripting;
-using static Unity.Burst.Intrinsics.X86.Avx;
-using UnityEditor.Experimental.GraphView;
 
 public class LandShape
 {
     public string name;
     public int enterCount = 0;
     public int height = 0;
+
+    //获取对应项加成
+    public Tuple<FixWay, float> ATK_All { get { return Adjust[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_All { get { return Adjust[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_All { get { return Adjust[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_All { get { return Adjust[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_All { get { return Adjust[FixData.RRK]; } }
+
 
     Dictionary<FixData,Tuple<FixWay,float>> Adjust = new Dictionary<FixData,Tuple<FixWay, float>>();
 
@@ -155,7 +156,7 @@ public class BasicLandShape : LandShape //基础地形
     }
 }
 
-//设施通常是有所属的，其效果仅对一方有效，或对双方的效果不同。
+//设施通常是有所属的，其效果仅对一方有效，或对双方的效果不同。特殊地形同样使用这个结构存储。
 public class Facility : LandShape
 {
     public Tile Left = null;
@@ -166,6 +167,24 @@ public class Facility : LandShape
     public bool atSide = false;
     public bool isRoad = false;
     public bool canLeftRuin = false;//是否留下废墟
+    public bool isSpecialLandShape = false;//是否为特殊地形
+
+    //获友方应项加成
+    #region
+    public Tuple<FixWay, float> ATK_Friend { get { return AdjustFriend[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_Friend { get { return AdjustFriend[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_Friend { get { return AdjustFriend[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_Friend { get { return AdjustFriend[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_Friend { get { return AdjustFriend[FixData.RRK]; } }
+    #endregion
+    //获取敌方加成
+    #region
+    public Tuple<FixWay, float> ATK_Enemy { get { return AdjustEnemy[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_Enemy { get { return AdjustEnemy[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_Enemy { get { return AdjustEnemy[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_Enemy { get { return AdjustEnemy[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_Enemy { get { return AdjustEnemy[FixData.RRK]; } }
+    #endregion
 
     Dictionary<FixData, Tuple<FixWay, float>> AdjustFriend = new Dictionary<FixData, Tuple<FixWay, float>>();
     Dictionary<FixData, Tuple<FixWay, float>> AdjustEnemy = new Dictionary<FixData, Tuple<FixWay, float>>();
@@ -176,6 +195,7 @@ public class Facility : LandShape
         if (root.Attributes["atSide"] != null) atSide = bool.Parse(root.Attributes["atSide"].Value);
         if (root.Attributes["isRoad"] != null) isRoad = bool.Parse(root.Attributes["isRoad"].Value);
         if (root.Attributes["Type"].Value == "FixFacility") canLeftRuin = true;
+        if (root.Attributes["Type"].Value == "SpecialTerrain") isSpecialLandShape = true;
         //加载另外两个增益项
         #region
         XmlNode tmp = root.SelectSingleNode("Data");
