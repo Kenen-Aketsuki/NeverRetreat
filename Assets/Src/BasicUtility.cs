@@ -15,18 +15,23 @@ public static class BasicUtility
         {
             XmlDoc.Load(file);
             XmlNodeList child = XmlDoc.DocumentElement.ChildNodes;
-            foreach(XmlNode node in child)
+
+            foreach (XmlNode node in child)
             {
+                if (node.Attributes == null) continue;
+
                 switch (node.Attributes["Type"].Value)
                 {
                     case "BasicTerrain":
+                        UnityEngine.Debug.Log(node.Attributes["id"].Value + "¡ª IN");
+                        
                         FixSystemData.GlobalTerrainList.Add(
                             node.Attributes["id"].Value,
                             new MiddleLandShape(node)
                             );
                         break;
                     default:
-                        UnityEngine.Debug.Log(node.Attributes["id"].Value);
+                        UnityEngine.Debug.Log(node.Attributes["id"].Value+"¡ª SKIP");
                         break;
                 }
             }
