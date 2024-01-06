@@ -107,7 +107,7 @@
         <name>智能雷场</name>
         <Data>
             <enterCost>0</enterCost>
-            <battleAdjust target="Enimy">
+            <battleAdjust target="Enemy">
                 <adjust target="HP" way="ADD" number="-1" />
             </battleAdjust>
             <height>0</height>
@@ -135,6 +135,18 @@
                 <adjust target="STK" way="ADD" number="1" />
             </battleAdjust>
             <height>3</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="TempFacility" id="FimensionFissure">
+        <name>裂隙</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust target="Friend">
+                <adjust target="MOV" way="ADD" number="-10" />
+                <adjust target="RRK" way="ADD" number="2" />
+            </battleAdjust>
+            <height>1000</height>
         </Data>
     </Terrain>
 </TerrainData>

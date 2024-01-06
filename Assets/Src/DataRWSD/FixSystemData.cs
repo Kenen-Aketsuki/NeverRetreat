@@ -12,8 +12,8 @@ public static class FixSystemData
     public static string pieceDirectory;
     public static string TerrainDirectory;
 
-    public static Dictionary<string, MiddleLandShape> GlobalTerrainList = new Dictionary<string, MiddleLandShape>();
-    public static Dictionary<string, SideLandShape> GlobalSideTerrainList = new Dictionary<string, SideLandShape>();
+    public static Dictionary<string, BasicLandShape> GlobalBasicTerrainList = new Dictionary<string, BasicLandShape>();
+    public static Dictionary<string, Facility> GlobalFacilityList = new Dictionary<string, Facility>();
 
     public static void InitPath()
     {

@@ -8,6 +8,9 @@ using System.Xml;
 using UnityEngine.Tilemaps;
 using System.IO;
 using UnityEngine;
+using Unity.VisualScripting;
+using static Unity.Burst.Intrinsics.X86.Avx;
+using UnityEditor.Experimental.GraphView;
 
 public class LandShape
 {
@@ -15,7 +18,7 @@ public class LandShape
     public int enterCount = 0;
     public int height = 0;
 
-    Dictionary<FixData,Tuple<FixWay,int>> Adjust = new Dictionary<FixData,Tuple<FixWay,int>>();
+    Dictionary<FixData,Tuple<FixWay,float>> Adjust = new Dictionary<FixData,Tuple<FixWay, float>>();
 
     public LandShape(XmlNode root)
     {
@@ -56,96 +59,196 @@ public class LandShape
                 }
             }
 
-            tmp = Data.SelectSingleNode("battleAdjust");//录入修正值
-            if(tmp != null && tmp.Attributes["target"].Value == "All")
+            XmlNodeList tmpL = Data.SelectNodes("battleAdjust");//录入修正值
+            tmp = null;
+            foreach(XmlNode L in tmpL)
             {
-                foreach(XmlNode node in tmp.ChildNodes)
+                if (L.Attributes["target"] == null || L.Attributes["target"].Value == "All")
                 {
-                    Adjust.Add(
-                        (FixData)Enum.Parse(typeof(FixData), node.Attributes["target"].Value),
-                        new Tuple<FixWay, int>(
-                            (FixWay)Enum.Parse(typeof(FixWay), node.Attributes["way"].Value),
-                            int.Parse(node.Attributes["number"].Value)
-                            )
-                        );
+                    addAdjestTo(ref Adjust, L);
+                    break;
                 }
             }
         }
-    
+    }
 
+    internal void addAdjestTo(ref Dictionary<FixData, Tuple<FixWay, float>> tar,XmlNode battleAdjust)
+    {
+        foreach(XmlNode node in battleAdjust.ChildNodes)
+        {
+            if (node.Attributes["target"].Value == "NA") return;
+            tar.Add(
+                (FixData)Enum.Parse(typeof(FixData), node.Attributes["target"].Value),
+                new Tuple<FixWay, float>(
+                    (FixWay)Enum.Parse(typeof(FixWay), node.Attributes["way"].Value),
+                    float.Parse(node.Attributes["number"].Value)
+                    )
+                );
+        }
     }
 }
 
-public class MiddleLandShape : LandShape//位于格上的地形
+//通常地形都是中立的，其效果对双方有效。
+public class BasicLandShape : LandShape //基础地形
 {
+    public Tile Left = null;
     public Tile Top;
+    public Tile Right = null;
 
     public string id;
+    public bool atSide = false;
 
-    public MiddleLandShape(XmlNode root) : base(root)
+    public BasicLandShape(XmlNode root) : base(root)
     {
-        //加载瓦片
-        string path = FixSystemData.TerrainDirectory + "\\img\\"+id+".png";
-        string[] files = Directory.GetFiles(path);
-        byte[] data = File.ReadAllBytes(files[0]);
-        
-        Texture2D texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
-        texture.LoadImage(data);
-        
-        Top = new Tile();
-        Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-        Top.name = id;
-    }
-    
-}
+        id = root.Attributes["id"].Value;
+        if(root.Attributes["atSide"] != null) atSide = bool.Parse(root.Attributes["atSide"].Value);
 
-public class SideLandShape : LandShape //位于边上的地形
-{
-    public Tile Left;
-    public Tile Top;
-    public Tile Right;
-
-    public string id;
-
-    public SideLandShape(XmlNode root) : base(root)
-    {
-        string path = FixSystemData.TerrainDirectory + "\\img\\" + id;
+        string path = FixSystemData.TerrainDirectory + "\\img\\" ;
+        Texture2D texture;
+        byte[] data;
         //加载中间
         #region
-        string[] files = Directory.GetFiles(path+"_T.png");
-        byte[] data = File.ReadAllBytes(files[0]);
+        string[] files = Directory.GetFiles(path, id + ".png");
+        if(files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
 
-        Texture2D texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
-        texture.LoadImage(data);
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
 
-        Top = new Tile();
-        Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-        Top.name = id + "_Top";
+            Top = new Tile();
+            Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Top.name = id + "_Top";
+        }
         #endregion
+        if (!atSide) return; //若是在边上的，则继续加载左右。
         //加载左
         #region
-        files = Directory.GetFiles(path + "_L.png");
-        data = File.ReadAllBytes(files[0]);
+        files = Directory.GetFiles(path, id + "_L.png");
+        if( files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
 
-        texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
-        texture.LoadImage(data);
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
 
-        Left = new Tile();
-        Left.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-        Left.name = id + "_Left";
+            Left = new Tile();
+            Left.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Left.name = id + "_Left";
+        }
         #endregion
         //加载右
         #region
-        files = Directory.GetFiles(path + "_R.png");
-        data = File.ReadAllBytes(files[0]);
+        files = Directory.GetFiles(path, id + "_R.png");
+        if(files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
 
-        texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
-        texture.LoadImage(data);
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
 
-        Right = new Tile();
-        Right.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-        Right.name = id + "_Right";
+            Right = new Tile();
+            Right.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Right.name = id + "_Right";
+        }
         #endregion
     }
 }
 
+//设施通常是有所属的，其效果仅对一方有效，或对双方的效果不同。
+public class Facility : LandShape
+{
+    public Tile Left = null;
+    public Tile Top;
+    public Tile Right = null;
+
+    public string id;
+    public bool atSide = false;
+    public bool isRoad = false;
+    public bool canLeftRuin = false;//是否留下废墟
+
+    Dictionary<FixData, Tuple<FixWay, float>> AdjustFriend = new Dictionary<FixData, Tuple<FixWay, float>>();
+    Dictionary<FixData, Tuple<FixWay, float>> AdjustEnemy = new Dictionary<FixData, Tuple<FixWay, float>>();
+
+    public Facility(XmlNode root) : base(root)
+    {
+        id = root.Attributes["id"].Value;
+        if (root.Attributes["atSide"] != null) atSide = bool.Parse(root.Attributes["atSide"].Value);
+        if (root.Attributes["isRoad"] != null) isRoad = bool.Parse(root.Attributes["isRoad"].Value);
+        if (root.Attributes["Type"].Value == "FixFacility") canLeftRuin = true;
+        //加载另外两个增益项
+        #region
+        XmlNode tmp = root.SelectSingleNode("Data");
+        if (tmp != null)
+        {
+            foreach (XmlNode L in root.SelectSingleNode("Data").SelectNodes("battleAdjust"))
+            {
+                if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Friend")
+                {
+                    addAdjestTo(ref AdjustFriend, L);
+                    break;
+                }else if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Enemy")
+                {
+                    addAdjestTo(ref AdjustEnemy, L);
+                    break;
+                }
+            }
+            
+        }
+        #endregion
+        string path = FixSystemData.TerrainDirectory + "\\img\\";
+        //加载中间
+        Texture2D texture;
+        byte[] data;
+        #region
+        string[] files = Directory.GetFiles(path, id + ".png");
+        if(files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
+
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+
+            Top = new Tile();
+            Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Top.name = id + "_Top";
+        }
+        else
+        {
+            Top = null;
+        }
+        
+        #endregion
+        if (!atSide) return; //若是在边上的，则继续加载左右。
+        //加载左
+        #region
+        files = Directory.GetFiles(path, id + "_L.png");
+        if( files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
+
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+
+            Left = new Tile();
+            Left.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Left.name = id + "_Left";
+        }
+        #endregion
+        //加载右
+        #region
+        files = Directory.GetFiles(path, id + "_R.png");
+        if(files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
+
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+
+            Right = new Tile();
+            Right.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Right.name = id + "_Right";
+        }
+        #endregion
+    }
+}

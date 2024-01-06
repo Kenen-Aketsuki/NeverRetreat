@@ -73,7 +73,7 @@
             <enterCost>0</enterCost>
             <battleAdjust>
                 <adjust target="ATK" way="MULTY" number="0.5" />
-                <adjust target="MOV" way="ALL" number="" />
+                <adjust target="MOV" way="ALL" number="0" />
             </battleAdjust>
             <height>0</height>
         </Data>

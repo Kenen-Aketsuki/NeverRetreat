@@ -25,9 +25,18 @@ public static class BasicUtility
                     case "BasicTerrain":
                         UnityEngine.Debug.Log(node.Attributes["id"].Value + "¡ª IN");
                         
-                        FixSystemData.GlobalTerrainList.Add(
+                        FixSystemData.GlobalBasicTerrainList.Add(
                             node.Attributes["id"].Value,
-                            new MiddleLandShape(node)
+                            new BasicLandShape(node)
+                            );
+                        break;
+                    case "TempFacility":
+                    case "FixFacility":
+                        UnityEngine.Debug.Log(node.Attributes["id"].Value + "¡ª IN");
+
+                        FixSystemData.GlobalFacilityList.Add(
+                            node.Attributes["id"].Value,
+                            new Facility(node)
                             );
                         break;
                     default:

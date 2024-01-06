@@ -38,7 +38,7 @@
         <name>奥术结界</name>
         <Data>
             <enterCost>0</enterCost>
-            <battleAdjust target="Enimy">
+            <battleAdjust target="Enemy">
                 <adjust target="MOV" way="NOPE" number="0" />
                 <adjust target="ATK" way="NOPE" number="0" />
             </battleAdjust>
@@ -50,7 +50,7 @@
         <name>防火墙</name>
         <Data>
             <enterCost>NA</enterCost>
-            <battleAdjust target="Enimy">
+            <battleAdjust target="Enemy">
                 <adjust target="NA" way="NOPE" number="0" />
             </battleAdjust>
             <battleAdjust target="Friend">
@@ -89,6 +89,17 @@
             <enterCost>0</enterCost>
             <battleAdjust>
                 <adjust target="MOV" way="ADD" number="1" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialTerrain" id="StaticBarrier">
+        <name>安定结界</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust target="Enemy">
+                <adjust target="HP" way="ADD" number="-1" />
             </battleAdjust>
             <height>0</height>
         </Data>
