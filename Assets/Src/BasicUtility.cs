@@ -1,11 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 
 public static class BasicUtility
 {
     public static void DataInit()
     {
-        //读取地形信息
+        XmlDocument XmlDoc = new XmlDocument();
+        //初始化固定数据
+        FixSystemData.InitPath();
+        //读取地形、设施等地图信息信息
+        foreach(string file in Directory.GetFiles(FixSystemData.TerrainDirectory, "*.xml", SearchOption.AllDirectories))
+        {
+            XmlDoc.Load(file);
+            XmlNodeList child = XmlDoc.DocumentElement.ChildNodes;
+            foreach(XmlNode node in child)
+            {
+                switch (node.Attributes["Type"].Value)
+                {
+                    case "BasicTerrain":
+                        FixSystemData.GlobalTerrainList.Add(
+                            node.Attributes["id"].Value,
+                            new MiddleLandShape(node)
+                            );
+                        break;
+                    default:
+                        UnityEngine.Debug.Log(node.Attributes["id"].Value);
+                        break;
+                }
+            }
+        }
         //读取棋子信息
     }
 }
