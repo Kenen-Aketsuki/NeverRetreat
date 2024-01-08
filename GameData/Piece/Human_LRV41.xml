@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 凌源东北第41志愿旅 摩托化融合步兵一团 -->
+    <Troop designation="LRV41.Mx11" name="凌源41志愿旅·摩融步一团一连" type="Motor-MixInfantry" Belong="Human" />
+    <Troop designation="LRV41.Mx12" name="凌源41志愿旅·摩融步一团二连" type="Motor-MixInfantry" Belong="Human" />
+    <Troop designation="LRV41.Mx13" name="凌源41志愿旅·摩融步一团三连" type="Motor-MixInfantry" Belong="Human" />
+    <Troop designation="LRV41.vP11" name="凌源41志愿旅·摩融步一团自行迫连" type="SP-Mortar" Belong="Human" />
+    <!-- 凌源东北第41志愿旅 摩托化融合步兵二团 -->
+    <Troop designation="LRV41.Mx21" name="凌源41志愿旅·摩融步二团一连" type="Motor-MixInfantry" Belong="Human" />
+    <Troop designation="LRV41.Mx22" name="凌源41志愿旅·摩融步二团二连" type="Motor-MixInfantry" Belong="Human" />
+    <Troop designation="LRV41.Mx23" name="凌源41志愿旅·摩融步二团三连" type="Motor-MixInfantry" Belong="Human" />
+    <Troop designation="LRV41.vP21" name="凌源41志愿旅·摩融步二团自行迫连" type="SP-Mortar" Belong="Human" />
+    <!-- 凌源东北第41志愿旅 装甲营 -->
+    <Troop designation="LRV41.Tk11" name="凌源41志愿旅·装甲营一连" type="Tank" Belong="Human" />
+    <Troop designation="LRV41.Tk12" name="凌源41志愿旅·装甲营二连" type="Tank" Belong="Human" />
+    <Troop designation="LRV41.Tk13" name="凌源41志愿旅·装甲营三连" type="Tank" Belong="Human" />
+    <Troop designation="LRV41.SPA1" name="凌源41志愿旅·装甲营自行榴一连" type="SP-Artillery" Belong="Human" />
+    <Troop designation="LRV41.SPA2" name="凌源41志愿旅·装甲营自行榴二连" type="SP-Artillery" Belong="Human" />
+    <!-- 凌源东北第41志愿旅 模组战营 -->
+    <Troop designation="LRV41.AME1" name="凌源41志愿旅·模组战团殁异一连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="LRV41.AME2" name="凌源41志愿旅·模组战团殁异二连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="LRV41.AME3" name="凌源41志愿旅·模组战团殁异三连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="LRV41.EME1" name="凌源41志愿旅·模组战团平异一连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="LRV41.EME2" name="凌源41志愿旅·模组战团平异二连" type="Ease-Exception" Belong="Human" />
+</TroopInfo>
