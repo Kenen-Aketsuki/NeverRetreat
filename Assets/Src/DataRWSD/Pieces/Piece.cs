@@ -97,7 +97,7 @@ public class Piece
 
     public Piece(XmlNode root)
     {
-
+        
     }
 
     public void RecoverHP(int pt) //恢复HP

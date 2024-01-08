@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE PieceInfo SYSTEM "PieceData.dtd">
 <PieceInfo>
+    <!-- 陆地单位 -->
     <Piece id="Infantry-Army">
         <name>步兵连-正规军</name>
         <Datas>
@@ -27,7 +28,7 @@
         <ability canSupport="False" canAirBattle="False" />
     </Piece>
 
-    <Piece id="MachineInfantry">
+    <Piece id="Machine-Infantry">
         <name>机械化步兵连</name>
         <Datas>
             <ATK>6</ATK>
@@ -107,5 +108,176 @@
             <activeArea>4</activeArea>
         </Datas>
         <ability canSupport="False" canAirBattle="True" />
+    </Piece>
+
+    <Piece id="Wizard">
+        <name>术士连</name>
+        <Datas>
+            <ATK>4</ATK>
+            <DEF>4</DEF>
+            <MOV>5</MOV>
+            <cATK>2</cATK>
+            <cDEF>2</cDEF>
+            <cMOV>5</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canDoMagic="True"/>
+    </Piece>
+
+    <Piece id="MixInfantry">
+        <name>混合步兵连</name>
+        <Datas>
+            <ATK>5</ATK>
+            <DEF>5</DEF>
+            <MOV>5</MOV>
+            <cATK>2</cATK>
+            <cDEF>2</cDEF>
+            <cMOV>3</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canDoMagic="True"/>
+    </Piece>
+
+    <Piece id="Motor-MixInfantry">
+        <name>摩托化混合步兵连</name>
+        <Datas>
+            <ATK>6</ATK>
+            <DEF>6</DEF>
+            <MOV>10</MOV>
+            <cATK>3</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>5</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canDoMagic="True"/>
+    </Piece>
+
+    <Piece id="Tank">
+        <name>装甲连</name>
+        <Datas>
+            <ATK>8</ATK>
+            <DEF>5</DEF>
+            <MOV>10</MOV>
+            <cATK>4</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>5</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="SP-Artillery">
+        <name>自行火炮连</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>3</DEF>
+            <MOV>8</MOV>
+            <cATK>-1</cATK>
+            <cDEF>1</cDEF>
+            <cMOV>4</cMOV>
+            <activeArea>15</activeArea>
+        </Datas>
+        <ability canSupport="True" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Rocket">
+        <name>火箭连</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>3</DEF>
+            <MOV>10</MOV>
+            <cATK>-1</cATK>
+            <cDEF>1</cDEF>
+            <cMOV>4</cMOV>
+            <activeArea>20</activeArea>
+        </Datas>
+        <ability canSupport="True" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Armed-AA">
+        <name>装甲防空连</name>
+        <Datas>
+            <ATK>10</ATK>
+            <DEF>5</DEF>
+            <MOV>8</MOV>
+            <cATK>10</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>4</cMOV>
+            <activeArea>6</activeArea>
+        </Datas>
+        <ability canSupport="False" canAirBattle="True" />
+    </Piece>
+
+    <Piece id="Gunship">
+        <name>武装直升机编队</name>
+        <Datas>
+            <ATK>5</ATK>
+            <DEF>5</DEF>
+            <MOV>10</MOV>
+            <cATK>3</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>10</cMOV>
+            <activeArea>6</activeArea>
+        </Datas>
+        <ability canSupport="False" canAirBattle="True" />
+    </Piece>
+    <!-- 空中单位 -->
+    <Piece id="Bomber" isAir="True">
+        <name>轰炸机编队</name>
+        <Datas>
+            <ATK>12</ATK>
+            <DEF>2</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Attacker" isAir="True">
+        <name>攻击机编队</name>
+        <Datas>
+            <ATK>8</ATK>
+            <DEF>3</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Battler" isAir="True">
+        <name>战斗机编队</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>5</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="True" />
+    </Piece>
+
+    <Piece id="UAV" isAir="True">
+        <name>察打一体无人机机编队</name>
+        <Datas>
+            <ATK>5</ATK>
+            <DEF>-1</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <!-- 特殊单位 -->
+    <Piece id="Ease-Exception">
+        <name>平异连</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>2</DEF>
+            <MOV>5</MOV>
+            <passiveArea>4</passiveArea>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
+    </Piece>
+
+    <Piece id="Annihilate-Exception">
+        <name>殁异连</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>2</DEF>
+            <MOV>5</MOV>
+            <passiveArea>3</passiveArea>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
     </Piece>
 </PieceInfo>
