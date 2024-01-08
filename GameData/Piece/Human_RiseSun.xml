@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 旭日航空师 -->
+    <Troop designation="RiseSun.AtkAir" name="旭日航空师·攻击机编队" type="Attacker" Belong="Human" />
+    <Troop designation="RiseSun.Bomer" name="旭日航空师·轰炸机编队" type="Bomber" Belong="Human" />
+    <Troop designation="RiseSun.Fight" name="旭日航空师·战斗机编队" type="Battler" Belong="Human" />
+    <Troop designation="RiseSun.UAV" name="旭日航空师·察打一体无人机" type="UAV" Belong="Human" />
+</TroopInfo>
