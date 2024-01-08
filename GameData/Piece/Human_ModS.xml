@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 模组异常对抗特别行动部队 殁异团-->
+    <Troop designation="ModS.F01" name="模组异常对抗特别行动部队·殁异团一营一连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="ModS.F02" name="模组异常对抗特别行动部队·殁异团一营二连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="ModS.F03" name="模组异常对抗特别行动部队·殁异团一营三连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="ModS.F11" name="模组异常对抗特别行动部队·殁异团二营一连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="ModS.F12" name="模组异常对抗特别行动部队·殁异团二营二连" type="Annihilate-Exception" Belong="Human" />
+    <Troop designation="ModS.F13" name="模组异常对抗特别行动部队·殁异团二营三连" type="Annihilate-Exception" Belong="Human" />
+    <!-- 模组异常对抗特别行动部队 平异团-->
+    <Troop designation="ModS.E01" name="模组异常对抗特别行动部队·平异团一营一连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E02" name="模组异常对抗特别行动部队·平异团一营二连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E03" name="模组异常对抗特别行动部队·平异团一营三连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E11" name="模组异常对抗特别行动部队·平异团二营一连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E12" name="模组异常对抗特别行动部队·平异团二营二连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E13" name="模组异常对抗特别行动部队·平异团二营三连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E21" name="模组异常对抗特别行动部队·平异团三营一连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E22" name="模组异常对抗特别行动部队·平异团三营二连" type="Ease-Exception" Belong="Human" />
+    <Troop designation="ModS.E23" name="模组异常对抗特别行动部队·平异团三营三连" type="Ease-Exception" Belong="Human" />
+
+</TroopInfo>
