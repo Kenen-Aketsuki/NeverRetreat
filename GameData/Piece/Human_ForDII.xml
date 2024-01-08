@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 拂晓二师 装甲一团-->
+    <Troop designation="ForDII.101Pz" name="拂晓二师装甲一团一营一连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.102Pz" name="拂晓二师装甲一团一营二连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.103Pz" name="拂晓二师装甲一团一营三连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.111Pz" name="拂晓二师装甲一团二营一连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.112Pz" name="拂晓二师装甲一团二营二连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.113Pz" name="拂晓二师装甲一团二营三连" type="Tank" Belong="Human" />
+    <!-- 拂晓二师 装甲二团-->
+    <Troop designation="ForDII.201Pz" name="拂晓二师装甲二团一营一连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.202Pz" name="拂晓二师装甲二团一营二连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.203Pz" name="拂晓二师装甲二团一营三连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.211Pz" name="拂晓二师装甲二团二营一连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.212Pz" name="拂晓二师装甲二团二营二连" type="Tank" Belong="Human" />
+    <Troop designation="ForDII.213Pz" name="拂晓二师装甲二团二营三连" type="Tank" Belong="Human" />
+    <!-- 拂晓二师 自行火炮团-->
+    <Troop designation="ForDII.101SPA" name="拂晓二师自行火炮团一连" type="SP-Artillery" Belong="Human" />
+    <Troop designation="ForDII.102SPA" name="拂晓二师自行火炮团二连" type="SP-Artillery" Belong="Human" />
+    <Troop designation="ForDII.103SPA" name="拂晓二师自行火炮团三连" type="SP-Artillery" Belong="Human" />
+    <!-- 拂晓二师 火箭团-->
+    <Troop designation="ForDII.101Rok" name="拂晓二师火箭团一连" type="Rocket" Belong="Human" />
+    <Troop designation="ForDII.102Rok" name="拂晓二师火箭团二连" type="Rocket" Belong="Human" />
+    <Troop designation="ForDII.103Rok" name="拂晓二师火箭团三连" type="Rocket" Belong="Human" />
+    <!-- 拂晓二师 装甲防空团-->
+    <Troop designation="ForDII.101AAA" name="拂晓二师装甲防空团一连" type="Armed-AA" Belong="Human" />
+    <Troop designation="ForDII.102AAA" name="拂晓二师装甲防空团二连" type="Armed-AA" Belong="Human" />
+    <Troop designation="ForDII.103AAA" name="拂晓二师装甲防空团三连" type="Armed-AA" Belong="Human" />
+</TroopInfo>

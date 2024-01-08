@@ -204,7 +204,7 @@
         <ability canSupport="False" canAirBattle="True" />
     </Piece>
 
-    <Piece id="Gunship">
+    <Piece id="Armed-Helicopter">
         <name>武装直升机编队</name>
         <Datas>
             <ATK>5</ATK>
