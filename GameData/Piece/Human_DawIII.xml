@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 曙光三师 一团-->
+    <Troop designation="DawIII.101" name="曙光三师一团一营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.102" name="曙光三师一团一营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.103" name="曙光三师一团一营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.111" name="曙光三师一团二营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.112" name="曙光三师一团二营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.113" name="曙光三师一团二营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.121" name="曙光三师一团三营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.122" name="曙光三师一团三营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.123" name="曙光三师一团三营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.101P" name="曙光三师一团迫击炮营一连" type="Mortar" Belong="Human" />
+    <Troop designation="DawIII.102P" name="曙光三师一团迫击炮营二连" type="Mortar" Belong="Human" />
+    <!-- 曙光三师 二团-->
+    <Troop designation="DawIII.201" name="曙光三师二团一营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.202" name="曙光三师二团一营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.203" name="曙光三师二团一营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.211" name="曙光三师二团二营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.212" name="曙光三师二团二营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.213" name="曙光三师二团二营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.221" name="曙光三师二团三营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.222" name="曙光三师二团三营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.223" name="曙光三师二团三营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.201P" name="曙光三师二团迫击炮营一连" type="Mortar" Belong="Human" />
+    <Troop designation="DawIII.202P" name="曙光三师二团迫击炮营二连" type="Mortar" Belong="Human" />
+    <!-- 曙光三师 三团-->
+    <Troop designation="DawIII.301" name="曙光三师三团一营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.302" name="曙光三师三团一营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.303" name="曙光三师三团一营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.311" name="曙光三师三团二营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.312" name="曙光三师三团二营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.313" name="曙光三师三团二营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.321" name="曙光三师三团三营一连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.322" name="曙光三师三团三营二连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.323" name="曙光三师三团三营三连" type="Infantry-Army" Belong="Human" />
+    <Troop designation="DawIII.301P" name="曙光三师三团迫击炮营一连" type="Mortar" Belong="Human" />
+    <Troop designation="DawIII.302P" name="曙光三师三团迫击炮营二连" type="Mortar" Belong="Human" />
+    <!-- 曙光三师 机械化一团-->
+    <Troop designation="DawIII.101v" name="曙光三师机械化一团一连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="DawIII.102v" name="曙光三师机械化一团二连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="DawIII.103v" name="曙光三师机械化一团三连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="DawIII.104vP" name="曙光三师机械化一团四连" type="SP-Mortar" Belong="Human" />
+    <!-- 曙光三师 机械化二团-->
+    <Troop designation="DawIII.201v" name="曙光三师机械化二团一连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="DawIII.202v" name="曙光三师机械化二团二连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="DawIII.203v" name="曙光三师机械化二团三连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="DawIII.204vP" name="曙光三师机械化二团四连" type="SP-Mortar" Belong="Human" />
+    <!-- 曙光三师 战略支援团-->
+    <Troop designation="DawIII.s01E" name="曙光三师战略支援团工兵一连" type="Engineer" Belong="Human" />
+    <Troop designation="DawIII.s02E" name="曙光三师战略支援团工兵二连" type="Engineer" Belong="Human" />
+    <Troop designation="DawIII.s01M" name="曙光三师战略支援团术士一连" type="Wizard" Belong="Human" />
+    <Troop designation="DawIII.s02M" name="曙光三师战略支援团术士二连" type="Wizard" Belong="Human" />
+    <Troop designation="DawIII.s1AA" name="曙光三师战略支援团防空营" type="Anti-Aircraft" Belong="Human" />
+    <Troop designation="DawIII.s01Art" name="曙光三师战略支援团炮兵一连" type="Artillery" Belong="Human" />
+    <Troop designation="DawIII.s02Art" name="曙光三师战略支援团炮兵二连" type="Artillery" Belong="Human" />
+    <Troop designation="DawIII.s03Art" name="曙光三师战略支援团炮兵三连" type="Artillery" Belong="Human" />
+</TroopInfo>
