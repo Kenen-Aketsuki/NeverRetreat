@@ -280,4 +280,14 @@
         </Datas>
         <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
     </Piece>
+
+    <Piece id="Govermant">
+        <name>政府要员</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>-1</DEF>
+            <MOV>5</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
 </PieceInfo>

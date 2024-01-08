@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 猎人工会 一营-->
+    <Troop designation="Hunter.101mx" name="猎人工会·一营一连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.102mx" name="猎人工会·一营二连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.103mx" name="猎人工会·一营三连" type="MixInfantry" Belong="Human" />
+    <!-- 猎人工会 二营-->
+    <Troop designation="Hunter.111mx" name="猎人工会·二营一连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.112mx" name="猎人工会·二营二连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.113mx" name="猎人工会·二营三连" type="MixInfantry" Belong="Human" />
+    <!-- 猎人工会 三营-->
+    <Troop designation="Hunter.121mx" name="猎人工会·三营一连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.122mx" name="猎人工会·三营二连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.123mx" name="猎人工会·三营三连" type="MixInfantry" Belong="Human" />
+    <!-- 猎人工会 四营-->
+    <Troop designation="Hunter.131mx" name="猎人工会·三营一连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.132mx" name="猎人工会·三营二连" type="MixInfantry" Belong="Human" />
+    <Troop designation="Hunter.133mx" name="猎人工会·三营三连" type="MixInfantry" Belong="Human" />
+    
+    <!-- 政府近卫团 -->
+    <Troop designation="Guard.101" name="政府近卫团·一连" type="Infantry-GovGuard" Belong="Human" />
+    <Troop designation="Guard.102" name="政府近卫团·二连" type="Infantry-GovGuard" Belong="Human" />
+    <Troop designation="Guard.103" name="政府近卫团·三连" type="Infantry-GovGuard" Belong="Human" />
+    <Troop designation="Guard.101v" name="政府近卫团·机械化步兵连" type="Machine-Infantry" Belong="Human" />
+    <Troop designation="GovermantVIP" name="政府要员" type="Govermant" Belong="Human" />
+</TroopInfo>
