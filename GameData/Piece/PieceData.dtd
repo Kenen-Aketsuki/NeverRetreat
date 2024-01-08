@@ -1,12 +1,12 @@
 <!-- 这里记述兵种的信息，包括兵种的战斗力等信息 -->
 <!ELEMENT PieceInfo (Piece+)>
 
-<!ELEMENT Piece (name,Datas,ability,enterForbidden?)>
+<!ELEMENT Piece (name,Datas,ability)>
 <!ATTLIST Piece isAir (True|False) "False"><!-- 是否为空中单位 -->
 <!ATTLIST Piece id ID #REQUIRED>
 
 <!ELEMENT name (#PCDATA)><!-- 棋子名称 -->
-<!ELEMENT Datas (ATK,cATK?,DEF,cDEF?,MOV,cMOV?,activeArea?,passiveArea?)><!-- 棋子数据 -->
+<!ELEMENT Datas (ATK,DEF,MOV,cATK?,cDEF?,cMOV?,activeArea?,passiveArea?)><!-- 棋子数据 -->
 <!-- 任意值小于零代表其无法执行对应能力-->
 <!ELEMENT ATK (#PCDATA)>
 <!ELEMENT DEF (#PCDATA)>
@@ -25,7 +25,10 @@
 <!ATTLIST ability canBild (True|False) #IMPLIED>
 <!ATTLIST ability canMental (True|False) #IMPLIED>
 
-<!ELEMENT enterForbidden (forbidFix+)><!-- 准入限制，不填默遵循规则限制,准入优先级遵循：特殊地形>临时设施=固定设施>基础地形，即以最高优先级地形的准入为准-->
+<!-- 已废弃 -->
+<!ELEMENT enterForbidden (forbidFix+)><!-- 准入限制，不填默遵循规则限制,准入优先级遵循：特殊地形>临时设施=固定设施>基础地形，即以最高优先级地形的准入为准,冲突取最大值-->
+<!-- 对移动消耗的修正 -->
 <!ELEMENT forbidFix EMPTY>
 <!ATTLIST forbidFix fixWay (ADD|MULTY|NOPE|ALL) #REQUIRED>
 <!ATTLIST forbidFix fixNumber CDATA #REQUIRED>
+<!ATTLIST forbidFix Land CDATA #REQUIRED>

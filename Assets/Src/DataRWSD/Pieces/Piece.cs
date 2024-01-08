@@ -77,7 +77,7 @@ public class Piece
     bool isAir = false;//是否为空中单位(支援签)
 
     public bool canBattle {get{
-            if (nATK > 0) return true;
+            if (nATK > 0 && !canAirBattle) return true;
             else return false;
         }}//能否参与普通战斗
     public bool canSupport = false;//能否提供火力支援

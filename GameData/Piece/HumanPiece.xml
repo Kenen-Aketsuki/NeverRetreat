@@ -5,10 +5,10 @@
         <name>步兵连-正规军</name>
         <Datas>
             <ATK>4</ATK>
-            <cATK>2</cATK>
             <DEF>4</DEF>
-            <cDEF>2</cDEF>
             <MOV>5</MOV>
+            <cATK>2</cATK>
+            <cDEF>2</cDEF>
             <cMOV>3</cMOV>
         </Datas>
         <ability canSupport="False" canAirBattle="False" />
@@ -18,10 +18,10 @@
         <name>步兵连-政府近卫军</name>
         <Datas>
             <ATK>3</ATK>
-            <cATK>1</cATK>
             <DEF>3</DEF>
-            <cDEF>1</cDEF>
             <MOV>5</MOV>
+            <cATK>1</cATK>
+            <cDEF>1</cDEF>
             <cMOV>3</cMOV>
         </Datas>
         <ability canSupport="False" canAirBattle="False" />
@@ -31,10 +31,10 @@
         <name>机械化步兵连</name>
         <Datas>
             <ATK>6</ATK>
-            <cATK>3</cATK>
             <DEF>4</DEF>
-            <cDEF>2</cDEF>
             <MOV>10</MOV>
+            <cATK>3</cATK>
+            <cDEF>2</cDEF>
             <cMOV>4</cMOV>
         </Datas>
         <ability canSupport="False" canAirBattle="False" />
@@ -44,10 +44,10 @@
         <name>迫击炮排</name>
         <Datas>
             <ATK>-1</ATK>
-            <cATK>-1</cATK>
             <DEF>2</DEF>
-            <cDEF>1</cDEF>
             <MOV>5</MOV>
+            <cATK>-1</cATK>
+            <cDEF>1</cDEF>
             <cMOV>3</cMOV>
             <activeArea>5</activeArea>
         </Datas>
@@ -58,10 +58,10 @@
         <name>自行迫击炮连</name>
         <Datas>
             <ATK>-1</ATK>
-            <cATK>-1</cATK>
             <DEF>3</DEF>
-            <cDEF>2</cDEF>
             <MOV>10</MOV>
+            <cATK>-1</cATK>
+            <cDEF>2</cDEF>
             <cMOV>4</cMOV>
             <activeArea>7</activeArea>
         </Datas>
@@ -72,13 +72,40 @@
         <name>炮兵连</name>
         <Datas>
             <ATK>3</ATK>
-            <cATK>1</cATK>
             <DEF>5</DEF>
-            <cDEF>3</cDEF>
             <MOV>5</MOV>
+            <cATK>1</cATK>
+            <cDEF>3</cDEF>
             <cMOV>3</cMOV>
             <activeArea>10</activeArea>
         </Datas>
         <ability canSupport="True" canAirBattle="True" />
+    </Piece>
+
+    <Piece id="Engineer">
+        <name>工兵连</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>3</DEF>
+            <MOV>5</MOV>
+            <cATK>-1</cATK>
+            <cDEF>1</cDEF>
+            <cMOV>2</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canBild="True"/>
+    </Piece>
+
+    <Piece id="Anti-Aircraft">
+        <name>防空连</name>
+        <Datas>
+            <ATK>5</ATK>
+            <DEF>5</DEF>
+            <MOV>3</MOV>
+            <cATK>5</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>2</cMOV>
+            <activeArea>4</activeArea>
+        </Datas>
+        <ability canSupport="False" canAirBattle="True" />
     </Piece>
 </PieceInfo>
