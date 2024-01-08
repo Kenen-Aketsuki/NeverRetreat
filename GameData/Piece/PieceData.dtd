@@ -1,26 +1,25 @@
 <!-- 这里记述兵种的信息，包括兵种的战斗力等信息 -->
 <!ELEMENT PieceInfo (Piece+)>
 
-<!ELEMENT Piece (name,belong,Datas,ability,enterForbidden?)>
+<!ELEMENT Piece (name,Datas,ability,enterForbidden?)>
 <!ATTLIST Piece isAir (True|False) "False"><!-- 是否为空中单位 -->
-<!ATTLIST Piece Belong (Human|ModCrash) #REQUIRED><!-- 所属 -->
+<!ATTLIST Piece id ID #REQUIRED>
 
 <!ELEMENT name (#PCDATA)><!-- 棋子名称 -->
 <!ELEMENT Datas (ATK,cATK?,DEF,cDEF?,MOV,cMOV?,activeArea?,passiveArea?)><!-- 棋子数据 -->
-
+<!-- 任意值小于零代表其无法执行对应能力-->
 <!ELEMENT ATK (#PCDATA)>
-<!ELEMENT cATK (#PCDATA)>
 <!ELEMENT DEF (#PCDATA)>
-<!ELEMENT cDEF (#PCDATA)>
 <!ELEMENT MOV (#PCDATA)>
+<!ELEMENT cDEF (#PCDATA)>
+<!ELEMENT cATK (#PCDATA)>
 <!ELEMENT cMOV (#PCDATA)>
 <!ELEMENT activeArea (#PCDATA)>
 <!ELEMENT passiveArea (#PCDATA)>
 
 <!ELEMENT ability EMPTY><!-- 棋子的能力 -->
-<!ATTLIST ability canBattle (True|False) #IMPLIED>
-<!ATTLIST ability canSupport (True|False) #IMPLIED>
-<!ATTLIST ability canAirBattle (True|False) #IMPLIED>
+<!ATTLIST ability canSupport (True|False) #REQUIRED>
+<!ATTLIST ability canAirBattle (True|False) #REQUIRED>
 <!ATTLIST ability canDoMagic (True|False) #IMPLIED>
 <!ATTLIST ability canFixMod (True|False) #IMPLIED>
 <!ATTLIST ability canBild (True|False) #IMPLIED>

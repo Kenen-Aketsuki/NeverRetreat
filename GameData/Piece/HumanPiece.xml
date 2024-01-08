@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PieceInfo SYSTEM "PieceData.dtd">
+<PieceInfo>
+    <Piece id="Infantry-Army">
+        <name>步兵连-正规军</name>
+        <Datas>
+            <ATK>4</ATK>
+            <cATK>2</cATK>
+            <DEF>4</DEF>
+            <cDEF>2</cDEF>
+            <MOV>5</MOV>
+            <cMOV>3</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Infantry-GovGuard">
+        <name>步兵连-政府近卫军</name>
+        <Datas>
+            <ATK>3</ATK>
+            <cATK>1</cATK>
+            <DEF>3</DEF>
+            <cDEF>1</cDEF>
+            <MOV>5</MOV>
+            <cMOV>3</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="MachineInfantry">
+        <name>机械化步兵连</name>
+        <Datas>
+            <ATK>6</ATK>
+            <cATK>3</cATK>
+            <DEF>4</DEF>
+            <cDEF>2</cDEF>
+            <MOV>10</MOV>
+            <cMOV>4</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Mortar">
+        <name>迫击炮排</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <cATK>-1</cATK>
+            <DEF>2</DEF>
+            <cDEF>1</cDEF>
+            <MOV>5</MOV>
+            <cMOV>3</cMOV>
+            <activeArea>5</activeArea>
+        </Datas>
+        <ability canSupport="True" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="SP-Mortar">
+        <name>自行迫击炮连</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <cATK>-1</cATK>
+            <DEF>3</DEF>
+            <cDEF>2</cDEF>
+            <MOV>10</MOV>
+            <cMOV>4</cMOV>
+            <activeArea>7</activeArea>
+        </Datas>
+        <ability canSupport="True" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Artillery">
+        <name>炮兵连</name>
+        <Datas>
+            <ATK>3</ATK>
+            <cATK>1</cATK>
+            <DEF>5</DEF>
+            <cDEF>3</cDEF>
+            <MOV>5</MOV>
+            <cMOV>3</cMOV>
+            <activeArea>10</activeArea>
+        </Datas>
+        <ability canSupport="True" canAirBattle="True" />
+    </Piece>
+</PieceInfo>

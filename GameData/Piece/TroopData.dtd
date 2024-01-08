@@ -1,7 +1,8 @@
 <!-- 这里记述部队信息，包括番号等信息-->
-<!ELEMENT PieceInfo (Piece+)>
+<!ELEMENT TroopInfo (Troop+)>
 
-<!ELEMENT Piece EMPTY>
-<!ATTLIST Piece designation ID #REQUIRED><!-- 番号 -->
-<!ATTLIST Piece name CDATA #REQUIRED><!-- 部队名称，精确到连 -->
-<!ATTLIST Piece type CDATA #REQUIRED><!-- 部队类型，参考PieceData.dtd定义的棋子-->
+<!ELEMENT Troop EMPTY>
+<!ATTLIST Troop designation ID #REQUIRED><!-- 番号 -->
+<!ATTLIST Troop name CDATA #REQUIRED><!-- 部队名称，精确到连 -->
+<!ATTLIST Troop type CDATA #REQUIRED><!-- 部队类型，参考PieceData.dtd定义的棋子-->
+<!ATTLIST Troop Belong (Human|ModCrash) #REQUIRED><!-- 所属 -->

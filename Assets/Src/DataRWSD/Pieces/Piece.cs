@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 
 public class Piece
 {
@@ -66,19 +67,31 @@ public class Piece
     bool inCasualty = false;// 是否减员
     bool isUnsupply = false;//是否断补
 
-    bool canCasualty = false;//能否减员
+    bool canCasualty { get
+        {
+            if(cATK > 0) return true;
+            else return false;
+        } }//能否减员
     bool canLossConnect = true;//能否失联
     bool canDoubleCross = false;//能否被策反
     bool isAir = false;//是否为空中单位(支援签)
 
-    public bool canBattle = true;//能否参与普通战斗
+    public bool canBattle {get{
+            if (nATK > 0) return true;
+            else return false;
+        }}//能否参与普通战斗
     public bool canSupport = false;//能否提供火力支援
     public bool canAirBattle = false;//能否参加空战
     public bool canDoMagic = false;//能否施法
     public bool canFixMod = false;//能否进行模组战
     public bool canBild = false;//能否进行建造
     public bool canMental = false;//能否进行心理战
-
+    public bool canStrike { get {
+            if (canSupport && !isAir) return true;
+            else if(isAir && nATK > 0) return true;
+            else return false;
+        } }//能否进行火力打击
+    
     public int activeArea = 0;//主动距离
     public int passivdArea = 0;//被动距离
 
@@ -103,6 +116,11 @@ public class Piece
     }
 
     public void TakeDemage(int Dmg)//受伤
+    {
+
+    }
+
+    public void TakeUnstable(int Dmg)//受到干扰
     {
 
     }
