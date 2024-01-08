@@ -87,5 +87,36 @@ public class Piece
 
     }
 
+    public void RecoverHP(int pt) //恢复HP
+    {
+
+    }
+
+    public void RecoverStable(int pt)//恢复稳定性
+    {
+
+    }
+
+    public void OverTurn() //过回合恢复
+    {
+
+    }
+
+    public void TakeDemage(int Dmg)//受伤
+    {
+
+    }
+
+    public static void Dead( Piece deadPiece )//死亡
+    {
+
+    }
+
+    public static void Move(Piece movePiece,Object Path)//移动
+    {
+
+    }
+
 }
+
 

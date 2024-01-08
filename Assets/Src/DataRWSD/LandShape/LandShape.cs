@@ -239,7 +239,7 @@ public class Facility : LandShape
         }
         
         #endregion
-        if (!atSide) return; //若是在边上的，则继续加载左右。
+        if (!atSide && !isRoad) return; //若是在边上的，则继续加载左右。
         //加载左
         #region
         files = Directory.GetFiles(path, id + "_L.png");
