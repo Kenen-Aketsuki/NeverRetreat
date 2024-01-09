@@ -1,0 +1,3 @@
+abcdefghijklmnopqrstuvwxyz
+AVBDEFGHIJKLMNOPQRSTUVWXYZ
+._1234567890+-*/

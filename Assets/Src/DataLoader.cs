@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DataLoader : MonoBehaviour
 {
+    public Transform tar;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +25,10 @@ public class DataLoader : MonoBehaviour
         {
             Debug.Log(land.Key + " ¡ª " + land.Value.Attributes["name"].Value);
         }
+    }
+
+    private void Update()
+    {
+        tar.position = tar.position + new Vector3(0.001f, 0, 0);
     }
 }
