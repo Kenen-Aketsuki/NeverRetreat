@@ -44,10 +44,11 @@ public class Piece
         }
     }//真实移动力
 
-    public string PName { get { return Name; } }
+    public string PName { get { return TroopName + "/" + PieceName; } }
     public string PDesignation { get { return Designation; } }
 
-    string Name;//名称
+    string TroopName;//部队名称
+    string PieceName;//兵种名称
     string Designation;//番号
     ArmyBelong Belong;//部队从属
     ArmyBelong LoyalTo;//部队效忠对象
@@ -69,8 +70,8 @@ public class Piece
 
     bool canCasualty { get
         {
-            if(cATK > 0) return true;
-            else return false;
+            if(cATK < 0 && cDEF < 0 && cMaxMOV < 0) return false;
+            else return true;
         } }//能否减员
     bool canLossConnect = true;//能否失联
     bool canDoubleCross = false;//能否被策反
@@ -86,17 +87,64 @@ public class Piece
     public bool canFixMod = false;//能否进行模组战
     public bool canBild = false;//能否进行建造
     public bool canMental = false;//能否进行心理战
-    public bool canStrike { get {
-            if (canSupport && !isAir) return true;
-            else if(isAir && nATK > 0) return true;
-            else return false;
-        } }//能否进行火力打击
+    public bool canStrike = false;//能否进行火力打击
     
     public int activeArea = 0;//主动距离
-    public int passivdArea = 0;//被动距离
+    public int passiveArea = 0;//被动距离
 
     public Piece(XmlNode root)
     {
+        TroopName = root.Attributes["name"].Value;
+        Designation = root.Attributes["designation"].Value;
+        XmlNode data = FixSystemData.GlobalPieceDataList[Designation];
+        XmlNode tmp;
+        //开始录入数据
+        PieceName = data.SelectSingleNode("name").InnerText;
+        tmp = data.SelectSingleNode("Datas");
+        isAir = bool.Parse(data.Attributes["isAir"].Value);
+        //正常数值
+        #region
+        nATK = int.Parse(tmp.SelectSingleNode("ATK").InnerText);
+        nDEF = int.Parse(tmp.SelectSingleNode("DEF").InnerText);
+        nMaxMOV = int.Parse(tmp.SelectSingleNode("MOV").InnerText);
+        if (tmp.SelectSingleNode("cATK") != null) cATK = int.Parse(tmp.SelectSingleNode("cATK").InnerText);
+        else cATK = -1;
+        if (tmp.SelectSingleNode("cDEF") != null) cDEF = int.Parse(tmp.SelectSingleNode("cDEF").InnerText);
+        else cDEF = -1;
+        if (tmp.SelectSingleNode("cMOV") != null) cMaxMOV = int.Parse(tmp.SelectSingleNode("cMOV").InnerText);
+        else cMaxMOV = -1;
+        if (tmp.SelectSingleNode("activeArea") != null) activeArea = int.Parse(tmp.SelectSingleNode("activeArea").InnerText);
+        else activeArea = -1;
+        if (tmp.SelectSingleNode("passiveArea") != null) passiveArea = int.Parse(tmp.SelectSingleNode("passiveArea").InnerText);
+        else passiveArea = -1;
+        #endregion
+        //读取能力
+        #region
+        tmp = data.SelectSingleNode("ability");
+        if (tmp.Attributes["canSupport"] != null) canSupport = bool.Parse(tmp.Attributes["canSupport"].Value);
+        if (tmp.Attributes["canAirBattle"] != null) canAirBattle = bool.Parse(tmp.Attributes["canAirBattle"].Value);
+        if (tmp.Attributes["canDoMagic"] != null) canDoMagic = bool.Parse(tmp.Attributes["canDoMagic"].Value);
+        if (tmp.Attributes["canFixMod"] != null) canFixMod = bool.Parse(tmp.Attributes["canFixMod"].Value);
+        if (tmp.Attributes["canBild"] != null) canBild = bool.Parse(tmp.Attributes["canBild"].Value);
+        if (tmp.Attributes["canMental"] != null) canMental = bool.Parse(tmp.Attributes["canMental"].Value);
+        #endregion
+        //衍生数值
+        Belong = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), root.Attributes["Belone"].Value);
+        LoyalTo = Belong;
+        //可策反、可失联
+        if (Belong == ArmyBelong.Human)
+        {
+            canLossConnect = true;
+            canDoubleCross = true;
+        }
+        else
+        {
+            canLossConnect = false;
+            canDoubleCross = false;
+        }
+        //可进行间瞄火力打击
+        if (canSupport && !isAir || isAir && nATK > 0) canStrike = true;
+        else canStrike = false;
         
     }
 

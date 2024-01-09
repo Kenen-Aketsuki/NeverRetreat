@@ -77,6 +77,8 @@ public static class BasicUtility
             }
 
         }
+        //读取棋子美术数据
+
     }
 }
 
