@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PieceInfo SYSTEM "PieceData.dtd">
+<PieceInfo>
+    <Piece id="Blade">
+        <name>冷兵种</name>
+        <Datas>
+            <ATK>4</ATK>
+            <DEF>4</DEF>
+            <MOV>6</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+    
+    <Piece id="Gunner">
+        <name>火器种</name>
+        <Datas>
+            <ATK>4</ATK>
+            <DEF>4</DEF>
+            <MOV>6</MOV>
+            <cATK>2</cATK>
+            <cDEF>2</cDEF>
+            <cMOV>3</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Heavy-Gunner">
+        <name>重型火器种</name>
+        <Datas>
+            <ATK>6</ATK>
+            <DEF>6</DEF>
+            <MOV>10</MOV>
+            <cATK>3</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>5</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Machine-Grope">
+        <name>机械化集群</name>
+        <Datas>
+            <ATK>6</ATK>
+            <DEF>6</DEF>
+            <MOV>10</MOV>
+            <cATK>3</cATK>
+            <cDEF>3</cDEF>
+            <cMOV>5</cMOV>
+            <activeArea>12</activeArea>
+        </Datas>
+        <ability canSupport="True" canAirBattle="False" />
+    </Piece>
+
+    <Piece id="Warlock">
+        <name>诡术种</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>3</DEF>
+            <MOV>5</MOV>
+            <cATK>-1</cATK>
+            <cDEF>1</cDEF>
+            <cMOV>5</cMOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canDoMagic="True"/>
+    </Piece>
+
+    <Piece id="Hacker">
+        <name>扰动者</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>-1</DEF>
+            <MOV>5</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
+    </Piece>
+
+    <Piece id="Inciter">
+        <name>煽动者</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>-1</DEF>
+            <MOV>6</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canMental="True"/>
+    </Piece>
+
+    <Piece id="Soar-Net" isAir="True">
+        <name>空网</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>5</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
+    </Piece>
+
+    <Piece id="Soar-Stay" isAir="True">
+        <name>滞空者</name>
+        <Datas>
+            <ATK>-1</ATK>
+            <DEF>5</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="True"/>
+    </Piece>
+
+    <Piece id="Soar-Attack" isAir="True">
+        <name>袭略者</name>
+        <Datas>
+            <ATK>8</ATK>
+            <DEF>3</DEF>
+            <MOV>-1</MOV>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False"/>
+    </Piece>
+</PieceInfo>

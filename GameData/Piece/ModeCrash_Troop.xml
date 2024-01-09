@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TroopInfo SYSTEM "TroopData.dtd">
+<TroopInfo>
+    <!-- 旭日航空师 -->
+    <Troop designation="Crash.Blade" name="崩坏意志·冷兵种" type="Blade" Belong="ModCrash" />
+    <Troop designation="Crash.Gun" name="崩坏意志·火器种" type="Gunner" Belong="ModCrash" />
+    <Troop designation="Crash.VehGun" name="崩坏意志·重装火器种" type="Heavy-Gunner" Belong="ModCrash" />
+    <Troop designation="Crash.MhnGrp" name="崩坏意志·装甲集群" type="Machine-Grope" Belong="ModCrash" />
+    <Troop designation="Crash.Warlock" name="崩坏意志·诡术种" type="Warlock" Belong="ModCrash" />
+    <Troop designation="Crash.Hack" name="崩坏意志·扰动者" type="Hacker" Belong="ModCrash" />
+    <Troop designation="Crash.Incite" name="崩坏意志·煽动者" type="Inciter" Belong="ModCrash" />
+    <Troop designation="Crash.SNet" name="崩坏意志·空网" type="Soar-Net" Belong="ModCrash" />
+    <Troop designation="Crash.SStay" name="崩坏意志·滞空种" type="Soar-Stay" Belong="ModCrash" />
+    <Troop designation="Crash.GAtk" name="崩坏意志·袭略种" type="Soar-Attack" Belong="ModCrash" />
+</TroopInfo>
