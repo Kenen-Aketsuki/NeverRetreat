@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using UnityEngine;
 
 public static class BasicUtility
 {
     public static void DataInit()
     {
         XmlDocument XmlDoc = new XmlDocument();
+        XmlNodeList child;
         //初始化固定数据
         FixSystemData.InitPath();
         //读取地形、设施等地图信息信息
         foreach(string file in Directory.GetFiles(FixSystemData.TerrainDirectory, "*.xml", SearchOption.AllDirectories))
         {
             XmlDoc.Load(file);
-            XmlNodeList child = XmlDoc.DocumentElement.ChildNodes;
+            child = XmlDoc.DocumentElement.ChildNodes;
 
             foreach (XmlNode node in child)
             {
@@ -23,8 +25,6 @@ public static class BasicUtility
                 switch (node.Attributes["Type"].Value)
                 {
                     case "BasicTerrain":
-                        UnityEngine.Debug.Log(node.Attributes["id"].Value + "— IN");
-                        
                         FixSystemData.GlobalBasicTerrainList.Add(
                             node.Attributes["id"].Value,
                             new BasicLandShape(node)
@@ -32,8 +32,6 @@ public static class BasicUtility
                         break;
                     case "TempFacility":
                     case "FixFacility":
-                        UnityEngine.Debug.Log(node.Attributes["id"].Value + "— IN");
-
                         FixSystemData.GlobalFacilityList.Add(
                             node.Attributes["id"].Value,
                             new Facility(node)
@@ -52,7 +50,33 @@ public static class BasicUtility
             }
         }
         //读取棋子信息
+        foreach (string file in Directory.GetFiles(FixSystemData.PieceDirectory, "*.xml", SearchOption.AllDirectories))
+        {
+            XmlDoc.Load(file);
+            child = XmlDoc.DocumentElement.ChildNodes;
 
+            if (XmlDoc.DocumentElement.Name != "PieceInfo") continue;
+            foreach(XmlNode node in child)
+            {
+                if (node.Name != "Piece") continue;
+                FixSystemData.GlobalPieceDataList.Add(node.Attributes["id"].Value,node);
+            }
+            
+        }
+        //读取部队编制
+        foreach (string file in Directory.GetFiles(FixSystemData.PieceDirectory, "*.xml", SearchOption.AllDirectories))
+        {
+            XmlDoc.Load(file);
+            child = XmlDoc.DocumentElement.ChildNodes;
+            if (XmlDoc.DocumentElement.Name != "TroopInfo") continue;
+            foreach (XmlNode node in child)
+            {
+                if (node.Name != "Troop") continue;
+                if (node.Attributes["Belong"].Value == "Human") FixSystemData.HumanOrganizationList.Add(node.Attributes["designation"].Value, node);
+                else if (node.Attributes["Belong"].Value == "ModCrash") FixSystemData.CrashOrganizationList.Add(node.Attributes["designation"].Value, node);
+            }
+
+        }
     }
 }
 

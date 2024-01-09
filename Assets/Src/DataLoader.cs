@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class DataLoader : MonoBehaviour
@@ -8,15 +9,20 @@ public class DataLoader : MonoBehaviour
     void Start()
     {
         BasicUtility.DataInit();//紗墮方象
-        Debug.Log("！！！！！！");
-        foreach(KeyValuePair<string,BasicLandShape> land in FixSystemData.GlobalBasicTerrainList)
+        Debug.LogError("！！！！！！");
+        foreach(KeyValuePair<string,XmlNode> land in FixSystemData.GlobalPieceDataList)
         {
-            Debug.Log(land.Key + " ！ "+ (land.Value.Top != null).ToString());
+            Debug.Log(land.Key + " ！ "+ land.Value.SelectSingleNode("name").InnerText);
         }
-        Debug.Log("！！！！！！");
-        foreach (KeyValuePair<string, Facility> land in FixSystemData.GlobalFacilityList)
+        Debug.LogError("！！！！！！");
+        foreach (KeyValuePair<string, XmlNode> land in FixSystemData.HumanOrganizationList)
         {
-            Debug.Log(land.Key + " ！ " + (land.Value.Top != null).ToString());
+            Debug.Log(land.Key + " ！ " + land.Value.Attributes["name"].Value);
+        }
+        Debug.LogError("！！！！！！");
+        foreach (KeyValuePair<string, XmlNode> land in FixSystemData.CrashOrganizationList)
+        {
+            Debug.Log(land.Key + " ！ " + land.Value.Attributes["name"].Value);
         }
     }
 }
