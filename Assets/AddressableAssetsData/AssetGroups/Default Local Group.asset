@@ -16,7 +16,15 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 80877148c7b936d4ea3710570adc0e7a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: a00416a98badf474d8090941a47ea8e2
+    m_Address: Assets/Prefab/PieceTextData.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e3c1d21ca84e0f34ab27e3e79836b929
+    m_Address: Assets/Prefab/PieceInGame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: be6894f5b3261434a91bf4a113cfbdb0, type: 2}
   m_SchemaSet:

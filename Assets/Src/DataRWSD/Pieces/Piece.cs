@@ -18,7 +18,7 @@ public class Piece
 
             return (int)Math.Ceiling(tmp);
         }}//真实防御力
-    public int ATK
+    public int ATK 
     {
         get
         {
@@ -36,22 +36,22 @@ public class Piece
             return (int)Math.Floor(tmp);
         }
     }//真实战斗力
-    public int MOV
+    public int MOV 
     {
         get
         {
             return restMOV;
         }
     }//真实移动力
-
+    
     public string PName { get { return TroopName + "/" + PieceName; } }
     public string PDesignation { get { return Designation; } }
 
     string TroopName;//部队名称
     string PieceName;//兵种名称
     string Designation;//番号
-    ArmyBelong Belong;//部队从属
-    ArmyBelong LoyalTo;//部队效忠对象
+    public ArmyBelong Belong;//部队从属
+    public ArmyBelong LoyalTo;//部队效忠对象
 
     int Stability = 0;//判定是否为“正常”-“瘫痪”-“失能”
     int ConnectState = 0;//判定是否为 正常 - 失联 - 孤立
@@ -92,16 +92,18 @@ public class Piece
     public int activeArea = 0;//主动距离
     public int passiveArea = 0;//被动距离
 
+    public bool isThree { get {return cATK == cDEF && nATK == nDEF;} }
     public Piece(XmlNode root)
     {
         TroopName = root.Attributes["name"].Value;
         Designation = root.Attributes["designation"].Value;
-        XmlNode data = FixSystemData.GlobalPieceDataList[Designation];
+        XmlNode data = FixSystemData.GlobalPieceDataList[root.Attributes["type"].Value];
         XmlNode tmp;
         //开始录入数据
         PieceName = data.SelectSingleNode("name").InnerText;
         tmp = data.SelectSingleNode("Datas");
-        isAir = bool.Parse(data.Attributes["isAir"].Value);
+        if (data.Attributes["isAir"] != null) isAir = bool.Parse(data.Attributes["isAir"].Value);
+        else isAir = false;
         //正常数值
         #region
         nATK = int.Parse(tmp.SelectSingleNode("ATK").InnerText);
@@ -129,7 +131,7 @@ public class Piece
         if (tmp.Attributes["canMental"] != null) canMental = bool.Parse(tmp.Attributes["canMental"].Value);
         #endregion
         //衍生数值
-        Belong = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), root.Attributes["Belone"].Value);
+        Belong = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), root.Attributes["Belong"].Value);
         LoyalTo = Belong;
         //可策反、可失联
         if (Belong == ArmyBelong.Human)
@@ -145,7 +147,7 @@ public class Piece
         //可进行间瞄火力打击
         if (canSupport && !isAir || isAir && nATK > 0) canStrike = true;
         else canStrike = false;
-        
+        OverTurn();
     }
 
     public void RecoverHP(int pt) //恢复HP
@@ -160,7 +162,8 @@ public class Piece
 
     public void OverTurn() //过回合恢复
     {
-
+        if (inCasualty) restMOV = cMaxMOV;
+        else restMOV = nMaxMOV;
     }
 
     public void TakeDemage(int Dmg)//受伤

@@ -79,6 +79,36 @@ public static class BasicUtility
         }
         //读取棋子美术数据
 
+        
+    }
+
+    public static void SpawnPiece(string TroopName,Vector3Int Pos)//以部队番号为名，生成一个棋子
+    {
+        Transform parent;
+        Piece PData;
+        if (FixSystemData.HumanOrganizationList.ContainsKey(TroopName))
+        {
+            PData = new Piece(FixSystemData.HumanOrganizationList[TroopName]);
+        }
+        else
+        {
+            PData = new Piece(FixSystemData.CrashOrganizationList[TroopName]);
+        }
+        
+        if (PData.Belong == ArmyBelong.Human)
+        {
+            parent = FixGameData.FGD.HumanPieceParent;
+
+        }
+        else
+        {
+            parent = FixGameData.FGD.CrashPieceParent;
+        }
+        GameObject newPiece = Object.Instantiate(FixGameData.FGD.PiecePrefab, parent);
+        newPiece.transform.position = Pos;
+        newPiece.name = TroopName;
+        OB_Piece ps = newPiece.GetComponent<OB_Piece>();
+        ps.setPieceData(PData);
     }
 }
 
