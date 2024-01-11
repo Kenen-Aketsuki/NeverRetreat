@@ -82,7 +82,7 @@ public static class BasicUtility
         
     }
 
-    public static void SpawnPiece(string TroopName,Vector3Int Pos)//以部队番号为名，生成一个棋子
+    public static void SpawnPiece(string TroopName,Vector3 Pos)//以部队番号为名，生成一个棋子
     {
         Transform parent;
         Piece PData;
