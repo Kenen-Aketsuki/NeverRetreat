@@ -44,12 +44,18 @@ public class Piece
         }
     }//真实移动力
     
-    public string PName { get { return TroopName + "/" + PieceName; } }
+    public string PName { get { return TroopName + "/" + PieceName + "/" + PieceID; } }
     public string PDesignation { get { return Designation; } }
+    public string BackColor { get {
+            if (Belong == ArmyBelong.Human && !inCasualty) return "ff5ec4";
+            else if (Belong == ArmyBelong.Human && inCasualty) return "ffb0e2";
+            else if (Belong == ArmyBelong.ModCrash && !inCasualty) return "c30cc0";
+            else return "d573d5";} }//背景色
 
     string TroopName;//部队名称
     string PieceName;//兵种名称
     string Designation;//番号
+    string PieceID;//兵种id
     public ArmyBelong Belong;//部队从属
     public ArmyBelong LoyalTo;//部队效忠对象
 
@@ -97,7 +103,8 @@ public class Piece
     {
         TroopName = root.Attributes["name"].Value;
         Designation = root.Attributes["designation"].Value;
-        XmlNode data = FixSystemData.GlobalPieceDataList[root.Attributes["type"].Value];
+        PieceID = root.Attributes["type"].Value;
+        XmlNode data = FixSystemData.GlobalPieceDataList[PieceID];
         XmlNode tmp;
         //开始录入数据
         PieceName = data.SelectSingleNode("name").InnerText;

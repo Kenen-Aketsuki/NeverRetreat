@@ -110,6 +110,24 @@ public static class BasicUtility
         OB_Piece ps = newPiece.GetComponent<OB_Piece>();
         ps.setPieceData(PData);
     }
+
+    public static Sprite getPieceIcon( string name )
+    {
+        string path = FixSystemData.PieceDirectory + "/img";
+        string[] files = Directory.GetFiles(path, name + ".png");
+
+        Debug.Log(name);
+
+        if (files.Length != 0)
+        {
+            byte[] data = File.ReadAllBytes(files[0]);
+
+            Texture2D texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+            return Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+        }
+        return null;
+    }
 }
 
 public enum ArmyBelong

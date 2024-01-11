@@ -8,9 +8,7 @@ public class OB_Piece : MonoBehaviour
     PieseTextShow PieceText;
 
     [SerializeField]
-    SpriteRenderer BaseColor_Normal;
-    [SerializeField]
-    SpriteRenderer BaseColor_Casualty;
+    SpriteRenderer BaseColor;
     [SerializeField]
     GameObject CrashCover;
     [SerializeField]
@@ -53,6 +51,12 @@ public class OB_Piece : MonoBehaviour
         else CrashCover.SetActive(false);
         if (Data.activeArea > 0 || Data.passiveArea > 0) AreaSlash.SetActive(true);
         else AreaSlash.SetActive(false);
+
+        Color bakC;
+        ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
+        BaseColor.color = bakC;
+        TroopType.sprite = BasicUtility.getPieceIcon(Data.PName.Split('/')[2]);
+        
     }
 
     void UpdateData()
