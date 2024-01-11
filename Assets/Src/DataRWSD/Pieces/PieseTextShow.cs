@@ -8,7 +8,9 @@ public class PieseTextShow : MonoBehaviour
     Transform ParPiece;
 
     [SerializeField]
-    TMP_Text BaseData;
+    Transform BaseData_Three;
+    [SerializeField]
+    Transform BaseData_Two;
     [SerializeField]
     TMP_Text TroopName;
     [SerializeField]
@@ -33,15 +35,18 @@ public class PieseTextShow : MonoBehaviour
         ParPiece = pp;
     }
 
-    public void InitText(Piece data,bool isThree)//∆Â◊”–≈œ¢°¢ «∑ÒŒ™»˝‘™
+    public void InitText(Piece data,bool isTwo)//ÂàùÂßãÂåñÊ£ãÂ≠ê‰ø°ÊÅØ
     {
         TroopName.text = data.PDesignation;
         
-        if (isThree)
+        if (isTwo)
         {
             string ATK;
             if (data.ATK < 0) ATK = "X"; else ATK = data.ATK.ToString();
-                BaseData.text = ATK + " - " + data.MOV;
+            
+            BaseData_Two.GetChild(0).GetComponent<TMP_Text>().text = data.MOV.ToString();
+            BaseData_Two.GetChild(2).GetComponent<TMP_Text>().text = ATK;
+            BaseData_Two.gameObject.SetActive(true);
         }
         else
         {
@@ -51,7 +56,13 @@ public class PieseTextShow : MonoBehaviour
             if (data.ATK < 0) ATK = "X"; else ATK = data.ATK.ToString();
             if (data.DEF < 0) DEF = "X"; else DEF = data.DEF.ToString();
             if (data.MOV < 0) MOV = "X"; else MOV = data.MOV.ToString();
-            BaseData.text = ATK + "-" + DEF + "-" + MOV;
+            BaseData_Three.GetChild(0).GetComponent<TMP_Text>().text = MOV;
+            BaseData_Three.GetChild(2).GetComponent<TMP_Text>().text = DEF;
+            BaseData_Three.GetChild(4).GetComponent<TMP_Text>().text = ATK;
+            BaseData_Three.gameObject.SetActive(true);
+
+            if (!data.canAirBattle && data.isAir) BaseData_Three.GetChild(2).GetComponent<TMP_Text>().fontStyle = FontStyles.Underline;
+            if(data.canAirBattle && !data.isAir) BaseData_Three.GetChild(4).GetComponent<TMP_Text>().fontStyle = FontStyles.Underline;
         }
         if (data.activeArea > 0) ActiveArea.text = data.activeArea.ToString();
         else ActiveArea.gameObject.SetActive(false);

@@ -5,6 +5,7 @@ using UnityEngine;
 public class OB_Piece : MonoBehaviour
 {
     Piece Data;//Æå×ÓÊý¾Ý
+    PieseTextShow PieceText;
 
     [SerializeField]
     SpriteRenderer BaseColor_Normal;
@@ -44,14 +45,19 @@ public class OB_Piece : MonoBehaviour
         }
         GameObject TextData = Instantiate(FixGameData.FGD.PieceInfoPrefab, parent);
         TextData.name = Data.PDesignation;
-        PieseTextShow PTS = TextData.GetComponent<PieseTextShow>();
-        PTS.setParPice(transform);
-        PTS.InitText(Data,Data.isThree);
+        PieceText = TextData.GetComponent<PieseTextShow>();
+        PieceText.setParPice(transform);
+        PieceText.InitText(Data,Data.isTwo);
 
         if (Data.Belong == ArmyBelong.ModCrash) CrashCover.SetActive(true);
         else CrashCover.SetActive(false);
         if (Data.activeArea > 0 || Data.passiveArea > 0) AreaSlash.SetActive(true);
         else AreaSlash.SetActive(false);
+    }
+
+    void UpdateData()
+    {
+        PieceText.InitText(Data, Data.isTwo);
     }
 
     public void setPieceData(Piece P)

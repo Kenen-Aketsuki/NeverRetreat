@@ -75,7 +75,7 @@ public class Piece
         } }//能否减员
     bool canLossConnect = true;//能否失联
     bool canDoubleCross = false;//能否被策反
-    bool isAir = false;//是否为空中单位(支援签)
+    public bool isAir = false;//是否为空中单位(支援签)
 
     public bool canBattle {get{
             if (nATK > 0 && !canAirBattle) return true;
@@ -92,7 +92,7 @@ public class Piece
     public int activeArea = 0;//主动距离
     public int passiveArea = 0;//被动距离
 
-    public bool isThree { get {return cATK == cDEF && nATK == nDEF;} }
+    public bool isTwo { get {return cATK == cDEF && nATK == nDEF;} }
     public Piece(XmlNode root)
     {
         TroopName = root.Attributes["name"].Value;

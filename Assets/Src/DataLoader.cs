@@ -30,8 +30,8 @@ public class DataLoader : MonoBehaviour
        */
 
         //≤‚ ‘
-        BasicUtility.SpawnPiece("DawIII.102", new Vector3Int(1, 0, 10));
-        BasicUtility.SpawnPiece("Crash.Hack", new Vector3Int(-1, 0, 10));
+        BasicUtility.SpawnPiece("DawIII.s1AA", new Vector3Int(1, 0, 10));
+        BasicUtility.SpawnPiece("Crash.GAtk", new Vector3Int(-1, 0, 10));
 
 
     }

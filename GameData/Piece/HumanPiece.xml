@@ -191,7 +191,7 @@
     </Piece>
 
     <Piece id="Armed-AA">
-        <name>装甲防空连</name>
+        <name>装甲防空营</name>
         <Datas>
             <ATK>10</ATK>
             <DEF>5</DEF>
