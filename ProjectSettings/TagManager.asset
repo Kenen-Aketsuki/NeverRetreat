@@ -44,3 +44,6 @@ TagManager:
   - name: PieceLayer
     uniqueID: 3574610569
     locked: 0
+  - name: MapLayer
+    uniqueID: 1878259263
+    locked: 0

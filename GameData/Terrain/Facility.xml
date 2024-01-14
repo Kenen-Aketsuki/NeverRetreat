@@ -7,7 +7,7 @@
         <Data>
             <enterCost>0</enterCost>
             <battleAdjust>
-                <adjust target="MOV" way="ADD" number="-1" />
+                <adjust target="MOV" way="ADD" number="-3" />
             </battleAdjust>
             <height>0</height>
         </Data>
@@ -29,7 +29,7 @@
         <Data>
             <enterCost>0</enterCost>
             <battleAdjust>
-                <adjust target="MOV" way="ADD" number="-3" />
+                <adjust target="MOV" way="ADD" number="-1" />
             </battleAdjust>
             <height>0</height>
         </Data>
