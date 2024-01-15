@@ -34,7 +34,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="ArcaneBarrier" atSide="True">
+    <Terrain Type="SpecialTerrain" id="ArcaneBarrier" atSide="True" belone="Human">
         <name>奥术结界</name>
         <Data>
             <enterCost>0</enterCost>
@@ -46,7 +46,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="Firewall" atSide="True">
+    <Terrain Type="SpecialTerrain" id="Firewall" atSide="True" belone="Human">
         <name>防火墙</name>
         <Data>
             <enterCost>NA</enterCost>
@@ -60,7 +60,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="PosDisorderZone">
+    <Terrain Type="SpecialTerrain" id="PosDisorderZone" belone="ModCrash">
         <name>坐标紊乱区</name>
         <Data>
             <enterCost>0</enterCost>
@@ -71,7 +71,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="DataDisorderZone">
+    <Terrain Type="SpecialTerrain" id="DataDisorderZone" belone="ModCrash">
         <name>数据紊乱区</name>
         <Data>
             <enterCost>0</enterCost>
@@ -94,7 +94,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="StaticBarrier">
+    <Terrain Type="SpecialTerrain" id="StaticBarrier" belone="Human">
         <name>安定结界</name>
         <Data>
             <enterCost>0</enterCost>

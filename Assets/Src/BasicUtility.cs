@@ -43,6 +43,12 @@ public static class BasicUtility
                             new Facility(node)
                             );
                         break;
+                    case "SpecialFacility":
+                        FixSystemData.GlobalSpFacilityList.Add(
+                            node.Attributes["id"].Value,
+                            new SpecialFacility(node)
+                            );
+                        break;
                     default:
                         UnityEngine.Debug.Log(node.Attributes["id"].Value+"— SKIP");
                         break;
@@ -77,7 +83,7 @@ public static class BasicUtility
             }
 
         }
-        //读取棋子美术数据
+        //读取棋子美术数据(已在棋子生成里实现)
 
         
     }
@@ -133,7 +139,8 @@ public static class BasicUtility
 public enum ArmyBelong
 {
     Human,
-    ModCrash
+    ModCrash,
+    Nutral
 }
 
 public enum TerrainType

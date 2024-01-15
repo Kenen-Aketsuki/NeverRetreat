@@ -5,11 +5,13 @@
     BasicTerrain|
     FixFacility|
     TempFacility|
-    SpecialTerrain
+    SpecialTerrain|
+    SpecialFacility
 ) #REQUIRED>
 <!ATTLIST Terrain atSide (True|False) "False"><!-- 是否在边上-->
 <!ATTLIST Terrain id ID #REQUIRED>
 <!ATTLIST Terrain isRoad (True|False) "False"><!-- 是否为道路-->
+<!ATTLIST Terrain belone (Human|ModCrash|Nutral) #IMPLIED><!-- 设施所属方，没有默认为中立-->
 
 <!ELEMENT name (#PCDATA)><!-- 地形名称-->
 

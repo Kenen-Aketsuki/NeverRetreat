@@ -17,6 +17,7 @@ public static class FixSystemData
     public static Dictionary<string, BasicLandShape> GlobalBasicTerrainList = new Dictionary<string, BasicLandShape>();
     //设施表
     public static Dictionary<string, Facility> GlobalFacilityList = new Dictionary<string, Facility>();
+    public static Dictionary<string, SpecialFacility> GlobalSpFacilityList = new Dictionary<string, SpecialFacility>();
     //特殊地形表
     public static Dictionary<string, Facility> GlobalSpecialTerrainList = new Dictionary<string, Facility>();
     

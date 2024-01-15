@@ -119,7 +119,7 @@ public class BasicLandShape : LandShape //基础地形
 
             Top = new Tile();
             Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-            Top.name = id + "_Top";
+            Top.name = id;
         }
         #endregion
         if (!atSide) return; //若是在边上的，则继续加载左右。
@@ -135,7 +135,7 @@ public class BasicLandShape : LandShape //基础地形
 
             Left = new Tile();
             Left.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-            Left.name = id + "_Left";
+            Left.name = id + "_L";
         }
         #endregion
         //加载右
@@ -150,7 +150,7 @@ public class BasicLandShape : LandShape //基础地形
 
             Right = new Tile();
             Right.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-            Right.name = id + "_Right";
+            Right.name = id + "_R";
         }
         #endregion
     }
@@ -167,7 +167,8 @@ public class Facility : LandShape
     public bool atSide = false;
     public bool isRoad = false;
     public bool canLeftRuin = false;//是否留下废墟
-    public bool isSpecialLandShape = false;//是否为特殊地形
+    public bool isSpecialLandShape = false;//是否为特殊地形(不包括特殊设施)
+    public ArmyBelong Belone = ArmyBelong.Nutral;
 
     //获友方应项加成
     #region
@@ -196,6 +197,7 @@ public class Facility : LandShape
         if (root.Attributes["isRoad"] != null) isRoad = bool.Parse(root.Attributes["isRoad"].Value);
         if (root.Attributes["Type"].Value == "FixFacility") canLeftRuin = true;
         if (root.Attributes["Type"].Value == "SpecialTerrain") isSpecialLandShape = true;
+        if (root.Attributes["belone"] != null) Belone = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), root.Attributes["belone"].Value);
         //加载另外两个增益项
         #region
         XmlNode tmp = root.SelectSingleNode("Data");
@@ -231,7 +233,7 @@ public class Facility : LandShape
 
             Top = new Tile();
             Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-            Top.name = id + "_Top";
+            Top.name = id;
         }
         else
         {
@@ -252,7 +254,7 @@ public class Facility : LandShape
 
             Left = new Tile();
             Left.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-            Left.name = id + "_Left";
+            Left.name = id + "_L";
         }
         #endregion
         //加载右
@@ -267,7 +269,101 @@ public class Facility : LandShape
 
             Right = new Tile();
             Right.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
-            Right.name = id + "_Right";
+            Right.name = id + "_R";
+        }
+        #endregion
+    }
+}
+
+public class SpecialFacility : LandShape
+{
+    public Tile Close;
+    public Tile Active;
+
+    public string id;
+    public ArmyBelong Belone = ArmyBelong.Nutral;
+
+    //获取友方加成
+    #region
+    public Tuple<FixWay, float> ATK_Friend { get { return AdjustFriend[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_Friend { get { return AdjustFriend[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_Friend { get { return AdjustFriend[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_Friend { get { return AdjustFriend[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_Friend { get { return AdjustFriend[FixData.RRK]; } }
+    #endregion
+    //获取敌方加成
+    #region
+    public Tuple<FixWay, float> ATK_Enemy { get { return AdjustEnemy[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_Enemy { get { return AdjustEnemy[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_Enemy { get { return AdjustEnemy[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_Enemy { get { return AdjustEnemy[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_Enemy { get { return AdjustEnemy[FixData.RRK]; } }
+    #endregion
+
+    Dictionary<FixData, Tuple<FixWay, float>> AdjustFriend = new Dictionary<FixData, Tuple<FixWay, float>>();
+    Dictionary<FixData, Tuple<FixWay, float>> AdjustEnemy = new Dictionary<FixData, Tuple<FixWay, float>>();
+
+    public SpecialFacility(XmlNode root) : base(root)
+    {
+        id = root.Attributes["id"].Value;
+        if (root.Attributes["belone"] != null) Belone = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), root.Attributes["belone"].Value);
+        //加载另外两个增益项
+        #region
+        XmlNode tmp = root.SelectSingleNode("Data");
+        if (tmp != null)
+        {
+            foreach (XmlNode L in root.SelectSingleNode("Data").SelectNodes("battleAdjust"))
+            {
+                if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Friend")
+                {
+                    addAdjestTo(ref AdjustFriend, L);
+                    break;
+                }
+                else if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Enemy")
+                {
+                    addAdjestTo(ref AdjustEnemy, L);
+                    break;
+                }
+            }
+
+        }
+        #endregion
+        string path = FixSystemData.TerrainDirectory + "\\img\\";
+        //加载未激活
+        Texture2D texture;
+        byte[] data;
+        #region
+        string[] files = Directory.GetFiles(path, id + ".png");
+        if (files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
+
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+
+            Close = new Tile();
+            Close.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Close.name = id;
+        }
+        else
+        {
+            Close = null;
+        }
+
+        #endregion
+        //加载激活
+        #region
+        files = Directory.GetFiles(path, id + "_Act.png");
+        if (files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
+
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+
+            Active = new Tile();
+            Active.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Active.name = id + "_Act";
         }
         #endregion
     }

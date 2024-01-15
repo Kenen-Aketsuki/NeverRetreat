@@ -5,7 +5,7 @@
     <Terrain Type="FixFacility" id="Road_1st" isRoad="True">
         <name>一级道路</name>
         <Data>
-            <enterCost>0</enterCost>
+            <enterCost>1</enterCost>
             <battleAdjust>
                 <adjust target="MOV" way="ADD" number="-3" />
             </battleAdjust>
@@ -16,7 +16,7 @@
     <Terrain Type="FixFacility" id="Road_2nd" isRoad="True">
         <name>二级道路</name>
         <Data>
-            <enterCost>0</enterCost>
+            <enterCost>2</enterCost>
             <battleAdjust>
                 <adjust target="MOV" way="ADD" number="-2" />
             </battleAdjust>
@@ -27,7 +27,7 @@
     <Terrain Type="FixFacility" id="Road_3rd" isRoad="True">
         <name>三级道路</name>
         <Data>
-            <enterCost>0</enterCost>
+            <enterCost>2</enterCost>
             <battleAdjust>
                 <adjust target="MOV" way="ADD" number="-1" />
             </battleAdjust>
@@ -40,13 +40,13 @@
         <Data>
             <enterCost>1</enterCost>
             <battleAdjust>
-                <adjust target="NA" way="NOPE" number="0" />
+                <adjust target="MOV" way="ADD" number="-50" />
             </battleAdjust>
             <height>0</height>
         </Data>
     </Terrain>
 
-    <Terrain Type="FixFacility" id="MetroStation">
+    <Terrain Type="FixFacility" id="MetroStation" belone="Human">
         <name>地铁站</name>
         <Data>
             <enterCost>0</enterCost>
@@ -57,7 +57,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="FixFacility" id="HunterGuild">
+    <Terrain Type="FixFacility" id="HunterGuild" belone="Human">
         <name>猎人工会</name>
         <Data>
             <enterCost>0</enterCost>
@@ -69,7 +69,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="FixFacility" id="Airpot">
+    <Terrain Type="FixFacility" id="Airpot" belone="Human">
         <name>军民共用机场</name>
         <Data>
             <enterCost>0</enterCost>
@@ -80,19 +80,19 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="FixFacility" id="StaticBarrierNode">
-        <name>安定结界节点</name>
+    <Terrain Type="FixFacility" id="Runway" isRoad="True">
+        <name>机场跑道</name>
         <Data>
-            <enterCost>0</enterCost>
+            <enterCost>1</enterCost>
             <battleAdjust>
                 <adjust target="NA" way="NOPE" number="0" />
             </battleAdjust>
-            <height>15</height>
+            <height>0</height>
         </Data>
     </Terrain>
 
     <!-- 临时设施 -->
-    <Terrain Type="TempFacility" id="Landmine" atSide="True">
+    <Terrain Type="TempFacility" id="Landmine" atSide="True" belone="Human">
         <name>旧式雷场</name>
         <Data>
             <enterCost>0</enterCost>
@@ -103,7 +103,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="AFFLandmine" atSide="True">
+    <Terrain Type="TempFacility" id="AFFLandmine" atSide="True" belone="Nutral">
         <name>智能雷场</name>
         <Data>
             <enterCost>0</enterCost>
@@ -114,7 +114,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="RoadBarrier">
+    <Terrain Type="TempFacility" id="RoadBarrier" belone="Human">
         <name>路障</name>
         <Data>
             <enterCost>NA</enterCost>
@@ -125,7 +125,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="DefenceArea">
+    <Terrain Type="TempFacility" id="DefenceArea" belone="Human">
         <name>防御工事</name>
         <Data>
             <enterCost>0</enterCost>
@@ -138,7 +138,8 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="FimensionFissure">
+    <!-- 特殊设施-->
+    <Terrain Type="SpecialFacility" id="FimensionFissure" belone="ModCrash">
         <name>裂隙</name>
         <Data>
             <enterCost>0</enterCost>
@@ -147,6 +148,17 @@
                 <adjust target="RRK" way="ADD" number="2" />
             </battleAdjust>
             <height>1000</height>
+        </Data>
+    </Terrain>
+
+    <Terrain Type="SpecialFacility" id="StaticBarrierNode" belone="Human">
+        <name>安定结界节点</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>15</height>
         </Data>
     </Terrain>
 </TerrainData>
