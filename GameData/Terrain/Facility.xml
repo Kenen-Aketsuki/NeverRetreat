@@ -103,7 +103,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="AFFLandmine" atSide="True" belone="Nutral">
+    <Terrain Type="TempFacility" id="IFFLandmine" atSide="True" belone="Nutral">
         <name>智能雷场</name>
         <Data>
             <enterCost>0</enterCost>
@@ -114,7 +114,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="RoadBarrier" belone="Human">
+    <Terrain Type="TempFacility" id="Roadblock" belone="Human">
         <name>路障</name>
         <Data>
             <enterCost>NA</enterCost>
