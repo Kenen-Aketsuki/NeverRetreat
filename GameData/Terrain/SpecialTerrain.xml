@@ -12,6 +12,17 @@
         </Data>
     </Terrain>
 
+    <Terrain Type="SpecialTerrain" id="IceRiver" atSide="True">
+        <name>冰河</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="NA" way="NOPE" number="0" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+
     <Terrain Type="SpecialTerrain" id="FrozenZone">
         <name>冰刺区</name>
         <Data>
