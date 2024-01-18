@@ -110,7 +110,7 @@
         <name>控制区</name>
         <Data>
             <enterCost>0</enterCost>
-            <battleAdjust target="Enemy">
+            <battleAdjust>
                 <adjust target="MOV" way="MULTY" number="2" />
             </battleAdjust>
             <height>0</height>
