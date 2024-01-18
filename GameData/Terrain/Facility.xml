@@ -91,6 +91,17 @@
         </Data>
     </Terrain>
 
+    <Terrain Type="FixFacility" id="BrokenFacility">
+        <name>破损设施</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="1" />
+            </battleAdjust>
+            <height>0</height>
+        </Data>
+    </Terrain>
+    
     <!-- 临时设施 -->
     <Terrain Type="TempFacility" id="Landmine" atSide="True" belone="Human">
         <name>旧式雷场</name>

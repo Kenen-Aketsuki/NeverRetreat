@@ -368,3 +368,82 @@ public class SpecialFacility : LandShape
         #endregion
     }
 }
+
+public class Zone : LandShape
+{
+    public Tile Top;
+
+    public string id;
+    public ArmyBelong Belone = ArmyBelong.Nutral;
+
+    //获友方应项加成
+    #region
+    public Tuple<FixWay, float> ATK_Friend { get { return AdjustFriend[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_Friend { get { return AdjustFriend[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_Friend { get { return AdjustFriend[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_Friend { get { return AdjustFriend[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_Friend { get { return AdjustFriend[FixData.RRK]; } }
+    #endregion
+    //获取敌方加成
+    #region
+    public Tuple<FixWay, float> ATK_Enemy { get { return AdjustEnemy[FixData.ATK]; } }
+    public Tuple<FixWay, float> DEF_Enemy { get { return AdjustEnemy[FixData.DEF]; } }
+    public Tuple<FixWay, float> HP_Enemy { get { return AdjustEnemy[FixData.HP]; } }
+    public Tuple<FixWay, float> MOV_Enemy { get { return AdjustEnemy[FixData.MOV]; } }
+    public Tuple<FixWay, float> RRK_Enemy { get { return AdjustEnemy[FixData.RRK]; } }
+    #endregion
+
+    Dictionary<FixData, Tuple<FixWay, float>> AdjustFriend = new Dictionary<FixData, Tuple<FixWay, float>>();
+    Dictionary<FixData, Tuple<FixWay, float>> AdjustEnemy = new Dictionary<FixData, Tuple<FixWay, float>>();
+
+    public Zone(XmlNode root) : base(root)
+    {
+        id = root.Attributes["id"].Value;
+        
+        if (root.Attributes["belone"] != null) Belone = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), root.Attributes["belone"].Value);
+        //加载另外两个增益项
+        #region
+        XmlNode tmp = root.SelectSingleNode("Data");
+        if (tmp != null)
+        {
+            foreach (XmlNode L in root.SelectSingleNode("Data").SelectNodes("battleAdjust"))
+            {
+                if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Friend")
+                {
+                    addAdjestTo(ref AdjustFriend, L);
+                    break;
+                }
+                else if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Enemy")
+                {
+                    addAdjestTo(ref AdjustEnemy, L);
+                    break;
+                }
+            }
+
+        }
+        #endregion
+        string path = FixSystemData.TerrainDirectory + "\\img\\";
+        //加载中间
+        Texture2D texture;
+        byte[] data;
+        #region
+        string[] files = Directory.GetFiles(path, id + ".png");
+        if (files.Length != 0)
+        {
+            data = File.ReadAllBytes(files[0]);
+
+            texture = new Texture2D(FixSystemData.ImagSize, FixSystemData.ImagSize, TextureFormat.ARGB32, false);
+            texture.LoadImage(data);
+
+            Top = new Tile();
+            Top.sprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
+            Top.name = id;
+        }
+        else
+        {
+            Top = null;
+        }
+
+        #endregion
+    }
+}

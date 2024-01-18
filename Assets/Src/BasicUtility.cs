@@ -49,6 +49,12 @@ public static class BasicUtility
                             new SpecialFacility(node)
                             );
                         break;
+                    case "Zone":
+                        FixSystemData.GlobalZoneList.Add(
+                            node.Attributes["id"].Value,
+                            new Zone(node)
+                            );
+                        break;
                     default:
                         UnityEngine.Debug.Log(node.Attributes["id"].Value+"¡ª SKIP");
                         break;

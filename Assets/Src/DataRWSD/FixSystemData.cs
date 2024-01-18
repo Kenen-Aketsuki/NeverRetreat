@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using UnityEngine.XR;
 
 public static class FixSystemData
 {
@@ -20,7 +21,9 @@ public static class FixSystemData
     public static Dictionary<string, SpecialFacility> GlobalSpFacilityList = new Dictionary<string, SpecialFacility>();
     //特殊地形表
     public static Dictionary<string, Facility> GlobalSpecialTerrainList = new Dictionary<string, Facility>();
-    
+    //区域表
+    public static Dictionary<string, Zone> GlobalZoneList = new Dictionary<string, Zone>();
+
     //兵种表
     public static Dictionary<string, XmlNode> GlobalPieceDataList = new Dictionary<string, XmlNode>();
     //编制表

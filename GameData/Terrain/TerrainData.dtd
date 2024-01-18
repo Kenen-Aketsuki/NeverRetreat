@@ -6,7 +6,8 @@
     FixFacility|
     TempFacility|
     SpecialTerrain|
-    SpecialFacility
+    SpecialFacility|
+    Zone
 ) #REQUIRED>
 <!ATTLIST Terrain atSide (True|False) "False"><!-- 是否在边上-->
 <!ATTLIST Terrain id ID #REQUIRED>
