@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FormData SYSTEM "FormData.dtd">
+<!-- 
+    战斗裁定表
+    行号计算方式： 四舍五入((攻击力/防御力)*2) 若结果大于3，则再除以二向上取整加一
+    列号：骰子出数
+-->
+
+<FormData>
+    <Form id="BattleJudgeForm">
+        <Colum Key="0">
+            <Row Key="1">2ARR</Row>
+            <Row Key="2">2ARR</Row>
+            <Row Key="3">1ARR</Row>
+            <Row Key="4">1ARR</Row>
+            <Row Key="5">ARR</Row>
+            <Row Key="6">AR</Row>
+            <Row Key="7">X</Row>
+            <Row Key="8">X</Row>
+        </Colum>
+
+        <Colum Key="1">
+            <Row Key="1">1ARR</Row>
+            <Row Key="2">1ARR</Row>
+            <Row Key="3">AR</Row>
+            <Row Key="4">AR</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+            <Row Key="7">DR</Row>
+            <Row Key="8">DR</Row>
+        </Colum>
+
+        <Colum Key="2">
+            <Row Key="1">ARR</Row>
+            <Row Key="2">AR</Row>
+            <Row Key="3">AR</Row>
+            <Row Key="4">X</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">DR</Row>
+            <Row Key="7">DR</Row>
+            <Row Key="8">DRR</Row>
+        </Colum>
+
+        <Colum Key="3">
+            <Row Key="1">AR</Row>
+            <Row Key="2">AR</Row>
+            <Row Key="3">X</Row>
+            <Row Key="4">X</Row>
+            <Row Key="5">DR</Row>
+            <Row Key="6">DR</Row>
+            <Row Key="7">DRR</Row>
+            <Row Key="8">DRR</Row>
+        </Colum>
+
+        <Colum Key="4">
+            <Row Key="1">AR</Row>
+            <Row Key="2">X</Row>
+            <Row Key="3">X</Row>
+            <Row Key="4">DR</Row>
+            <Row Key="5">DR</Row>
+            <Row Key="6">DRR</Row>
+            <Row Key="7">DRR</Row>
+            <Row Key="8">1DRR</Row>
+        </Colum>       
+
+        <Colum Key="5">
+            <Row Key="1">X</Row>
+            <Row Key="2">X</Row>
+            <Row Key="3">DR</Row>
+            <Row Key="4">DR</Row>
+            <Row Key="5">DRR</Row>
+            <Row Key="6">DRR</Row>
+            <Row Key="7">1DRR</Row>
+            <Row Key="8">1DRR</Row>
+        </Colum>
+
+        <Colum Key="6">
+            <Row Key="1">X</Row>
+            <Row Key="2">DR</Row>
+            <Row Key="3">DR</Row>
+            <Row Key="4">DRR</Row>
+            <Row Key="5">DRR</Row>
+            <Row Key="6">1DRR</Row>
+            <Row Key="7">1DRR</Row>
+            <Row Key="8">2DRR</Row>
+        </Colum>
+
+        <Colum Key="7">
+            <Row Key="1">DR</Row>
+            <Row Key="2">DR</Row>
+            <Row Key="3">DRR</Row>
+            <Row Key="4">DRR</Row>
+            <Row Key="5">1DRR</Row>
+            <Row Key="6">1DRR</Row>
+            <Row Key="7">2DRR</Row>
+            <Row Key="8">2DRR</Row>
+        </Colum>
+
+        <Colum Key="8">
+            <Row Key="1">DR</Row>
+            <Row Key="2">DRR</Row>
+            <Row Key="3">DRR</Row>
+            <Row Key="4">1DRR</Row>
+            <Row Key="5">1DRR</Row>
+            <Row Key="6">2DRR</Row>
+            <Row Key="7">2DRR</Row>
+            <Row Key="8">3DRR</Row>
+        </Colum>
+
+        <Colum Key="9">
+            <Row Key="1">DRR</Row>
+            <Row Key="2">DRR</Row>
+            <Row Key="3">1DRR</Row>
+            <Row Key="4">1DRR</Row>
+            <Row Key="5">2DRR</Row>
+            <Row Key="6">2DRR</Row>
+            <Row Key="7">3DRR</Row>
+            <Row Key="8">3DRR</Row>
+        </Colum>
+
+        <Colum Key="10">
+            <Row Key="1">DRR</Row>
+            <Row Key="2">1DRR</Row>
+            <Row Key="3">1DRR</Row>
+            <Row Key="4">2DRR</Row>
+            <Row Key="5">2DRR</Row>
+            <Row Key="6">3DRR</Row>
+            <Row Key="7">3DRR</Row>
+            <Row Key="8">4DRR</Row>
+        </Colum>
+
+        <Colum Key="11">
+            <Row Key="1">1DRR</Row>
+            <Row Key="2">1DRR</Row>
+            <Row Key="3">2DRR</Row>
+            <Row Key="4">2DRR</Row>
+            <Row Key="5">3DRR</Row>
+            <Row Key="6">3DRR</Row>
+            <Row Key="7">4DRR</Row>
+            <Row Key="8">4DRR</Row>
+        </Colum>
+    </Form>
+</FormData>

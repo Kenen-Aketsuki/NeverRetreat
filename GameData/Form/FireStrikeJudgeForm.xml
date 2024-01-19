@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FormData SYSTEM "FormData.dtd">
+<!-- 
+    火力打击裁定表
+-->
+
+<FormData>
+    <Form id="FireStrikeJudgeForm">
+        <Colum Key="2">
+            <Row Key="1">X</Row>
+            <Row Key="2">X</Row>
+            <Row Key="3">X</Row>
+            <Row Key="4">X</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="3">
+            <Row Key="1">1D</Row>
+            <Row Key="2">1D</Row>
+            <Row Key="3">1K</Row>
+            <Row Key="4">1K</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="4">
+            <Row Key="1">2D</Row>
+            <Row Key="2">1D</Row>
+            <Row Key="3">1D</Row>
+            <Row Key="4">1K</Row>
+            <Row Key="5">1K</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="5">
+            <Row Key="1">2D</Row>
+            <Row Key="2">2D</Row>
+            <Row Key="3">1D</Row>
+            <Row Key="4">1D</Row>
+            <Row Key="5">1K</Row>
+            <Row Key="6">1K</Row>
+        </Colum>
+
+        <Colum Key="6">
+            <Row Key="1">3D</Row>
+            <Row Key="2">2D+1K</Row>
+            <Row Key="3">2D</Row>
+            <Row Key="4">1D+1K</Row>
+            <Row Key="5">1D</Row>
+            <Row Key="6">1K</Row>
+        </Colum>
+
+        <Colum Key="7">
+            <Row Key="1">3D</Row>
+            <Row Key="2">3D+1K</Row>
+            <Row Key="3">2D+1K</Row>
+            <Row Key="4">2D+1K</Row>
+            <Row Key="5">1D+2K</Row>
+            <Row Key="6">1D+2K</Row>
+        </Colum>
+
+        <Colum Key="8">
+            <Row Key="1">4D+2K</Row>
+            <Row Key="2">4D+1K</Row>
+            <Row Key="3">3D+2K</Row>
+            <Row Key="4">3D+1K</Row>
+            <Row Key="5">2D+2K</Row>
+            <Row Key="6">2D+2K</Row>
+        </Colum>
+
+        <Colum Key="9">
+            <Row Key="1">5D+1K</Row>
+            <Row Key="2">5D+1K</Row>
+            <Row Key="3">4D+1K</Row>
+            <Row Key="4">4D+2K</Row>
+            <Row Key="5">3D+2K</Row>
+            <Row Key="6">3D+2K</Row>
+        </Colum>
+
+        <Colum Key="10">
+            <Row Key="1">3K</Row>
+            <Row Key="2">3K</Row>
+            <Row Key="3">5D+2K</Row>
+            <Row Key="4">5D+2K</Row>
+            <Row Key="5">4D+2K</Row>
+            <Row Key="6">4D+2K</Row>
+        </Colum>
+
+        <Colum Key="11">
+            <Row Key="1">4K</Row>
+            <Row Key="2">3K</Row>
+            <Row Key="3">3K</Row>
+            <Row Key="4">5D+2K</Row>
+            <Row Key="5">5D+2K</Row>
+            <Row Key="6">4D+3K</Row>
+        </Colum>
+
+        <Colum Key="12">
+            <Row Key="1">5K</Row>
+            <Row Key="2">4K</Row>
+            <Row Key="3">3K</Row>
+            <Row Key="4">3K</Row>
+            <Row Key="5">5D+3K</Row>
+            <Row Key="6">4D+3K</Row>
+        </Colum>
+    </Form>
+</FormData>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FormData SYSTEM "FormData.dtd">
+<!-- 
+    空战裁定表
+-->
+<FormData>
+    <Form id="AirBattleJudgeForm">
+        <Colum Key="0">
+            <Row Key="1">X</Row>
+            <Row Key="2">X</Row>
+            <Row Key="3">X</Row>
+            <Row Key="4">X</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="1">
+            <Row Key="1">1D</Row>
+            <Row Key="2">1D</Row>
+            <Row Key="3">X</Row>
+            <Row Key="4">X</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="2">
+            <Row Key="1">2D</Row>
+            <Row Key="2">1D</Row>
+            <Row Key="3">1D</Row>
+            <Row Key="4">X</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="3">
+            <Row Key="1">2D</Row>
+            <Row Key="2">2D</Row>
+            <Row Key="3">1D</Row>
+            <Row Key="4">1D</Row>
+            <Row Key="5">X</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="4">
+            <Row Key="1">C</Row>
+            <Row Key="2">2D</Row>
+            <Row Key="3">2D</Row>
+            <Row Key="4">1D</Row>
+            <Row Key="5">1D</Row>
+            <Row Key="6">X</Row>
+        </Colum>
+
+        <Colum Key="5">
+            <Row Key="1">C</Row>
+            <Row Key="2">C</Row>
+            <Row Key="3">2D</Row>
+            <Row Key="4">2D</Row>
+            <Row Key="5">1D</Row>
+            <Row Key="6">1D</Row>
+        </Colum>
+
+        <Colum Key="6">
+            <Row Key="1">C</Row>
+            <Row Key="2">C</Row>
+            <Row Key="3">C</Row>
+            <Row Key="4">2D</Row>
+            <Row Key="5">2D</Row>
+            <Row Key="6">1D</Row>
+        </Colum>
+    </Form>
+</FormData>

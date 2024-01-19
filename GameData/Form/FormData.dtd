@@ -1,0 +1,10 @@
+<!ELEMENT FormData (Form+)>
+<!-- 裁定表 -->
+<!ELEMENT Form (Colum+)><!-- 行优先存储 -->
+<!ATTLIST Form id ID #REQUIRED><!-- 表名-->
+
+<!ELEMENT Colum (Row+)><!-- 行 -->
+<!ATTLIST Colum Key CDATA #REQUIRED><!-- 行号-->
+
+<!ELEMENT Row (#PCDATA)><!-- 列与列内容 -->
+<!ATTLIST Row Key CDATA #REQUIRED><!-- 列号-->
