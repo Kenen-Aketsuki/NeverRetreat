@@ -13,6 +13,7 @@ public static class FixSystemData
     public static string dataDirectory;
     public static string PieceDirectory;
     public static string TerrainDirectory;
+    public static string FormDirectory;
 
     //地形表
     public static Dictionary<string, BasicLandShape> GlobalBasicTerrainList = new Dictionary<string, BasicLandShape>();
@@ -30,6 +31,12 @@ public static class FixSystemData
     public static Dictionary <string, XmlNode> HumanOrganizationList = new Dictionary<string, XmlNode>();//人类方
     public static Dictionary<string, XmlNode> CrashOrganizationList = new Dictionary<string, XmlNode>();//模组方
 
+    //战斗裁定表
+    public static BattleJudgeForm battleJudgeForm;
+    public static AirBattleJudgeForm airBattleJudgeForm;
+    public static FireRankForm fireRankForm;
+    public static FireStrikeJudgeForm fireStrikeJudgeForm;
+
     public static void InitPath()
     {
         rootDirectory = Environment.CurrentDirectory;
@@ -41,6 +48,9 @@ public static class FixSystemData
 
         TerrainDirectory = dataDirectory + "\\Terrain";
         if (!Directory.Exists(TerrainDirectory)) TerrainDirectory = "MISS";
+
+        FormDirectory = dataDirectory + "\\Form";
+        if (!Directory.Exists(FormDirectory)) FormDirectory = "MISS";
     }
 
     public static string toString()

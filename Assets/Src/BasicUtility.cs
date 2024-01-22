@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public static class BasicUtility
@@ -90,8 +91,34 @@ public static class BasicUtility
 
         }
         //读取棋子美术数据(已在棋子生成里实现)
-
-        
+        //读取四大裁定表
+        foreach (string file in Directory.GetFiles(FixSystemData.FormDirectory, "*.xml", SearchOption.AllDirectories))
+        {
+            XmlDoc.Load(file);
+            XmlNode tmp = XmlDoc.DocumentElement.FirstChild;
+            switch (tmp.Attributes["id"].Value)
+            {
+                case "BattleJudgeForm":
+                    FixSystemData.battleJudgeForm = new BattleJudgeForm(tmp);
+                    Debug.Log("加载 战斗裁定表");
+                    break;
+                case "AirBattleJudgeForm":
+                    FixSystemData.airBattleJudgeForm = new AirBattleJudgeForm(tmp);
+                    Debug.Log("加载 空战裁定表");
+                    break;
+                case "FireRankForm":
+                    FixSystemData.fireRankForm = new FireRankForm(tmp);
+                    Debug.Log("加载 火力表");
+                    break;
+                case "FireStrikeJudgeForm":
+                    FixSystemData.fireStrikeJudgeForm = new FireStrikeJudgeForm(tmp);
+                    Debug.Log("加载 火力打击裁定表");
+                    break;
+                default:
+                    Debug.Log(file + " 处的裁定表被忽略");
+                    break;
+            }
+        }
     }
 
     public static void SpawnPiece(string TroopName,Vector3 Pos)//以部队番号为名，生成一个棋子
