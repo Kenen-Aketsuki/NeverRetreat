@@ -8,6 +8,10 @@ public class FixGameData : MonoBehaviour
 {
     public static FixGameData FGD;
 
+    //地图大小
+    public Vector2Int MapSize;
+
+    //棋子结构
     public GameObject PiecePrefab;
     public GameObject PieceInfoPrefab;
 
@@ -29,10 +33,17 @@ public class FixGameData : MonoBehaviour
         FGD = this;
     }
 
-    public static Vector3Int MapToWorld(int x,int y,int xSize,int ySize)
+    public static Vector3Int MapToWorld(int x,int y,int xSize,int ySize)//存档坐标转游戏地图坐标
     {
         x = x - (int)Math.Floor((double)(xSize / 2));
         y = y - (int)Math.Floor((double)(ySize / 2));
         return new Vector3Int(x, y, 0);
+    }
+
+    public static Vector2Int WorldToMap(Vector3Int pos,int xSize,int ySize)//游戏地图坐标转存档坐标
+    {
+        int x = pos.y + (int)Math.Floor((double)(xSize / 2));
+        int y = pos.x + (int)Math.Floor((double)(ySize / 2));
+        return new Vector2Int(x, y);
     }
 }

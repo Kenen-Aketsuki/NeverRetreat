@@ -167,7 +167,7 @@ public static class BasicUtility
         return null;
     }
 
-    public static void saveMap(string path)
+    public static void saveTerrain(string path)//保存道路、基本地形、河流
     {
         FixGameData gamedata = FixGameData.FGD;
         XmlDocument xmlDoc = new XmlDocument();
@@ -188,7 +188,7 @@ public static class BasicUtility
         string tmpStr;
 
         Vector3Int pos;
-        for(int y = 0; y < 42; y++)
+        for (int y = 0; y < 42; y++)
         {
             Colum = xmlDoc.CreateElement("Colum");
             Colum.SetAttribute("CNo", y.ToString());
@@ -198,8 +198,6 @@ public static class BasicUtility
                 Row = xmlDoc.CreateElement("Row");
                 Row.SetAttribute("RNo", x.ToString());
                 pos = FixGameData.MapToWorld(y, x, 42, 42);
-                
-                goto ed;
 
                 //编写基础地形
                 tmp = xmlDoc.CreateElement("basicTerrain");
@@ -210,7 +208,7 @@ public static class BasicUtility
                 if (gamedata.MapList[1].GetTile(pos) != null) tmpStr += "1-"; else tmpStr += "0-";
                 if (gamedata.MapList[2].GetTile(pos) != null) tmpStr += "1-"; else tmpStr += "0-";
                 if (gamedata.MapList[3].GetTile(pos) != null) tmpStr += "1"; else tmpStr += "0";
-                if(tmpStr != "0-0-0")
+                if (tmpStr != "0-0-0")
                 {
                     tmp = xmlDoc.CreateElement("river");
                     tmp.InnerText = tmpStr;
@@ -218,7 +216,7 @@ public static class BasicUtility
                 }
                 //编写道路
                 tmpStr = "";
-                if (gamedata.MapList[4].GetTile(pos) != null) 
+                if (gamedata.MapList[4].GetTile(pos) != null)
                 {
                     if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road_1st")) tmpStr += "1-";
                     else if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road_2nd")) tmpStr += "2-";
@@ -239,15 +237,56 @@ public static class BasicUtility
                     else if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road_3rd")) tmpStr += "3";
                 }
                 else tmpStr += "0";
-                if(tmpStr != "0-0-0")
+                if (tmpStr != "0-0-0")
                 {
                     tmp = xmlDoc.CreateElement("road");
                     tmp.InnerText = tmpStr;
                     Row.AppendChild(tmp);
                 }
 
-                
-ed:
+                //列加入行
+                Colum.AppendChild(Row);
+
+            }
+            Map.AppendChild(Colum);
+
+        }
+
+        xmlDoc.Save(path);
+    }
+
+    public static void saveFacillitys(string path)//保存设施、特殊设施和特殊地形
+    {
+        FixGameData gamedata = FixGameData.FGD;
+        XmlDocument xmlDoc = new XmlDocument();
+        XmlDeclaration xmlDec = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+        xmlDoc.AppendChild(xmlDec);
+        XmlNode root = xmlDoc.CreateElement("MapData");
+        xmlDoc.AppendChild(root);
+
+        XmlNode tmp = xmlDoc.CreateElement("Size");
+        tmp.InnerText = "42*42";
+        root.AppendChild(tmp);
+
+        XmlNode Map = xmlDoc.CreateElement("Map");
+        root.AppendChild(Map);
+
+        XmlElement Colum;
+        XmlElement Row;
+        string tmpStr;
+
+        Vector3Int pos;
+        for (int y = 0; y < 42; y++)
+        {
+            Colum = xmlDoc.CreateElement("Colum");
+            Colum.SetAttribute("CNo", y.ToString());
+
+            for (int x = 0; x < 42; x++)
+            {
+                Row = xmlDoc.CreateElement("Row");
+                Row.SetAttribute("RNo", x.ToString());
+                pos = FixGameData.MapToWorld(y, x, 42, 42);
+
                 //编写设施(格内)
                 if (gamedata.MapList[7].GetTile(pos) != null)
                 {
@@ -262,7 +301,7 @@ ed:
                 if (gamedata.MapList[8].GetTile(pos) != null) tmpStr += gamedata.MapList[8].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[9].GetTile(pos) != null) tmpStr += gamedata.MapList[9].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[10].GetTile(pos) != null) tmpStr += gamedata.MapList[10].GetTile(pos).name; else tmpStr += "X";
-                if(tmpStr != "X-X-X")
+                if (tmpStr != "X-X-X")
                 {
                     tmp = xmlDoc.CreateElement("facilityS");
                     tmp.InnerText = tmpStr;
@@ -273,14 +312,14 @@ ed:
                 if (gamedata.MapList[11].GetTile(pos) != null) tmpStr += gamedata.MapList[11].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[12].GetTile(pos) != null) tmpStr += gamedata.MapList[12].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[13].GetTile(pos) != null) tmpStr += gamedata.MapList[13].GetTile(pos).name; else tmpStr += "X";
-                if(tmpStr != "X-X-X")
+                if (tmpStr != "X-X-X")
                 {
                     tmp = xmlDoc.CreateElement("specialTerrainS");
                     tmp.InnerText = tmpStr;
                     Row.AppendChild(tmp);
                 }
                 //特殊地形(格内)
-                if (gamedata.MapList[14].GetTile(pos) != null) 
+                if (gamedata.MapList[14].GetTile(pos) != null)
                 {
                     tmpStr = "";
                     tmpStr += gamedata.MapList[14].GetTile(pos).name;
@@ -291,15 +330,14 @@ ed:
 
 
                 //列加入行
-                if(Row.ChildNodes.Count != 0) Colum.AppendChild(Row);
+                if (Row.ChildNodes.Count != 0) Colum.AppendChild(Row);
 
             }
-            if(Colum.ChildNodes.Count != 0) Map.AppendChild(Colum);
+            if (Colum.ChildNodes.Count != 0) Map.AppendChild(Colum);
 
         }
 
         xmlDoc.Save(path);
-
     }
 }
 

@@ -15,6 +15,9 @@ public static class FixSystemData
     public static string TerrainDirectory;
     public static string FormDirectory;
 
+    public static string GameInitDirectory;//游戏初始化
+    public static string SaveDirectory;//存档
+
     //地形表
     public static Dictionary<string, BasicLandShape> GlobalBasicTerrainList = new Dictionary<string, BasicLandShape>();
     //设施表
@@ -51,6 +54,13 @@ public static class FixSystemData
 
         FormDirectory = dataDirectory + "\\Form";
         if (!Directory.Exists(FormDirectory)) FormDirectory = "MISS";
+
+        GameInitDirectory = dataDirectory + "\\StartState";
+        if (!Directory.Exists(GameInitDirectory)) GameInitDirectory = "MISS";
+
+        SaveDirectory = rootDirectory + "\\Saves";
+        if (!Directory.Exists(SaveDirectory)) SaveDirectory = "MISS";
+
     }
 
     public static string toString()
