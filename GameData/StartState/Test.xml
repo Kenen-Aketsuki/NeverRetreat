@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MapData>
     <Size>42*42</Size>
-    <Colum num="0">
-        <Row num = "0">
-            <basicTerrain>Mountain</basicTerrain>
-            <river>0-0-0</river><!-- 左-中-右，0为无1为有-->
-            <road>0-0-0</road><!-- 左-中-右，0为无1、2、3为一、二、三级道路-->
-            <facilityC>X</facilityC><!-- 中央设施 X为无，设施id指明设施-->
-            <facilityS>0-0-0</facilityS><!-- 左-中-右，0为无 设施id指明设施-->
-            <specialTerrain>X</specialTerrain><!-- 特殊地形 X为无-->
-            <specialTerrainS>0-0-0</specialTerrainS><!-- 格边特殊地形 0为无，地形id指明地形-->
-
-        </Row>
-    </Colum>
+    <Map>
+        <Colum num="0">
+            <Row num = "0">
+                <basicTerrain>Mountain</basicTerrain>
+                <river>0-0-0</river><!-- 左-中-右，0为无1为有-->
+                <road>0-0-0</road><!-- 左-中-右，0为无1、2、3为一、二、三级道路-->
+                <facilityC>X</facilityC><!-- 中央设施 X为无，设施id指明设施-->
+                <facilityS>0-0-0</facilityS><!-- 左-中-右，0为无 设施id指明设施-->
+                <specialTerrain>X</specialTerrain><!-- 特殊地形 X为无-->
+                <specialTerrainS>0-0-0</specialTerrainS><!-- 格边特殊地形 0为无，地形id指明地形-->
+    
+            </Row>
+        </Colum>
+    </Map>
 </MapData>

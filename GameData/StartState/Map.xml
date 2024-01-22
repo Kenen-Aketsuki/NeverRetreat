@@ -1,4 +1,926 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MapData>
-    
+  <Size>42*42</Size>
+  <Map>
+    <Colum CNo="0">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-Runway-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>1-1-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>1-1-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="1">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-Runway-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>1-1-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>1-1-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>1-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>1-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="2">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-Runway-Runway_R</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-3</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-3</road>
+        <facilityC>MetroStation-</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>1-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>1-1-0</river>
+        <road>1-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>1-1-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="3">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-Runway-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>Airpot-</facilityC>
+        <facilityS>Runway_L-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>HunterGuild-</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>1-0-0</river>
+        <road>2-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="4">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>2-2-2</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>Water</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="5">
+      <Row RNo="0">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-1</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>3-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>3-0-3</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-3</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>2-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>2-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>Water</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-2</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="6">
+      <Row RNo="0">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-1</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-1</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>Water</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="7">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-1</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-1</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-2-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>Water</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="8">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>MetroStation-</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-3</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-3-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-2</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>Water</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+    <Colum CNo="9">
+      <Row RNo="0">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="1">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="2">
+        <basicTerrain>PrimaryDevZone</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="3">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="4">
+        <basicTerrain>LowBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="5">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-1-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="6">
+        <basicTerrain>MidBuilding</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-3</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="7">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="8">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-0</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+      <Row RNo="9">
+        <basicTerrain>Mountain</basicTerrain>
+        <river>0-0-0</river>
+        <road>0-0-2</road>
+        <facilityC>X</facilityC>
+        <facilityS>X-X-X</facilityS>
+        <specialTerrainS>X-X-X</specialTerrainS>
+        <specialTerrain>X</specialTerrain>
+      </Row>
+    </Colum>
+  </Map>
 </MapData>

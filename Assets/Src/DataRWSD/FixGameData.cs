@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,4 +29,10 @@ public class FixGameData : MonoBehaviour
         FGD = this;
     }
 
+    public static Vector3Int MapToWorld(int x,int y,int xSize,int ySize)
+    {
+        x = x - (int)Math.Floor((double)(xSize / 2));
+        y = y - (int)Math.Floor((double)(ySize / 2));
+        return new Vector3Int(x, y, 0);
+    }
 }
