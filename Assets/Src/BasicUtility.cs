@@ -188,12 +188,12 @@ public static class BasicUtility
         string tmpStr;
 
         Vector3Int pos;
-        for(int y = 0; y < 10; y++)
+        for(int y = 0; y < 42; y++)
         {
             Colum = xmlDoc.CreateElement("Colum");
             Colum.SetAttribute("CNo", y.ToString());
 
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 42; x++)
             {
                 Row = xmlDoc.CreateElement("Row");
                 Row.SetAttribute("RNo", x.ToString());
@@ -205,15 +205,17 @@ public static class BasicUtility
                 Row.AppendChild(tmp);
                 //编写河流
                 tmpStr = "";
-                tmp = xmlDoc.CreateElement("river");
                 if (gamedata.MapList[1].GetTile(pos) != null) tmpStr += "1-"; else tmpStr += "0-";
                 if (gamedata.MapList[2].GetTile(pos) != null) tmpStr += "1-"; else tmpStr += "0-";
                 if (gamedata.MapList[3].GetTile(pos) != null) tmpStr += "1"; else tmpStr += "0";
-                tmp.InnerText = tmpStr;
-                Row.AppendChild(tmp);
+                if(tmpStr != "0-0-0")
+                {
+                    tmp = xmlDoc.CreateElement("river");
+                    tmp.InnerText = tmpStr;
+                    Row.AppendChild(tmp);
+                }
                 //编写道路
                 tmpStr = "";
-                tmp = xmlDoc.CreateElement("road");
                 if (gamedata.MapList[4].GetTile(pos) != null) 
                 {
                     if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road_1st")) tmpStr += "1-";
@@ -235,38 +237,57 @@ public static class BasicUtility
                     else if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road_3rd")) tmpStr += "3";
                 }
                 else tmpStr += "0";
-                tmp.InnerText = tmpStr;
-                Row.AppendChild(tmp);
+                if(tmpStr != "0-0-0")
+                {
+                    tmp = xmlDoc.CreateElement("road");
+                    tmp.InnerText = tmpStr;
+                    Row.AppendChild(tmp);
+                }
+
+                goto ed;
+
                 //编写设施(格内)
-                tmpStr = "";
-                tmp = xmlDoc.CreateElement("facilityC");
-                if (gamedata.MapList[7].GetTile(pos) != null) tmpStr += gamedata.MapList[7].GetTile(pos).name + "-"; else tmpStr += "X";
-                tmp.InnerText = tmpStr;
-                Row.AppendChild(tmp);
+                if (gamedata.MapList[7].GetTile(pos) != null)
+                {
+                    tmpStr = "";
+                    tmpStr += gamedata.MapList[7].GetTile(pos).name + "-";
+                    tmp = xmlDoc.CreateElement("facilityC");
+                    tmp.InnerText = tmpStr;
+                    Row.AppendChild(tmp);
+                }
                 //编写设施(格边)
                 tmpStr = "";
-                tmp = xmlDoc.CreateElement("facilityS");
                 if (gamedata.MapList[8].GetTile(pos) != null) tmpStr += gamedata.MapList[8].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[9].GetTile(pos) != null) tmpStr += gamedata.MapList[9].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[10].GetTile(pos) != null) tmpStr += gamedata.MapList[10].GetTile(pos).name; else tmpStr += "X";
-                tmp.InnerText = tmpStr;
-                Row.AppendChild(tmp);
+                if(tmpStr != "X-X-X")
+                {
+                    tmp = xmlDoc.CreateElement("facilityS");
+                    tmp.InnerText = tmpStr;
+                    Row.AppendChild(tmp);
+                }
                 //特殊地形(格边)
                 tmpStr = "";
-                tmp = xmlDoc.CreateElement("specialTerrainS");
                 if (gamedata.MapList[11].GetTile(pos) != null) tmpStr += gamedata.MapList[11].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[12].GetTile(pos) != null) tmpStr += gamedata.MapList[12].GetTile(pos).name + "-"; else tmpStr += "X-";
                 if (gamedata.MapList[13].GetTile(pos) != null) tmpStr += gamedata.MapList[13].GetTile(pos).name; else tmpStr += "X";
-                tmp.InnerText = tmpStr;
-                Row.AppendChild(tmp);
+                if(tmpStr != "X-X-X")
+                {
+                    tmp = xmlDoc.CreateElement("specialTerrainS");
+                    tmp.InnerText = tmpStr;
+                    Row.AppendChild(tmp);
+                }
                 //特殊地形(格内)
-                tmpStr = "";
-                tmp = xmlDoc.CreateElement("specialTerrain");
-                if (gamedata.MapList[14].GetTile(pos) != null) tmpStr += gamedata.MapList[14].GetTile(pos).name; else tmpStr += "X";
-                tmp.InnerText = tmpStr;
-                Row.AppendChild(tmp);
+                if (gamedata.MapList[14].GetTile(pos) != null) 
+                {
+                    tmpStr = "";
+                    tmpStr += gamedata.MapList[14].GetTile(pos).name;
+                    tmp = xmlDoc.CreateElement("specialTerrain");
+                    tmp.InnerText = tmpStr;
+                    Row.AppendChild(tmp);
+                }
 
-
+ed:
                 //列加入行
                 Colum.AppendChild(Row);
             }
