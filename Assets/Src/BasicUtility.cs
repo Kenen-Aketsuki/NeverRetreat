@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public static class BasicUtility
@@ -166,6 +165,11 @@ public static class BasicUtility
             return Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), FixSystemData.ImagSize);
         }
         return null;
+    }
+
+    public static void saveMap()
+    {
+
     }
 }
 
