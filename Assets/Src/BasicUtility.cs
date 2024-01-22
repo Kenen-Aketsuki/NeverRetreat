@@ -177,7 +177,7 @@ public static class BasicUtility
         xmlDoc.AppendChild(root);
 
         XmlNode tmp = xmlDoc.CreateElement("Size");
-        tmp.InnerText = "42*42";
+        tmp.InnerText = GameUtility.mapSize.x + "*" + GameUtility.mapSize.y;
         root.AppendChild(tmp);
 
         XmlNode Map = xmlDoc.CreateElement("Map");
@@ -188,16 +188,16 @@ public static class BasicUtility
         string tmpStr;
 
         Vector3Int pos;
-        for (int y = 0; y < 42; y++)
+        for (int y = 0; y <= GameUtility.mapSize.y; y++)
         {
             Colum = xmlDoc.CreateElement("Colum");
             Colum.SetAttribute("CNo", y.ToString());
 
-            for (int x = 0; x < 42; x++)
+            for (int x = 0; x <= GameUtility.mapSize.x; x++)
             {
                 Row = xmlDoc.CreateElement("Row");
                 Row.SetAttribute("RNo", x.ToString());
-                pos = FixGameData.MapToWorld(y, x, 42, 42);
+                pos = FixGameData.MapToWorld(y, x);
 
                 //编写基础地形
                 tmp = xmlDoc.CreateElement("basicTerrain");
@@ -265,7 +265,7 @@ public static class BasicUtility
         xmlDoc.AppendChild(root);
 
         XmlNode tmp = xmlDoc.CreateElement("Size");
-        tmp.InnerText = "42*42";
+        tmp.InnerText = GameUtility.mapSize.x + "*" + GameUtility.mapSize.y;
         root.AppendChild(tmp);
 
         XmlNode Map = xmlDoc.CreateElement("Map");
@@ -276,16 +276,16 @@ public static class BasicUtility
         string tmpStr;
 
         Vector3Int pos;
-        for (int y = 0; y < 42; y++)
+        for (int y = 0; y <= GameUtility.mapSize.y; y++)
         {
             Colum = xmlDoc.CreateElement("Colum");
             Colum.SetAttribute("CNo", y.ToString());
 
-            for (int x = 0; x < 42; x++)
+            for (int x = 0; x <= GameUtility.mapSize.x; x++)
             {
                 Row = xmlDoc.CreateElement("Row");
                 Row.SetAttribute("RNo", x.ToString());
-                pos = FixGameData.MapToWorld(y, x, 42, 42);
+                pos = FixGameData.MapToWorld(y, x);
 
                 //编写设施(格内)
                 if (gamedata.MapList[7].GetTile(pos) != null)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MapData>
-    <Size>42*42</Size>
+    <Size>42*42</Size><!-- 实际铺设交互时是x、y 各-2-->
     <Map>
         <Colum num="0">
             <Row num = "0">
