@@ -198,6 +198,8 @@ public static class BasicUtility
                 Row = xmlDoc.CreateElement("Row");
                 Row.SetAttribute("RNo", x.ToString());
                 pos = FixGameData.MapToWorld(y, x, 42, 42);
+                
+                goto ed;
 
                 //编写基础地形
                 tmp = xmlDoc.CreateElement("basicTerrain");
@@ -244,13 +246,13 @@ public static class BasicUtility
                     Row.AppendChild(tmp);
                 }
 
-                goto ed;
-
+                
+ed:
                 //编写设施(格内)
                 if (gamedata.MapList[7].GetTile(pos) != null)
                 {
                     tmpStr = "";
-                    tmpStr += gamedata.MapList[7].GetTile(pos).name + "-";
+                    tmpStr += gamedata.MapList[7].GetTile(pos).name;
                     tmp = xmlDoc.CreateElement("facilityC");
                     tmp.InnerText = tmpStr;
                     Row.AppendChild(tmp);
@@ -287,11 +289,13 @@ public static class BasicUtility
                     Row.AppendChild(tmp);
                 }
 
-ed:
+
                 //列加入行
-                Colum.AppendChild(Row);
+                if(Row.ChildNodes.Count != 0) Colum.AppendChild(Row);
+
             }
-            Map.AppendChild(Colum);
+            if(Colum.ChildNodes.Count != 0) Map.AppendChild(Colum);
+
         }
 
         xmlDoc.Save(path);

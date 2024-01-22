@@ -58,7 +58,7 @@ public class DataLoader : MonoBehaviour
         }
         */
 
-        BasicUtility.saveMap("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Map.xml");
+        BasicUtility.saveMap("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Facility.xml");
 
 
     }
