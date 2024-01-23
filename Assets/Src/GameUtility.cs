@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -17,7 +18,7 @@ public static class GameUtility
 
         if (fromSave)
         {
-            xmlDoc.Load(FixSystemData.GameInitDirectory + "\\" + Save + "\\Facility.xml");
+            xmlDoc.Load(FixSystemData.SaveDirectory + "\\" + Save + "\\Facility.xml");
         }
         else
         {
@@ -109,14 +110,16 @@ public static class GameUtility
                 }
 
                 if (rowFac < FacilityRow.Count &&
+                    columFac < FacilityColum.Count &&
                     FacilityColum[columFac].Attributes["CNo"].Value == columNo.ToString() &&
                     FacilityRow[rowFac].Attributes["RNo"].Value == rowNo.ToString())
                 {
+
                     //进入代表此节点匹配此位置
                     //放置设施(格子内)
-                    if (row.SelectSingleNode("FacilityC") != null)
+                    if (FacilityRow[rowFac].SelectSingleNode("facilityC") != null)
                     {
-                        tileName = row.SelectSingleNode("FacilityC").InnerText;
+                        tileName = FacilityRow[rowFac].SelectSingleNode("facilityC").InnerText;
                         if (FixSystemData.GlobalFacilityList.ContainsKey(tileName))
                         {
                             FixGameData.FGD.MapList[7].SetTile(
@@ -132,11 +135,12 @@ public static class GameUtility
                         
                     }
                     //放置设施（格子边）
-                    if (row.SelectSingleNode("FacilityS") != null)
+                    if (FacilityRow[rowFac].SelectSingleNode("facilityS") != null)
                     {
-                        sideSplit = row.SelectSingleNode("FacilityS").InnerText.Split("-");
+                        sideSplit = FacilityRow[rowFac].SelectSingleNode("facilityS").InnerText.Split("-");
                         if (sideSplit[0] == "1")
                         {
+                            sideSplit[0] = sideSplit[0].Replace("_L", "");
                             FixGameData.FGD.MapList[8].SetTile(
                                 FixGameData.MapToWorld(columNo, rowNo),
                                 FixSystemData.GlobalFacilityList[sideSplit[0]].Left);
@@ -149,17 +153,19 @@ public static class GameUtility
                         }
                         if (sideSplit[2] == "1")
                         {
+                            sideSplit[2] = sideSplit[2].Replace("_R", "");
                             FixGameData.FGD.MapList[10].SetTile(
                                 FixGameData.MapToWorld(columNo, rowNo),
                                 FixSystemData.GlobalFacilityList[sideSplit[2]].Right);
                         }
                     }
                     //放置特殊地形（格子边）
-                    if(fromSave && row.SelectSingleNode("specialTerrainS") != null)
+                    if(fromSave && FacilityRow[rowFac].SelectSingleNode("specialTerrainS") != null)
                     {
-                        sideSplit = row.SelectSingleNode("specialTerrainS").InnerText.Split("-");
+                        sideSplit = FacilityRow[rowFac].SelectSingleNode("specialTerrainS").InnerText.Split("-");
                         if (sideSplit[0] == "1")
                         {
+                            sideSplit[0] = sideSplit[0].Replace("_L", "");
                             FixGameData.FGD.MapList[11].SetTile(
                                 FixGameData.MapToWorld(columNo, rowNo),
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[0]].Left);
@@ -172,15 +178,16 @@ public static class GameUtility
                         }
                         if (sideSplit[2] == "1")
                         {
+                            sideSplit[2] = sideSplit[2].Replace("_R", "");
                             FixGameData.FGD.MapList[13].SetTile(
                                 FixGameData.MapToWorld(columNo, rowNo),
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[2]].Right);
                         }
                     }
                     //放置特殊地形（格子内）
-                    if (fromSave && row.SelectSingleNode("specialTerrain") != null)
+                    if (fromSave && FacilityRow[rowFac].SelectSingleNode("specialTerrain") != null)
                     {
-                        tileName = row.SelectSingleNode("specialTerrain").InnerText;
+                        tileName = FacilityRow[rowFac].SelectSingleNode("specialTerrain").InnerText;
                         FixGameData.FGD.MapList[14].SetTile(
                                 FixGameData.MapToWorld(columNo, rowNo),
                                 FixSystemData.GlobalFacilityList[tileName].Top);
@@ -193,7 +200,10 @@ public static class GameUtility
                     {
                         rowFac = 0;
                         columFac++;
-                        if(columFac < FacilityColum.Count) FacilityRow = FacilityColum[columFac].ChildNodes;
+                        if(columFac < FacilityColum.Count)
+                        {
+                            FacilityRow = FacilityColum[columFac].ChildNodes;
+                        }
                     }
                 }
 

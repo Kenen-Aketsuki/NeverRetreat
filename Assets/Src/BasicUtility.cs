@@ -99,19 +99,15 @@ public static class BasicUtility
             {
                 case "BattleJudgeForm":
                     FixSystemData.battleJudgeForm = new BattleJudgeForm(tmp);
-                    Debug.Log("加载 战斗裁定表");
                     break;
                 case "AirBattleJudgeForm":
                     FixSystemData.airBattleJudgeForm = new AirBattleJudgeForm(tmp);
-                    Debug.Log("加载 空战裁定表");
                     break;
                 case "FireRankForm":
                     FixSystemData.fireRankForm = new FireRankForm(tmp);
-                    Debug.Log("加载 火力表");
                     break;
                 case "FireStrikeJudgeForm":
                     FixSystemData.fireStrikeJudgeForm = new FireStrikeJudgeForm(tmp);
-                    Debug.Log("加载 火力打击裁定表");
                     break;
                 default:
                     Debug.Log(file + " 处的裁定表被忽略");
