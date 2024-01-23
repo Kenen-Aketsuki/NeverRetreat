@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PieceData>
+    <Piece troopName="DawIII.204vP" xPos="5" yPos="30" LoyalTo="Human">
+        <stability>0</stability>
+        <connectState>0</connectState>
+        <inCasualty>false</inCasualty>
+    </Piece>
+</PieceData>

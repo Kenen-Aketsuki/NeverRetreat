@@ -61,7 +61,18 @@ public class OB_Piece : MonoBehaviour
 
     void UpdateData()
     {
+        //更新文本
         PieceText.InitText(Data, Data.isTwo);
+        //显示崩坏遮罩
+        if (Data.Belong == ArmyBelong.ModCrash) CrashCover.SetActive(true);
+        else CrashCover.SetActive(false);
+        //更改底色
+        Color bakC;
+        ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
+        BaseColor.color = bakC;
+        //更改父元素(其它修改在别的位置)
+        if (Data.LoyalTo == ArmyBelong.Human) gameObject.transform.parent = FixGameData.FGD.HumanPieceParent;
+        else gameObject.transform.parent = FixGameData.FGD.CrashPieceParent;
     }
 
     public void setPieceData(Piece P)

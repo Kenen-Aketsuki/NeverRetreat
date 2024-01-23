@@ -335,6 +335,11 @@ public static class BasicUtility
 
         xmlDoc.Save(path);
     }
+
+    public static void savePiece(string path)//保存场上棋子
+    {
+
+    }
 }
 
 public enum ArmyBelong
