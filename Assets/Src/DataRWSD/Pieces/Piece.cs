@@ -52,6 +52,8 @@ public class Piece
             else if (Belong == ArmyBelong.ModCrash && !inCasualty) return "c30cc0";
             else return "d573d5";} }//背景色
 
+    public int crashLoad { get; set; }//崩坏负载
+
     string TroopName;//部队名称(显示)
     string PieceName;//兵种名称(显示)
     string Designation;//番号(程序)
@@ -126,6 +128,8 @@ public class Piece
         else activeArea = -1;
         if (tmp.SelectSingleNode("passiveArea") != null) passiveArea = int.Parse(tmp.SelectSingleNode("passiveArea").InnerText);
         else passiveArea = -1;
+        if (tmp.SelectSingleNode("crashLoad") != null) crashLoad = int.Parse(tmp.SelectSingleNode("crashLoad").InnerText);
+        else crashLoad = -1;
         #endregion
         //读取能力
         #region
