@@ -235,11 +235,10 @@ public static class GameUtility
         foreach(GameObject fake in GameObject.FindGameObjectsWithTag("FakePiece"))
         {
             GameObject.Destroy(fake);
+            
         }
         
-
-
-
+        //录入人类方棋子
         foreach (XmlNode HumanPiece in HumanPieceList)
         {
             pos = FixGameData.MapToWorld(int.Parse(HumanPiece.Attributes["xPos"].Value), int.Parse(HumanPiece.Attributes["yPos"].Value));
@@ -253,6 +252,21 @@ public static class GameUtility
                 BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, null);
             }
             
+        }
+        //录入崩坏方棋子
+        foreach (XmlNode CrashPiece in CrashPieceList)
+        {
+            pos = FixGameData.MapToWorld(int.Parse(CrashPiece.Attributes["xPos"].Value), int.Parse(CrashPiece.Attributes["yPos"].Value));
+            try
+            {
+                _ = CrashPiece.Attributes["stability"].Value;
+                BasicUtility.SpawnPiece(CrashPiece.Attributes["troopName"].Value, pos, CrashPiece);
+            }
+            catch (Exception)
+            {
+                BasicUtility.SpawnPiece(CrashPiece.Attributes["troopName"].Value, pos, null);
+            }
+
         }
 
 

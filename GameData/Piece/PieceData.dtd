@@ -6,7 +6,7 @@
 <!ATTLIST Piece id ID #REQUIRED>
 
 <!ELEMENT name (#PCDATA)><!-- 棋子名称 -->
-<!ELEMENT Datas (ATK,DEF,MOV,cATK?,cDEF?,cMOV?,activeArea?,passiveArea?)><!-- 棋子数据 -->
+<!ELEMENT Datas (ATK,DEF,MOV,cATK?,cDEF?,cMOV?,activeArea?,passiveArea?,crashLoad?)><!-- 棋子数据 -->
 <!-- 任意值小于零代表其无法执行对应能力-->
 <!ELEMENT ATK (#PCDATA)>
 <!ELEMENT DEF (#PCDATA)>
@@ -16,6 +16,7 @@
 <!ELEMENT cMOV (#PCDATA)>
 <!ELEMENT activeArea (#PCDATA)>
 <!ELEMENT passiveArea (#PCDATA)>
+<!ELEMENT crashLoad (#PCDATA)><!-- 棋子占据崩坏带宽的负载-->
 
 <!ELEMENT ability EMPTY><!-- 棋子的能力 -->
 <!ATTLIST ability canSupport (True|False) #REQUIRED>

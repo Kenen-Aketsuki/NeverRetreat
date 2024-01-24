@@ -7,6 +7,7 @@
             <ATK>4</ATK>
             <DEF>4</DEF>
             <MOV>6</MOV>
+            <crashLoad>1</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" />
     </Piece>
@@ -20,6 +21,7 @@
             <cATK>2</cATK>
             <cDEF>2</cDEF>
             <cMOV>3</cMOV>
+            <crashLoad>1</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" />
     </Piece>
@@ -33,6 +35,7 @@
             <cATK>3</cATK>
             <cDEF>3</cDEF>
             <cMOV>5</cMOV>
+            <crashLoad>2</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" />
     </Piece>
@@ -47,6 +50,7 @@
             <cDEF>3</cDEF>
             <cMOV>5</cMOV>
             <activeArea>12</activeArea>
+            <crashLoad>2</crashLoad>
         </Datas>
         <ability canSupport="True" canAirBattle="False" />
     </Piece>
@@ -60,6 +64,7 @@
             <cATK>-1</cATK>
             <cDEF>1</cDEF>
             <cMOV>5</cMOV>
+            <crashLoad>3</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" canDoMagic="True"/>
     </Piece>
@@ -70,6 +75,7 @@
             <ATK>-1</ATK>
             <DEF>-1</DEF>
             <MOV>5</MOV>
+            <crashLoad>3</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
     </Piece>
@@ -80,6 +86,7 @@
             <ATK>-1</ATK>
             <DEF>-1</DEF>
             <MOV>6</MOV>
+            <crashLoad>3</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" canMental="True"/>
     </Piece>
@@ -90,26 +97,29 @@
             <ATK>-1</ATK>
             <DEF>5</DEF>
             <MOV>-1</MOV>
+            <crashLoad>4</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
     </Piece>
 
     <Piece id="Soar-Stay" isAir="True">
-        <name>滞空者</name>
+        <name>滞空种</name>
         <Datas>
             <ATK>-1</ATK>
             <DEF>5</DEF>
             <MOV>-1</MOV>
+            <crashLoad>2</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="True"/>
     </Piece>
 
     <Piece id="Soar-Attack" isAir="True">
-        <name>袭略者</name>
+        <name>袭略种</name>
         <Datas>
             <ATK>8</ATK>
             <DEF>3</DEF>
             <MOV>-1</MOV>
+            <crashLoad>2</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False"/>
     </Piece>
