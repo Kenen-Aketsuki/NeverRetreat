@@ -52,7 +52,8 @@
     <Troop designation="DawIV.s02E" name="曙光四师战略支援团工兵二连" type="Engineer" Belong="Human" />
     <Troop designation="DawIV.s01M" name="曙光四师战略支援团术士一连" type="Wizard" Belong="Human" />
     <Troop designation="DawIV.s02M" name="曙光四师战略支援团术士二连" type="Wizard" Belong="Human" />
-    <Troop designation="DawIV.s1AA" name="曙光四师战略支援团防空营" type="Anti-Aircraft" Belong="Human" />
+    <Troop designation="DawIV.s1AA" name="曙光四师战略支援团防空一营" type="Anti-Aircraft" Belong="Human" />
+    <Troop designation="DawIV.s2AA" name="曙光四师战略支援团防空二营" type="Anti-Aircraft" Belong="Human" />
     <Troop designation="DawIV.s01Art" name="曙光四师战略支援团炮兵一连" type="Artillery" Belong="Human" />
     <Troop designation="DawIV.s02Art" name="曙光四师战略支援团炮兵二连" type="Artillery" Belong="Human" />
     <Troop designation="DawIV.s03Art" name="曙光四师战略支援团炮兵三连" type="Artillery" Belong="Human" />

@@ -806,11 +806,11 @@
       </Row>
       <Row RNo="19">
         <basicTerrain>MidBuilding</basicTerrain>
-        <road>0-3-0</road>
+        <road>0-0-3</road>
       </Row>
       <Row RNo="20">
         <basicTerrain>MidBuilding</basicTerrain>
-        <road>0-3-0</road>
+        <road>0-0-3</road>
       </Row>
       <Row RNo="21">
         <basicTerrain>MidBuilding</basicTerrain>

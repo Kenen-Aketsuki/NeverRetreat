@@ -58,11 +58,14 @@ public class DataLoader : MonoBehaviour
         }
         */
 
-        GameUtility.从预设中读取地图(false, "");
-        //GameUtility.从预设中读取棋子(false, "");
+        //GameUtility.mapSize = new Vector2Int(42, 42);
         //BasicUtility.saveTerrain("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Terrain.xml");
         //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Facility.xml");
+        GameUtility.从预设中读取地图(false, "");
+
         BasicUtility.savePiece("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");
+        GameUtility.从预设中读取棋子(false, "");
+        
 
     }
 
