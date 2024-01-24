@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -78,5 +79,12 @@ public class OB_Piece : MonoBehaviour
     public void setPieceData(Piece P)
     {
         Data = P;
+    }
+
+    public Tuple<string, Vector2Int, string, int, int, bool> getPieceData()
+    {
+        Vector3Int pos = FixGameData.FGD.InteractMap.WorldToCell(gameObject.transform.position);
+        Vector2Int pos2 = FixGameData.WorldToMap(pos);
+        return Data.getDataPack(pos2);
     }
 }

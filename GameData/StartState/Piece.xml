@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PieceData>
+  <Human>
+    <Piece troopName="DawIII.101" xPos="35" yPos="5" />
+    <Piece troopName="DawIII.102" xPos="35" yPos="4" />
+    <Piece troopName="DawIII.103" xPos="34" yPos="6" />
+    <Piece troopName="DawIII.111" xPos="32" yPos="5" />
+    <Piece troopName="DawIII.112" xPos="31" yPos="4" />
+    <Piece troopName="DawIII.113" xPos="32" yPos="6" />
+    <Piece troopName="DawIII.121" xPos="29" yPos="2" />
+    <Piece troopName="DawIII.122" xPos="30" yPos="3" />
+    <Piece troopName="DawIII.123" xPos="31" yPos="3" />
+    <Piece troopName="DawIII.101P" xPos="36" yPos="6" />
+    <Piece troopName="DawIII.102P" xPos="33" yPos="8" />
+  </Human>
+  <Crash />
+</PieceData>

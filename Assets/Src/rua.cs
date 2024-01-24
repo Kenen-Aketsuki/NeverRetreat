@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class rua : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log(MethodBase.GetCurrentMethod().Name);
-    }
+    [SerializeField]
+    ArmyBelong loy = ArmyBelong.Human;
 
-    // Update is called once per frame
-    void Update()
+    public Tuple<string, Vector2Int, string, int, int, bool> getData()
     {
-        
+        Vector3Int pos = FixGameData.FGD.InteractMap.WorldToCell(gameObject.transform.position);
+        Vector2Int pos2 = FixGameData.WorldToMap(pos);
+
+        return new Tuple<string, Vector2Int, string, int, int, bool>(gameObject.name, pos2, loy.ToString(), 0, 0, false);
     }
+    
 }

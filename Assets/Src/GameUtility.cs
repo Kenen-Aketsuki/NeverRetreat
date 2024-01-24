@@ -215,4 +215,46 @@ public static class GameUtility
         
 
     }
+
+    public static void 从预设中读取棋子(bool fromSave,string Save)
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        if (fromSave)
+        {
+            xmlDoc.Load(FixSystemData.SaveDirectory + "\\" + Save + "\\Piece.xml");
+        }
+        else
+        {
+            xmlDoc.Load(FixSystemData.GameInitDirectory + "\\Piece.xml");
+        }
+        XmlNodeList HumanPieceList = xmlDoc.DocumentElement.FirstChild.ChildNodes;
+        XmlNodeList CrashPieceList = xmlDoc.DocumentElement.LastChild.ChildNodes;
+        Vector3Int pos;
+
+        //清空假棋子
+        foreach(GameObject fake in GameObject.FindGameObjectsWithTag("FakePiece"))
+        {
+            GameObject.Destroy(fake);
+        }
+        
+
+
+
+        foreach (XmlNode HumanPiece in HumanPieceList)
+        {
+            pos = FixGameData.MapToWorld(int.Parse(HumanPiece.Attributes["xPos"].Value), int.Parse(HumanPiece.Attributes["yPos"].Value));
+            try
+            {
+                _ = HumanPiece.Attributes["stability"].Value;
+                BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, HumanPiece);
+            }
+            catch (Exception)
+            {
+                BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, null);
+            }
+            
+        }
+
+
+    }
 }

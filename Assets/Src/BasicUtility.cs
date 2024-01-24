@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -116,17 +117,17 @@ public static class BasicUtility
         }
     }
 
-    public static void SpawnPiece(string TroopName,Vector3 Pos)//以部队番号为名，生成一个棋子
+    public static void SpawnPiece(string TroopName,Vector3Int Pos,XmlNode SaveData)//以部队番号为名，生成一个棋子,SaveData为null说明这是新棋子
     {
         Transform parent;
         Piece PData;
         if (FixSystemData.HumanOrganizationList.ContainsKey(TroopName))
         {
-            PData = new Piece(FixSystemData.HumanOrganizationList[TroopName]);
+            PData = new Piece(FixSystemData.HumanOrganizationList[TroopName],SaveData);
         }
         else
         {
-            PData = new Piece(FixSystemData.CrashOrganizationList[TroopName]);
+            PData = new Piece(FixSystemData.CrashOrganizationList[TroopName],SaveData);
         }
         
         if (PData.Belong == ArmyBelong.Human)
@@ -138,8 +139,9 @@ public static class BasicUtility
         {
             parent = FixGameData.FGD.CrashPieceParent;
         }
-        GameObject newPiece = Object.Instantiate(FixGameData.FGD.PiecePrefab, parent);
-        newPiece.transform.position = Pos;
+
+        GameObject newPiece = UnityEngine.Object.Instantiate(FixGameData.FGD.PiecePrefab, parent);
+        newPiece.transform.position = FixGameData.FGD.InteractMap.CellToWorld(Pos);
         newPiece.name = TroopName;
         OB_Piece ps = newPiece.GetComponent<OB_Piece>();
         ps.setPieceData(PData);
@@ -149,8 +151,6 @@ public static class BasicUtility
     {
         string path = FixSystemData.PieceDirectory + "/img";
         string[] files = Directory.GetFiles(path, name + ".png");
-
-        Debug.Log(name);
 
         if (files.Length != 0)
         {
@@ -338,7 +338,59 @@ public static class BasicUtility
 
     public static void savePiece(string path)//保存场上棋子
     {
+        FixGameData gamedata = FixGameData.FGD;
+        XmlDocument xmlDoc = new XmlDocument();
+        XmlDeclaration Dec = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+        xmlDoc.AppendChild(Dec);
+        XmlNode root = xmlDoc.CreateElement("PieceData");
+        xmlDoc.AppendChild(root);
 
+        XmlElement Humans = xmlDoc.CreateElement("Human");
+        XmlElement Crash = xmlDoc.CreateElement("Crash");
+        XmlElement tmp;
+        Tuple<string, Vector2Int, string, int, int, bool> pData;
+        //保存人类方棋子
+        for (int i= 0; i < gamedata.HumanPieceParent.childCount; i++)
+        {
+            //pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData();
+            pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<rua>().getData();
+
+            tmp = xmlDoc.CreateElement("Piece");
+            tmp.SetAttribute("troopName", pData.Item1);
+            tmp.SetAttribute("xPos", pData.Item2.x.ToString());
+            tmp.SetAttribute("yPos", pData.Item2.y.ToString());
+            /* 暂时封存
+            tmp.SetAttribute("LoyalTo", pData.Item3);
+            tmp.SetAttribute("stability", pData.Item4.ToString());
+            tmp.SetAttribute("connectState", pData.Item5.ToString());
+            tmp.SetAttribute("inCasualty", pData.Item6.ToString());
+            */
+            Humans.AppendChild(tmp);
+
+        }
+        //保存崩坏方棋子
+        for (int i = 0; i < gamedata.CrashPieceParent.childCount; i++)
+        {
+            //pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData();
+            pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<rua>().getData();
+
+            tmp = xmlDoc.CreateElement("Piece");
+            tmp.SetAttribute("troopName", pData.Item1);
+            tmp.SetAttribute("xPos", pData.Item2.x.ToString());
+            tmp.SetAttribute("yPos", pData.Item2.y.ToString());
+            /*
+            tmp.SetAttribute("LoyalTo", pData.Item3);
+            tmp.SetAttribute("stability", pData.Item4.ToString());
+            tmp.SetAttribute("connectState", pData.Item5.ToString());
+            tmp.SetAttribute("inCasualty", pData.Item6.ToString());
+            */
+            Crash.AppendChild(tmp);
+
+        }
+
+        root.AppendChild(Humans);
+        root.AppendChild(Crash);
+        xmlDoc.Save(path);
     }
 }
 

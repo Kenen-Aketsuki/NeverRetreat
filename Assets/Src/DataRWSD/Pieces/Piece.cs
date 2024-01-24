@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Serialization;
+using UnityEngine;
 
 public class Piece
 {
@@ -99,7 +99,7 @@ public class Piece
     public int passiveArea = 0;//被动距离
 
     public bool isTwo { get {return cATK == cDEF && nATK == nDEF;} }
-    public Piece(XmlNode root)
+    public Piece(XmlNode root,XmlNode otherData)
     {
         TroopName = root.Attributes["name"].Value;
         Designation = root.Attributes["designation"].Value;
@@ -155,6 +155,19 @@ public class Piece
         if (canSupport && !isAir || isAir && nATK > 0) canStrike = true;
         else canStrike = false;
         OverTurn();
+        //读取其它数据
+        if(otherData != null)
+        {
+            LoyalTo = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), otherData.Attributes["LoyalTo"].Value);
+            Stability = int.Parse(otherData.Attributes["stability"].Value);
+            ConnectState = int.Parse(otherData.Attributes["connectState"].Value);
+            inCasualty = bool.Parse(otherData.Attributes["inCasualty"].Value);
+        }
+    }
+
+    public Tuple<string,Vector2Int,string,int,int,bool> getDataPack(Vector2Int pos)//获取保存用的数据包
+    {
+        return new Tuple<string, Vector2Int, string, int, int, bool>(Designation, pos, LoyalTo.ToString(), Stability, ConnectState, inCasualty);
     }
 
     public void RecoverHP(int pt) //恢复HP
@@ -188,7 +201,7 @@ public class Piece
 
     }
 
-    public static void Move(Piece movePiece,Object Path)//移动
+    public static void Move(Piece movePiece,List<Vector3Int> Path)//移动
     {
 
     }

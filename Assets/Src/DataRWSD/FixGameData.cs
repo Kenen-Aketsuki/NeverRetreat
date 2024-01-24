@@ -8,9 +8,6 @@ public class FixGameData : MonoBehaviour
 {
     public static FixGameData FGD;
 
-    //地图大小
-    public Vector2Int MapSize;
-
     //棋子结构
     public GameObject PiecePrefab;
     public GameObject PieceInfoPrefab;
@@ -44,8 +41,8 @@ public class FixGameData : MonoBehaviour
 
     public static Vector2Int WorldToMap(Vector3Int pos)//游戏地图坐标转存档坐标
     {
-        int x = pos.y + (int)Math.Floor((double)(GameUtility.mapSize.x / 2));
-        int y = pos.x + (int)Math.Floor((double)(GameUtility.mapSize.y / 2));
+        int x = pos.x + (int)Math.Floor((double)(GameUtility.mapSize.x / 2));
+        int y = pos.y + (int)Math.Floor((double)(GameUtility.mapSize.y / 2));
         return new Vector2Int(x, y);
     }
 }
