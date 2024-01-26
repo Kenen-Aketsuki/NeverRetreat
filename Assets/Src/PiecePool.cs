@@ -39,11 +39,11 @@ public class PiecePool : MonoBehaviour
         return childList;
     }
 
-    void QuickSortPriKey(ref List<int> numList)//行坐标排序
+    void QuickSortPriKey(ref List<Tuple<string, int, int>> numList)//行坐标排序
     {
         //快速排序
         int anix;//快排轴枢
-        int anixKey;//轴数值
+        Tuple<string, int, int> anixKey;//轴数值
         List<Tuple<int, int>> toSortQ = new List<Tuple<int, int>>();//待排序的片段起止队列
         toSortQ.Add(new Tuple<int, int>(0, numList.Count));//初始区间入队
                                                            //开始排序
@@ -66,7 +66,7 @@ public class PiecePool : MonoBehaviour
                 int length = backP - frontP - 1;
                 if (onReverse)
                 {
-                    if (forwardSerch(ref frontP, ref numList, anixKey, length))
+                    if (forwardSerch(ref frontP, ref numList, anixKey.Item3, length))
                     {
                         numList[backP] = numList[frontP];
                         onReverse = false;
@@ -74,7 +74,7 @@ public class PiecePool : MonoBehaviour
                 }
                 else
                 {
-                    if (backwardSerch(ref backP, ref numList, anixKey, length))
+                    if (backwardSerch(ref backP, ref numList, anixKey.Item3, length))
                     {
                         numList[frontP] = numList[backP];
                         onReverse = true;
@@ -97,24 +97,24 @@ public class PiecePool : MonoBehaviour
         }
     }
 
-    bool forwardSerch(ref int pin, ref List<int> list, int anixKey, int length)//返回是否应该反向
+    bool forwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
     {
         pin += 1;
         int mem = pin;
         for (; pin - mem < length; pin++)
         {
-            if (list[pin] > anixKey) return true;
+            if (list[pin].Item3 > anixKey) return true;
         }
         return false;
     }
 
-    bool backwardSerch(ref int pin, ref List<int> list, int anixKey, int length)//返回是否应该反向
+    bool backwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
     {
         pin -= 1;
         int mem = pin;
         for (; mem - pin < length; pin--)
         {
-            if (list[pin] < anixKey) return true;
+            if (list[pin].Item3 < anixKey) return true;
         }
         return false;
     }
