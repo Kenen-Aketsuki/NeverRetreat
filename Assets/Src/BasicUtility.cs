@@ -359,12 +359,12 @@ public static class BasicUtility
             tmp.SetAttribute("troopName", pData.Item1);
             tmp.SetAttribute("xPos", pData.Item2.x.ToString());
             tmp.SetAttribute("yPos", pData.Item2.y.ToString());
-            /* ÔÝÊ±·â´æ
+            
             tmp.SetAttribute("LoyalTo", pData.Item3);
             tmp.SetAttribute("stability", pData.Item4.ToString());
             tmp.SetAttribute("connectState", pData.Item5.ToString());
             tmp.SetAttribute("inCasualty", pData.Item6.ToString());
-            */
+            
             Humans.AppendChild(tmp);
 
         }
@@ -378,12 +378,12 @@ public static class BasicUtility
             tmp.SetAttribute("troopName", pData.Item1);
             tmp.SetAttribute("xPos", pData.Item2.x.ToString());
             tmp.SetAttribute("yPos", pData.Item2.y.ToString());
-            /*
+            
             tmp.SetAttribute("LoyalTo", pData.Item3);
             tmp.SetAttribute("stability", pData.Item4.ToString());
             tmp.SetAttribute("connectState", pData.Item5.ToString());
             tmp.SetAttribute("inCasualty", pData.Item6.ToString());
-            */
+            
             Crash.AppendChild(tmp);
 
         }

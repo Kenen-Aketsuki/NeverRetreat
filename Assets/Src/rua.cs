@@ -14,7 +14,7 @@ public class rua : MonoBehaviour
         Vector3Int pos = FixGameData.FGD.InteractMap.WorldToCell(gameObject.transform.position);
         Vector2Int pos2 = FixGameData.WorldToMap(pos);
 
-        return new Tuple<string, Vector2Int, string, int, int, bool>(gameObject.name, pos2, loy.ToString(), 0, 0, false);
+        return new Tuple<string, Vector2Int, string, int, int, bool>(gameObject.name.Split(" ")[0], pos2, loy.ToString(), 0, 0, false);
     }
     
 }

@@ -106,6 +106,56 @@
     <Piece troopName="GovermantVIP" xPos="13" yPos="20" />
   </Human>
   <Crash>
-    <Piece troopName="Crash.Blade" xPos="33" yPos="1" />
+    <Piece troopName="Crash.Blade" xPos="35" yPos="3" />
+    <Piece troopName="Crash.Blade" xPos="34" yPos="4" />
+    <Piece troopName="Crash.Blade" xPos="36" yPos="3" />
+    <Piece troopName="Crash.Gun" xPos="34" yPos="5" />
+    <Piece troopName="Crash.Gun" xPos="33" yPos="5" />
+    <Piece troopName="Crash.Gun" xPos="32" yPos="4" />
+    <Piece troopName="Crash.Gun" xPos="30" yPos="2" />
+    <Piece troopName="Crash.Gun" xPos="32" yPos="3" />
+    <Piece troopName="Crash.Gun" xPos="31" yPos="2" />
+    <Piece troopName="Crash.MhnGrp" xPos="34" yPos="1" />
+    <Piece troopName="Crash.MhnGrp" xPos="33" yPos="1" />
+    <Piece troopName="Crash.Blade" xPos="18" yPos="4" />
+    <Piece troopName="Crash.Blade" xPos="17" yPos="4" />
+    <Piece troopName="Crash.Blade" xPos="18" yPos="4" />
+    <Piece troopName="Crash.Gun" xPos="20" yPos="3" />
+    <Piece troopName="Crash.Gun" xPos="20" yPos="2" />
+    <Piece troopName="Crash.Gun" xPos="19" yPos="3" />
+    <Piece troopName="Crash.Gun" xPos="17" yPos="3" />
+    <Piece troopName="Crash.Gun" xPos="16" yPos="2" />
+    <Piece troopName="Crash.Gun" xPos="16" yPos="1" />
+    <Piece troopName="Crash.MhnGrp" xPos="19" yPos="1" />
+    <Piece troopName="Crash.MhnGrp" xPos="18" yPos="2" />
+    <Piece troopName="Crash.VehGun" xPos="35" yPos="36" />
+    <Piece troopName="Crash.VehGun" xPos="36" yPos="35" />
+    <Piece troopName="Crash.VehGun" xPos="37" yPos="35" />
+    <Piece troopName="Crash.VehGun" xPos="38" yPos="36" />
+    <Piece troopName="Crash.VehGun" xPos="37" yPos="36" />
+    <Piece troopName="Crash.VehGun" xPos="35" yPos="2" />
+    <Piece troopName="Crash.VehGun" xPos="33" yPos="4" />
+    <Piece troopName="Crash.MhnGrp" xPos="39" yPos="37" />
+    <Piece troopName="Crash.MhnGrp" xPos="38" yPos="38" />
+    <Piece troopName="Crash.MhnGrp" xPos="36" yPos="36" />
+    <Piece troopName="Crash.MhnGrp" xPos="35" yPos="37" />
+    <Piece troopName="Crash.VehGun" xPos="7" yPos="30" />
+    <Piece troopName="Crash.VehGun" xPos="7" yPos="31" />
+    <Piece troopName="Crash.VehGun" xPos="6" yPos="30" />
+    <Piece troopName="Crash.VehGun" xPos="5" yPos="30" />
+    <Piece troopName="Crash.MhnGrp" xPos="6" yPos="31" />
+    <Piece troopName="Crash.MhnGrp" xPos="4" yPos="29" />
+    <Piece troopName="Crash.MhnGrp" xPos="5" yPos="30" />
+    <Piece troopName="Crash.MhnGrp" xPos="4" yPos="30" />
+    <Piece troopName="Crash.Warlock" xPos="34" yPos="2" />
+    <Piece troopName="Crash.Warlock" xPos="31" yPos="1" />
+    <Piece troopName="Crash.Warlock" xPos="20" yPos="1" />
+    <Piece troopName="Crash.Warlock" xPos="17" yPos="1" />
+    <Piece troopName="Crash.Hack" xPos="1" yPos="40" />
+    <Piece troopName="Crash.Hack" xPos="2" yPos="41" />
+    <Piece troopName="Crash.Hack" xPos="1" yPos="41" />
+    <Piece troopName="Crash.Hack" xPos="41" yPos="38" />
+    <Piece troopName="Crash.Hack" xPos="41" yPos="39" />
+    <Piece troopName="Crash.Hack" xPos="40" yPos="40" />
   </Crash>
 </PieceData>
