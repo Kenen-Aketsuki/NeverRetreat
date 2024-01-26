@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -65,7 +66,14 @@ public class DataLoader : MonoBehaviour
 
         //BasicUtility.savePiece("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");
         GameUtility.从预设中读取棋子(false, "");
-        
+
+        Dictionary<int, Tuple<int, int>> listIndex = null;
+        List<Tuple<string, int, int>> clist = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildList(ref listIndex);
+        Debug.Log(clist.Count);
+        foreach (KeyValuePair<int, Tuple<int, int>> piece in listIndex)
+        {
+            Debug.Log((piece.Key + 21) + "的长度为: " + piece.Value.Item2 + "起始坐标为: " + piece.Value.Item1);
+        }
 
     }
 

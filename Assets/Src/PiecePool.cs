@@ -24,17 +24,35 @@ public class PiecePool : MonoBehaviour
         }
         return null;
     }
-    
-    public List<Tuple<string,int,int>> getChildList()
+
+    public List<Tuple<string,int,int>> getChildList(ref Dictionary<int, Tuple<int, int>> listIndex)
     {
         List<Tuple<string, int, int>> childList = new List<Tuple<string, int, int>>();
+        listIndex = new Dictionary<int, Tuple<int, int>>();//索引：行号，二元组：起始坐标、长度
+
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
             Transform child = gameObject.transform.GetChild(i);
+            if (child.name.Split("\\").Length != 2 ) continue;
             Vector3Int cpos = FixGameData.FGD.InteractMap.WorldToCell(child.position);
             childList.Add(new Tuple<string, int, int>(child.name, cpos.x, cpos.x));
         }
         //进行基数排序
+        QuickSortPriKey(ref childList);//行排序
+        //统计起始坐标与长度
+        int sta = 0;
+        foreach(Tuple<string, int, int> tup in childList)
+        {
+            if(listIndex.ContainsKey(tup.Item3))
+            {
+                listIndex[tup.Item3] = new Tuple<int, int>(listIndex[tup.Item3].Item1, listIndex[tup.Item3].Item2 + 1);
+            }
+            else
+            {
+                listIndex.Add(tup.Item3, new Tuple<int, int>(sta, 1));
+            }
+            sta++;
+        }
 
         return childList;
     }
