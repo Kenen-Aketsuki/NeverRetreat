@@ -160,12 +160,15 @@ public class Piece
         else canStrike = false;
         OverTurn();
         //读取其它数据
-        if(otherData != null)
+        try
         {
             LoyalTo = (ArmyBelong)Enum.Parse(typeof(ArmyBelong), otherData.Attributes["LoyalTo"].Value);
             Stability = int.Parse(otherData.Attributes["stability"].Value);
             ConnectState = int.Parse(otherData.Attributes["connectState"].Value);
             inCasualty = bool.Parse(otherData.Attributes["inCasualty"].Value);
+        }catch (Exception)
+        {
+
         }
     }
 

@@ -142,7 +142,7 @@ public static class BasicUtility
 
         GameObject newPiece = UnityEngine.Object.Instantiate(FixGameData.FGD.PiecePrefab, parent);
         newPiece.transform.position = FixGameData.FGD.InteractMap.CellToWorld(Pos);
-        newPiece.name = TroopName;
+        newPiece.name = parent.gameObject.GetComponent<PiecePool>().getRedomNo() + TroopName;
         OB_Piece ps = newPiece.GetComponent<OB_Piece>();
         ps.setPieceData(PData);
     }
@@ -392,6 +392,53 @@ public static class BasicUtility
         root.AppendChild(Crash);
         xmlDoc.Save(path);
     }
+
+    public static void savePieceAsDefault(string path)//保存场上棋子为预设
+    {
+        FixGameData gamedata = FixGameData.FGD;
+        XmlDocument xmlDoc = new XmlDocument();
+        XmlDeclaration Dec = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+        xmlDoc.AppendChild(Dec);
+        XmlNode root = xmlDoc.CreateElement("PieceData");
+        xmlDoc.AppendChild(root);
+
+        XmlElement Humans = xmlDoc.CreateElement("Human");
+        XmlElement Crash = xmlDoc.CreateElement("Crash");
+        XmlElement tmp;
+        Tuple<string, Vector2Int, string, int, int, bool> pData;
+        //保存人类方棋子
+        for (int i = 0; i < gamedata.HumanPieceParent.childCount; i++)
+        {
+            pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<rua>().getData();
+
+            tmp = xmlDoc.CreateElement("Piece");
+            tmp.SetAttribute("troopName", pData.Item1);
+            tmp.SetAttribute("xPos", pData.Item2.x.ToString());
+            tmp.SetAttribute("yPos", pData.Item2.y.ToString());
+
+            Humans.AppendChild(tmp);
+
+        }
+        //保存崩坏方棋子
+        for (int i = 0; i < gamedata.CrashPieceParent.childCount; i++)
+        {
+            pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<rua>().getData();
+
+            tmp = xmlDoc.CreateElement("Piece");
+            tmp.SetAttribute("troopName", pData.Item1);
+            tmp.SetAttribute("xPos", pData.Item2.x.ToString());
+            tmp.SetAttribute("yPos", pData.Item2.y.ToString());
+
+            Crash.AppendChild(tmp);
+
+        }
+
+        root.AppendChild(Humans);
+        root.AppendChild(Crash);
+        xmlDoc.Save(path);
+    }
+
+
 }
 
 public enum ArmyBelong
