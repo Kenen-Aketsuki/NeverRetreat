@@ -117,10 +117,12 @@ public static class BasicUtility
         }
     }
 
-    public static void SpawnPiece(string TroopName,Vector3Int Pos,XmlNode SaveData)//以部队番号为名，生成一个棋子,SaveData为null说明这是新棋子
+    public static void SpawnPiece(string TroopName,Vector3Int Pos,XmlNode SaveData, bool needSort)//以部队番号为名，生成一个棋子,SaveData为null说明这是新棋子,needSort代表是否按照顺序加入
     {
         Transform parent;
         Piece PData;
+        PiecePool pool;
+
         if (FixSystemData.HumanOrganizationList.ContainsKey(TroopName))
         {
             PData = new Piece(FixSystemData.HumanOrganizationList[TroopName],SaveData);
@@ -145,6 +147,16 @@ public static class BasicUtility
         newPiece.name = parent.gameObject.GetComponent<PiecePool>().getRedomNo() + TroopName;
         OB_Piece ps = newPiece.GetComponent<OB_Piece>();
         ps.setPieceData(PData);
+
+        pool = parent.gameObject.GetComponent<PiecePool>();
+        if (needSort)
+        {
+            pool.AddChildInOrder(newPiece.name, Pos);
+        }
+        else
+        {
+            pool.AddChildNoOrder(newPiece.name, Pos);
+        }
     }
 
     public static Sprite getPieceIcon( string name )

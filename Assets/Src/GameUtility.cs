@@ -2,12 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class GameUtility
 {
     public static Vector2Int mapSize;
+    public static Tuple<int, int> columRange;
+    public static Tuple<int, int> rowRange;
+
+
+    public static bool fromSave;
+    public static string Save;
 
     public static void 从预设中读取地图(bool fromSave, string Save)//字面意思
     {
@@ -32,6 +39,9 @@ public static class GameUtility
         int rowFac = int.Parse(TerrainRoot.FirstChild.InnerText.Split("*")[1]);
 
         mapSize = new Vector2Int(columFac, rowFac);
+        columRange = new Tuple<int,int>(-(int)math.floor(mapSize.y / 2), (int)math.floor(mapSize.y / 2));
+        rowRange = new Tuple<int, int>(-(int)math.floor(mapSize.x / 2), (int)math.floor(mapSize.x / 2));
+
 
         TerrainRoot = TerrainRoot.LastChild;
 
@@ -245,11 +255,11 @@ public static class GameUtility
             try
             {
                 _ = HumanPiece.Attributes["stability"].Value;
-                BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, HumanPiece);
+                BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, HumanPiece, false);
             }
             catch (Exception)
             {
-                BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, null);
+                BasicUtility.SpawnPiece(HumanPiece.Attributes["troopName"].Value, pos, null, false);
             }
             
         }
@@ -260,17 +270,122 @@ public static class GameUtility
             try
             {
                 _ = CrashPiece.Attributes["stability"].Value;
-                BasicUtility.SpawnPiece(CrashPiece.Attributes["troopName"].Value, pos, CrashPiece);
+                BasicUtility.SpawnPiece(CrashPiece.Attributes["troopName"].Value, pos, CrashPiece, false);
             }
             catch (Exception)
             {
-                BasicUtility.SpawnPiece(CrashPiece.Attributes["troopName"].Value, pos, null);
+                BasicUtility.SpawnPiece(CrashPiece.Attributes["troopName"].Value, pos, null, false);
             }
 
         }
 
+        //排序并生成行目录
+        QuickSortColumNo(ref FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList);
+        GenColumIndex(FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList,
+            ref FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().listIndex);
 
+        QuickSortColumNo(ref FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().childList);
+        GenColumIndex(FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().childList,
+            ref FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().listIndex);
     }
 
-    
+    //生成行目录
+    static public void GenColumIndex(List<Tuple<string, int, int>> childList,ref Dictionary<int, Tuple<int, int>> listIndex)
+    {
+        listIndex = new Dictionary<int, Tuple<int, int>>();
+        int sta = 0;
+        foreach (Tuple<string, int, int> tup in childList)
+        {
+            if (listIndex.ContainsKey(tup.Item3))
+            {
+                listIndex[tup.Item3] = new Tuple<int, int>(listIndex[tup.Item3].Item1, listIndex[tup.Item3].Item2 + 1);
+            }
+            else
+            {
+                listIndex.Add(tup.Item3, new Tuple<int, int>(sta, 1));
+            }
+            sta++;
+        }
+    }
+    //行优先快速排序
+    public static void QuickSortColumNo(ref List<Tuple<string, int, int>> numList)//行坐标排序
+    {
+        //快速排序
+        int anix;//快排轴枢
+        Tuple<string, int, int> anixKey;//轴数值
+        List<Tuple<int, int>> toSortQ = new List<Tuple<int, int>>();//待排序的片段起止队列
+        toSortQ.Add(new Tuple<int, int>(0, numList.Count));//初始区间入队
+                                                           //开始排序
+        for (; toSortQ.Count > 0;)
+        {
+            //当前开始排序的片段出队
+            Tuple<int, int> onSort = toSortQ[0];
+            toSortQ.RemoveAt(0);
+
+            //初始化
+            int frontP = onSort.Item1;//前指针
+            int backP = onSort.Item2;//后指针
+
+            bool onReverse = false;//当前是否反向指针,false为从后往前,true 为从前往后
+
+            anix = frontP;
+            anixKey = numList[anix];
+            for (; frontP != backP;)
+            {
+                int length = backP - frontP - 1;
+                if (onReverse)
+                {
+                    if (forwardSerch(ref frontP, ref numList, anixKey.Item3, length))
+                    {
+                        numList[backP] = numList[frontP];
+                        onReverse = false;
+                    }
+                }
+                else
+                {
+                    if (backwardSerch(ref backP, ref numList, anixKey.Item3, length))
+                    {
+                        numList[frontP] = numList[backP];
+                        onReverse = true;
+                    }
+                }
+            }
+            numList[backP] = anixKey;
+            //一次完成,开始入队后续
+            //左侧
+            if (backP - onSort.Item1 > 1)
+            {
+                toSortQ.Add(new Tuple<int, int>(onSort.Item1, backP));
+            }
+            //右侧
+            if (onSort.Item2 - backP - 1 > 1)
+            {
+                toSortQ.Add(new Tuple<int, int>(backP + 1, onSort.Item2));
+            }
+
+        }
+    }
+
+    static bool forwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
+    {
+        pin += 1;
+        int mem = pin;
+        for (; pin - mem < length; pin++)
+        {
+            if (list[pin].Item3 > anixKey) return true;
+        }
+        return false;
+    }
+
+    static bool backwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
+    {
+        pin -= 1;
+        int mem = pin;
+        for (; mem - pin < length; pin--)
+        {
+            if (list[pin].Item3 < anixKey) return true;
+        }
+        return false;
+    }
+
 }

@@ -1,11 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PiecePool : MonoBehaviour
 {
     int counter = 0;
+    
+    //子对象列表
+    public List<Tuple<string, int, int>> childList = new List<Tuple<string, int, int>>();
+    //行目录
+    public Dictionary<int, Tuple<int, int>> listIndex = new Dictionary<int, Tuple<int, int>>();
 
     public string getRedomNo()
     {
@@ -25,117 +33,71 @@ public class PiecePool : MonoBehaviour
         return null;
     }
 
-    public List<Tuple<string,int,int>> getChildList(ref Dictionary<int, Tuple<int, int>> listIndex)
+    public List<GameObject> getChildByPos(Vector3Int Pos)
     {
-        List<Tuple<string, int, int>> childList = new List<Tuple<string, int, int>>();
-        listIndex = new Dictionary<int, Tuple<int, int>>();//索引：行号，二元组：起始坐标、长度
-
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        List<GameObject> lst = new List<GameObject>();
+        for (int i = listIndex[Pos.y].Item1; i < listIndex[Pos.y].Item2 + listIndex[Pos.y].Item1; i++)
         {
-            Transform child = gameObject.transform.GetChild(i);
-            if (child.name.Split("\\").Length != 2 ) continue;
-            Vector3Int cpos = FixGameData.FGD.InteractMap.WorldToCell(child.position);
-            childList.Add(new Tuple<string, int, int>(child.name, cpos.x, cpos.x));
-        }
-        //进行基数排序
-        QuickSortPriKey(ref childList);//行排序
-        //统计起始坐标与长度
-        int sta = 0;
-        foreach(Tuple<string, int, int> tup in childList)
-        {
-            if(listIndex.ContainsKey(tup.Item3))
+            if (childList[i].Item2 == Pos.x)
             {
-                listIndex[tup.Item3] = new Tuple<int, int>(listIndex[tup.Item3].Item1, listIndex[tup.Item3].Item2 + 1);
+                lst.Add(getChildByID(childList[i].Item1));
             }
-            else
-            {
-                listIndex.Add(tup.Item3, new Tuple<int, int>(sta, 1));
-            }
-            sta++;
         }
 
-        return childList;
+        return lst;
     }
 
-    void QuickSortPriKey(ref List<Tuple<string, int, int>> numList)//行坐标排序
+    //有序加入子对象
+    public void AddChildInOrder(string childName,Vector3Int Pos)
     {
-        //快速排序
-        int anix;//快排轴枢
-        Tuple<string, int, int> anixKey;//轴数值
-        List<Tuple<int, int>> toSortQ = new List<Tuple<int, int>>();//待排序的片段起止队列
-        toSortQ.Add(new Tuple<int, int>(0, numList.Count));//初始区间入队
-                                                           //开始排序
-        for (; toSortQ.Count > 0;)
+        Tuple<int, int> addr;
+        if(!listIndex.TryGetValue(Pos.y, out addr))
         {
-            //当前开始排序的片段出队
-            Tuple<int, int> onSort = toSortQ[0];
-            toSortQ.RemoveAt(0);
-
-            //初始化
-            int frontP = onSort.Item1;//前指针
-            int backP = onSort.Item2;//后指针
-
-            bool onReverse = false;//当前是否反向指针,false为从后往前,true 为从前往后
-
-            anix = frontP;
-            anixKey = numList[anix];
-            for (; frontP != backP;)
+            bool ok = false;
+            for(int i = GameUtility.columRange.Item2; i > GameUtility.columRange.Item1; i--)
             {
-                int length = backP - frontP - 1;
-                if (onReverse)
+                if (listIndex.ContainsKey(i) && i < Pos.y && !ok)
                 {
-                    if (forwardSerch(ref frontP, ref numList, anixKey.Item3, length))
-                    {
-                        numList[backP] = numList[frontP];
-                        onReverse = false;
-                    }
+                    listIndex.Add(Pos.y, new Tuple<int, int>(listIndex[i].Item1 + listIndex[i].Item2, 1));
+                    ok = true;
+                    addr = listIndex[Pos.y];
                 }
-                else
+                else if (listIndex.ContainsKey(i) && i > Pos.y)
                 {
-                    if (backwardSerch(ref backP, ref numList, anixKey.Item3, length))
-                    {
-                        numList[frontP] = numList[backP];
-                        onReverse = true;
-                    }
+                    listIndex[i] = new Tuple<int, int>(listIndex[i].Item1 + 1, listIndex[i].Item2);
                 }
             }
-            numList[backP] = anixKey;
-            //一次完成,开始入队后续
-            //左侧
-            if (backP - onSort.Item1 > 1)
-            {
-                toSortQ.Add(new Tuple<int, int>(onSort.Item1, backP));
-            }
-            //右侧
-            if (onSort.Item2 - backP - 1 > 1)
-            {
-                toSortQ.Add(new Tuple<int, int>(backP + 1, onSort.Item2));
-            }
+            listIndex = listIndex.OrderBy(x => x.Key).ToDictionary(x => x.Key, p => p.Value);
 
         }
-    }
-
-    bool forwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
-    {
-        pin += 1;
-        int mem = pin;
-        for (; pin - mem < length; pin++)
+        else
         {
-            if (list[pin].Item3 > anixKey) return true;
+            listIndex[Pos.y] = new Tuple<int, int>(addr.Item1, addr.Item2 + 1);
+            for (int i = GameUtility.columRange.Item2; i > GameUtility.columRange.Item1; i--)
+            {
+                if (listIndex.ContainsKey(i) && i > Pos.y)
+                {
+                    listIndex[i] = new Tuple<int, int>(listIndex[i].Item1 + 1, listIndex[i].Item2);
+                }
+            }
         }
-        return false;
+        childList.Insert(addr.Item1, new Tuple<string, int, int>(childName, Pos.x, Pos.y));
     }
-
-    bool backwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
+    //无序加入子对象
+    public void AddChildNoOrder(string childName, Vector3Int Pos)
     {
-        pin -= 1;
-        int mem = pin;
-        for (; mem - pin < length; pin--)
-        {
-            if (list[pin].Item3 < anixKey) return true;
-        }
-        return false;
+        childList.Add(new Tuple<string, int, int>(childName, Pos.x, Pos.y));
     }
-
-
+    //当棋子改变位置时更新字元素列表
+    public void UpdateChildList(string ID, Vector3Int oldPos, Vector3Int newPos)
+    {
+        for (int i = listIndex[oldPos.y].Item1; i < listIndex[oldPos.y].Item2 + listIndex[oldPos.y].Item1; i++)
+        {
+            if (childList[i].Item1 == ID)
+            {
+                childList.RemoveAt(i);
+            }
+        }
+        AddChildInOrder(ID, newPos);
+    }
 }
