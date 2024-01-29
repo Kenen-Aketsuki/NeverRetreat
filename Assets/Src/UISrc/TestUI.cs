@@ -13,8 +13,9 @@ public class TestUI : MonoBehaviour
         //    true);
         //Debug.Log("增加了一个棋子");
 
-        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().UpdateChildList("1\\DawIII.101", FixGameData.MapToWorld(35, 5), new Vector3Int(0, 0, 0));
+        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().UpdateChildPos("1\\DawIII.101", FixGameData.MapToWorld(35, 5), new Vector3Int(0, 0, 0));
         FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildByID("1\\DawIII.101").transform.position = new Vector3Int(0, 0, 0);
+        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().DelChildByID("1\\DawIII.101");
         Debug.Log("移动了一个棋子");
 
         List<Tuple<string, int, int>> clist = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList;

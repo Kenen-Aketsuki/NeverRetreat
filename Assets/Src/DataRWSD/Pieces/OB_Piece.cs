@@ -25,9 +25,12 @@ public class OB_Piece : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-
+        if(Data.Belong == ArmyBelong.Human)
+        {
+            Destroy(FixGameData.FGD.DataHumanPieceParent.Find(gameObject.name).gameObject);
+        }
     }
 
     void InitData()
@@ -42,13 +45,14 @@ public class OB_Piece : MonoBehaviour
         {
             parent = FixGameData.FGD.DataCrashPieceParent;
         }
+        //创建文本显示器
         GameObject TextData = Instantiate(FixGameData.FGD.PieceInfoPrefab, parent);
         TextData.name = Data.PDesignation;
         PieceText = TextData.GetComponent<PieseTextShow>();
         PieceText.setParPice(transform);
-        PieceText.InitText(Data,Data.isTwo);
-
-        if (Data.Belong == ArmyBelong.ModCrash) CrashCover.SetActive(true);
+        PieceText.InitText(gameObject.name, Data);
+        
+        if (Data.LoyalTo == ArmyBelong.ModCrash) CrashCover.SetActive(true);
         else CrashCover.SetActive(false);
         if (Data.activeArea > 0 || Data.passiveArea > 0) AreaSlash.SetActive(true);
         else AreaSlash.SetActive(false);
@@ -63,7 +67,7 @@ public class OB_Piece : MonoBehaviour
     void UpdateData()
     {
         //更新文本
-        PieceText.InitText(Data, Data.isTwo);
+        PieceText.InitText(gameObject.name, Data);
         //显示崩坏遮罩
         if (Data.Belong == ArmyBelong.ModCrash) CrashCover.SetActive(true);
         else CrashCover.SetActive(false);
@@ -87,4 +91,7 @@ public class OB_Piece : MonoBehaviour
         Vector2Int pos2 = FixGameData.WorldToMap(pos);
         return Data.getDataPack(pos2);
     }
+
+    //棋子的动作
+    //
 }

@@ -35,11 +35,12 @@ public class PieseTextShow : MonoBehaviour
         ParPiece = pp;
     }
 
-    public void InitText(Piece data,bool isTwo)//初始化棋子信息
+    public void InitText(string ID, Piece data)//初始化棋子信息
     {
         TroopName.text = data.PDesignation;
-        
-        if (isTwo)
+        gameObject.name = ID;
+
+        if (data.isTwo)
         {
             string ATK;
             if (data.ATK < 0) ATK = "X"; else ATK = data.ATK.ToString();

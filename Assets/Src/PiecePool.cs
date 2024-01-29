@@ -14,13 +14,13 @@ public class PiecePool : MonoBehaviour
     public List<Tuple<string, int, int>> childList = new List<Tuple<string, int, int>>();
     //行目录
     public Dictionary<int, Tuple<int, int>> listIndex = new Dictionary<int, Tuple<int, int>>();
-
+    //获取棋子的随机(?)编号
     public string getRedomNo()
     {
         counter++;
         return counter.ToString() + "\\";
     }
-
+    //以棋子ID为索引搜索棋子
     public GameObject getChildByID(string ID)
     {
         for(int i = 0; i < gameObject.transform.childCount; i++)
@@ -32,7 +32,7 @@ public class PiecePool : MonoBehaviour
         }
         return null;
     }
-
+    //以棋子位置为索引，搜索此位置上所有棋子
     public List<GameObject> getChildByPos(Vector3Int Pos)
     {
         List<GameObject> lst = new List<GameObject>();
@@ -89,7 +89,7 @@ public class PiecePool : MonoBehaviour
         childList.Add(new Tuple<string, int, int>(childName, Pos.x, Pos.y));
     }
     //当棋子改变位置时更新字元素列表
-    public void UpdateChildList(string ID, Vector3Int oldPos, Vector3Int newPos)
+    public void UpdateChildPos(string ID, Vector3Int oldPos, Vector3Int newPos)
     {
         for (int i = listIndex[oldPos.y].Item1; i < listIndex[oldPos.y].Item2 + listIndex[oldPos.y].Item1; i++)
         {
@@ -99,5 +99,40 @@ public class PiecePool : MonoBehaviour
             }
         }
         AddChildInOrder(ID, newPos);
+    }
+    //当棋子被删除时更新子元素列表
+    public void DelChildByID(string ID)
+    {
+        GameObject tar = getChildByID(ID);
+        int posY = FixGameData.FGD.InteractMap.WorldToCell(tar.transform.position).y;
+        Tuple<int, int> AddrT = listIndex[posY];
+        int addr;
+        //删除棋子位置信息
+        for (int i = 0;i < AddrT.Item2; i++)
+        {
+            addr = i + AddrT.Item1;
+            if(childList[addr].Item1 == ID)
+            {
+                childList.RemoveAt(addr);
+                break;
+            }
+        }
+
+        //修改被删减的目录
+        AddrT = listIndex[posY];
+        if (AddrT.Item2 == 1) listIndex.Remove(posY);
+        else listIndex[posY] = new Tuple<int, int>(AddrT.Item1, AddrT.Item2 - 1);
+
+        //修改其它目录
+        for (int i = GameUtility.columRange.Item2; i > GameUtility.columRange.Item1; i--)
+        {
+            if (listIndex.ContainsKey(i) && i > posY)
+            {
+                listIndex[i] = new Tuple<int, int>(listIndex[i].Item1 - 1, listIndex[i].Item2);
+            }
+        }
+
+        //删除棋子
+        Destroy(tar);
     }
 }

@@ -20,6 +20,10 @@ public class FixGameData : MonoBehaviour
     public Transform DataHumanPieceParent;
     public Transform DataCrashPieceParent;
 
+    //棋子池
+    public PiecePool HumanPiecePool;
+    public PiecePool CrashPiecePool;
+
     //地图层次
     //基础地形-河流-道路-设施(格内)-设施(格边)-特殊地形(格边)-特殊地形(格内)
     //    0   -  1 -  4 -    7     -    8     -      11      -    14 （起始地址，按照左-中-右排序）
