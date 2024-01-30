@@ -177,14 +177,18 @@ public class Piece
         return new Tuple<string, Vector2Int, string, int, int, bool>(Designation, pos, LoyalTo.ToString(), Stability, ConnectState, inCasualty);
     }
 
-    public void RecoverHP(int pt) //恢复HP
+    public void Recover() //恢复HP
     {
-
+        if (inCasualty)
+        {
+            inCasualty = !inCasualty;
+        }
     }
 
     public void RecoverStable(int pt)//恢复稳定性
     {
-
+        Stability -= pt;
+        if (Stability < 0) Stability = 0;
     }
 
     public void OverTurn() //过回合恢复
@@ -193,26 +197,49 @@ public class Piece
         else restMOV = nMaxMOV;
     }
 
-    public void TakeDemage(int Dmg)//受伤
+    public bool TakeDemage(int Dmg)//受伤,返回是否存活
     {
+        for(;Dmg > 0; Dmg--)
+        {
+            if (canCasualty && !inCasualty) inCasualty = !inCasualty;
+            else return false;
+        }
+        if (restMOV > cMaxMOV) restMOV = cMaxMOV;
 
+        return true;
     }
 
     public void TakeUnstable(int Dmg)//受到干扰
     {
-
+        Stability += Dmg;
+        if (Stability > 2) Stability = 2;
     }
 
-    public static void Dead( Piece deadPiece )//死亡
+    public void Betray()//被策反
     {
-
+        if (canDoubleCross)
+        {
+            LoyalTo = (ArmyBelong)(((int)LoyalTo + 1) % 2);
+        }
     }
 
-    public static void Move(Piece movePiece,List<Vector3Int> Path)//移动
+    public void UpdateSupplyConnection(bool Unsupplyed,bool connected)//更新断补与联络状态
     {
-
+        isUnsupply = Unsupplyed;
+        if (connected) ConnectState = 0;
+        else
+        {
+            ConnectState++;
+            if (ConnectState > 2) ConnectState = 2;
+        }
     }
 
+    public bool TryMove(int cost)
+    {
+        if (cost > restMOV) return false;
+        else restMOV -= cost;
+        return true;
+    }
 }
 
 

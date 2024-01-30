@@ -365,7 +365,7 @@ public static class GameUtility
 
         }
     }
-
+    //快速排序——向前搜索
     static bool forwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
     {
         pin += 1;
@@ -376,7 +376,7 @@ public static class GameUtility
         }
         return false;
     }
-
+    //快速排序——向后搜索
     static bool backwardSerch(ref int pin, ref List<Tuple<string, int, int>> list, int anixKey, int length)//返回是否应该反向
     {
         pin -= 1;
@@ -387,5 +387,48 @@ public static class GameUtility
         }
         return false;
     }
+
+    //地图操作相关
+    //获取某格周边的格子
+    public static Vector3Int GetRoundSlotPos(Vector3Int Pos,int tar)//从左上开始顺时针1~6编号，0代表自身
+    {
+        Vector3Int endPos;
+        switch (tar)
+        {
+            case 0:
+                endPos = Pos;
+                break;
+            case 1:
+                endPos = new Vector3Int(Pos.x - 1, Pos.y + (Pos.x + 1) % 2, Pos.z);
+                break;
+            case 2:
+                endPos = new Vector3Int(Pos.x, Pos.y + 1, Pos.z);
+                break;
+            case 3:
+                endPos = new Vector3Int(Pos.x + 1, Pos.y + (Pos.x + 1) % 2, Pos.z);
+                break;
+            case 4:
+                endPos = new Vector3Int(Pos.x + 1, Pos.y - Pos.x % 2, Pos.z);
+                break;
+            case 5:
+                endPos = new Vector3Int(Pos.x , Pos.y - 1, Pos.z);
+                break;
+            case 6:
+                endPos = new Vector3Int(Pos.x - 1, Pos.y - Pos.x % 2, Pos.z);
+                break;
+            default:
+                endPos = Vector3Int.zero;
+                break;
+        }
+        return endPos;
+    }
+    //刷新控制区
+    public static void UpdateZOC()
+    {
+        ArmyBelong EnemySide = (ArmyBelong)(((int)GameManager.GM.ActionSide + 1)%2);
+
+
+    }
+    
 
 }

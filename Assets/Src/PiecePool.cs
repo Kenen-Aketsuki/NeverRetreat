@@ -20,6 +20,7 @@ public class PiecePool : MonoBehaviour
         counter++;
         return counter.ToString() + "\\";
     }
+
     //以棋子ID为索引搜索棋子
     public GameObject getChildByID(string ID)
     {
@@ -104,6 +105,9 @@ public class PiecePool : MonoBehaviour
     public void DelChildByID(string ID)
     {
         GameObject tar = getChildByID(ID);
+
+        if (tar == null) Debug.Log(gameObject.name + "未找到目标");
+
         int posY = FixGameData.FGD.InteractMap.WorldToCell(tar.transform.position).y;
         Tuple<int, int> AddrT = listIndex[posY];
         int addr;
@@ -131,8 +135,26 @@ public class PiecePool : MonoBehaviour
                 listIndex[i] = new Tuple<int, int>(listIndex[i].Item1 - 1, listIndex[i].Item2);
             }
         }
+    }
 
-        //删除棋子
-        Destroy(tar);
+    //棋子跳边
+    public static void ChangeSide(string ID,Vector3Int Pos,ArmyBelong old)
+    {
+        PiecePool oldSide;
+        PiecePool newSide;
+        if(old == ArmyBelong.Human)
+        {
+            oldSide = FixGameData.FGD.HumanPiecePool;
+            newSide = FixGameData.FGD.CrashPiecePool;
+        }
+        else
+        {
+            oldSide = FixGameData.FGD.CrashPiecePool;
+            newSide = FixGameData.FGD.HumanPiecePool;
+        }
+
+        newSide.AddChildInOrder(ID, Pos);
+        oldSide.DelChildByID(ID);
+
     }
 }

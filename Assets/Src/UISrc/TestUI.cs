@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TestUI : MonoBehaviour
 {
+    GameObject piece;
+
     public void AddPiece()
     {
         //BasicUtility.SpawnPiece("Crash.Incite",
@@ -36,5 +38,28 @@ public class TestUI : MonoBehaviour
             Debug.Log("我那么大一个棋子呢？");
         }
         
+    }
+
+    public void MovePiece()
+    {
+        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().UpdateChildPos("1\\DawIII.101", FixGameData.MapToWorld(35, 5), new Vector3Int(0, 0, 0));
+        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildByID("1\\DawIII.101").transform.position = new Vector3Int(0, 0, 0);
+        piece = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildByID("1\\DawIII.101");
+    }
+
+    public void TestFunc1()
+    {
+        piece.GetComponent<OB_Piece>().Betray();
+    }
+
+    public void TestFunc2()
+    {
+        if (FixGameData.FGD.HumanPiecePool.getChildByID(piece.name) != null) Debug.Log("人类方找到目标");
+        if (FixGameData.FGD.CrashPiecePool.getChildByID(piece.name) != null) Debug.Log("崩坏方找到目标");
+    }
+
+    public void TestFunc3()
+    {
+        piece.GetComponent<OB_Piece>().CheckSupplyConnect();
     }
 }
