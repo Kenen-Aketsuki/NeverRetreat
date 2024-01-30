@@ -15,7 +15,7 @@ public class TestUI : MonoBehaviour
         //    true);
         //Debug.Log("增加了一个棋子");
 
-        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().UpdateChildPos("1\\DawIII.101", FixGameData.MapToWorld(35, 5), new Vector3Int(0, 0, 0));
+        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().UpdateChildPos("1\\DawIII.101", new Vector3Int(0, 0, 0));
         FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildByID("1\\DawIII.101").transform.position = new Vector3Int(0, 0, 0);
         FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().DelChildByID("1\\DawIII.101");
         Debug.Log("移动了一个棋子");
@@ -42,14 +42,15 @@ public class TestUI : MonoBehaviour
 
     public void MovePiece()
     {
-        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().UpdateChildPos("1\\DawIII.101", FixGameData.MapToWorld(35, 5), new Vector3Int(0, 0, 0));
-        FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildByID("1\\DawIII.101").transform.position = new Vector3Int(0, 0, 0);
-        piece = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().getChildByID("1\\DawIII.101");
+        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", FixGameData.MapToWorld(21, 21));
+        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.MapToWorld(21, 21);
+        
+        piece = FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade");
     }
 
     public void TestFunc1()
     {
-        piece.GetComponent<OB_Piece>().Betray();
+        Map.UpdateZOC();
     }
 
     public void TestFunc2()
@@ -60,6 +61,7 @@ public class TestUI : MonoBehaviour
 
     public void TestFunc3()
     {
-        piece.GetComponent<OB_Piece>().CheckSupplyConnect();
+        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", FixGameData.MapToWorld(23, 21));
+        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.MapToWorld(21, 23);
     }
 }

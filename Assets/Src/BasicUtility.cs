@@ -423,6 +423,7 @@ public static class BasicUtility
         //保存人类方棋子
         for (int i = 0; i < gamedata.HumanPieceParent.childCount; i++)
         {
+            //pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData();
             pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<rua>().getData();
 
             tmp = xmlDoc.CreateElement("Piece");
@@ -436,6 +437,7 @@ public static class BasicUtility
         //保存崩坏方棋子
         for (int i = 0; i < gamedata.CrashPieceParent.childCount; i++)
         {
+            //pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData();
             pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<rua>().getData();
 
             tmp = xmlDoc.CreateElement("Piece");

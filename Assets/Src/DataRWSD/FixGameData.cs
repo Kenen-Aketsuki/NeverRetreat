@@ -30,6 +30,12 @@ public class FixGameData : MonoBehaviour
     public List<Tilemap> MapList;
     //交互用地图
     public Tilemap InteractMap;
+    public Tilemap ZoneMap;
+    public Tilemap MultiPieceMap;
+
+    //特殊瓦片
+    public Tile InteractFill;//填充交互用
+    public Tile MultiPieceIcon;
 
     private void Start()
     {

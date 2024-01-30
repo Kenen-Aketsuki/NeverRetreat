@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OB_Piece : MonoBehaviour
@@ -63,7 +64,7 @@ public class OB_Piece : MonoBehaviour
         else AreaSlash.SetActive(false);
 
         Color bakC;
-        ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
+        UnityEngine.ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
         BaseColor.color = bakC;
         TroopType.sprite = BasicUtility.getPieceIcon(Data.PName.Split('/')[2]);
         
@@ -78,15 +79,8 @@ public class OB_Piece : MonoBehaviour
         else CrashCover.SetActive(false);
         //更改底色
         Color bakC;
-        ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
+        UnityEngine.ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
         BaseColor.color = bakC;
-
-        //更改父元素(其它修改在别的位置)
-        //if (Data.LoyalTo == ArmyBelong.Human) transform.parent = FixGameData.FGD.HumanPieceParent;
-        //else transform.parent = FixGameData.FGD.CrashPieceParent;
-
-        
-
     }
     //设置棋子数据
     public void setPieceData(Piece P)

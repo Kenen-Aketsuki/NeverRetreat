@@ -64,7 +64,7 @@ public class DataLoader : MonoBehaviour
         //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Facility.xml");
         GameUtility.从预设中读取地图(false, "");
 
-        //BasicUtility.savePiece("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");
+        //BasicUtility.savePieceAsDefault("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");
         GameUtility.从预设中读取棋子(false, "");
 
         

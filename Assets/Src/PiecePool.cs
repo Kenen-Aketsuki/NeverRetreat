@@ -57,6 +57,7 @@ public class PiecePool : MonoBehaviour
             bool ok = false;
             for(int i = GameUtility.columRange.Item2; i > GameUtility.columRange.Item1; i--)
             {
+                
                 if (listIndex.ContainsKey(i) && i < Pos.y && !ok)
                 {
                     listIndex.Add(Pos.y, new Tuple<int, int>(listIndex[i].Item1 + listIndex[i].Item2, 1));
@@ -68,8 +69,13 @@ public class PiecePool : MonoBehaviour
                     listIndex[i] = new Tuple<int, int>(listIndex[i].Item1 + 1, listIndex[i].Item2);
                 }
             }
-            listIndex = listIndex.OrderBy(x => x.Key).ToDictionary(x => x.Key, p => p.Value);
+            if (!ok)
+            {
+                listIndex.Add(Pos.y, new Tuple<int, int>(0, 1));
+                addr = listIndex[Pos.y];
+            }
 
+            listIndex = listIndex.OrderBy(x => x.Key).ToDictionary(x => x.Key, p => p.Value);
         }
         else
         {
@@ -82,6 +88,9 @@ public class PiecePool : MonoBehaviour
                 }
             }
         }
+
+        if (addr == null) Debug.Log("空地址");
+
         childList.Insert(addr.Item1, new Tuple<string, int, int>(childName, Pos.x, Pos.y));
     }
     //无序加入子对象
@@ -90,15 +99,10 @@ public class PiecePool : MonoBehaviour
         childList.Add(new Tuple<string, int, int>(childName, Pos.x, Pos.y));
     }
     //当棋子改变位置时更新字元素列表
-    public void UpdateChildPos(string ID, Vector3Int oldPos, Vector3Int newPos)
+    public void UpdateChildPos(string ID, Vector3Int newPos)
     {
-        for (int i = listIndex[oldPos.y].Item1; i < listIndex[oldPos.y].Item2 + listIndex[oldPos.y].Item1; i++)
-        {
-            if (childList[i].Item1 == ID)
-            {
-                childList.RemoveAt(i);
-            }
-        }
+        DelChildByID(ID);
+
         AddChildInOrder(ID, newPos);
     }
     //当棋子被删除时更新子元素列表

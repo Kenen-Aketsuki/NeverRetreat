@@ -53,8 +53,9 @@ public static class GameUtility
         columFac = 0;
         rowFac = 0;
 
-
+        //清空原有地图
         foreach (Tilemap map in FixGameData.FGD.MapList) map.ClearAllTiles();
+        FixGameData.FGD.InteractMap.ClearAllTiles();
 
         foreach (XmlNode colum in TerrainRoot.ChildNodes)
         {
@@ -222,7 +223,10 @@ public static class GameUtility
             columNo++;
         }
 
-        
+        //填充交互
+        Vector3Int LD = FixGameData.MapToWorld(0, 0);
+        Vector3Int RT = FixGameData.MapToWorld(mapSize.x, mapSize.y);
+        FixGameData.FGD.InteractMap.BoxFill(Vector3Int.zero, FixGameData.FGD.InteractFill, LD.x, LD.y, RT.x, RT.y);
 
     }
 
@@ -386,48 +390,6 @@ public static class GameUtility
             if (list[pin].Item3 < anixKey) return true;
         }
         return false;
-    }
-
-    //地图操作相关
-    //获取某格周边的格子
-    public static Vector3Int GetRoundSlotPos(Vector3Int Pos,int tar)//从左上开始顺时针1~6编号，0代表自身
-    {
-        Vector3Int endPos;
-        switch (tar)
-        {
-            case 0:
-                endPos = Pos;
-                break;
-            case 1:
-                endPos = new Vector3Int(Pos.x - 1, Pos.y + (Pos.x + 1) % 2, Pos.z);
-                break;
-            case 2:
-                endPos = new Vector3Int(Pos.x, Pos.y + 1, Pos.z);
-                break;
-            case 3:
-                endPos = new Vector3Int(Pos.x + 1, Pos.y + (Pos.x + 1) % 2, Pos.z);
-                break;
-            case 4:
-                endPos = new Vector3Int(Pos.x + 1, Pos.y - Pos.x % 2, Pos.z);
-                break;
-            case 5:
-                endPos = new Vector3Int(Pos.x , Pos.y - 1, Pos.z);
-                break;
-            case 6:
-                endPos = new Vector3Int(Pos.x - 1, Pos.y - Pos.x % 2, Pos.z);
-                break;
-            default:
-                endPos = Vector3Int.zero;
-                break;
-        }
-        return endPos;
-    }
-    //刷新控制区
-    public static void UpdateZOC()
-    {
-        ArmyBelong EnemySide = (ArmyBelong)(((int)GameManager.GM.ActionSide + 1)%2);
-
-
     }
     
 
