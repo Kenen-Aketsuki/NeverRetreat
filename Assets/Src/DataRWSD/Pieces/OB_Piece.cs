@@ -8,7 +8,7 @@ public class OB_Piece : MonoBehaviour
 {
     Piece Data;//棋子数据
     PieseTextShow PieceText;
-    bool isVisiable = true;
+    public bool isVisiable { get; private set; }
 
     [SerializeField]
     SpriteRenderer BaseColor;
@@ -19,7 +19,7 @@ public class OB_Piece : MonoBehaviour
     [SerializeField]
     GameObject AreaSlash;
     [SerializeField]
-    GameObject VisibaleMash;
+    SpriteMask VisibaleMask;
 
 
     //获取地图坐标
@@ -68,16 +68,18 @@ public class OB_Piece : MonoBehaviour
         PieceText.setParPice(transform);
         PieceText.InitText(gameObject.name, Data);
         
+        //设置显示
         if (Data.LoyalTo == ArmyBelong.ModCrash) CrashCover.SetActive(true);
         else CrashCover.SetActive(false);
         if (Data.activeArea > 0 || Data.passiveArea > 0) AreaSlash.SetActive(true);
         else AreaSlash.SetActive(false);
-
+        //设置背景
         Color bakC;
         UnityEngine.ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
         BaseColor.color = bakC;
         TroopType.sprite = BasicUtility.getPieceIcon(Data.PName.Split('/')[2]);
         
+        isVisiable = true;
     }
     //更新棋子显示数据
     void UpdateData()
@@ -101,12 +103,14 @@ public class OB_Piece : MonoBehaviour
     //设置可见性
     public void setVisibility(bool visible)
     {
-        if (!(visible ^ isVisiable))//二者同或
+        Debug.Log(isVisiable +"同或" + visible);
+        if ((visible ^ isVisiable))//二者同或
         {
+            Debug.Log("嗨嗨嗨");
+
             isVisiable = visible;
-
-
-
+            PieceText.gameObject.SetActive(isVisiable);
+            VisibaleMask.enabled = !visible;
         }
     }
 

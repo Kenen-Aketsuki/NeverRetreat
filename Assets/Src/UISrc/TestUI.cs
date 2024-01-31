@@ -55,17 +55,10 @@ public class TestUI : MonoBehaviour
 
     public void TestFunc1()
     {
-        
-        Map.UpdateZOC();
-        //FixGameData.FGD.ZoneMap.ClearAllTiles();
 
-        //Vector3Int pos = Map.GetRoundSlotPos(piece.GetComponent<OB_Piece>().PosInMap, counter);
-        ////Vector3Int pos = piece.GetComponent<OB_Piece>().PosInMap + new Vector3Int(0, counter, 0);
-        //FixGameData.FGD.ZoneMap.SetTile(
-        //    pos,
-        //    FixSystemData.GlobalZoneList["ZOC"].Top);
-        //Debug.Log(pos +" ¡ª "+counter);
-        //counter =(counter + 1) % 7;
+        //Map.UpdateZOC();
+        piece.GetComponent<OB_Piece>().setVisibility(!piece.GetComponent<OB_Piece>().isVisiable);
+        
 
     }
 
