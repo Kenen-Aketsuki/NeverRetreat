@@ -2,7 +2,7 @@
 <!DOCTYPE TerrainData SYSTEM "TerrainData.dtd">
 <TerrainData>
     <!-- 固定设施 -->
-    <Terrain Type="FixFacility" id="Road_1st" isRoad="True">
+    <Terrain Type="FixFacility" id="Road1st" isRoad="True">
         <name>一级道路</name>
         <Data>
             <enterCost>1</enterCost>
@@ -13,7 +13,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="FixFacility" id="Road_2nd" isRoad="True">
+    <Terrain Type="FixFacility" id="Road2nd" isRoad="True">
         <name>二级道路</name>
         <Data>
             <enterCost>2</enterCost>
@@ -24,7 +24,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="FixFacility" id="Road_3rd" isRoad="True">
+    <Terrain Type="FixFacility" id="Road3rd" isRoad="True">
         <name>三级道路</name>
         <Data>
             <enterCost>2</enterCost>
@@ -66,6 +66,7 @@
                 <adjust target="RRK" way="ADD" number="1" />
             </battleAdjust>
             <height>10</height>
+            <canZoc>False</canZoc>
         </Data>
     </Terrain>
 
@@ -133,6 +134,7 @@
                 <adjust target="ATK" way="NOPE" number="0" />
             </battleAdjust>
             <height>2</height>
+            <canZoc>False</canZoc>
         </Data>
     </Terrain>
 
@@ -146,6 +148,7 @@
                 <adjust target="STK" way="ADD" number="1" />
             </battleAdjust>
             <height>3</height>
+            <canZoc>False</canZoc>
         </Data>
     </Terrain>
 

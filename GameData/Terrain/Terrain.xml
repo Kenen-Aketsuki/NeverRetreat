@@ -9,6 +9,7 @@
                 <adjust target="NA" way="NOPE" number="0"/>
             </battleAdjust>
             <height>500</height>
+            <canZoc>False</canZoc>
         </Data>
     </Terrain>
 
@@ -64,6 +65,7 @@
                 <adjust target="NA" way="NOPE" number="0" />
             </battleAdjust>
             <height>0</height>
+            <canZoc>False</canZoc>
         </Data>
     </Terrain>
 
@@ -76,6 +78,7 @@
                 <adjust target="MOV" way="ALL" number="0" />
             </battleAdjust>
             <height>0</height>
+            <canZoc>False</canZoc>
         </Data>
     </Terrain>
 </TerrainData>

@@ -228,23 +228,23 @@ public static class BasicUtility
                 tmpStr = "";
                 if (gamedata.MapList[4].GetTile(pos) != null)
                 {
-                    if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road_1st")) tmpStr += "1-";
-                    else if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road_2nd")) tmpStr += "2-";
-                    else if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road_3rd")) tmpStr += "3-";
+                    if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road1st")) tmpStr += "1-";
+                    else if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road2nd")) tmpStr += "2-";
+                    else if (gamedata.MapList[4].GetTile(pos).name.StartsWith("Road3rd")) tmpStr += "3-";
                 }
                 else tmpStr += "0-";
                 if (gamedata.MapList[5].GetTile(pos) != null)
                 {
-                    if (gamedata.MapList[5].GetTile(pos).name.StartsWith("Road_1st")) tmpStr += "1-";
-                    else if (gamedata.MapList[5].GetTile(pos).name.StartsWith("Road_2nd")) tmpStr += "2-";
-                    else if (gamedata.MapList[5].GetTile(pos).name.StartsWith("Road_3rd")) tmpStr += "3-";
+                    if (gamedata.MapList[5].GetTile(pos).name.StartsWith("Road1st")) tmpStr += "1-";
+                    else if (gamedata.MapList[5].GetTile(pos).name.StartsWith("Road2nd")) tmpStr += "2-";
+                    else if (gamedata.MapList[5].GetTile(pos).name.StartsWith("Road3rd")) tmpStr += "3-";
                 }
                 else tmpStr += "0-";
                 if (gamedata.MapList[6].GetTile(pos) != null)
                 {
-                    if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road_1st")) tmpStr += "1";
-                    else if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road_2nd")) tmpStr += "2";
-                    else if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road_3rd")) tmpStr += "3";
+                    if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road1st")) tmpStr += "1";
+                    else if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road2nd")) tmpStr += "2";
+                    else if (gamedata.MapList[6].GetTile(pos).name.StartsWith("Road3rd")) tmpStr += "3";
                 }
                 else tmpStr += "0";
                 if (tmpStr != "0-0-0")

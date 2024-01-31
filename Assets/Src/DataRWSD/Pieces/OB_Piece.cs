@@ -103,11 +103,8 @@ public class OB_Piece : MonoBehaviour
     //设置可见性
     public void setVisibility(bool visible)
     {
-        Debug.Log(isVisiable +"同或" + visible);
         if ((visible ^ isVisiable))//二者同或
         {
-            Debug.Log("嗨嗨嗨");
-
             isVisiable = visible;
             PieceText.gameObject.SetActive(isVisiable);
             VisibaleMask.enabled = !visible;

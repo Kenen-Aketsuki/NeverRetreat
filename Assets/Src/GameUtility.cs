@@ -124,19 +124,19 @@ public static class GameUtility
                     {
                         FixGameData.FGD.MapList[4].SetTile(
                             FixGameData.MapToWorld(columNo, rowNo ),
-                            FixSystemData.GlobalFacilityList["Road_" + roadName[int.Parse(sideSplit[0]) - 1]].Left);
+                            FixSystemData.GlobalFacilityList["Road" + roadName[int.Parse(sideSplit[0]) - 1]].Left);
                     }
                     if (sideSplit[1] != "0")
                     {
                         FixGameData.FGD.MapList[5].SetTile(
                             FixGameData.MapToWorld(columNo, rowNo ),
-                            FixSystemData.GlobalFacilityList["Road_" + roadName[int.Parse(sideSplit[1]) - 1]].Top);
+                            FixSystemData.GlobalFacilityList["Road" + roadName[int.Parse(sideSplit[1]) - 1]].Top);
                     }
                     if (sideSplit[2] != "0")
                     {
                         FixGameData.FGD.MapList[6].SetTile(
                             FixGameData.MapToWorld(columNo, rowNo ),
-                            FixSystemData.GlobalFacilityList["Road_" + roadName[int.Parse(sideSplit[2]) - 1]].Right);
+                            FixSystemData.GlobalFacilityList["Road" + roadName[int.Parse(sideSplit[2]) - 1]].Right);
                     }
                 }
 

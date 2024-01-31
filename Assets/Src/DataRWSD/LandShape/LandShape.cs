@@ -10,13 +10,39 @@ public class LandShape
     public string name;
     public int enterCount = 0;
     public int height = 0;
-
+    public bool canZoc = true;
     //获取对应项加成
-    public Tuple<FixWay, float> ATK_All { get { return Adjust[FixData.ATK]; } }
-    public Tuple<FixWay, float> DEF_All { get { return Adjust[FixData.DEF]; } }
-    public Tuple<FixWay, float> HP_All { get { return Adjust[FixData.HP]; } }
-    public Tuple<FixWay, float> MOV_All { get { return Adjust[FixData.MOV]; } }
-    public Tuple<FixWay, float> RRK_All { get { return Adjust[FixData.RRK]; } }
+    public Tuple<FixWay, float> ATK_All { get {
+            Tuple<FixWay, float> tmp = null;
+            Adjust.TryGetValue(FixData.ATK, out tmp);
+            return tmp;
+        }
+    }
+    public Tuple<FixWay, float> DEF_All { get {
+            Tuple<FixWay, float> tmp = null;
+            Adjust.TryGetValue(FixData.DEF, out tmp);
+            return tmp;
+        } }
+    public Tuple<FixWay, float> HP_All { get {
+            Tuple<FixWay, float> tmp = null;
+            Adjust.TryGetValue(FixData.HP, out tmp);
+            return tmp;
+        } }
+    public Tuple<FixWay, float> MOV_All { get {
+            Tuple<FixWay, float> tmp = null;
+            Adjust.TryGetValue(FixData.MOV, out tmp);
+            return tmp;
+        } }
+    public Tuple<FixWay, float> RRK_All { get {
+            Tuple<FixWay, float> tmp = null;
+            Adjust.TryGetValue(FixData.RRK, out tmp);
+            return tmp;
+        } }
+    public Tuple<FixWay, float> STK_All { get {
+            Tuple<FixWay, float> tmp = null;
+            Adjust.TryGetValue(FixData.STK, out tmp);
+            return tmp;
+        } }
 
 
     Dictionary<FixData,Tuple<FixWay,float>> Adjust = new Dictionary<FixData,Tuple<FixWay, float>>();
@@ -61,7 +87,6 @@ public class LandShape
             }
 
             XmlNodeList tmpL = Data.SelectNodes("battleAdjust");//录入修正值
-            tmp = null;
             foreach(XmlNode L in tmpL)
             {
                 if (L.Attributes["target"] == null || L.Attributes["target"].Value == "All")
@@ -70,6 +95,9 @@ public class LandShape
                     break;
                 }
             }
+
+            tmp = Data.SelectSingleNode("canZoc");
+            if (tmp != null) canZoc = bool.Parse(tmp.InnerText);
         }
     }
 
@@ -170,21 +198,43 @@ public class Facility : LandShape
     public bool isSpecialLandShape = false;//是否为特殊地形(不包括特殊设施)
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
-    //获友方应项加成
+    //获取带有敌我的加成
     #region
-    public Tuple<FixWay, float> ATK_Friend { get { return AdjustFriend[FixData.ATK]; } }
-    public Tuple<FixWay, float> DEF_Friend { get { return AdjustFriend[FixData.DEF]; } }
-    public Tuple<FixWay, float> HP_Friend { get { return AdjustFriend[FixData.HP]; } }
-    public Tuple<FixWay, float> MOV_Friend { get { return AdjustFriend[FixData.MOV]; } }
-    public Tuple<FixWay, float> RRK_Friend { get { return AdjustFriend[FixData.RRK]; } }
-    #endregion
-    //获取敌方加成
-    #region
-    public Tuple<FixWay, float> ATK_Enemy { get { return AdjustEnemy[FixData.ATK]; } }
-    public Tuple<FixWay, float> DEF_Enemy { get { return AdjustEnemy[FixData.DEF]; } }
-    public Tuple<FixWay, float> HP_Enemy { get { return AdjustEnemy[FixData.HP]; } }
-    public Tuple<FixWay, float> MOV_Enemy { get { return AdjustEnemy[FixData.MOV]; } }
-    public Tuple<FixWay, float> RRK_Enemy { get { return AdjustEnemy[FixData.RRK]; } }
+    public Tuple<FixWay, float> ATK_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.ATK];
+        else return AdjustEnemy[FixData.ATK];
+    }
+
+    public Tuple<FixWay, float> DEF_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.DEF];
+        else return AdjustEnemy[FixData.DEF];
+    }
+
+    public Tuple<FixWay, float> HP_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.HP];
+        else return AdjustEnemy[FixData.HP];
+    }
+
+    public Tuple<FixWay, float> MOV_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.MOV];
+        else return AdjustEnemy[FixData.MOV];
+    }
+
+    public Tuple<FixWay, float> RRK_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.RRK];
+        else return AdjustEnemy[FixData.RRK];
+    }
+
+    public Tuple<FixWay, float> STK_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.STK];
+        else return AdjustEnemy[FixData.STK];
+    }
     #endregion
 
     Dictionary<FixData, Tuple<FixWay, float>> AdjustFriend = new Dictionary<FixData, Tuple<FixWay, float>>();
@@ -283,22 +333,45 @@ public class SpecialFacility : LandShape
     public string id;
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
-    //获取友方加成
+    //获取带有敌我的加成
     #region
-    public Tuple<FixWay, float> ATK_Friend { get { return AdjustFriend[FixData.ATK]; } }
-    public Tuple<FixWay, float> DEF_Friend { get { return AdjustFriend[FixData.DEF]; } }
-    public Tuple<FixWay, float> HP_Friend { get { return AdjustFriend[FixData.HP]; } }
-    public Tuple<FixWay, float> MOV_Friend { get { return AdjustFriend[FixData.MOV]; } }
-    public Tuple<FixWay, float> RRK_Friend { get { return AdjustFriend[FixData.RRK]; } }
+    public Tuple<FixWay, float> ATK_IFF (ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.ATK];
+        else return AdjustEnemy[FixData.ATK];
+    }
+
+    public Tuple<FixWay, float> DEF_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.DEF];
+        else return AdjustEnemy[FixData.DEF];
+    }
+
+    public Tuple<FixWay, float> HP_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.HP];
+        else return AdjustEnemy[FixData.HP];
+    }
+
+    public Tuple<FixWay, float> MOV_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.MOV];
+        else return AdjustEnemy[FixData.MOV];
+    }
+
+    public Tuple<FixWay, float> RRK_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.RRK];
+        else return AdjustEnemy[FixData.RRK];
+    }
+
+    public Tuple<FixWay, float> STK_IFF(ArmyBelong side)
+    {
+        if (side == Belone) return AdjustFriend[FixData.STK];
+        else return AdjustEnemy[FixData.STK];
+    }
     #endregion
-    //获取敌方加成
-    #region
-    public Tuple<FixWay, float> ATK_Enemy { get { return AdjustEnemy[FixData.ATK]; } }
-    public Tuple<FixWay, float> DEF_Enemy { get { return AdjustEnemy[FixData.DEF]; } }
-    public Tuple<FixWay, float> HP_Enemy { get { return AdjustEnemy[FixData.HP]; } }
-    public Tuple<FixWay, float> MOV_Enemy { get { return AdjustEnemy[FixData.MOV]; } }
-    public Tuple<FixWay, float> RRK_Enemy { get { return AdjustEnemy[FixData.RRK]; } }
-    #endregion
+
 
     Dictionary<FixData, Tuple<FixWay, float>> AdjustFriend = new Dictionary<FixData, Tuple<FixWay, float>>();
     Dictionary<FixData, Tuple<FixWay, float>> AdjustEnemy = new Dictionary<FixData, Tuple<FixWay, float>>();
