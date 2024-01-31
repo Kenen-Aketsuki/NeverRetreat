@@ -16,6 +16,26 @@ public static class GameUtility
     public static bool fromSave;
     public static string Save;
 
+    public static void 游戏初始化()
+    {
+        从预设中读取地图(fromSave, Save);
+
+        从预设中读取棋子(fromSave, Save);
+
+        //录入回合信息
+        if (fromSave)
+        {
+
+        }
+        else
+        {
+
+        }
+
+        //布设棋子堆叠标志
+        布设棋子堆叠标志();
+    }
+
     public static void 从预设中读取地图(bool fromSave, string Save)//字面意思
     {
         
@@ -291,6 +311,36 @@ public static class GameUtility
         QuickSortColumNo(ref FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().childList);
         GenColumIndex(FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().childList,
             ref FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().listIndex);
+    }
+
+    public static void 布设棋子堆叠标志()
+    {
+        //清空棋子堆叠标志
+        FixGameData.FGD.MultiPieceMap.ClearAllTiles();
+        //人类方
+        foreach(Tuple<string,int,int> child in FixGameData.FGD.HumanPiecePool.childList)
+        {
+            Vector3Int tmp = new Vector3Int(child.Item2, child.Item3, 0);
+            List<GameObject> lst = FixGameData.FGD.HumanPiecePool.getChildByPos(tmp);
+            if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null && 
+                lst.Count > 1)
+            {
+                Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
+                FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
+                
+            }
+        }
+        //崩坏方
+        foreach (Tuple<string, int, int> child in FixGameData.FGD.CrashPiecePool.childList)
+        {
+            Vector3Int tmp = new Vector3Int(child.Item2, child.Item3, 0);
+            if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null &&
+                FixGameData.FGD.CrashPiecePool.getChildByPos(tmp).Count > 1)
+            {
+                Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
+                FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
+            }
+        }
     }
 
     //生成行目录

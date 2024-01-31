@@ -25528,6 +25528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8787c536a05194140a5869fb6dd2414e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionSide: 0
 --- !u!4 &471578657
 Transform:
   m_ObjectHideFlags: 0
@@ -25580,6 +25581,10 @@ MonoBehaviour:
   - {fileID: 1767863650}
   - {fileID: 915283367}
   InteractMap: {fileID: 940476343}
+  ZoneMap: {fileID: 1177643926}
+  MultiPieceMap: {fileID: 1235662756}
+  InteractFill: {fileID: 11400000, guid: db2171631409b6744a1d163a516b6d91, type: 2}
+  MultiPieceIcon: {fileID: 11400000, guid: 1912c3371a1f0014f877ef5baf30fac6, type: 2}
 --- !u!1001 &476069296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26496,9 +26501,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1235662754}
-  - {fileID: 1177643927}
   - {fileID: 915283368}
   - {fileID: 2142187433}
+  - {fileID: 1177643927}
   - {fileID: 1535538390}
   - {fileID: 914971099}
   - {fileID: 2472607}
@@ -26629,7 +26634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test2
+  m_text: Ver
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -28773,7 +28778,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 672733063}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &917216934
 PrefabInstance:
@@ -48505,7 +48510,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test3
+  m_text: Hor
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -49577,7 +49582,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 672733063}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1189143142 stripped
 Transform:
@@ -49751,7 +49756,7 @@ GameObject:
   - component: {fileID: 1235662756}
   - component: {fileID: 1235662755}
   m_Layer: 0
-  m_Name: MorePiece
+  m_Name: MultiPieceSign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50335,11 +50340,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1917929046095897183, guid: 437320c37c9c58e4187f33c436b2eadb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.64
+      value: -22.55
       objectReference: {fileID: 0}
     - target: {fileID: 1917929046095897183, guid: 437320c37c9c58e4187f33c436b2eadb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.48
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 1917929046095897183, guid: 437320c37c9c58e4187f33c436b2eadb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -60111,7 +60116,7 @@ Transform:
   - {fileID: 99433973}
   - {fileID: 1767863648}
   m_Father: {fileID: 672733063}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2142550582
 PrefabInstance:

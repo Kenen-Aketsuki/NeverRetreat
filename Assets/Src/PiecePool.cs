@@ -52,7 +52,8 @@ public class PiecePool : MonoBehaviour
     public void AddChildInOrder(string childName,Vector3Int Pos)
     {
         Tuple<int, int> addr;
-        if(!listIndex.TryGetValue(Pos.y, out addr))
+
+        if (!listIndex.TryGetValue(Pos.y, out addr))
         {
             bool ok = false;
             for(int i = GameUtility.columRange.Item2; i > GameUtility.columRange.Item1; i--)
@@ -89,8 +90,6 @@ public class PiecePool : MonoBehaviour
             }
         }
 
-        if (addr == null) Debug.Log("空地址");
-
         childList.Insert(addr.Item1, new Tuple<string, int, int>(childName, Pos.x, Pos.y));
     }
     //无序加入子对象
@@ -110,11 +109,16 @@ public class PiecePool : MonoBehaviour
     {
         GameObject tar = getChildByID(ID);
 
-        if (tar == null) Debug.Log(gameObject.name + "未找到目标");
+        if (tar == null)
+        {
+            Debug.Log(gameObject.name + "未找到目标");
+            return;
+        }
 
         int posY = FixGameData.FGD.InteractMap.WorldToCell(tar.transform.position).y;
         Tuple<int, int> AddrT = listIndex[posY];
         int addr;
+
         //删除棋子位置信息
         for (int i = 0;i < AddrT.Item2; i++)
         {

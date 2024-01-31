@@ -8,6 +8,7 @@ public class OB_Piece : MonoBehaviour
 {
     Piece Data;//棋子数据
     PieseTextShow PieceText;
+    bool isVisiable = true;
 
     [SerializeField]
     SpriteRenderer BaseColor;
@@ -17,7 +18,16 @@ public class OB_Piece : MonoBehaviour
     SpriteRenderer TroopType;
     [SerializeField]
     GameObject AreaSlash;
-    
+    [SerializeField]
+    GameObject VisibaleMash;
+
+
+    //获取地图坐标
+    public Vector3Int PosInMap { get
+        {
+            return FixGameData.FGD.InteractMap.WorldToCell((transform.position));
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +98,18 @@ public class OB_Piece : MonoBehaviour
         Data = P;
     }
 
+    //设置可见性
+    public void setVisibility(bool visible)
+    {
+        if (!(visible ^ isVisiable))//二者同或
+        {
+            isVisiable = visible;
+
+
+
+        }
+    }
+
     public Tuple<string, Vector2Int, string, int, int, bool> getPieceData()
     {
         Vector3Int pos = FixGameData.FGD.InteractMap.WorldToCell(gameObject.transform.position);
@@ -147,7 +169,7 @@ public class OB_Piece : MonoBehaviour
     public void Betray()
     {
         //数据跳边
-        PiecePool.ChangeSide(gameObject.name, GetMapPos(), Data.LoyalTo);
+        PiecePool.ChangeSide(gameObject.name, PosInMap, Data.LoyalTo);
         Data.Betray();
         //本体跳边
         if (Data.LoyalTo == ArmyBelong.Human)
@@ -190,9 +212,6 @@ public class OB_Piece : MonoBehaviour
     }
 
 
-    //获取地图坐标
-    public Vector3Int GetMapPos()
-    {
-        return FixGameData.FGD.InteractMap.WorldToCell(transform.position);
-    }
+    
+
 }

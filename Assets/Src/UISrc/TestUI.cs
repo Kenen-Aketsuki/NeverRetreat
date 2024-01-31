@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class TestUI : MonoBehaviour
 {
     GameObject piece;
+
+    int movDir = 1;
+    int counter;
 
     public void AddPiece()
     {
@@ -42,26 +46,49 @@ public class TestUI : MonoBehaviour
 
     public void MovePiece()
     {
-        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", FixGameData.MapToWorld(21, 21));
-        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.MapToWorld(21, 21);
+        FixGameData.FGD.HumanPiecePool.UpdateChildPos("1\\DawIII.101", FixGameData.MapToWorld(21, 21));
+        FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101").transform.position = FixGameData.MapToWorld(21, 21);
         
-        piece = FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade");
+        piece = FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101");
+        counter = 0;
     }
 
     public void TestFunc1()
     {
+        
         Map.UpdateZOC();
+        //FixGameData.FGD.ZoneMap.ClearAllTiles();
+
+        //Vector3Int pos = Map.GetRoundSlotPos(piece.GetComponent<OB_Piece>().PosInMap, counter);
+        ////Vector3Int pos = piece.GetComponent<OB_Piece>().PosInMap + new Vector3Int(0, counter, 0);
+        //FixGameData.FGD.ZoneMap.SetTile(
+        //    pos,
+        //    FixSystemData.GlobalZoneList["ZOC"].Top);
+        //Debug.Log(pos +" — "+counter);
+        //counter =(counter + 1) % 7;
+
     }
 
     public void TestFunc2()
     {
-        if (FixGameData.FGD.HumanPiecePool.getChildByID(piece.name) != null) Debug.Log("人类方找到目标");
-        if (FixGameData.FGD.CrashPiecePool.getChildByID(piece.name) != null) Debug.Log("崩坏方找到目标");
+        Vector3Int tmp = FixGameData.FGD.InteractMap.WorldToCell(piece.transform.position) + new Vector3Int(0, movDir, 0);
+        
+        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", tmp);
+        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.FGD.InteractMap.CellToWorld(tmp);
+        //if (FixGameData.FGD.HumanPiecePool.getChildByID(piece.name) != null) Debug.Log("人类方找到目标");
+        //if (FixGameData.FGD.CrashPiecePool.getChildByID(piece.name) != null) Debug.Log("崩坏方找到目标");
     }
 
     public void TestFunc3()
     {
-        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", FixGameData.MapToWorld(23, 21));
-        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.MapToWorld(21, 23);
+        Vector3Int tmp = FixGameData.FGD.InteractMap.WorldToCell(piece.transform.position) + new Vector3Int(movDir, 0, 0);
+
+        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", tmp);
+        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.FGD.InteractMap.CellToWorld(tmp);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl)) movDir *= -1;
     }
 }

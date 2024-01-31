@@ -10,28 +10,29 @@ public static class Map
     public static Vector3Int GetRoundSlotPos(Vector3Int Pos, int tar)//从左上开始顺时针1~6编号，0代表自身
     {
         Vector3Int endPos;
+        int y = Math.Abs(Pos.y);
         switch (tar)
         {
             case 0:
                 endPos = Pos;
                 break;
             case 1:
-                endPos = new Vector3Int(Pos.x - 1, Pos.y + (Pos.x + 1) % 2, Pos.z);
+                endPos = new Vector3Int(Pos.x + y % 2, Pos.y - 1, Pos.z);
                 break;
             case 2:
-                endPos = new Vector3Int(Pos.x, Pos.y + 1, Pos.z);
+                endPos = new Vector3Int(Pos.x + 1, Pos.y, Pos.z);
                 break;
             case 3:
-                endPos = new Vector3Int(Pos.x + 1, Pos.y + (Pos.x + 1) % 2, Pos.z);
+                endPos = new Vector3Int(Pos.x + y % 2, Pos.y + 1, Pos.z);
                 break;
             case 4:
-                endPos = new Vector3Int(Pos.x + 1, Pos.y - Pos.x % 2, Pos.z);
+                endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y + 1, Pos.z);
                 break;
             case 5:
-                endPos = new Vector3Int(Pos.x, Pos.y - 1, Pos.z);
+                endPos = new Vector3Int(Pos.x - 1, Pos.y, Pos.z);
                 break;
             case 6:
-                endPos = new Vector3Int(Pos.x - 1, Pos.y - Pos.x % 2, Pos.z);
+                endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y - 1, Pos.z);
                 break;
             default:
                 endPos = Vector3Int.zero;
@@ -62,8 +63,10 @@ public static class Map
 
             for(int i = 1; i < 7; i++)
             {
+                Vector3Int tmp = GetRoundSlotPos(pos, i);
+                if (FixGameData.FGD.ZoneMap.GetTile(tmp) != null) continue;
                 FixGameData.FGD.ZoneMap.SetTile(
-                    GetRoundSlotPos(pos, i), 
+                    tmp, 
                     FixSystemData.GlobalZoneList["ZOC"].Top);
             }
         }
