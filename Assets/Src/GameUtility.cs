@@ -12,6 +12,7 @@ public static class GameUtility
     public static Tuple<int, int> columRange;
     public static Tuple<int, int> rowRange;
 
+    public static float TileMapCellStep { get { return 2.16f; } }
 
     public static bool fromSave;
     public static string Save;

@@ -4,7 +4,6 @@ using System.Xml;
 using UnityEngine.Tilemaps;
 using System.IO;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class LandShape
 {
@@ -12,6 +11,7 @@ public class LandShape
     public int enterCount = 0;
     public int height = 0;
     public bool canZoc = true;
+    public bool atSide { get; private set; }
     //获取对应项加成
     #region
     public Tuple<FixWay, float> ATK_All { get {
@@ -84,14 +84,17 @@ public class LandShape
 
     public LandShape(XmlNode root)
     {
-
         XmlNode tmp = root.SelectSingleNode("name");
-        if (tmp != null)//录入名称
+        //录入名称
+        if (tmp != null)
         {
             name = tmp.InnerText;
         }
-
-        tmp = root.SelectSingleNode("Data");//录入数值
+        //是否在边上
+        if (root.Attributes["atSide"] != null) atSide = bool.Parse(root.Attributes["atSide"].Value);
+        
+        //录入数值
+        tmp = root.SelectSingleNode("Data");
         if (tmp != null)
         {
             XmlNode Data = tmp;
@@ -160,12 +163,10 @@ public class BasicLandShape : LandShape //基础地形
     public Tile Right = null;
 
     public string id;
-    public bool atSide = false;
 
     public BasicLandShape(XmlNode root) : base(root)
     {
         id = root.Attributes["id"].Value;
-        if(root.Attributes["atSide"] != null) atSide = bool.Parse(root.Attributes["atSide"].Value);
 
         string path = FixSystemData.TerrainDirectory + "\\img\\" ;
         Texture2D texture;
@@ -227,7 +228,6 @@ public class Facility : LandShape
     public Tile Right = null;
 
     public string id;
-    public bool atSide = false;
     public bool isRoad = false;
     public bool canLeftRuin = false;//是否留下废墟
     public bool isSpecialLandShape = false;//是否为特殊地形(不包括特殊设施)
@@ -290,7 +290,6 @@ public class Facility : LandShape
     public Facility(XmlNode root) : base(root)
     {
         id = root.Attributes["id"].Value;
-        if (root.Attributes["atSide"] != null) atSide = bool.Parse(root.Attributes["atSide"].Value);
         if (root.Attributes["isRoad"] != null) isRoad = bool.Parse(root.Attributes["isRoad"].Value);
         if (root.Attributes["Type"].Value == "FixFacility") canLeftRuin = true;
         if (root.Attributes["Type"].Value == "SpecialTerrain") isSpecialLandShape = true;
@@ -305,11 +304,9 @@ public class Facility : LandShape
                 if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Friend")
                 {
                     addAdjestTo(ref AdjustFriend, L);
-                    break;
                 }else if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Enemy")
                 {
                     addAdjestTo(ref AdjustEnemy, L);
-                    break;
                 }
             }
             

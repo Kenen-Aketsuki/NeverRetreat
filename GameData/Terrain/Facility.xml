@@ -61,7 +61,7 @@
         <name>猎人工会</name>
         <Data>
             <enterCost>0</enterCost>
-            <battleAdjust>
+            <battleAdjust target="Friend">
                 <adjust target="MOV" way="ADD" number="-2" />
                 <adjust target="RRK" way="ADD" number="1" />
             </battleAdjust>

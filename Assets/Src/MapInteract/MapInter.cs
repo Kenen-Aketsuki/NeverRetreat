@@ -16,10 +16,10 @@ public class MapInter : MonoBehaviour
     {
         Map.UpdateZOC();
 
-        Debug.Log(MousePos);
+        Debug.Log(MousePos + "处的防御力为: " + Map.GetTargetDEFK(MousePos, GameManager.GM.ActionSide, 5));
         for (int i = 1; i < 7; i++)
         {
-            Debug.Log("——————方向： " + i + " ———————\n此处堆叠为" + Map.GetHereStack(MousePos,GameManager.GM.ActionSide));
+            Debug.Log("——————方向： " + i + " ———————\n此方向攻击力为: " + Map.GetTargetATK(MousePos, i, GameManager.GM.ActionSide, 5));
 
         }
     }

@@ -155,8 +155,8 @@ public static class Map
             else if (Land.MOV_All != null && Land.MOV_All.Item1 == FixWay.ALL) Mov = -2;
             else if (Land.MOV_All != null && Land.MOV_All.Item1 == FixWay.NOPE) Mov = -1;
             //统计阵营
-            if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.MULTY) MovMULTY *= Land.MOV_All.Item2;
-            else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.ADD) MovAdd += Land.MOV_All.Item2;
+            if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.MULTY) MovMULTY *= Land.MOV_IFF(ActionSide).Item2;
+            else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.ADD) MovAdd += Land.MOV_IFF(ActionSide).Item2;
             else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.ALL) Mov = -2;
             else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.NOPE) Mov = -1;
         }
@@ -182,7 +182,7 @@ public static class Map
         
         return canset;
     }
-
+    //获取目标格的堆叠
     public static int GetHereStack(Vector3Int Pos,ArmyBelong ActionSide)
     {
         float FixSTK = 0;
@@ -192,158 +192,86 @@ public static class Map
             if(Land == null) continue;
             if (Land.STK_All != null && Land.STK_All.Item1 == FixWay.ADD) FixSTK += Land.STK_All.Item2;
             //统计阵营
-            if (Land.STK_IFF(ActionSide) != null && Land.STK_IFF(ActionSide).Item1 == FixWay.MULTY) FixSTK += Land.STK_All.Item2;
+            if (Land.STK_IFF(ActionSide) != null && Land.STK_IFF(ActionSide).Item1 == FixWay.MULTY) FixSTK += Land.STK_IFF(ActionSide).Item2;
         }
 
         return (int)FixSTK + 2;
     }
-
-    //位置、移动力、高度、堆叠、能否跨越获得控制区、是否需要全部
-    public static Tuple<Vector3Int, float, int, int, bool, bool> GetNextSlotWithData(Vector3Int Pos,int direction)//可以认为是从Pos对应位置向某个方向移动
+    //获取目标格的高度
+    public static int GetInCellHeight(Vector3Int Pos)
     {
-        float Mov = -1;
         int height = 0;
-        int Stk = 2;
-        bool canZoc = true;
-        bool AllMovNeed = false;
-
-        float MovAdd = 0;
-        float MovMULTY = 1;
-
-        string tmpStr;
-        //获取边坐标
-        Tuple<int, Vector3Int> tmpTup = GetSideAddr(Pos, direction);
-        //获取目的坐标
-        Vector3Int endPos = GetRoundSlotPos(Pos, direction);
-
-        //计算基础地形
-        if (FixGameData.FGD.MapList[0].GetTile(endPos) != null)
+        List<LandShape> Lands = GetPLaceInfo(Pos, 0);
+        foreach (LandShape Land in Lands)
         {
-            tmpStr = FixGameData.FGD.MapList[0].GetTile(endPos).name;
-            BasicLandShape tmpLand = FixSystemData.GlobalBasicTerrainList[tmpStr];
-            Mov = tmpLand.enterCount;
-            height = tmpLand.height;
-            if (!tmpLand.canZoc) canZoc = false;
-        }
-        
-
-        //计算河流
-        if (FixGameData.FGD.MapList[1+tmpTup.Item1].GetTile(tmpTup.Item2) != null)
-        {
-            AllMovNeed = true;
-            canZoc = false;
+            if (Land == null) continue;
+            if (Land.height > height) height = Land.height;
         }
 
-        //计算道路
-        if (FixGameData.FGD.MapList[4 + tmpTup.Item1].GetTile(tmpTup.Item2) != null)
-        {
-            tmpStr = FixGameData.FGD.MapList[4 + tmpTup.Item1].GetTile(tmpTup.Item2).name;
-            Facility tmpLand = FixSystemData.GlobalFacilityList[tmpStr];
-            height = tmpLand.height;
-            if (Mov == -1) Mov = tmpLand.enterCount;
-            else MovAdd += tmpLand.MOV_All.Item2;
-        }
-
-
-        //计算格内设施
-        if (FixGameData.FGD.MapList[7].GetTile(endPos) != null)
-        {
-            tmpStr = FixGameData.FGD.MapList[7].GetTile(endPos).name;
-            Facility tmpLand = null;
-            FixSystemData.GlobalFacilityList.TryGetValue(tmpStr, out tmpLand);
-            if(tmpLand != null)
-            {
-                height = tmpLand.height;
-                if (canZoc) canZoc = tmpLand.canZoc;
-                if (tmpLand.STK_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) Stk += (int)tmpLand.STK_All.Item2;
-                //计算公共的
-                if (Mov == -1) Mov = tmpLand.enterCount;
-                else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-                else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-
-                //计算阵营的
-                if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-                else if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-            }
-        }
-        //特殊设施
-        if (FixGameData.FGD.MapList[7].GetTile(endPos) != null)
-        {
-            tmpStr = FixGameData.FGD.MapList[7].GetTile(endPos).name;
-            SpecialFacility tmpLand = null;
-            FixSystemData.GlobalSpFacilityList.TryGetValue(tmpStr, out tmpLand);
-            if (tmpLand != null)
-            {
-                height = tmpLand.height;
-                if (canZoc) canZoc = tmpLand.canZoc;
-                if (tmpLand.STK_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) Stk += (int)tmpLand.STK_All.Item2;
-                //计算公共的
-                if (Mov == -1) Mov = tmpLand.enterCount;
-                else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-                else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-
-                //计算阵营的
-                if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-                else if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-            }
-        }
-
-        //计算格边设施
-        if (FixGameData.FGD.MapList[8 + tmpTup.Item1].GetTile(tmpTup.Item2) != null)
-        {
-            tmpStr = FixGameData.FGD.MapList[8 + tmpTup.Item1].GetTile(tmpTup.Item2).name;
-            Facility tmpLand = FixSystemData.GlobalFacilityList[tmpStr];
-            
-            height = tmpLand.height;
-            if (canZoc) canZoc = tmpLand.canZoc;
-            //计算公共的
-            if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-            else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-
-            //计算阵营的
-            if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-            else if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-        }
-
-        //计算格边特殊地形
-        if (FixGameData.FGD.MapList[11 + tmpTup.Item1].GetTile(tmpTup.Item2) != null)
-        {
-            tmpStr = FixGameData.FGD.MapList[11 + tmpTup.Item1].GetTile(tmpTup.Item2).name;
-            Facility tmpLand = FixSystemData.GlobalSpecialTerrainList[tmpStr];
-
-            height = tmpLand.height;
-            if (canZoc) canZoc = tmpLand.canZoc;
-            //计算公共的
-            if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-            else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-
-            //计算阵营的
-            if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-            else if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-        }
-        //计算格内特殊地形
-        if (FixGameData.FGD.MapList[14].GetTile(endPos) != null)
-        {
-            tmpStr = FixGameData.FGD.MapList[14].GetTile(endPos).name;
-            Facility tmpLand = FixSystemData.GlobalFacilityList[tmpStr];
-
-            height = tmpLand.height;
-            if (canZoc) canZoc = tmpLand.canZoc;
-            //计算公共的
-            if (Mov == -1) Mov = tmpLand.enterCount;
-            else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-            else if (tmpLand.MOV_All != null && tmpLand.MOV_All.Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-
-            //计算阵营的
-            if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.MULTY) MovMULTY *= tmpLand.MOV_All.Item2;
-            else if (tmpLand.ATK_IFF(GameManager.GM.ActionSide) != null && tmpLand.ATK_IFF(GameManager.GM.ActionSide).Item1 == FixWay.ADD) MovAdd += tmpLand.MOV_All.Item2;
-        }
-
-
-        //位置、移动力、高度、堆叠、能否跨越获得控制区、是否有河流
-        return new Tuple<Vector3Int, float, int, int, bool, bool>(endPos, Mov, height, Stk, canZoc, AllMovNeed);
+        return height;
     }
+    //获取目标边的高度
+    public static int GetCellSideHeight(Vector3Int Pos,int Dir)
+    {
+        int height = 0;
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+        foreach(LandShape Land in Lands)
+        {
+            if (Land == null || !Land.atSide) continue;
+            if (Land.height > height) height = Land.height;
+        }
 
+        return height;
+    }
+    //获取目标方向的攻击力(带修正)
+    public static float GetTargetATK(Vector3Int Pos,int Dir,ArmyBelong ActionSide, float BaseATK)
+    {
+        float 加 = 0;
+        float 乘 = 1;
+
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+
+        for (int i = 0; i < Lands.Count; i++)
+        {
+            LandShape Land = Lands[i];
+            if (Land == null) continue;
+
+            //统计共有
+            if (Land.ATK_All != null && Land.ATK_All.Item1 == FixWay.MULTY) 乘 *= Land.ATK_All.Item2;
+            else if (Land.ATK_All != null && Land.ATK_All.Item1 == FixWay.ADD) 加 += Land.ATK_All.Item2;
+            else if (Land.ATK_All != null && Land.ATK_All.Item1 == FixWay.NOPE) 乘 = 0;
+            //统计阵营
+            if (Land.ATK_IFF(ActionSide) != null && Land.ATK_IFF(ActionSide).Item1 == FixWay.MULTY) 乘 *= Land.ATK_IFF(ActionSide).Item2;
+            else if (Land.ATK_IFF(ActionSide) != null && Land.ATK_IFF(ActionSide).Item1 == FixWay.ADD) 加 += Land.ATK_IFF(ActionSide).Item2;
+            else if (Land.ATK_IFF(ActionSide) != null && Land.ATK_IFF(ActionSide).Item1 == FixWay.NOPE) 乘 = 0;
+        }
+
+        return (BaseATK + 加) * 乘;
+    }
+    //获取目标方向的防御力(带修正)
+    public static float GetTargetDEFK(Vector3Int Pos, ArmyBelong ActionSide, float BaseDEF)
+    {
+        float 加 = 0;
+        float 乘 = 1;
+
+        List<LandShape> Lands = GetPLaceInfo(Pos, 0);
+
+        for (int i = 0; i < Lands.Count; i++)
+        {
+            LandShape Land = Lands[i];
+            if (Land == null) continue;
+            //统计共有
+            if (Land.DEF_All != null && Land.DEF_All.Item1 == FixWay.MULTY) 乘 *= Land.DEF_All.Item2;
+            else if (Land.DEF_All != null && Land.DEF_All.Item1 == FixWay.ADD) 加 += Land.DEF_All.Item2;
+            else if (Land.DEF_All != null && Land.DEF_All.Item1 == FixWay.NOPE) 乘 = 0;
+            //统计阵营
+            if (Land.DEF_IFF(ActionSide) != null && Land.DEF_IFF(ActionSide).Item1 == FixWay.MULTY) 乘 *= Land.DEF_IFF(ActionSide).Item2;
+            else if (Land.DEF_IFF(ActionSide) != null && Land.DEF_IFF(ActionSide).Item1 == FixWay.ADD) 加 += Land.DEF_IFF(ActionSide).Item2;
+            else if (Land.DEF_IFF(ActionSide) != null && Land.DEF_IFF(ActionSide).Item1 == FixWay.NOPE) 乘 = 0;
+        }
+
+        return (BaseDEF + 加) * 乘;
+    }
     //刷新控制区，未完善
     public static void UpdateZOC()
     {
