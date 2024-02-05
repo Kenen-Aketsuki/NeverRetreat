@@ -46,10 +46,10 @@ public class TestUI : MonoBehaviour
 
     public void MovePiece()
     {
-        FixGameData.FGD.HumanPiecePool.UpdateChildPos("1\\DawIII.101", FixGameData.MapToWorld(21, 21));
-        FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101").transform.position = FixGameData.MapToWorld(21, 21);
+        FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", FixGameData.MapToWorld(21, 21));
+        FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.MapToWorld(21, 21);
         
-        piece = FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101");
+        piece = FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade");
         counter = 0;
     }
 

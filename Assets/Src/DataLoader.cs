@@ -62,13 +62,15 @@ public class DataLoader : MonoBehaviour
         //GameUtility.mapSize = new Vector2Int(42, 42);
         //BasicUtility.saveTerrain("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Terrain.xml");
         //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Facility.xml");
-        GameUtility.从预设中读取地图(false, "");
+        //GameUtility.从预设中读取地图(false, "");
 
         //BasicUtility.savePieceAsDefault("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");
-        GameUtility.从预设中读取棋子(false, "");
+        //GameUtility.从预设中读取棋子(false, "");
 
-        
-        
+        GameUtility.fromSave = false;
+        GameUtility.Save = "";
+        GameUtility.游戏初始化();
+
         //List<Tuple<string, int, int>> clist = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList;
         //Dictionary<int, Tuple<int, int>> listIndex = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().listIndex;
         //Debug.Log(clist.Count);

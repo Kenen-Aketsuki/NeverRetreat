@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class FixGameData : MonoBehaviour
 {
     public static FixGameData FGD;
+    public Camera CameraNow;
 
     //棋子结构
     public GameObject PiecePrefab;
@@ -30,7 +31,9 @@ public class FixGameData : MonoBehaviour
     public List<Tilemap> MapList;
     //交互用地图
     public Tilemap InteractMap;
+    //区域地图 Z = 0为ZOC，Z = 1 为安定结界
     public Tilemap ZoneMap;
+    //堆叠标志
     public Tilemap MultiPieceMap;
 
     //特殊瓦片

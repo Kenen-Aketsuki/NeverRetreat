@@ -84,33 +84,37 @@ public static class GameUtility
             {
                 string tileName;
                 string[] sideSplit;
+                Vector3Int tarPos = FixGameData.MapToWorld(columNo, rowNo);
 
                 //放置基础地形
                 tileName = row.SelectSingleNode("basicTerrain").InnerText;
                 FixGameData.FGD.MapList[0].SetTile(
-                    FixGameData.MapToWorld(columNo,rowNo ),
+                    tarPos,
                     FixSystemData.GlobalBasicTerrainList[tileName].Top);
+                //填充交互
+                FixGameData.FGD.InteractMap.SetTile(tarPos,
+                    FixGameData.FGD.InteractFill);
 
                 //放置河流
-                if(row.SelectSingleNode("river") != null)
+                if (row.SelectSingleNode("river") != null)
                 {
                     sideSplit = row.SelectSingleNode("river").InnerText.Split("-");
                     if (sideSplit[0] == "1")
                     {
                         FixGameData.FGD.MapList[1].SetTile(
-                            FixGameData.MapToWorld(columNo, rowNo ),
+                            tarPos,
                             FixSystemData.GlobalBasicTerrainList["River"].Left);
                     }
                     if (sideSplit[1] == "1")
                     {
                         FixGameData.FGD.MapList[2].SetTile(
-                            FixGameData.MapToWorld(columNo, rowNo ),
+                            tarPos,
                             FixSystemData.GlobalBasicTerrainList["River"].Top);
                     }
                     if (sideSplit[2] == "1")
                     {
                         FixGameData.FGD.MapList[3].SetTile(
-                            FixGameData.MapToWorld(columNo, rowNo ),
+                            tarPos,
                             FixSystemData.GlobalBasicTerrainList["River"].Right);
                     }
                 }
@@ -123,19 +127,19 @@ public static class GameUtility
                     if (sideSplit[0] != "0")
                     {
                         FixGameData.FGD.MapList[4].SetTile(
-                            FixGameData.MapToWorld(columNo, rowNo ),
+                            tarPos,
                             FixSystemData.GlobalFacilityList["Road" + roadName[int.Parse(sideSplit[0]) - 1]].Left);
                     }
                     if (sideSplit[1] != "0")
                     {
                         FixGameData.FGD.MapList[5].SetTile(
-                            FixGameData.MapToWorld(columNo, rowNo ),
+                            tarPos,
                             FixSystemData.GlobalFacilityList["Road" + roadName[int.Parse(sideSplit[1]) - 1]].Top);
                     }
                     if (sideSplit[2] != "0")
                     {
                         FixGameData.FGD.MapList[6].SetTile(
-                            FixGameData.MapToWorld(columNo, rowNo ),
+                            tarPos,
                             FixSystemData.GlobalFacilityList["Road" + roadName[int.Parse(sideSplit[2]) - 1]].Right);
                     }
                 }
@@ -154,13 +158,13 @@ public static class GameUtility
                         if (FixSystemData.GlobalFacilityList.ContainsKey(tileName))
                         {
                             FixGameData.FGD.MapList[7].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalFacilityList[tileName].Top);
                         }
                         else
                         {
                             FixGameData.FGD.MapList[7].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalSpFacilityList[tileName].Close);
                         }
                         
@@ -173,20 +177,20 @@ public static class GameUtility
                         {
                             sideSplit[0] = sideSplit[0].Replace("_L", "");
                             FixGameData.FGD.MapList[8].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalFacilityList[sideSplit[0]].Left);
                         }
                         if (sideSplit[1] == "1")
                         {
                             FixGameData.FGD.MapList[9].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalFacilityList[sideSplit[1]].Top);
                         }
                         if (sideSplit[2] == "1")
                         {
                             sideSplit[2] = sideSplit[2].Replace("_R", "");
                             FixGameData.FGD.MapList[10].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalFacilityList[sideSplit[2]].Right);
                         }
                     }
@@ -198,20 +202,20 @@ public static class GameUtility
                         {
                             sideSplit[0] = sideSplit[0].Replace("_L", "");
                             FixGameData.FGD.MapList[11].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[0]].Left);
                         }
                         if (sideSplit[1] == "1")
                         {
                             FixGameData.FGD.MapList[12].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[1]].Top);
                         }
                         if (sideSplit[2] == "1")
                         {
                             sideSplit[2] = sideSplit[2].Replace("_R", "");
                             FixGameData.FGD.MapList[13].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[2]].Right);
                         }
                     }
@@ -220,7 +224,7 @@ public static class GameUtility
                     {
                         tileName = FacilityRow[rowFac].SelectSingleNode("specialTerrain").InnerText;
                         FixGameData.FGD.MapList[14].SetTile(
-                                FixGameData.MapToWorld(columNo, rowNo),
+                                tarPos,
                                 FixSystemData.GlobalFacilityList[tileName].Top);
 
                     }
@@ -243,10 +247,9 @@ public static class GameUtility
             columNo++;
         }
 
-        //填充交互
-        Vector3Int LD = FixGameData.MapToWorld(0, 0);
-        Vector3Int RT = FixGameData.MapToWorld(mapSize.x, mapSize.y);
-        FixGameData.FGD.InteractMap.BoxFill(Vector3Int.zero, FixGameData.FGD.InteractFill, LD.x, LD.y, RT.x, RT.y);
+        
+        
+        
 
     }
 
@@ -325,7 +328,7 @@ public static class GameUtility
             if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null && 
                 lst.Count > 1)
             {
-                Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
+                //Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
                 FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
                 
             }
