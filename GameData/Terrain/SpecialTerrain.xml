@@ -29,6 +29,7 @@
             <enterCost>2</enterCost>
             <battleAdjust>
                 <adjust target="DEF" way="ADD" number="5" />
+                <adjust target="STK" way="ADD" number="-1" />
             </battleAdjust>
             <height>5</height>
         </Data>
@@ -40,6 +41,7 @@
             <enterCost>0</enterCost>
             <battleAdjust>
                 <adjust target="RRK" way="ADD" number="-3" />
+                <adjust target="STK" way="ADD" number="-1" />
             </battleAdjust>
             <height>0</height>
         </Data>

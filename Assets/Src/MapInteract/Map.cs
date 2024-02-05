@@ -49,6 +49,10 @@ public static class Map
         Vector3Int endPos;
         switch (direction)
         {
+            case 0:
+                endPos = new Vector3Int(11, 45, 14);
+                map = 0;
+                break;
             case 1:
                 endPos = Pos;
                 map = 0;
@@ -81,10 +85,9 @@ public static class Map
 
         return new Tuple<int, Vector3Int>(map, endPos);
     }
-
     //获取相邻格子的数据,传入当前位置、方向
     //列表顺序：0 基础地形 - 1 河流 - 2 道路 - 3 格内设施 - 4 格边设施 - 5 格边特殊地形 - 6 格内特殊地形 - 7 控制区 - 8 安定结界
-    public static List<LandShape> GetNearInfo(Vector3Int Pos,int Dir)
+    public static List<LandShape> GetPLaceInfo(Vector3Int Pos,int Dir)
     {
         List<LandShape> lst = new List<LandShape>();
         Vector3Int targetPos = GetRoundSlotPos(Pos, Dir);
@@ -132,13 +135,14 @@ public static class Map
 
         return lst;
     }
+    
     //获取临近移动力消耗，输入当前位置和方向
     public static float GetNearMov(Vector3Int Pos, int Dir , ArmyBelong ActionSide)
     {
         float Mov = -1;
         float MovAdd = 0;
         float MovMULTY = 1;
-        List<LandShape> Lands = GetNearInfo(Pos, Dir);
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
 
         for (int i = 0; i < Lands.Count; i++)
         {
@@ -151,8 +155,10 @@ public static class Map
             else if (Land.MOV_All != null && Land.MOV_All.Item1 == FixWay.ALL) Mov = -2;
             else if (Land.MOV_All != null && Land.MOV_All.Item1 == FixWay.NOPE) Mov = -1;
             //统计阵营
-            if (Land.ATK_IFF(ActionSide) != null && Land.ATK_IFF(ActionSide).Item1 == FixWay.MULTY) MovMULTY *= Land.MOV_All.Item2;
-            else if (Land.ATK_IFF(ActionSide) != null && Land.ATK_IFF(ActionSide).Item1 == FixWay.ADD) MovAdd += Land.MOV_All.Item2;
+            if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.MULTY) MovMULTY *= Land.MOV_All.Item2;
+            else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.ADD) MovAdd += Land.MOV_All.Item2;
+            else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.ALL) Mov = -2;
+            else if (Land.MOV_IFF(ActionSide) != null && Land.MOV_IFF(ActionSide).Item1 == FixWay.NOPE) Mov = -1;
         }
         if(Mov < 0 ) return Mov;
         else return Math.Max((Mov + MovAdd) , 1) * MovMULTY;
@@ -161,7 +167,7 @@ public static class Map
     static bool canSetZoc(Vector3Int Pos, int Dir)
     {
         bool canset = true;
-        List<LandShape> Lands = GetNearInfo(Pos, Dir);
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
 
         for (int i = 0; i < Lands.Count; i++)
         {
@@ -175,6 +181,21 @@ public static class Map
         }
         
         return canset;
+    }
+
+    public static int GetHereStack(Vector3Int Pos,ArmyBelong ActionSide)
+    {
+        float FixSTK = 0;
+        List<LandShape> Lands = GetPLaceInfo(Pos, 0);
+        foreach(LandShape Land in Lands)
+        {
+            if(Land == null) continue;
+            if (Land.STK_All != null && Land.STK_All.Item1 == FixWay.ADD) FixSTK += Land.STK_All.Item2;
+            //统计阵营
+            if (Land.STK_IFF(ActionSide) != null && Land.STK_IFF(ActionSide).Item1 == FixWay.MULTY) FixSTK += Land.STK_All.Item2;
+        }
+
+        return (int)FixSTK + 2;
     }
 
     //位置、移动力、高度、堆叠、能否跨越获得控制区、是否需要全部

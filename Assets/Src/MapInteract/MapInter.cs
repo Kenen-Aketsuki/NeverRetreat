@@ -19,7 +19,7 @@ public class MapInter : MonoBehaviour
         Debug.Log(MousePos);
         for (int i = 1; i < 7; i++)
         {
-            //Debug.Log("——————方向： " + i + " ———————\n：" + (Map.canSetZoc(MousePos, i) ? "可以" : "不能") + "放置ZOC");
+            Debug.Log("——————方向： " + i + " ———————\n此处堆叠为" + Map.GetHereStack(MousePos,GameManager.GM.ActionSide));
 
         }
     }

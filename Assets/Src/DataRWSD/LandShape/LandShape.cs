@@ -237,38 +237,50 @@ public class Facility : LandShape
     #region
     public override Tuple<FixWay, float> ATK_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.ATK];
-        else return AdjustEnemy[FixData.ATK];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.ATK, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.ATK, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> DEF_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.DEF];
-        else return AdjustEnemy[FixData.DEF];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.DEF, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.DEF, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> HP_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.HP];
-        else return AdjustEnemy[FixData.HP];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.HP, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.HP, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> MOV_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.MOV];
-        else return AdjustEnemy[FixData.MOV];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.MOV, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.MOV, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> RRK_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.RRK];
-        else return AdjustEnemy[FixData.RRK];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.RRK, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.RRK, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> STK_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.STK];
-        else return AdjustEnemy[FixData.STK];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.STK, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.STK,out tmp);
+        return tmp;
     }
     #endregion
 
@@ -370,40 +382,52 @@ public class SpecialFacility : LandShape
 
     //获取带有敌我的加成
     #region
-    public override Tuple<FixWay, float> ATK_IFF (ArmyBelong side)
+    public override Tuple<FixWay, float> ATK_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.ATK];
-        else return AdjustEnemy[FixData.ATK];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.ATK, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.ATK, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> DEF_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.DEF];
-        else return AdjustEnemy[FixData.DEF];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.DEF, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.DEF, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> HP_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.HP];
-        else return AdjustEnemy[FixData.HP];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.HP, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.HP, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> MOV_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.MOV];
-        else return AdjustEnemy[FixData.MOV];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.MOV, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.MOV, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> RRK_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.RRK];
-        else return AdjustEnemy[FixData.RRK];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.RRK, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.RRK, out tmp);
+        return tmp;
     }
 
     public override Tuple<FixWay, float> STK_IFF(ArmyBelong side)
     {
-        if (side == Belone) return AdjustFriend[FixData.STK];
-        else return AdjustEnemy[FixData.STK];
+        Tuple<FixWay, float> tmp;
+        if (side == Belone) AdjustFriend.TryGetValue(FixData.STK, out tmp);
+        else AdjustEnemy.TryGetValue(FixData.STK, out tmp);
+        return tmp;
     }
     #endregion
 
