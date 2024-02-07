@@ -335,17 +335,16 @@ public static class Map
     }
 
     //A*寻路算法
-    static List<CellInfo> ToSearchStack = new List<CellInfo>();//待搜索的栈
-    static Dictionary<Vector3Int, CellInfo> Searched = new Dictionary<Vector3Int, CellInfo>();//已搜索的队列
-
     public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float CurrentMov)
     {
-        List<CellInfo> Path = new List<CellInfo>();
+        List<CellInfo> ToSearchStack = new List<CellInfo>();//待搜索的栈
+        Dictionary<Vector3Int, CellInfo> Searched = new Dictionary<Vector3Int, CellInfo>();//已搜索的队列
+        List<CellInfo> Path = new List<CellInfo>();//路径
         int cot = 0;
 
         //算法开始
         CellInfo presentCell;
-        ToSearchStack.Add(new CellInfo(Start, Start, End, -100, 0, 0));
+        ToSearchStack.Add(new CellInfo(Start, Start, End, -100, 0, 0, 0));
         while(ToSearchStack.Count > 0)
         {
             //出栈，入已搜索队列
@@ -358,6 +357,8 @@ public static class Map
                 Searched[presentCell.Positian] = presentCell;
             }
 
+            Debug.Log("就是你啦！出来吧，" + presentCell.Positian + " \n移动力为：" + presentCell.moveCost);
+
             //判定是否结束。条件：到达终点
             if (presentCell.ArriveEnd(End))
             {
@@ -369,14 +370,21 @@ public static class Map
                 continue;
             }
 
-
-                //未结束或跳过则将周围一圈加入搜索队列
+            //未结束或跳过则将周围一圈加入搜索队列
             for (int i = 1; i < 7; i++)
             {
                 //六向
                 float Mov = GetNearMov(presentCell.Positian, i, GameManager.GM.ActionSide);
+
                 //临时变量
-                CellInfo tmp = new CellInfo(GetRoundSlotPos(presentCell.Positian, i), presentCell.Positian, End, i, Mov + presentCell.usedCost, presentCell.passedCell + 1);
+                CellInfo tmp = new CellInfo(
+                    GetRoundSlotPos(presentCell.Positian, i),
+                    presentCell.Positian,
+                    End,
+                    i,
+                    Mov,
+                    presentCell.moveCost + presentCell.usedCost,
+                    presentCell.passedCell + 1);
                 //跳过不可进入的地块
                 if (tmp.moveCost == -1) continue;
                 //查看此节点是否已在待搜索队列中
@@ -393,19 +401,11 @@ public static class Map
             }
             //搜索队列排序
             ToSearchStack = ToSearchStack.OrderBy(x => x.F).ThenByDescending(x => x.Cost).ToList();
-
-            Debug.Log("————待搜索列表" + cot + "————");
-            foreach (CellInfo inc in ToSearchStack)
-            {
-                Debug.Log(inc.Positian+"\n的F = "+inc.F + " \\ Mov = " + inc.moveCost);
-            }
-            cot++;
-
         }
 
+        //回溯路径
         if (Searched.ContainsKey(End))
         {
-            //回溯路径
             Vector3Int tmpPos = End;
             for (; Searched[tmpPos].fromDir > 0;)
             {
@@ -417,11 +417,6 @@ public static class Map
             Path.Reverse();
         }
         else Path = null;//返回空路径，表示寻路失败
-
-        //清空队列
-        ToSearchStack.Clear();
-        Searched.Clear();
-
 
         return Path;
     }
@@ -438,25 +433,25 @@ public class CellInfo
     //生命消耗
     public float hpCost { get; private set; }
     //移入代价
-    public float Cost { get { return moveCost + hpCost * FixSystemData.AStar + passedCell * 50; } }
+    public float Cost { get { return moveCost + hpCost * FixSystemData.AStar + passedCell * 20; } }
     //距离终点距离，欧氏距离的平方
-    float distance { get; set; }
+    public float distance { get; private set; }
     //已用消耗
     public float usedCost { get; private set; }
    //已走过的格子数
     public int passedCell { get; private set; }
     
     //最终代价: Cost + usedCost 为历史代价，distance 为未来预期代价
-    public float F { get{ return moveCost + hpCost + usedCost + distance; } }
+    public float F { get{ return Cost + usedCost + distance; } }
     
     //来自方向，用于反向追溯
     public int fromDir { get; private set; }
 
     //当前位置, 上一个位置，终点, 前进方向
-    public CellInfo(Vector3Int Pos,Vector3Int from, Vector3Int end, int Dir, float usedCost, int passedCell)
+    public CellInfo(Vector3Int Pos,Vector3Int from, Vector3Int end, int Dir,float moveCost, float usedCost, int passedCell)
     {
         Positian = Pos;
-        moveCost = Map.GetNearMov(from, Dir, GameManager.GM.ActionSide);
+        this.moveCost = moveCost;
         hpCost = Map.GetPassDamge(from, Dir, GameManager.GM.ActionSide);
 
         Vector3 fm = FixGameData.FGD.InteractMap.CellToWorld(from);
@@ -466,6 +461,9 @@ public class CellInfo
         this.usedCost = usedCost;
         fromDir = (Dir + 2) % 6 + 1;
         this.passedCell = passedCell;
+
+        if (Positian == new Vector3Int(-2, 1, 0)) Debug.Log(Positian + " — " + this.moveCost + " 来自:" + fromDir);
+
     }
     //是否到达终点
     public bool ArriveEnd(Vector3Int end)
