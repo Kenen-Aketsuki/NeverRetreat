@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MapInter : MonoBehaviour
 {
@@ -14,13 +15,19 @@ public class MapInter : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Map.UpdateZOC();
+        //防止与UI交互时误触地图
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        Debug.Log(MousePos + "处的防御力为: " + Map.GetTargetDEFK(MousePos, GameManager.GM.ActionSide, 5));
-        for (int i = 1; i < 7; i++)
+        FixGameData.FGD.ZoneMap.ClearAllTiles();
+        List<CellInfo> Path = Map.AStarPathSerch(Vector3Int.zero, MousePos, 1000);
+        if (Path == null) Debug.Log("寻路失败");
+        else
         {
-            Debug.Log("——————方向： " + i + " ———————\n此方向攻击力为: " + Map.GetTargetATK(MousePos, i, GameManager.GM.ActionSide, 5));
-
+            for (int i = 0; i < Path.Count; i++)
+            {
+                FixGameData.FGD.ZoneMap.SetTile(Path[i].Positian, FixSystemData.GlobalZoneList["ZOC"].Top);
+            }
+            Debug.Log("花费移动力：" + Path[Path.Count - 1].usedCost);
         }
     }
 }

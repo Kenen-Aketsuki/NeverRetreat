@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -272,7 +273,35 @@ public static class Map
 
         return (BaseDEF + 加) * 乘;
     }
-    //刷新控制区，未完善
+    //获取通过掉血
+    public static int GetPassDamge(Vector3Int Pos, int Dir,ArmyBelong ActionSide)
+    {
+        float HP = 0;
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+        foreach (LandShape Land in Lands)
+        {
+            if (Land == null) continue;
+            if (Land.HP_All != null) HP += Land.HP_All.Item2;
+            if (Land.HP_IFF(ActionSide) != null) HP += Land.HP_IFF(ActionSide).Item2;
+        }
+
+        return (int)Math.Floor(HP);
+    }
+    //获取战果加成
+    public static int GetBattleRRK(Vector3Int Pos, int Dir, ArmyBelong ActionSide,int RRK)
+    {
+        float RRKmend = 0;
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+        foreach (LandShape Land in Lands)
+        {
+            if (Land == null) continue;
+            if (Land.RRK_All != null) RRKmend += Land.RRK_All.Item2;
+            if (Land.RRK_IFF(ActionSide) != null) RRKmend += Land.RRK_IFF(ActionSide).Item2;
+        }
+        return (int)Math.Floor(RRK + RRKmend);
+    }
+
+    //刷新控制区
     public static void UpdateZOC()
     {
         FixGameData.FGD.ZoneMap.ClearAllTiles();
@@ -303,5 +332,155 @@ public static class Map
             }
         }
 
+    }
+
+    //A*寻路算法
+    static List<CellInfo> ToSearchStack = new List<CellInfo>();//待搜索的栈
+    static Dictionary<Vector3Int, CellInfo> Searched = new Dictionary<Vector3Int, CellInfo>();//已搜索的队列
+
+    public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float CurrentMov)
+    {
+        List<CellInfo> Path = new List<CellInfo>();
+        int cot = 0;
+
+        //算法开始
+        CellInfo presentCell;
+        ToSearchStack.Add(new CellInfo(Start, Start, End, -100, 0, 0));
+        while(ToSearchStack.Count > 0)
+        {
+            //出栈，入已搜索队列
+            presentCell = ToSearchStack[0];
+            ToSearchStack.RemoveAt(0);
+
+            if(!Searched.TryAdd(presentCell.Positian, presentCell) &&
+                Searched[presentCell.Positian].usedCost > presentCell.usedCost)
+            {
+                Searched[presentCell.Positian] = presentCell;
+            }
+
+            //判定是否结束。条件：到达终点
+            if (presentCell.ArriveEnd(End))
+            {
+                break;
+            }
+            //判定是否跳过。条件：移动力用光、地图格不可进入
+            if (presentCell.usedCost > CurrentMov || presentCell.moveCost == -2)
+            {
+                continue;
+            }
+
+
+                //未结束或跳过则将周围一圈加入搜索队列
+            for (int i = 1; i < 7; i++)
+            {
+                //六向
+                float Mov = GetNearMov(presentCell.Positian, i, GameManager.GM.ActionSide);
+                //临时变量
+                CellInfo tmp = new CellInfo(GetRoundSlotPos(presentCell.Positian, i), presentCell.Positian, End, i, Mov + presentCell.usedCost, presentCell.passedCell + 1);
+                //跳过不可进入的地块
+                if (tmp.moveCost == -1) continue;
+                //查看此节点是否已在待搜索队列中
+                if(!ToSearchStack.Contains(tmp)) ToSearchStack.Add(tmp);//没有则直接加入
+                else 
+                {
+                    //有则当后来者移动代价更少的情况下加入
+                    int addr = ToSearchStack.FindIndex(0, ToSearchStack.Count, delegate (CellInfo inc)
+                    {
+                        return inc.Positian == tmp.Positian;
+                    });
+                    if (ToSearchStack[addr].Cost > tmp.Cost) ToSearchStack[addr] = tmp;
+                }
+            }
+            //搜索队列排序
+            ToSearchStack = ToSearchStack.OrderBy(x => x.F).ThenByDescending(x => x.Cost).ToList();
+
+            Debug.Log("————待搜索列表" + cot + "————");
+            foreach (CellInfo inc in ToSearchStack)
+            {
+                Debug.Log(inc.Positian+"\n的F = "+inc.F + " \\ Mov = " + inc.moveCost);
+            }
+            cot++;
+
+        }
+
+        if (Searched.ContainsKey(End))
+        {
+            //回溯路径
+            Vector3Int tmpPos = End;
+            for (; Searched[tmpPos].fromDir > 0;)
+            {
+                Path.Add(Searched[tmpPos]);
+                tmpPos = GetRoundSlotPos(tmpPos, Searched[tmpPos].fromDir);
+            }
+            Path.Add(Searched[tmpPos]);
+            //反向，获得路径
+            Path.Reverse();
+        }
+        else Path = null;//返回空路径，表示寻路失败
+
+        //清空队列
+        ToSearchStack.Clear();
+        Searched.Clear();
+
+
+        return Path;
+    }
+
+}
+
+//存储A*算法的地图信息
+public class CellInfo
+{
+    //位置
+    public Vector3Int Positian { get; private set; }
+    //移动损耗
+    public float moveCost { get; private set; }
+    //生命消耗
+    public float hpCost { get; private set; }
+    //移入代价
+    public float Cost { get { return moveCost + hpCost * FixSystemData.AStar + passedCell * 50; } }
+    //距离终点距离，欧氏距离的平方
+    float distance { get; set; }
+    //已用消耗
+    public float usedCost { get; private set; }
+   //已走过的格子数
+    public int passedCell { get; private set; }
+    
+    //最终代价: Cost + usedCost 为历史代价，distance 为未来预期代价
+    public float F { get{ return moveCost + hpCost + usedCost + distance; } }
+    
+    //来自方向，用于反向追溯
+    public int fromDir { get; private set; }
+
+    //当前位置, 上一个位置，终点, 前进方向
+    public CellInfo(Vector3Int Pos,Vector3Int from, Vector3Int end, int Dir, float usedCost, int passedCell)
+    {
+        Positian = Pos;
+        moveCost = Map.GetNearMov(from, Dir, GameManager.GM.ActionSide);
+        hpCost = Map.GetPassDamge(from, Dir, GameManager.GM.ActionSide);
+
+        Vector3 fm = FixGameData.FGD.InteractMap.CellToWorld(from);
+        Vector3 ed = FixGameData.FGD.InteractMap.CellToWorld(end);
+
+        distance = (float)(Math.Pow(fm.x - ed.x, 2) + Math.Pow(fm.y - ed.y, 2));
+        this.usedCost = usedCost;
+        fromDir = (Dir + 2) % 6 + 1;
+        this.passedCell = passedCell;
+    }
+    //是否到达终点
+    public bool ArriveEnd(Vector3Int end)
+    {
+        return Positian.x == end.x && Positian.y == end.y;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is CellInfo info &&
+               Positian.x == info.Positian.x && Positian.y == info.Positian.y;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Positian);
     }
 }

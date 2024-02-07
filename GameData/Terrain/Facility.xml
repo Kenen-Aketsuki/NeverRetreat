@@ -61,6 +61,10 @@
         <name>猎人工会</name>
         <Data>
             <enterCost>0</enterCost>
+            <battleAdjust target="Enemy">
+                <adjust target="MOV" way="ADD" number="2" />
+                <adjust target="RRK" way="ADD" number="-1" />
+            </battleAdjust>
             <battleAdjust target="Friend">
                 <adjust target="MOV" way="ADD" number="-2" />
                 <adjust target="RRK" way="ADD" number="1" />
@@ -104,7 +108,7 @@
     </Terrain>
     
     <!-- 临时设施 -->
-    <Terrain Type="TempFacility" id="Landmine" atSide="True" belone="Human">
+    <Terrain Type="TempFacility" id="Landmine" atSide="True" belone="Nutral">
         <name>旧式雷场</name>
         <Data>
             <enterCost>0</enterCost>
@@ -115,7 +119,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="IFFLandmine" atSide="True" belone="Nutral">
+    <Terrain Type="TempFacility" id="IFFLandmine" atSide="True" belone="Human">
         <name>智能雷场</name>
         <Data>
             <enterCost>0</enterCost>
@@ -142,9 +146,12 @@
         <name>防御工事</name>
         <Data>
             <enterCost>0</enterCost>
+            <battleAdjust target="Enemy">
+                <adjust target="RRK" way="ADD" number="-2" />
+                <adjust target="STK" way="ADD" number="-1" />
+            </battleAdjust>
             <battleAdjust target="Friend">
                 <adjust target="MOV" way="ADD" number="-10" />
-                <adjust target="RRK" way="ADD" number="2" />
                 <adjust target="STK" way="ADD" number="1" />
             </battleAdjust>
             <height>3</height>

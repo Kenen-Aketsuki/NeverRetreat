@@ -66,21 +66,27 @@ public class BattleJudgeForm : Form
 
     }
 
-    public string getResult(double ATK,double DEF)
+    public string GetResult(double rrk)
     {
         int Address;
-        //计算起始地址
+        
+        //计算地址偏移
+        Address =  getFromColumIndex((int)Math.Floor(rrk)).Item2;
+        Address += new Random().Next(0,7);
+
+        return getFromDataSet(Address);
+    }
+
+    public double GetRRK(double ATK, double DEF)
+    {
         double rrk = Math.Round(Math.Pow((ATK / DEF), Math.Sign(ATK - DEF))) * 2 - 2;
         rrk *= Math.Sign(ATK - DEF);
         if (rrk > 3) rrk = Math.Round(rrk / 2) + 1;
         else if (rrk < -1) rrk = -1;
         else if (rrk > 10) rrk = 10;
         rrk++;
-        //计算地址偏移
-        Address =  getFromColumIndex((int)rrk).Item2;
-        Address += new Random().Next(0,7);
 
-        return getFromDataSet(Address);
+        return rrk;
     }
 }
 

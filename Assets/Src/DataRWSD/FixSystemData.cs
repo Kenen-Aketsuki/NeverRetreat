@@ -8,6 +8,8 @@ using UnityEngine.XR;
 public static class FixSystemData
 {
     public static int ImagSize = 256;
+    //A*算法里平衡受伤占比的量
+    public static float AStar = 1.5f;
 
     public static string rootDirectory;
     public static string dataDirectory;
