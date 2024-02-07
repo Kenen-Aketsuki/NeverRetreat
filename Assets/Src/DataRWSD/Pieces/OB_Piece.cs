@@ -205,7 +205,7 @@ public class OB_Piece : MonoBehaviour
         bool Connect = false;
         bool unSupply = true ;
         //判定失联
-
+        
         //从近到远排序工会
         //依次寻路，若有则直接跳出，否则认为没有。
         Data.UpdateSupplyConnection(unSupply, Connect);
