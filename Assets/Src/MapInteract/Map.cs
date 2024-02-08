@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static Unity.Burst.Intrinsics.X86.Avx;
@@ -166,6 +167,27 @@ public static class Map
         if(Mov < 0 ) return Mov;
         else return Math.Max((Mov + MovAdd) , 1) * MovMULTY;
     }
+    //获取是否能够通过补给
+    public static float GetSupplyCost(Vector3Int Pos, int Dir)
+    {
+        float supply = -1;
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+        for(int i = 0; i < Lands.Count; i++)
+        {
+            LandShape Land = Lands[i];
+            if (Land == null) continue;
+            //统计共有
+            if (supply < 0 && Land.enterCount != -2) supply = Land.enterCount;
+            else if(Land.name == "控制区")
+            {
+                supply = -1;
+                break;
+            }
+        }
+
+        return Math.Min(supply, 1);
+    }
+    
     //检查能否延申控制区
     static bool canSetZoc(Vector3Int Pos, int Dir)
     {
@@ -339,18 +361,18 @@ public static class Map
     //A*寻路算法，用于判定路径存在
     public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float Distence)
     {
-        List<CellInfo> ToSearchStack = new List<CellInfo>();//待搜索的栈
+        Dictionary<Vector3Int, CellInfo> ToSearchStack = new Dictionary<Vector3Int, CellInfo>();//待搜索的栈
         Dictionary<Vector3Int, CellInfo> Searched = new Dictionary<Vector3Int, CellInfo>();//已搜索的队列
         List<CellInfo> Path = new List<CellInfo>();//路径
 
         //算法开始
         CellInfo presentCell;
-        ToSearchStack.Add(new CellInfo(Start, Start, End, -100, 0, 0, 0));
+        ToSearchStack.Add(Start, new CellInfo(Start, Start, End, -7, 0, 0, -1));
         while(ToSearchStack.Count > 0)
         {
             //出栈，入已搜索队列
-            presentCell = ToSearchStack[0];
-            ToSearchStack.RemoveAt(0);
+            presentCell = ToSearchStack.First().Value;
+            ToSearchStack.Remove(presentCell.Positian);
 
             if(!Searched.TryAdd(presentCell.Positian, presentCell) &&
                 Searched[presentCell.Positian].usedCost > presentCell.usedCost)
@@ -363,40 +385,38 @@ public static class Map
             {
                 break;
             }
-            //判定是否跳过。条件：移动力用光、地图格不可进入
-            if (presentCell.usedCost > Distence || presentCell.moveCost == -2)
-            {
-                continue;
-            }
 
             //未结束或跳过则将周围一圈加入搜索队列
             for (int i = 1; i < 7; i++)
             {
-
                 //临时变量
                 CellInfo tmp = new CellInfo(
                     GetRoundSlotPos(presentCell.Positian, i),
                     presentCell.Positian,
                     End,
                     i,
-                    1,
+                    GetSupplyCost(presentCell.Positian, i),
                     presentCell.usedCost,
-                    presentCell.passedCell + 1);
+                    presentCell.passedCell);
 
-                //查看此节点是否已在待搜索队列中
-                if (!ToSearchStack.Contains(tmp)) ToSearchStack.Add(tmp);//没有则直接加入
-                else 
+
+                //判定是否跳过。条件：移动力用光、地图格不可进入
+                if (tmp.usedCost > Distence)
                 {
-                    //有则当后来者移动代价更少的情况下加入
-                    int addr = ToSearchStack.FindIndex(0, ToSearchStack.Count, delegate (CellInfo inc)
-                    {
-                        return inc.Positian == tmp.Positian;
-                    });
-                    if (ToSearchStack[addr].Cost > tmp.Cost) ToSearchStack[addr] = tmp;
+                    continue;
+                }
+                //若搜索到终点，则立刻结束
+                if (ToSearchStack.ContainsKey(tmp.Positian) && ToSearchStack[tmp.Positian].Cost > tmp.Cost)
+                {
+                    ToSearchStack[tmp.Positian] = tmp;//有则当后来者移动代价更少的情况下加入
+                }
+                else if(!Searched.ContainsKey(tmp.Positian))
+                {
+                   ToSearchStack.TryAdd(tmp.Positian, tmp);//没有则直接加入
                 }
             }
             //搜索队列排序
-            ToSearchStack = ToSearchStack.OrderBy(x => x.F).ThenByDescending(x => x.Cost).ToList();
+            ToSearchStack = ToSearchStack.OrderBy(x => x.Value.F).ThenByDescending(x => x.Value.Cost).ToDictionary(x => x.Key, x => x.Value);
         }
 
         //回溯路径
@@ -464,7 +484,7 @@ public static class Map
                 else
                 {
                     //加入不存在的点
-                    bool alpTyAdd = allPath.TryAdd(tmpPos, tmpCell);
+                    allPath.TryAdd(tmpPos, tmpCell);
                 }
                 
             }
@@ -506,6 +526,54 @@ public static class Map
     }
 
     //力大砖飞区域搜索算法
+    public static List<CellInfo> PowerfulBrickAreaSearch(Vector3Int Start,int Range)
+    {
+        //已搜索
+        List<CellInfo> Area = new List<CellInfo>();
+        //待搜索队列
+        List<CellInfo> ToSelect = new List<CellInfo>();
+        //120度极坐标下的起始地点
+        Vector3Int PolarStart = CellTo120Dig(Start);
+
+
+        ToSelect.Add(new CellInfo(Start, -7, 0, 0, 0));
+        //算法开始 待搜索队列为空时结束
+        while(ToSelect.Count > 0)
+        {
+            //出队
+            CellInfo SelectCell = ToSelect[0];
+            ToSelect.RemoveAt(0);
+            //加入搜索区
+            Area.Add(SelectCell);
+
+            //将可选择的单元格加入待选择队列
+            for(int i = 1; i < 7; i++)
+            {
+                CellInfo tmpCell = new CellInfo(
+                    GetRoundSlotPos(SelectCell.Positian, i),
+                    Start);
+                if(tmpCell.distance > Range || !FixGameData.FGD.InteractMap.HasTile(tmpCell.Positian))
+                {
+                    continue;
+                }else if(!Area.Contains(tmpCell) && !ToSelect.Contains(tmpCell))
+                {
+                    ToSelect.Add(tmpCell);
+                }
+            }
+        }
+
+        return Area;
+    }
+    //类直角到120度极坐标转换
+    public static Vector3Int CellTo120Dig(Vector3Int pos)
+    {
+        //int flg = Math.Abs(pos.y);
+        //pos.y > 0 => 0 || pos.y < 0 => 1
+        int x = pos.x + (pos.y - (pos.y < 0 ? 1 : 0)) / 2 - (Math.Abs(pos.y) + 1) % 2;
+        int y = pos.y;
+
+        return new Vector3Int(x, y, pos.z);
+    }
 }
 
 //存储A*算法的地图信息
@@ -520,16 +588,16 @@ public class CellInfo
     //生命消耗
     public float hpCost { get; private set; }
     //移入代价
-    public float Cost { get { return moveCost + hpCost * FixSystemData.AStar + passedCell * 20; } }
-    //Dijkstra用的CCost
+    public float Cost { get { return moveCost + passedCell; } }
+    //Dijkstra用的Cost
     public float CostD { get { return (moveCost == float.PositiveInfinity) ? float.PositiveInfinity : (hpCost * FixSystemData.AStar + usedCost); } }
+    //经过的地块
+    public int passedCell { get; private set; }
 
     //距离终点距离，欧氏距离的平方
     public float distance { get; private set; }
     //已用消耗
     public float usedCost { get; private set; }
-   //已走过的格子数
-    public int passedCell { get; private set; }
     
     //最终代价: Cost + usedCost 为历史代价，distance 为未来预期代价
     public float F { get{ return Cost + usedCost + distance; } }
@@ -538,21 +606,19 @@ public class CellInfo
     public int fromDir { get; private set; }
 
     //当前位置, 上一个位置，终点, 前进方向
-    public CellInfo(Vector3Int Pos,Vector3Int from, Vector3Int end, int Dir,float moveCost, float usedCost, int passedCell)
+    public CellInfo(Vector3Int Pos,Vector3Int from, Vector3Int end, int Dir,float moveCost, float usedCost,int passedCell)
     {
         Positian = Pos;
-        this.moveCost = moveCost;
+        this.moveCost = moveCost == -1 ? float.PositiveInfinity : moveCost;
         hpCost = Map.GetPassDamge(from, Dir, GameManager.GM.ActionSide);
 
-        Vector3 fm = FixGameData.FGD.InteractMap.CellToWorld(from);
-        Vector3 ed = FixGameData.FGD.InteractMap.CellToWorld(end);
+        Vector3Int fm = Map.CellTo120Dig(Pos);
+        Vector3Int ed = Map.CellTo120Dig(end);
+        distance = Math.Max(Math.Max(Math.Abs(fm.x - ed.x), Math.Abs(fm.y - ed.y)), Math.Abs(fm.y - ed.y - fm.x + ed.x));
 
-        distance = (float)(Math.Pow(fm.x - ed.x, 2) + Math.Pow(fm.y - ed.y, 2));
-        this.usedCost = usedCost + moveCost;
+        this.usedCost = usedCost + this.moveCost;
         fromDir = (Dir + 2) % 6 + 1;
-        this.passedCell = passedCell;
-
-        if (Positian == new Vector3Int(-2, 1, 0)) Debug.Log(Positian + " — " + this.moveCost + " 来自:" + fromDir);
+        this.passedCell = passedCell + 1;
 
     }
     
@@ -566,6 +632,14 @@ public class CellInfo
         hpCost = Hp;
     }
     
+    public CellInfo(Vector3Int Pos,Vector3Int Start)
+    {
+        Positian = Pos;
+        Vector3Int fm = Map.CellTo120Dig(Pos);
+        Vector3Int ed = Map.CellTo120Dig(Start);
+        distance = Math.Max(Math.Max(Math.Abs(fm.x - ed.x), Math.Abs(fm.y - ed.y)), Math.Abs(fm.y - ed.y - fm.x + ed.x));
+    }
+
     public void setMove(float mov)
     {
         moveCost = mov;
