@@ -52,8 +52,8 @@ public class TestUI : MonoBehaviour
         piece = FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade");
         counter = 0;
 
-        FixGameData.FGD.MapList[7].SetTile(new Vector3Int(2, 2, 0), FixSystemData.GlobalFacilityList["DefenceArea"].Top);
-
+       // FixGameData.FGD.MapList[7].SetTile(new Vector3Int(2, 2, 0), FixSystemData.GlobalFacilityList["DefenceArea"].Top);
+       FixGameData.FGD.ZoneMap.ClearAllTiles();
 
     }
 

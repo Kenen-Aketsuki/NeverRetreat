@@ -336,8 +336,8 @@ public static class Map
 
     }
 
-    //A*寻路算法
-    public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float CurrentMov)
+    //A*寻路算法，用于判定路径存在
+    public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float Distence)
     {
         List<CellInfo> ToSearchStack = new List<CellInfo>();//待搜索的栈
         Dictionary<Vector3Int, CellInfo> Searched = new Dictionary<Vector3Int, CellInfo>();//已搜索的队列
@@ -364,7 +364,7 @@ public static class Map
                 break;
             }
             //判定是否跳过。条件：移动力用光、地图格不可进入
-            if (presentCell.usedCost > CurrentMov || presentCell.moveCost == -2)
+            if (presentCell.usedCost > Distence || presentCell.moveCost == -2)
             {
                 continue;
             }
@@ -372,8 +372,6 @@ public static class Map
             //未结束或跳过则将周围一圈加入搜索队列
             for (int i = 1; i < 7; i++)
             {
-                //六向
-                float Mov = GetNearMov(presentCell.Positian, i, GameManager.GM.ActionSide);
 
                 //临时变量
                 CellInfo tmp = new CellInfo(
@@ -381,15 +379,9 @@ public static class Map
                     presentCell.Positian,
                     End,
                     i,
-                    Mov,
+                    1,
                     presentCell.usedCost,
                     presentCell.passedCell + 1);
-
-                
-                //路过消耗为剩余全部
-                if (Mov == -2) tmp.setMove(CurrentMov - tmp.usedCost);
-                //跳过不可进入的地块
-                if (Mov < 0) continue;
 
                 //查看此节点是否已在待搜索队列中
                 if (!ToSearchStack.Contains(tmp)) ToSearchStack.Add(tmp);//没有则直接加入
@@ -425,30 +417,13 @@ public static class Map
         return Path;
     }
 
-    //dijkstra寻路（雾）算法
+    //Dijkstra寻路算法,用于单位移动
     public static Dictionary<Vector3Int,CellInfo> DijkstraPathSerch(Vector3Int Start, float CurrentMov)
     {
         //所有道路
         Dictionary<Vector3Int, CellInfo> allPath = new Dictionary<Vector3Int, CellInfo>();
         //已选定队列
         List<Vector3Int> Searched = new List<Vector3Int>();
-
-        //X、Y范围
-        int xMax = (int)Math.Ceiling(Start.x + CurrentMov);
-        int xMin = (int)Math.Floor(Start.x - CurrentMov);
-        int yMax = (int)Math.Ceiling(Start.y + CurrentMov);
-        int yMin = (int)Math.Floor(Start.y - CurrentMov);
-
-        //初始化待搜索格子
-        for(int x = xMin; x < xMax + 1; x++)
-        {
-            for(int y = yMin; y < yMax + 1; y++)
-            {
-                Vector3Int here = new Vector3Int(x, y, 0);
-                if (FixGameData.FGD.InteractMap.GetTile(here) == null) continue;
-                allPath.Add(here, new CellInfo(here, -7, 0, float.PositiveInfinity, 0));
-            }
-        }
 
         //装载初始起点
         CellInfo lastSelect = new CellInfo(Start, -7, 0, float.PositiveInfinity, 0);//上一个选择的地点
@@ -465,27 +440,19 @@ public static class Map
             for (int i = 1; i < 7; i++)
             {
                 Vector3Int tmpPos = GetRoundSlotPos(lastSelect.Positian, i);
-                float Mov = GetNearMov(tmpPos, i, GameManager.GM.ActionSide);
+                float Mov = GetNearMov(lastSelect.Positian, i, GameManager.GM.ActionSide);
 
                 CellInfo tmpCell = new CellInfo(
                     tmpPos,
                     i,
                     GetPassDamge(tmpPos, i, GameManager.GM.ActionSide),
-                    Mov,
+                    Mov == -2 ? CurrentMov - lastSelect.usedCost : Mov,//路过消耗为剩余全部
                     lastSelect.usedCost
                     );
 
-                bool bl1 = tmpCell.moveCost < 0;
-                bool bl2 = CurrentMov < tmpCell.usedCost;
-
-                //路过消耗为剩余全部
-                if (Mov == -2) tmpCell.setMove(CurrentMov - tmpCell.usedCost);
+                
                 //跳过不可进入的地块
                 if (tmpCell.moveCost < 0 || CurrentMov < tmpCell.usedCost) tmpCell.setMove(float.PositiveInfinity);
-
-                bl1 = !Searched.Contains(tmpPos);
-                bl2 = allPath.ContainsKey(tmpPos);
-                bool bl3 = bl2 && allPath[tmpCell.Positian].CostD > tmpCell.CostD;
 
                 //替换可替换的重复选项，条件：新节点的 Cost 小于原节点的 Cost  或原本为空时加入
                 if (!Searched.Contains(tmpPos) &&
@@ -494,12 +461,16 @@ public static class Map
                 {
                     allPath[tmpCell.Positian] = tmpCell;
                 }
+                else
+                {
+                    //加入不存在的点
+                    bool alpTyAdd = allPath.TryAdd(tmpPos, tmpCell);
+                }
+                
             }
 
             //排序
             allPath = allPath.OrderBy(x => Searched.Contains(x.Key) ? 1000 : x.Value.CostD).ToDictionary(x => x.Key, x => x.Value);
-
-            _ = lastSelect.Positian;
 
             //选择 Cost 最小且未被标记过的节点
             lastSelect = null;
@@ -509,7 +480,7 @@ public static class Map
                 lastSelect = kvp.Value;
                 break;
             }
-            if (Searched.Contains(lastSelect.Positian)) break;//没有可选择的，退出
+            if (lastSelect == null || Searched.Contains(lastSelect.Positian)) break;//没有可选择的，退出
             else Searched.Add(lastSelect.Positian);
             //循环,直到所有节点均被赋值，或找不到可选的下一个
         }
@@ -517,7 +488,7 @@ public static class Map
 
         return allPath;
     }
-
+    //Dijkstra路径回溯算法
     public static List<CellInfo> DijkstraPathReverse(Dictionary<Vector3Int, CellInfo> allPath, Vector3Int End)
     {
         List<CellInfo> Path = new List<CellInfo>();
@@ -533,11 +504,15 @@ public static class Map
 
         return Path;
     }
+
+    //力大砖飞区域搜索算法
 }
 
 //存储A*算法的地图信息
 public class CellInfo
 {
+    public Vector3Int DebugPos => Positian * new Vector3Int(-1, 1, 0) + new Vector3Int(21, 21, fromDir);
+
     //位置
     public Vector3Int Positian { get; private set; }
     //移动损耗
@@ -547,7 +522,7 @@ public class CellInfo
     //移入代价
     public float Cost { get { return moveCost + hpCost * FixSystemData.AStar + passedCell * 20; } }
     //Dijkstra用的CCost
-    public float CostD { get { return moveCost == float.PositiveInfinity ? float.PositiveInfinity : (hpCost * FixSystemData.AStar + usedCost); } }
+    public float CostD { get { return (moveCost == float.PositiveInfinity) ? float.PositiveInfinity : (hpCost * FixSystemData.AStar + usedCost); } }
 
     //距离终点距离，欧氏距离的平方
     public float distance { get; private set; }

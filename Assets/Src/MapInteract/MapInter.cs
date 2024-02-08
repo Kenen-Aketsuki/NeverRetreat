@@ -20,7 +20,7 @@ public class MapInter : MonoBehaviour
         //防止与UI交互时误触地图
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        Debug.Log(MousePos);
+        Debug.Log(MousePos * new Vector3Int(-1, 1, 0) + new Vector3Int(21, 21));
         if (!FixGameData.FGD.ZoneMap.HasTile(MousePos)) goto DigTest;
         else goto PathRev;
 
@@ -28,6 +28,8 @@ public class MapInter : MonoBehaviour
         //{
         //    Debug.Log(Map.GetNearMov(MousePos, i, ArmyBelong.Human));
         //}
+        //FixGameData.FGD.ZoneMap.ClearAllTiles();
+        //FixGameData.FGD.ZoneMap.SetTile(MousePos, FixSystemData.GlobalZoneList["StaticBarrier"].Top);
         //return;
 
         //测试A*算法
@@ -43,10 +45,10 @@ public class MapInter : MonoBehaviour
         //    }
         //    Debug.Log("花费移动力：" + Path[Path.Count - 1].usedCost);
         //}
-    DigTest:
+        DigTest:
         FixGameData.FGD.ZoneMap.ClearAllTiles();
         //测试Dijkstra算法
-        area = Map.DijkstraPathSerch(MousePos, 5);
+        area = Map.DijkstraPathSerch(MousePos, 10);
         Debug.Log(area.Count);
         foreach(KeyValuePair<Vector3Int, CellInfo> kvp in area)
         {
