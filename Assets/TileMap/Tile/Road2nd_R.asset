@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: FimensionFissure
+  m_Name: Road2nd_R
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 6e51311b5acdf5f48abce805d18c16aa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1ed958e10eb0ad34d88ecaccef289657, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
