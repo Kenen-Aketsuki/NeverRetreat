@@ -113,7 +113,7 @@
     </Colum>
     <Colum CNo="20">
       <Row RNo="24">
-        <facilityC>MetroStation</facilityC>
+        <facilityC stayTime="2147483647">MetroStation</facilityC>
       </Row>
     </Colum>
     <Colum CNo="21">
@@ -123,7 +123,7 @@
     </Colum>
     <Colum CNo="22">
       <Row RNo="16">
-        <facilityC>MetroStation</facilityC>
+        <facilityC stayTime="2147483647">MetroStation</facilityC>
       </Row>
     </Colum>
     <Colum CNo="25">

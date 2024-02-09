@@ -12,7 +12,7 @@ public static class Map
 {
     //地图操作相关
     //获取某格周边的格子,从左上开始顺时针1~6编号，0代表自身
-    static Vector3Int GetRoundSlotPos(Vector3Int Pos, int direction)
+    public static Vector3Int GetRoundSlotPos(Vector3Int Pos, int direction)
     {
         Vector3Int endPos;
         int y = Math.Abs(Pos.y);
@@ -46,7 +46,7 @@ public static class Map
         return endPos;
     }
     //获取边元素的位置。二元组为“目标地图”与“位置”
-    static Tuple<int, Vector3Int> GetSideAddr(Vector3Int Pos, int direction)
+    public static Tuple<int, Vector3Int> GetSideAddr(Vector3Int Pos, int direction)
     {
         int map;
         int y = Math.Abs(Pos.y);
@@ -344,13 +344,13 @@ public static class Map
         foreach(Tuple<string,int,int> piece in EnemyPool.childList)
         {
             Vector3Int pos = new Vector3Int(piece.Item2, piece.Item3, 0);
-            FixGameData.FGD.ZoneMap.SetTile(pos, FixSystemData.GlobalZoneList["ZOC"].Top);
+            FixGameData.FGD.ZOCMap.SetTile(pos, FixSystemData.GlobalZoneList["ZOC"].Top);
 
             for(int i = 1; i < 7; i++)
             {
                 Vector3Int tmp = GetRoundSlotPos(pos, i);
                 if (FixGameData.FGD.ZoneMap.GetTile(tmp) != null || !canSetZoc(pos, i)) continue;
-                FixGameData.FGD.ZoneMap.SetTile(
+                FixGameData.FGD.ZOCMap.SetTile(
                     tmp, 
                     FixSystemData.GlobalZoneList["ZOC"].Top);
             }
@@ -567,8 +567,6 @@ public static class Map
     //类直角到120度极坐标转换
     public static Vector3Int CellTo120Dig(Vector3Int pos)
     {
-        //int flg = Math.Abs(pos.y);
-        //pos.y > 0 => 0 || pos.y < 0 => 1
         int x = pos.x + (pos.y - (pos.y < 0 ? 1 : 0)) / 2 - (Math.Abs(pos.y) + 1) % 2;
         int y = pos.y;
 

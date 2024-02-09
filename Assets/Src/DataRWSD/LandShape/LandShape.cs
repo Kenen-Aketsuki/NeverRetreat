@@ -231,6 +231,7 @@ public class Facility : LandShape
     public bool isRoad = false;
     public bool canLeftRuin = false;//是否留下废墟
     public bool isSpecialLandShape = false;//是否为特殊地形(不包括特殊设施)
+    public int defaultExistTime = int.MaxValue;
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
     //获取带有敌我的加成
@@ -305,7 +306,7 @@ public class Facility : LandShape
         XmlNode tmp = root.SelectSingleNode("Data");
         if (tmp != null)
         {
-            foreach (XmlNode L in root.SelectSingleNode("Data").SelectNodes("battleAdjust"))
+            foreach (XmlNode L in tmp.SelectNodes("battleAdjust"))
             {
                 if (L.Attributes["target"] != null && L.Attributes["target"].Value == "Friend")
                 {
@@ -315,7 +316,7 @@ public class Facility : LandShape
                     addAdjestTo(ref AdjustEnemy, L);
                 }
             }
-            
+            if (tmp.SelectSingleNode("defaultExistTime") != null) defaultExistTime = int.Parse(tmp.SelectSingleNode("defaultExistTime").InnerText);
         }
         #endregion
         string path = FixSystemData.TerrainDirectory + "\\img\\";

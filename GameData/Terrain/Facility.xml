@@ -116,6 +116,7 @@
                 <adjust target="HP" way="ADD" number="-2" />
             </battleAdjust>
             <height>0</height>
+            
         </Data>
     </Terrain>
 
@@ -160,7 +161,7 @@
     </Terrain>
 
     <!-- 特殊设施-->
-    <Terrain Type="SpecialFacility" id="FimensionFissure" belone="ModCrash">
+    <Terrain Type="SpecialFacility" id="DimensionFissure" belone="ModCrash">
         <name>裂隙</name>
         <Data>
             <enterCost>0</enterCost>

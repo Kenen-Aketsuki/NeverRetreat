@@ -58,10 +58,15 @@ public class DataLoader : MonoBehaviour
             Debug.Log(i);
         }
         */
+        
+        //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("Airpot", new Vector3Int(-1, 3), 0, 114514, false));
+        //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("MetroStation", new Vector3Int(-1, 3), 0, int.MaxValue, false));
 
-        //GameUtility.mapSize = new Vector2Int(42, 42);
+        //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("MetroStation", new Vector3Int(1, -5), 0, int.MaxValue, false));
+
+        GameUtility.mapSize = new Vector2Int(42, 42);
         //BasicUtility.saveTerrain("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Terrain.xml");
-        //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Facility.xml");
+        //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Trash.xml");
         //GameUtility.从预设中读取地图(false, "");
 
         //BasicUtility.savePieceAsDefault("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");

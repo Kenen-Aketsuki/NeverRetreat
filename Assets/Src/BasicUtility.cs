@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public static class BasicUtility
 {
@@ -274,7 +276,7 @@ public static class BasicUtility
         XmlNode root = xmlDoc.CreateElement("MapData");
         xmlDoc.AppendChild(root);
 
-        XmlNode tmp = xmlDoc.CreateElement("Size");
+        XmlElement tmp = xmlDoc.CreateElement("Size");
         tmp.InnerText = GameUtility.mapSize.x + "*" + GameUtility.mapSize.y;
         root.AppendChild(tmp);
 
@@ -284,6 +286,9 @@ public static class BasicUtility
         XmlElement Colum;
         XmlElement Row;
         string tmpStr;
+        TileBase tmpTile;
+        
+        List<FacilityDataCell> tmpFacLst;
 
         Vector3Int pos;
         for (int y = 0; y <= GameUtility.mapSize.y; y++)
@@ -298,19 +303,49 @@ public static class BasicUtility
                 pos = FixGameData.MapToWorld(y, x);
 
                 //编写设施(格内)
-                if (gamedata.MapList[7].GetTile(pos) != null)
+                tmpTile = gamedata.MapList[7].GetTile(pos);
+                if (tmpTile != null)
                 {
                     tmpStr = "";
-                    tmpStr += gamedata.MapList[7].GetTile(pos).name;
+                    tmpStr += tmpTile.name;
                     tmp = xmlDoc.CreateElement("facilityC");
                     tmp.InnerText = tmpStr;
+                    
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
+                    if(tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
+                    if(tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+
                     Row.AppendChild(tmp);
                 }
                 //编写设施(格边)
                 tmpStr = "";
-                if (gamedata.MapList[8].GetTile(pos) != null) tmpStr += gamedata.MapList[8].GetTile(pos).name + "-"; else tmpStr += "X-";
-                if (gamedata.MapList[9].GetTile(pos) != null) tmpStr += gamedata.MapList[9].GetTile(pos).name + "-"; else tmpStr += "X-";
-                if (gamedata.MapList[10].GetTile(pos) != null) tmpStr += gamedata.MapList[10].GetTile(pos).name; else tmpStr += "X";
+                tmpTile = gamedata.MapList[8].GetTile(pos);
+                if (tmpTile != null) 
+                {
+                    tmpStr += tmpTile.name + "-";
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
+                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+
+                }  else tmpStr += "X-";
+
+                tmpTile = gamedata.MapList[9].GetTile(pos);
+                if (tmpTile != null)
+                {
+                    tmpStr += tmpTile.name + "-";
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
+                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                } else tmpStr += "X-";
+                
+                tmpTile = gamedata.MapList[10].GetTile(pos);
+                if (tmpTile != null) 
+                {
+                    tmpStr += tmpTile.name;
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
+                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                } else tmpStr += "X";
                 if (tmpStr != "X-X-X")
                 {
                     tmp = xmlDoc.CreateElement("facilityS");
@@ -319,9 +354,29 @@ public static class BasicUtility
                 }
                 //特殊地形(格边)
                 tmpStr = "";
-                if (gamedata.MapList[11].GetTile(pos) != null) tmpStr += gamedata.MapList[11].GetTile(pos).name + "-"; else tmpStr += "X-";
-                if (gamedata.MapList[12].GetTile(pos) != null) tmpStr += gamedata.MapList[12].GetTile(pos).name + "-"; else tmpStr += "X-";
-                if (gamedata.MapList[13].GetTile(pos) != null) tmpStr += gamedata.MapList[13].GetTile(pos).name; else tmpStr += "X";
+                tmpTile = gamedata.MapList[11].GetTile(pos);
+                if (tmpTile != null) 
+                {
+                    tmpStr += tmpTile.name + "-";
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                } else tmpStr += "X-";
+
+                tmpTile = gamedata.MapList[12].GetTile(pos);
+                if (tmpTile != null) 
+                {
+                    tmpStr += tmpTile.name + "-";
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                } else tmpStr += "X-";
+
+                tmpTile = gamedata.MapList[13].GetTile(pos);
+                if (tmpTile != null) 
+                {
+                    tmpStr += tmpTile.name;
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                } else tmpStr += "X";
                 if (tmpStr != "X-X-X")
                 {
                     tmp = xmlDoc.CreateElement("specialTerrainS");
@@ -329,11 +384,15 @@ public static class BasicUtility
                     Row.AppendChild(tmp);
                 }
                 //特殊地形(格内)
-                if (gamedata.MapList[14].GetTile(pos) != null)
+                tmpTile = gamedata.MapList[14].GetTile(pos);
+                if (tmpTile != null)
                 {
                     tmpStr = "";
-                    tmpStr += gamedata.MapList[14].GetTile(pos).name;
+                    tmpStr += tmpTile.name;
                     tmp = xmlDoc.CreateElement("specialTerrain");
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
+                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+
                     tmp.InnerText = tmpStr;
                     Row.AppendChild(tmp);
                 }

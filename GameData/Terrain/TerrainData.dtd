@@ -16,7 +16,7 @@
 
 <!ELEMENT name (#PCDATA)><!-- 地形名称-->
 
-<!ELEMENT Data (enterCost,battleAdjust+,height,canZoc?)><!-- 地形信息-->
+<!ELEMENT Data (enterCost,battleAdjust+,height,canZoc?,defaultExistTime?)><!-- 地形信息-->
 <!ELEMENT enterCost (#PCDATA)><!-- 进入消耗,用NA代表不可入内,0表示不规定消耗，优先级遵循：特殊地形>临时设施=固定设施>基础地形，冲突时按照已有最高优先级的计算,同优先级取最大值-->
 <!ELEMENT battleAdjust (adjust+)><!-- 战斗修正-->
 <!ATTLIST battleAdjust target (All|Friend|Enemy) "All"><!-- 生效对象，用于设施的记录-->
@@ -26,3 +26,4 @@
 <!ATTLIST adjust number CDATA #REQUIRED><!-- 修正值-->
 <!ELEMENT height (#PCDATA)><!-- 地形平均海拔，单位为米,优先级遵循：特殊地形>临时设施=固定设施>基础地形，冲突时按照已有最高优先级的计算,同优先级取最大值-->
 <!ELEMENT canZoc (#PCDATA)>
+<!ELEMENT defaultExistTime (#PCDATA)><!-- 默认存在时间，不填则为固定设施，否则为临时设施-->

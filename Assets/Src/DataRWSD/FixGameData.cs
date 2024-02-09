@@ -31,14 +31,25 @@ public class FixGameData : MonoBehaviour
     public List<Tilemap> MapList;
     //交互用地图
     public Tilemap InteractMap;
-    //区域地图 Z = 0为ZOC，Z = 1 为安定结界
+    //区域地图 
     public Tilemap ZoneMap;
     //堆叠标志
     public Tilemap MultiPieceMap;
+    //控制区
+    public Tilemap ZOCMap;
 
     //特殊瓦片
     public Tile InteractFill;//填充交互用
-    public Tile MultiPieceIcon;
+    public Tile MultiPieceIcon;//堆叠标记
+
+    //游戏内数据
+    //恒定设施列表
+    public List<FacilityDataCell> SpecialFacilityList = new List<FacilityDataCell>();
+    //临时设施
+    public List<FacilityDataCell> FacilityList = new List<FacilityDataCell>();
+    //特殊地形
+    public List<FacilityDataCell> SpecialTerrainList = new List<FacilityDataCell>();
+
 
     private void Start()
     {
@@ -57,5 +68,82 @@ public class FixGameData : MonoBehaviour
         int x = pos.x + (int)Math.Floor((double)(GameUtility.mapSize.x / 2));
         int y = pos.y + (int)Math.Floor((double)(GameUtility.mapSize.y / 2));
         return new Vector2Int(x, y);
+    }
+}
+
+public class FacilityDataCell
+{
+    public Tuple<Type,LandShape> Data
+    {
+        get
+        {
+            LandShape tmp = null;
+            Type type = null;
+            if (FixSystemData.GlobalFacilityList.ContainsKey(Id))
+            {
+                tmp = FixSystemData.GlobalFacilityList[Id];
+                type = typeof(Facility);
+            }
+            else if (FixSystemData.GlobalSpFacilityList.ContainsKey(Id))
+            {
+                tmp = FixSystemData.GlobalSpFacilityList[Id];
+                type = typeof(SpecialFacility);
+            }
+            else if (FixSystemData.GlobalSpecialTerrainList.ContainsKey(Id))
+            {
+                tmp = FixSystemData.GlobalSpecialTerrainList[Id];
+                type = typeof(Facility);
+            }
+            return new Tuple<Type, LandShape>(type, tmp);
+        }
+    }
+
+    public string Id { get; private set; }
+    public Vector3Int Positian { get; private set; }
+    public int dir { get; private set; }
+    public int LastTime { get; private set; }//存在时间
+
+    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide)
+    {
+        LastTime = lastTime;
+        Id = id;
+        if (atSide)
+        {
+            Tuple<int, Vector3Int> tmpP = Map.GetSideAddr(Pos, Dir);
+            Positian = tmpP.Item2;
+            dir = tmpP.Item1 + 1;
+        }
+        else
+        {
+            Positian = Pos;
+            dir = 0;
+        }
+    }
+
+    public bool PassTime()
+    {
+        LastTime--;
+        return LastTime > 0;
+    }
+
+    public void RemoveSelf()
+    {
+        int startAddr = 0;
+        if(Data.Item1 == typeof(Facility) && dir == 0)
+        {
+            Facility tmpf = (Facility)Data.Item2;
+            //本格设施
+            startAddr = tmpf.isSpecialLandShape ? 14 : 7;
+        }
+        else if((Data.Item1 == typeof(Facility) && dir != 0))
+        {
+            Facility tmpf = (Facility)Data.Item2;
+            //本格设施
+            startAddr = tmpf.isSpecialLandShape ? 11 : 8;
+            startAddr += dir - 1;
+        }
+
+        FixGameData.FGD.MapList[startAddr].SetTile(Positian, null);
+
     }
 }

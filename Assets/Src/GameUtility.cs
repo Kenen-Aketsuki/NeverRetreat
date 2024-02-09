@@ -161,12 +161,26 @@ public static class GameUtility
                             FixGameData.FGD.MapList[7].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalFacilityList[tileName].Top);
+                            FixGameData.FGD.FacilityList.Add(new FacilityDataCell(
+                                tileName,
+                                tarPos,
+                                0,
+                                FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["stayTime"] == null? FixSystemData.GlobalFacilityList[tileName].defaultExistTime:int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["stayTime"].Value),
+                                false
+                                ));
                         }
                         else
                         {
                             FixGameData.FGD.MapList[7].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalSpFacilityList[tileName].Close);
+                            FixGameData.FGD.SpecialFacilityList.Add(new FacilityDataCell(
+                                tileName,
+                                tarPos,
+                                0,
+                                int.MaxValue,
+                                false
+                                ));
                         }
                         
                     }
@@ -174,50 +188,92 @@ public static class GameUtility
                     if (FacilityRow[rowFac].SelectSingleNode("facilityS") != null)
                     {
                         sideSplit = FacilityRow[rowFac].SelectSingleNode("facilityS").InnerText.Split("-");
-                        if (sideSplit[0] == "1")
+                        if (sideSplit[0] != "X")
                         {
                             sideSplit[0] = sideSplit[0].Replace("_L", "");
                             FixGameData.FGD.MapList[8].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalFacilityList[sideSplit[0]].Left);
+                            FixGameData.FGD.FacilityList.Add(new FacilityDataCell(
+                                sideSplit[0],
+                                tarPos,
+                                1,
+                                FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"] == null ? FixSystemData.GlobalFacilityList[sideSplit[0]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"].Value.Split("-")[0]),
+                                false
+                                ));
                         }
-                        if (sideSplit[1] == "1")
+                        if (sideSplit[1] != "X")
                         {
                             FixGameData.FGD.MapList[9].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalFacilityList[sideSplit[1]].Top);
+                            FixGameData.FGD.FacilityList.Add(new FacilityDataCell(
+                                sideSplit[1],
+                                tarPos,
+                                2,
+                                FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"] == null ? FixSystemData.GlobalFacilityList[sideSplit[1]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"].Value.Split("-")[1]),
+                                true
+                                ));
                         }
-                        if (sideSplit[2] == "1")
+                        if (sideSplit[2] != "X")
                         {
                             sideSplit[2] = sideSplit[2].Replace("_R", "");
                             FixGameData.FGD.MapList[10].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalFacilityList[sideSplit[2]].Right);
+                            FixGameData.FGD.FacilityList.Add(new FacilityDataCell(
+                                sideSplit[2],
+                                tarPos,
+                                3,
+                                FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"] == null ? FixSystemData.GlobalFacilityList[sideSplit[2]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"].Value.Split("-")[2]),
+                                true
+                                ));
                         }
                     }
                     //放置特殊地形（格子边）
                     if(fromSave && FacilityRow[rowFac].SelectSingleNode("specialTerrainS") != null)
                     {
                         sideSplit = FacilityRow[rowFac].SelectSingleNode("specialTerrainS").InnerText.Split("-");
-                        if (sideSplit[0] == "1")
+                        if (sideSplit[0] != "X")
                         {
                             sideSplit[0] = sideSplit[0].Replace("_L", "");
                             FixGameData.FGD.MapList[11].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[0]].Left);
+                            FixGameData.FGD.SpecialTerrainList.Add(new FacilityDataCell(
+                                sideSplit[0],
+                                tarPos,
+                                1,
+                                FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[sideSplit[0]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"].Value.Split("-")[0]),
+                                true
+                                ));
                         }
-                        if (sideSplit[1] == "1")
+                        if (sideSplit[1] != "X")
                         {
                             FixGameData.FGD.MapList[12].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[1]].Top);
+                            FixGameData.FGD.SpecialTerrainList.Add(new FacilityDataCell(
+                                sideSplit[1],
+                                tarPos,
+                                2,
+                                FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[sideSplit[1]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"].Value.Split("-")[1]),
+                                true
+                                ));
                         }
-                        if (sideSplit[2] == "1")
+                        if (sideSplit[2] != "X")
                         {
                             sideSplit[2] = sideSplit[2].Replace("_R", "");
                             FixGameData.FGD.MapList[13].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalSpecialTerrainList[sideSplit[2]].Right);
+                            FixGameData.FGD.SpecialTerrainList.Add(new FacilityDataCell(
+                                sideSplit[2],
+                                tarPos,
+                                3,
+                                FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[sideSplit[2]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"].Value.Split("-")[2]),
+                                true
+                                ));
                         }
                     }
                     //放置特殊地形（格子内）
@@ -227,7 +283,13 @@ public static class GameUtility
                         FixGameData.FGD.MapList[14].SetTile(
                                 tarPos,
                                 FixSystemData.GlobalFacilityList[tileName].Top);
-
+                        FixGameData.FGD.SpecialTerrainList.Add(new FacilityDataCell(
+                                tileName,
+                                tarPos,
+                                0,
+                                FacilityRow[rowFac].SelectSingleNode("specialTerrain").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[tileName].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrain").Attributes["stayTime"].Value),
+                                false
+                                ));
                     }
 
                     //前进到下一行
