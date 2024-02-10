@@ -20,10 +20,11 @@ public class MapInter : MonoBehaviour
         //·ÀÖ¹ÓëUI½»»¥Ê±Îó´¥µØÍ¼
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        Debug.Log(MousePos * new Vector3Int(-1, 1, 0) + new Vector3Int(21, 21));
-        Map.UpdateZOC();
+        //Debug.Log(MousePos * new Vector3Int(-1, 1, 0) + new Vector3Int(21, 21));
+        Debug.Log(MousePos);
 
-
+        //Ò»Ûç²âÊÔ´úÂë
+        #region
         //if (!FixGameData.FGD.ZoneMap.HasTile(MousePos)) goto DigTest;
         //else goto PathRev;
 
@@ -71,11 +72,36 @@ public class MapInter : MonoBehaviour
         //    }
 
         //²âÊÔÇøÓòËÑË÷Ëã·¨
-        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(MousePos, 20);
-        foreach(CellInfo Cell in Area)
+        //List<CellInfo> Area = Map.PowerfulBrickAreaSearch(MousePos, 20);
+        //foreach(CellInfo Cell in Area)
+        //{
+        //    FixGameData.FGD.ZoneMap.SetTile(Cell.Positian, FixSystemData.GlobalZoneList["StaticBarrier"].Top);
+        //}
+        //FixGameData.FGD.ZoneMap.SetTile(MousePos, FixSystemData.GlobalZoneList["ZOC"].Top);
+        #endregion
+        switch (GameManager.GM.GetMachineState())
         {
-            FixGameData.FGD.ZoneMap.SetTile(Cell.Positian, FixSystemData.GlobalZoneList["StaticBarrier"].Top);
+            case MachineState.WaitMoveTarget:
+                if( GameManager.GM.currentPiece.MoveTo(MousePos)) 
+                    GameManager.GM.SetMachineState(MachineState.FocusOnPiece);
+                break;
+            case MachineState.FocusOnPiece:
+                if( GameManager.GM.currentPiece.PrepareMove()) 
+                    GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
+                break;
+            case MachineState.Idel:
+                area = Map.DijkstraPathSerch(MousePos, 10);
+                Debug.Log(area.Count);
+                foreach (KeyValuePair<Vector3Int, CellInfo> kvp in area)
+                {
+                    if (kvp.Value.moveCost != float.PositiveInfinity) FixGameData.FGD.MoveAreaMap.SetTile(kvp.Key, FixGameData.FGD.MoveArea);
+                    else FixGameData.FGD.MoveAreaMap.SetTile(kvp.Key, FixGameData.FGD.MoveZocArea);
+                }
+                break;
+            default:
+                Debug.Log("Î´ÖªµÄ×´Ì¬:" + GameManager.GM.GetMachineState());
+                break;
         }
-        FixGameData.FGD.ZoneMap.SetTile(MousePos, FixSystemData.GlobalZoneList["ZOC"].Top);
+
     }
 }

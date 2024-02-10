@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 
 public class OB_Piece : MonoBehaviour
 {
     Piece Data;//棋子数据
     PieseTextShow PieceText;
+
     public bool isVisiable { get; private set; }
+    public Vector3Int piecePosition{ get { return FixGameData.FGD.InteractMap.WorldToCell(transform.position); } }
 
     [SerializeField]
     SpriteRenderer BaseColor;
@@ -20,7 +22,16 @@ public class OB_Piece : MonoBehaviour
     GameObject AreaSlash;
     [SerializeField]
     SpriteMask VisibaleMask;
+    [SerializeField]
+    AnimationCurve curve;
 
+    //棋子的移动路径
+    List<CellInfo> Path;
+    int PathCount = 0;
+
+    //棋子状态
+    bool needMove = false;
+    float timer;
 
     //获取地图坐标
     public Vector3Int PosInMap { get
@@ -47,6 +58,34 @@ public class OB_Piece : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (needMove)
+        {
+            //移动到坐标
+            //StartCoroutine(Move());
+
+            if(timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                if (PathCount < Path.Count)
+                {
+                    transform.position = FixGameData.FGD.InteractMap.CellToWorld(Path[PathCount].Positian);
+                    PathCount++;
+                    timer = 0.2f;
+                }
+                else
+                {
+                    needMove = false;
+                    EndMove();
+                }
+            }
+
+        }
+    }
 
     //初始化棋子显示数据
     void InitData()
@@ -81,9 +120,13 @@ public class OB_Piece : MonoBehaviour
         
         isVisiable = true;
     }
-    //更新棋子显示数据
+    //自检，并更新棋子显示数据
     void UpdateData()
     {
+        //自检
+        //检查补给与通信情况
+        //CheckSupplyConnect();
+
         //更新文本
         PieceText.InitText(gameObject.name, Data);
         //显示崩坏遮罩
@@ -103,7 +146,7 @@ public class OB_Piece : MonoBehaviour
     //设置可见性
     public void setVisibility(bool visible)
     {
-        if ((visible ^ isVisiable))//二者同或
+        if (visible ^ isVisiable)//二者同或
         {
             isVisiable = visible;
             PieceText.gameObject.SetActive(isVisiable);
@@ -184,35 +227,85 @@ public class OB_Piece : MonoBehaviour
         UpdateData();
     }
 
+    //准备移动
+    public bool PrepareMove()
+    {
+        if (Data.MOV <= 0) return false;
+        GameManager.GM.MoveArea = Map.DijkstraPathSerch(piecePosition, Data.MOV);
+        Map.UpdateMoveArea();
+        return true;
+    }
     //移动
     public bool MoveTo(Vector3Int Target)
     {
-        //测试用
-        Data.TryMove(1);
+        PiecePool pool;
+        if (Data.LoyalTo == ArmyBelong.Human) pool = FixGameData.FGD.HumanPiecePool;
+        else pool = FixGameData.FGD.CrashPiecePool;
 
-        //判断能否移动
+        Path = null;
         //寻路
-        //检查剩余移动点
-        //移动到坐标
-        //减少移动点
+        if (FixGameData.FGD.MoveAreaMap.HasTile(Target))
+        {
+            Path = Map.DijkstraPathReverse(GameManager.GM.MoveArea, Target);
+            //清空移动范围
+            GameManager.GM.MoveArea.Clear();
+            Map.UpdateMoveArea();
+        }
+        if(Path != null)
+        {
+            //减少移动点
+            Data.DecreaseMov(Path[Path.Count - 1].usedCost);
+            PathCount = 0;
+            timer = -1;
+            needMove = true;
+            //棋子数据移动
+            pool.UpdateChildPos(name, Target);
 
+        }else return false;
         UpdateData();
         return true;
+    }
+    //移动结束
+    public void EndMove()
+    {
+        Path.Clear();
+        //重新布设棋子堆叠标志
+        Map.UpdatePieceStackSign();
+        //检查我双方的补给与联络
+
     }
     //检查联络与补给
     public void CheckSupplyConnect()
     {
-        bool Connect = false;
-        bool unSupply = true ;
+        bool Connect = true;//默认未失联
+        bool unSupply = true ;//默认断补
         //判定失联
-        
+        int countZoc = 0;
+        List<LandShape> shaplst = Map.GetPLaceInfo(piecePosition, 0);
+        if (shaplst.Where(x => x.id == "DefenceArea").ToList().Count() == 0)//部队不处于防御区内
+        {
+            for (int i = 1; i < 7; i++)
+            {
+                countZoc += Map.GetPLaceInfo(piecePosition, i).Where(x => x.id == "ZOC").ToList().Count;
+            }
+            if (countZoc == 6) Connect = false;
+        }
+
+        string tarId;
+        if (Data.Belong == ArmyBelong.Human) tarId = "HunterGuild";
+        else tarId = "DimensionFissure";
+
         //从近到远排序工会
-        //依次寻路，若有则直接跳出，否则认为没有。
+        foreach (FacilityDataCell dta in FixGameData.FGD.FacilityList.Where(x=>x.Id == tarId).OrderBy(x=>Map.HexDistence(piecePosition,x.Positian)).ToList())
+        {
+            //依次寻路，若有则直接跳出，否则认为没有。
+            if (Map.AStarPathSerch(piecePosition, dta.Positian, 20).Count() > 0)
+            {
+                unSupply = false;
+                break;
+            }
+        }
         Data.UpdateSupplyConnection(unSupply, Connect);
         UpdateData();
     }
-
-
-    
-
 }

@@ -6,10 +6,6 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class TestUI : MonoBehaviour
 {
-    GameObject piece;
-
-    int movDir = 1;
-    int counter;
 
     public void AddPiece()
     {
@@ -46,47 +42,29 @@ public class TestUI : MonoBehaviour
 
     public void MovePiece()
     {
-        //FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", FixGameData.MapToWorld(21, 21));
-        //FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.MapToWorld(21, 21);
-        
-        //piece = FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade");
-        counter = 0;
-
-       // FixGameData.FGD.MapList[7].SetTile(new Vector3Int(2, 2, 0), FixSystemData.GlobalFacilityList["DefenceArea"].Top);
-       FixGameData.FGD.ZoneMap.ClearAllTiles();
-
+        GameManager.GM.currentPiece = FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101").GetComponent<OB_Piece>();
+        Map.UpdateZOC();
+        GameManager.GM.SetMachineState(MachineState.FocusOnPiece);
     }
 
     public void TestFunc1()
     {
-
-        //counter = (counter + 1) % 6 + 1;
-        //FixGameData.FGD.ZoneMap.SetTile(FixGameData.FGD.InteractMap.WorldToCell(piece.transform.position), FixSystemData.GlobalZoneList["ZOC"].Top);
-        //Debug.Log(Map.GetNextSlotWithData(FixGameData.FGD.InteractMap.WorldToCell(piece.transform.position), counter));
-
+        GameManager.GM.currentPiece.OverTurn();
 
     }
 
     public void TestFunc2()
     {
-        //Vector3Int tmp = FixGameData.FGD.InteractMap.WorldToCell(piece.transform.position) + new Vector3Int(0, movDir, 0);
         
-        //FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", tmp);
-        //FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.FGD.InteractMap.CellToWorld(tmp);
-        //if (FixGameData.FGD.HumanPiecePool.getChildByID(piece.name) != null) Debug.Log("人类方找到目标");
-        //if (FixGameData.FGD.CrashPiecePool.getChildByID(piece.name) != null) Debug.Log("崩坏方找到目标");
     }
 
     public void TestFunc3()
     {
-        //Vector3Int tmp = FixGameData.FGD.InteractMap.WorldToCell(piece.transform.position) + new Vector3Int(movDir, 0, 0);
-
-        //FixGameData.FGD.CrashPiecePool.UpdateChildPos("1\\Crash.Blade", tmp);
-        //FixGameData.FGD.CrashPiecePool.getChildByID("1\\Crash.Blade").transform.position = FixGameData.FGD.InteractMap.CellToWorld(tmp);
+        
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) movDir *= -1;
+        
     }
 }

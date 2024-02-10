@@ -55,6 +55,39 @@ MonoBehaviour:
   TroopType: {fileID: 2298948379426341938}
   AreaSlash: {fileID: 2298948378923661984}
   VisibaleMask: {fileID: 4346965065325913331}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.0032802648
+      outSlope: 0.0032802648
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.28752
+    - serializedVersion: 3
+      time: 0.53182274
+      value: 0.66383195
+      inSlope: 0.02632191
+      outSlope: 0.02632191
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.29514083
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.00020620227
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!331 &4346965065325913331
 SpriteMask:
   m_ObjectHideFlags: 0

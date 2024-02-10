@@ -34,7 +34,9 @@ public static class GameUtility
         }
 
         //布设棋子堆叠标志
-        布设棋子堆叠标志();
+        //布设棋子堆叠标志();
+        Map.UpdatePieceStackSign();
+
     }
 
     public static void 从预设中读取地图(bool fromSave, string Save)//字面意思

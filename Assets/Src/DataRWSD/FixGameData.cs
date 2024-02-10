@@ -37,10 +37,14 @@ public class FixGameData : MonoBehaviour
     public Tilemap MultiPieceMap;
     //控制区
     public Tilemap ZOCMap;
+    //移动范围地图
+    public Tilemap MoveAreaMap;
 
     //特殊瓦片
     public Tile InteractFill;//填充交互用
     public Tile MultiPieceIcon;//堆叠标记
+    public Tile MoveArea;//移动区域
+    public Tile MoveZocArea;//有ZOC的移动区域
 
     //游戏内数据
     //恒定设施列表
@@ -49,7 +53,8 @@ public class FixGameData : MonoBehaviour
     public List<FacilityDataCell> FacilityList = new List<FacilityDataCell>();
     //特殊地形
     public List<FacilityDataCell> SpecialTerrainList = new List<FacilityDataCell>();
-
+    //最大回合数
+    public int MaxRoundCount;
 
     private void Start()
     {

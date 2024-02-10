@@ -129,11 +129,11 @@ public static class Map
         else lst.Add(null);
 
         //获取控制区
-        tmpName = FixGameData.FGD.ZoneMap.GetTile(new Vector3Int(targetPos.x, targetPos.y, 0));
+        tmpName = FixGameData.FGD.ZOCMap.GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalZoneList[tmpName.name]);
         else lst.Add(null);
         //获取安定结界
-        tmpName = FixGameData.FGD.ZoneMap.GetTile(new Vector3Int(targetPos.x, targetPos.y, 1));
+        tmpName = FixGameData.FGD.ZoneMap.GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalZoneList[tmpName.name]);
         else lst.Add(null);
 
@@ -143,6 +143,18 @@ public static class Map
     //获取临近移动力消耗，输入当前位置和方向
     public static float GetNearMov(Vector3Int Pos, int Dir , ArmyBelong ActionSide)
     {
+        //如果该格有敌方单位，则不可通过
+        if(ActionSide == ArmyBelong.Human)
+        {
+            if (FixGameData.FGD.CrashPiecePool.getChildByPos(GetRoundSlotPos(Pos, Dir)).Count != 0 || //不能通过敌方所在格子
+                FixGameData.FGD.HumanPiecePool.getChildByPos(GetRoundSlotPos(Pos, Dir)).Count >= GetHereStack(GetRoundSlotPos(Pos, Dir),ActionSide)) return -1;//或者超过堆叠
+        }
+        else
+        {
+            if (FixGameData.FGD.HumanPiecePool.getChildByPos(GetRoundSlotPos(Pos, Dir)).Count != 0 ||
+                FixGameData.FGD.CrashPiecePool.getChildByPos(GetRoundSlotPos(Pos, Dir)).Count >= GetHereStack(GetRoundSlotPos(Pos, Dir), ActionSide)) return -1;
+        }
+
         float Mov = -1;
         float MovAdd = 0;
         float MovMULTY = 1;
@@ -152,6 +164,7 @@ public static class Map
         {
             LandShape Land = Lands[i];
             if (Land == null) continue;
+
             //统计共有
             if (Mov < 0 || Land.enterCount == -1) Mov = Land.enterCount;
             else if (Land.MOV_All != null && Land.MOV_All.Item1 == FixWay.MULTY) MovMULTY *= Land.MOV_All.Item2;
@@ -357,6 +370,57 @@ public static class Map
         }
 
     }
+    //刷新移动区
+    public static void UpdateMoveArea()
+    {
+        FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+        foreach (KeyValuePair<Vector3Int, CellInfo> pos in GameManager.GM.MoveArea)
+        {
+            if(pos.Value.moveCost == float.PositiveInfinity) continue;
+            if (FixGameData.FGD.ZOCMap.HasTile(pos.Key))
+            {
+                FixGameData.FGD.MoveAreaMap.SetTile(pos.Key, FixGameData.FGD.MoveZocArea);
+            }
+            else
+            {
+                FixGameData.FGD.MoveAreaMap.SetTile(pos.Key, FixGameData.FGD.MoveArea);
+            }
+        }
+    }
+    //布设棋子堆叠标志
+    public static void UpdatePieceStackSign()
+    {
+        //清空棋子堆叠标志
+        FixGameData.FGD.MultiPieceMap.ClearAllTiles();
+        Vector3Int tmp;
+        List<GameObject> lst;
+        //人类方
+        foreach (Tuple<string, int, int> child in FixGameData.FGD.HumanPiecePool.childList)
+        {
+            tmp = new Vector3Int(child.Item2, child.Item3, 0);
+            lst = FixGameData.FGD.HumanPiecePool.getChildByPos(tmp);
+            if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null &&
+                lst.Count > 1)
+            {
+                //Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
+                FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
+            }
+        }
+        //崩坏方
+        foreach (Tuple<string, int, int> child in FixGameData.FGD.CrashPiecePool.childList)
+        {
+            tmp = new Vector3Int(child.Item2, child.Item3, 0);
+            lst = FixGameData.FGD.CrashPiecePool.getChildByPos(tmp);
+            if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null &&
+                lst.Count > 1)
+            {
+                //Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
+                FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
+            }
+        }
+    }
+
+
 
     //A*寻路算法，用于判定路径存在
     public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float Distence)
@@ -446,7 +510,7 @@ public static class Map
         List<Vector3Int> Searched = new List<Vector3Int>();
 
         //装载初始起点
-        CellInfo lastSelect = new CellInfo(Start, -7, 0, float.PositiveInfinity, 0);//上一个选择的地点
+        CellInfo lastSelect = new CellInfo(Start, -7, 0, 0, 0);//上一个选择的地点
         allPath[Start] = lastSelect;
         Searched.Add(Start);
         allPath = allPath.OrderBy(x => x.Value.Cost).ToDictionary(x => x.Key, x => x.Value);
@@ -571,6 +635,14 @@ public static class Map
         int y = pos.y;
 
         return new Vector3Int(x, y, pos.z);
+    }
+    //求距离
+    public static int HexDistence(Vector3Int pos1,Vector3Int pos2)
+    {
+        pos1 = CellTo120Dig(pos1);
+        pos2 = CellTo120Dig(pos2);
+
+        return Math.Max(Math.Max(Math.Abs(pos1.x - pos2.x), Math.Abs(pos1.y - pos2.y)), Math.Abs(pos1.y - pos2.y - pos1.x + pos2.x));
     }
 }
 

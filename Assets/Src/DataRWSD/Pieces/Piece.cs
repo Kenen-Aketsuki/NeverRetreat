@@ -226,6 +226,8 @@ public class Piece
     public void UpdateSupplyConnection(bool Unsupplyed,bool connected)//更新断补与联络状态
     {
         isUnsupply = Unsupplyed;
+        if (!canLossConnect) return;
+
         if (connected) ConnectState = 0;
         else
         {
@@ -234,11 +236,10 @@ public class Piece
         }
     }
 
-    public bool TryMove(int cost)
+    public void DecreaseMov(float cost)
     {
-        if (cost > restMOV) return false;
-        else restMOV -= cost;
-        return true;
+        restMOV -= (int)Math.Ceiling(cost);
+        restMOV = Math.Max(0, restMOV);
     }
 }
 

@@ -116,7 +116,7 @@
         <Data>
             <enterCost>0</enterCost>
             <battleAdjust>
-                <adjust target="MOV" way="MULTY" number="2" />
+                <adjust target="MOV" way="ALL" number="0" />
             </battleAdjust>
             <height>0</height>
             <canZoc>False</canZoc>

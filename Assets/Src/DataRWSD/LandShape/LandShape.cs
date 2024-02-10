@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class LandShape
 {
+    public string id;
     public string name;
     public int enterCount = 0;
     public int height = 0;
@@ -162,8 +163,6 @@ public class BasicLandShape : LandShape //基础地形
     public Tile Top;
     public Tile Right = null;
 
-    public string id;
-
     public BasicLandShape(XmlNode root) : base(root)
     {
         id = root.Attributes["id"].Value;
@@ -227,7 +226,6 @@ public class Facility : LandShape
     public Tile Top;
     public Tile Right = null;
 
-    public string id;
     public bool isRoad = false;
     public bool canLeftRuin = false;//是否留下废墟
     public bool isSpecialLandShape = false;//是否为特殊地形(不包括特殊设施)
@@ -381,7 +379,6 @@ public class SpecialFacility : LandShape
     public Tile Close;
     public Tile Active;
 
-    public string id;
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
     //获取带有敌我的加成
@@ -515,7 +512,6 @@ public class Zone : LandShape
 {
     public Tile Top;
 
-    public string id;
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
     public Zone(XmlNode root) : base(root)

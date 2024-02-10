@@ -12,7 +12,7 @@ public class PiecePool : MonoBehaviour
     
     //子对象列表
     public List<Tuple<string, int, int>> childList = new List<Tuple<string, int, int>>();
-    //行目录
+    //行目录 行号：起始坐标，长度
     public Dictionary<int, Tuple<int, int>> listIndex = new Dictionary<int, Tuple<int, int>>();
     //获取棋子的随机(?)编号
     public string getRedomNo()
@@ -37,6 +37,8 @@ public class PiecePool : MonoBehaviour
     public List<GameObject> getChildByPos(Vector3Int Pos)
     {
         List<GameObject> lst = new List<GameObject>();
+        if(!listIndex.ContainsKey(Pos.y)) return lst;
+
         for (int i = listIndex[Pos.y].Item1; i < listIndex[Pos.y].Item2 + listIndex[Pos.y].Item1; i++)
         {
             if (childList[i].Item2 == Pos.x)
