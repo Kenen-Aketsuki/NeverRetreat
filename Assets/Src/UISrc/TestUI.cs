@@ -42,7 +42,9 @@ public class TestUI : MonoBehaviour
 
     public void MovePiece()
     {
-        GameManager.GM.currentPiece = FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101").GetComponent<OB_Piece>();
+        if (GameManager.GM.ActionSide == ArmyBelong.Human) GameManager.GM.currentPiece = FixGameData.FGD.HumanPiecePool.getChildByID("1\\DawIII.101").GetComponent<OB_Piece>();
+        else GameManager.GM.currentPiece = FixGameData.FGD.HumanPiecePool.getChildByID("1\\Crash.Blade").GetComponent<OB_Piece>();
+
         Map.UpdateZOC();
         GameManager.GM.SetMachineState(MachineState.FocusOnPiece);
     }

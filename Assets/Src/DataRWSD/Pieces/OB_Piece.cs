@@ -132,7 +132,7 @@ public class OB_Piece : MonoBehaviour
     {
         //自检
         //检查补给与通信情况
-        //CheckSupplyConnect();
+        CheckSupplyConnect();
 
         //更新文本
         PieceText.InitText(gameObject.name, Data);
@@ -290,15 +290,17 @@ public class OB_Piece : MonoBehaviour
         //判定失联
         int countZoc = 0;
         List<LandShape> shaplst = Map.GetPLaceInfo(piecePosition, 0);
-        if (shaplst.Where(x => x.id == "DefenceArea").ToList().Count() == 0)//部队不处于防御区内
+        //shaplst = shaplst.Where(x => x.id == "DefenceArea").ToList();
+        if (!(shaplst[3] != null && shaplst[3].id == "DefenceArea"))//部队不处于防御区内
         {
             for (int i = 1; i < 7; i++)
             {
-                countZoc += Map.GetPLaceInfo(piecePosition, i).Where(x => x.id == "ZOC").ToList().Count;
+                countZoc += FixGameData.FGD.ZOCMap.HasTile(Map.GetRoundSlotPos(piecePosition, i)) ? 1 : 0;
             }
             if (countZoc == 6) Connect = false;
         }
 
+        //判定补给
         string tarId;
         if (Data.Belong == ArmyBelong.Human) tarId = "HunterGuild";
         else tarId = "DimensionFissure";
@@ -307,16 +309,16 @@ public class OB_Piece : MonoBehaviour
         foreach (FacilityDataCell dta in FixGameData.FGD.FacilityList.Where(x=>x.Id == tarId).OrderBy(x=>Map.HexDistence(piecePosition,x.Positian)).ToList())
         {
             //依次寻路，若有则直接跳出，否则认为没有。
-            if (Map.AStarPathSerch(piecePosition, dta.Positian, 20).Count() > 0)
+            if (Map.AStarPathSerch(piecePosition, dta.Positian, 20) != null)
             {
                 unSupply = false;
                 break;
             }
         }
         Data.UpdateSupplyConnection(unSupply, Connect);
-        UpdateData();
+
     }
-    //检查自身是否需要隐藏
+    //检查是否需要隐藏
     public static void CheckVisibility()
     {
         PiecePool pool = GameManager.GM.ActionPool;

@@ -31,7 +31,7 @@ public class Piece
 
             if (ConnectState == 1) tmp *= 0.5;//失联
             else if (ConnectState == 2) tmp = -1;//孤立
-            else if (isUnsupply && ConnectState ==0) tmp *= 0.75;//断补
+            else if (SupplyState == 1 && ConnectState ==0) tmp *= 0.75;//断补
 
             return (int)Math.Floor(tmp);
         }
@@ -63,6 +63,7 @@ public class Piece
 
     int Stability = 0;//判定是否为“正常”-“瘫痪”-“失能”
     int ConnectState = 0;//判定是否为 正常 - 失联 - 孤立
+    int SupplyState = 0;//判定是否为 正常 - 断补
     //数值，C开头的为减员态数值,N开头为正常态数值,为小于零时代表其不能执行此操作
     int nATK;
     int cATK;
@@ -75,7 +76,7 @@ public class Piece
     
     bool inCasualty = false;// 是否减员
     bool isUnsupply = false;//是否断补
-
+    bool isConnected = true;//是否失联
     bool canCasualty { get
         {
             if(cATK < 0 && cDEF < 0 && cMaxMOV < 0) return false;
@@ -195,6 +196,8 @@ public class Piece
     {
         if (inCasualty) restMOV = cMaxMOV;
         else restMOV = nMaxMOV;
+
+        CulateSupplyConnection();//计算补给和通信影响
     }
 
     public bool TakeDemage(int Dmg)//受伤,返回是否存活
@@ -226,9 +229,23 @@ public class Piece
     public void UpdateSupplyConnection(bool Unsupplyed,bool connected)//更新断补与联络状态
     {
         isUnsupply = Unsupplyed;
+        isConnected = connected;
+    }
+    
+    public void CulateSupplyConnection()//结算断补与联络buff
+    {
+        if (isUnsupply)
+        {
+            SupplyState = 1;
+        }
+        else
+        {
+            SupplyState = 0;
+        }
+
         if (!canLossConnect) return;
 
-        if (connected) ConnectState = 0;
+        if (isConnected) ConnectState = 0;
         else
         {
             ConnectState++;
