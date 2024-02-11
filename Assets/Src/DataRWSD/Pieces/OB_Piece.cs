@@ -87,7 +87,8 @@ public class OB_Piece : MonoBehaviour
 
     private void OnEnable()
     {
-        PieceText.gameObject.SetActive(isActiveAndEnabled);
+        if (PieceText != null)
+            PieceText.gameObject.SetActive(isActiveAndEnabled);
     }
     private void OnDisable()
     {
