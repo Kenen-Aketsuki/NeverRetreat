@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class OB_Piece : MonoBehaviour
 {
+    public static List<Vector3Int> needChenkVisibility = new List<Vector3Int>();
+
     Piece Data;//棋子数据
     PieseTextShow PieceText;
 
@@ -22,15 +24,13 @@ public class OB_Piece : MonoBehaviour
     GameObject AreaSlash;
     [SerializeField]
     SpriteMask VisibaleMask;
-    [SerializeField]
-    AnimationCurve curve;
 
     //棋子的移动路径
     List<CellInfo> Path;
     int PathCount = 0;
 
     //棋子状态
-    bool needMove = false;
+    bool needMove = false;//是否需要移动
     float timer;
 
     //获取地图坐标
@@ -63,8 +63,6 @@ public class OB_Piece : MonoBehaviour
         if (needMove)
         {
             //移动到坐标
-            //StartCoroutine(Move());
-
             if(timer > 0)
             {
                 timer -= Time.deltaTime;
@@ -75,7 +73,7 @@ public class OB_Piece : MonoBehaviour
                 {
                     transform.position = FixGameData.FGD.InteractMap.CellToWorld(Path[PathCount].Positian);
                     PathCount++;
-                    timer = 0.2f;
+                    timer = 0.1f;
                 }
                 else
                 {
@@ -87,6 +85,14 @@ public class OB_Piece : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        PieceText.gameObject.SetActive(isActiveAndEnabled);
+    }
+    private void OnDisable()
+    {
+        PieceText.gameObject.SetActive(isActiveAndEnabled);
+    }
     //初始化棋子显示数据
     void InitData()
     {
@@ -134,7 +140,7 @@ public class OB_Piece : MonoBehaviour
         else CrashCover.SetActive(false);
         //更改底色
         Color bakC;
-        UnityEngine.ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
+        ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
         BaseColor.color = bakC;
     }
     //设置棋子数据
@@ -150,7 +156,8 @@ public class OB_Piece : MonoBehaviour
         {
             isVisiable = visible;
             PieceText.gameObject.SetActive(isVisiable);
-            VisibaleMask.enabled = !visible;
+            //VisibaleMask.enabled = !visible;
+            //gameObject.SetActive(visible);
         }
     }
 
@@ -262,7 +269,6 @@ public class OB_Piece : MonoBehaviour
             pool.UpdateChildPos(name, Target);
 
         }else return false;
-        UpdateData();
         return true;
     }
     //移动结束
@@ -272,6 +278,7 @@ public class OB_Piece : MonoBehaviour
         //重新布设棋子堆叠标志
         Map.UpdatePieceStackSign();
         //检查我双方的补给与联络
+        UpdateData();
 
     }
     //检查联络与补给
@@ -307,5 +314,25 @@ public class OB_Piece : MonoBehaviour
         }
         Data.UpdateSupplyConnection(unSupply, Connect);
         UpdateData();
+    }
+    //检查自身是否需要隐藏
+    public static void CheckVisibility()
+    {
+        PiecePool pool = GameManager.GM.ActionPool;
+
+        foreach(Vector3Int pie in needChenkVisibility)
+        {
+            List<GameObject> tmpl = pool.getChildByPos(pie);
+            if(tmpl.Count() > 0)
+            {
+                tmpl[0].SetActive(true);
+            }
+            for (int i = 1;i< tmpl.Count;i++)
+            {
+                tmpl[i].SetActive(false);
+            }
+        }
+
+        needChenkVisibility.Clear();
     }
 }

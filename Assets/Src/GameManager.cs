@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager GM;
     //数据区
+    //行动方棋子池
+    public PiecePool ActionPool;
+    //敌方棋子池
+    public PiecePool EnemyPool;
+
     //棋子可移动区域
     public Dictionary<Vector3Int, CellInfo> MoveArea;
     //当前行动的棋子

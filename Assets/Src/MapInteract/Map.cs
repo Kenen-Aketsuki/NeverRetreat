@@ -525,18 +525,31 @@ public static class Map
             {
                 Vector3Int tmpPos = GetRoundSlotPos(lastSelect.Positian, i);
                 float Mov = GetNearMov(lastSelect.Positian, i, GameManager.GM.ActionSide);
-
+                
+                if (Mov == -2)
+                {
+                    Mov = CurrentMov - lastSelect.usedCost;//路过消耗为剩余全部
+                }
+                
                 CellInfo tmpCell = new CellInfo(
                     tmpPos,
                     i,
                     GetPassDamge(tmpPos, i, GameManager.GM.ActionSide),
-                    Mov == -2 ? CurrentMov - lastSelect.usedCost : Mov,//路过消耗为剩余全部
+                    Mov,
                     lastSelect.usedCost
                     );
 
                 
                 //跳过不可进入的地块
-                if (tmpCell.moveCost < 0 || CurrentMov < tmpCell.usedCost) tmpCell.setMove(float.PositiveInfinity);
+                if (tmpCell.moveCost <= 0 || CurrentMov < tmpCell.usedCost) tmpCell.setMove(float.PositiveInfinity);
+
+                //修正错误键值对
+                if(allPath.ContainsKey(tmpPos) &&
+                    (allPath[tmpPos] == null || allPath[tmpPos].Positian != tmpPos))
+                {
+                    allPath[tmpPos] = tmpCell;
+                    continue;
+                }
 
                 //替换可替换的重复选项，条件：新节点的 Cost 小于原节点的 Cost  或原本为空时加入
                 if (!Searched.Contains(tmpPos) &&
@@ -553,6 +566,8 @@ public static class Map
                 
             }
 
+            //除去空值
+            allPath = allPath.Where(x=>x.Value != null).ToDictionary(x=>x.Key,x=>x.Value);
             //排序
             allPath = allPath.OrderBy(x => Searched.Contains(x.Key) ? 1000 : x.Value.CostD).ToDictionary(x => x.Key, x => x.Value);
 

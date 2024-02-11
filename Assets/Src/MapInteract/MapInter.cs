@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,15 +15,13 @@ public class MapInter : MonoBehaviour
         }
     }
 
-    Dictionary<Vector3Int, CellInfo> area;
-
     private void OnMouseDown()
     {
         //防止与UI交互时误触地图
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject() || Input.GetKey(KeyCode.Mouse1)) return;
 
         //Debug.Log(MousePos * new Vector3Int(-1, 1, 0) + new Vector3Int(21, 21));
-        Debug.Log(MousePos);
+        //Debug.Log(MousePos);
 
         //一坨测试代码
         #region
@@ -82,21 +82,20 @@ public class MapInter : MonoBehaviour
         switch (GameManager.GM.GetMachineState())
         {
             case MachineState.WaitMoveTarget:
-                if( GameManager.GM.currentPiece.MoveTo(MousePos)) 
+                if( GameManager.GM.currentPiece.MoveTo(MousePos))
+                {
+                    OB_Piece.needChenkVisibility.Add(MousePos);
                     GameManager.GM.SetMachineState(MachineState.FocusOnPiece);
+                    OB_Piece.CheckVisibility();
+                }
                 break;
             case MachineState.FocusOnPiece:
-                if( GameManager.GM.currentPiece.PrepareMove()) 
-                    GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
-                break;
-            case MachineState.Idel:
-                area = Map.DijkstraPathSerch(MousePos, 10);
-                Debug.Log(area.Count);
-                foreach (KeyValuePair<Vector3Int, CellInfo> kvp in area)
+                if( GameManager.GM.currentPiece.PrepareMove())
                 {
-                    if (kvp.Value.moveCost != float.PositiveInfinity) FixGameData.FGD.MoveAreaMap.SetTile(kvp.Key, FixGameData.FGD.MoveArea);
-                    else FixGameData.FGD.MoveAreaMap.SetTile(kvp.Key, FixGameData.FGD.MoveZocArea);
+                    OB_Piece.needChenkVisibility.Add(GameManager.GM.currentPiece.piecePosition);
+                    GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
                 }
+                    
                 break;
             default:
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());
@@ -104,4 +103,5 @@ public class MapInter : MonoBehaviour
         }
 
     }
+
 }

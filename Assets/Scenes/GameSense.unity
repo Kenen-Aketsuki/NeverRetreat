@@ -25528,6 +25528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8787c536a05194140a5869fb6dd2414e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionPool: {fileID: 439428708}
+  EnemyPool: {fileID: 439428708}
   currentPiece: {fileID: 0}
   machineState: 0
   ActionSide: 0
