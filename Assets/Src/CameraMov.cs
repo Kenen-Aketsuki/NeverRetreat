@@ -35,11 +35,11 @@ public class CameraMov : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) addSpd = 0.05f;
         if (Input.GetKeyUp(KeyCode.LeftShift)) addSpd = 0;
 
-        if (Input.mouseScrollDelta.y > 0 && thisCam.orthographicSize < 20) thisCam.orthographicSize += 0.5f;
-        if (Input.mouseScrollDelta.y < 0 && thisCam.orthographicSize > 2) thisCam.orthographicSize -= 0.5f;
+        if (Input.mouseScrollDelta.y < 0 && thisCam.orthographicSize < 20) thisCam.orthographicSize += 0.5f;
+        if (Input.mouseScrollDelta.y > 0 && thisCam.orthographicSize > 2) thisCam.orthographicSize -= 0.5f;
 
-        //мов╖
-        #region
+
+        #region //мов╖
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             mouseNow = thisCam.ScreenToWorldPoint(Input.mousePosition);
@@ -49,7 +49,9 @@ public class CameraMov : MonoBehaviour
         {
             isDraging = false;
         }
-        if (isDraging)
+        if (isDraging &&
+            transform.position.y < borderRT.y && transform.position.y > borderLD.y &&
+            transform.position.x > borderLD.x && transform.position.x < borderRT.x)
         {
             transform.position -= (thisCam.ScreenToWorldPoint(Input.mousePosition) - mouseNow);
             mouseNow = thisCam.ScreenToWorldPoint(Input.mousePosition);

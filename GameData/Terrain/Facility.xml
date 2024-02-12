@@ -107,6 +107,17 @@
         </Data>
     </Terrain>
     
+    <Terrain Type="FixFacility" id="Shelter" belone="Human">
+        <name>人防工程</name>
+        <Data>
+            <enterCost>0</enterCost>
+            <battleAdjust>
+                <adjust target="MOV" way="ADD" number="-1" />
+            </battleAdjust>
+            <height>5</height>
+        </Data>
+    </Terrain>
+
     <!-- 临时设施 -->
     <Terrain Type="TempFacility" id="Landmine" atSide="True" belone="Nutral">
         <name>旧式雷场</name>

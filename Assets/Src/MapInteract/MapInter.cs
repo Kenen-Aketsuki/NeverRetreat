@@ -98,6 +98,7 @@ public class MapInter : MonoBehaviour
                     
                 break;
             default:
+                Map.UpdateCrashBindwith();
                 Debug.Log("δ֪��״̬:" + GameManager.GM.GetMachineState());
                 break;
         }

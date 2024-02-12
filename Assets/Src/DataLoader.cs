@@ -64,9 +64,9 @@ public class DataLoader : MonoBehaviour
 
         //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("MetroStation", new Vector3Int(1, -5), 0, int.MaxValue, false));
 
-        GameUtility.mapSize = new Vector2Int(42, 42);
+        //GameUtility.mapSize = new Vector2Int(42, 42);
         //BasicUtility.saveTerrain("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Terrain.xml");
-        //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Trash.xml");
+        //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Facility.xml");
         //GameUtility.从预设中读取地图(false, "");
 
         //BasicUtility.savePieceAsDefault("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");

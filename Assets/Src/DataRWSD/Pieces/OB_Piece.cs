@@ -149,7 +149,11 @@ public class OB_Piece : MonoBehaviour
     {
         Data = P;
     }
-
+    //获取棋子数据
+    public Piece getPieceData()
+    {
+        return Data;
+    }
     //设置可见性
     public void setVisibility(bool visible)
     {
@@ -162,7 +166,7 @@ public class OB_Piece : MonoBehaviour
         }
     }
 
-    public Tuple<string, Vector2Int, string, int, int, bool> getPieceData()
+    public Tuple<string, Vector2Int, string, int, int, bool> getPieceDataPack()
     {
         Vector3Int pos = FixGameData.FGD.InteractMap.WorldToCell(gameObject.transform.position);
         Vector2Int pos2 = FixGameData.WorldToMap(pos);

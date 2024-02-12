@@ -36,6 +36,9 @@
       </Row>
     </Colum>
     <Colum CNo="4">
+      <Row RNo="8">
+        <facilityC>Shelter</facilityC>
+      </Row>
       <Row RNo="14">
         <facilityC>MetroStation</facilityC>
       </Row>
@@ -84,6 +87,9 @@
       <Row RNo="18">
         <facilityC>StaticBarrierNode</facilityC>
       </Row>
+      <Row RNo="23">
+        <facilityC>Shelter</facilityC>
+      </Row>
       <Row RNo="31">
         <facilityC>Runway</facilityC>
       </Row>
@@ -101,6 +107,11 @@
         <facilityC>HunterGuild</facilityC>
       </Row>
     </Colum>
+    <Colum CNo="15">
+      <Row RNo="11">
+        <facilityC>Shelter</facilityC>
+      </Row>
+    </Colum>
     <Colum CNo="17">
       <Row RNo="18">
         <facilityC>MetroStation</facilityC>
@@ -113,7 +124,7 @@
     </Colum>
     <Colum CNo="20">
       <Row RNo="24">
-        <facilityC stayTime="2147483647">MetroStation</facilityC>
+        <facilityC>MetroStation</facilityC>
       </Row>
     </Colum>
     <Colum CNo="21">
@@ -123,10 +134,13 @@
     </Colum>
     <Colum CNo="22">
       <Row RNo="16">
-        <facilityC stayTime="2147483647">MetroStation</facilityC>
+        <facilityC>MetroStation</facilityC>
       </Row>
     </Colum>
     <Colum CNo="25">
+      <Row RNo="19">
+        <facilityC>Shelter</facilityC>
+      </Row>
       <Row RNo="21">
         <facilityC>MetroStation</facilityC>
       </Row>
@@ -137,6 +151,14 @@
     <Colum CNo="26">
       <Row RNo="13">
         <facilityC>StaticBarrierNode</facilityC>
+      </Row>
+      <Row RNo="32">
+        <facilityC>Shelter</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="27">
+      <Row RNo="12">
+        <facilityC>Shelter</facilityC>
       </Row>
     </Colum>
     <Colum CNo="28">
@@ -192,10 +214,18 @@
       <Row RNo="21">
         <facilityC>MetroStation</facilityC>
       </Row>
+      <Row RNo="22">
+        <facilityC>Shelter</facilityC>
+      </Row>
     </Colum>
     <Colum CNo="39">
       <Row RNo="14">
         <facilityC>MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="40">
+      <Row RNo="9">
+        <facilityC>Shelter</facilityC>
       </Row>
     </Colum>
   </Map>

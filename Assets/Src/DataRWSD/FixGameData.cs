@@ -55,6 +55,13 @@ public class FixGameData : MonoBehaviour
     public List<FacilityDataCell> SpecialTerrainList = new List<FacilityDataCell>();
     //最大回合数
     public int MaxRoundCount;
+    //回合信息
+    public List<TurnData> TurnDatas;
+
+    //人类方部队准备列表
+    public List<Tuple<string, string,int>> HumanLoadList;
+    //崩坏方部队准备列表
+    public List<Tuple<string, string,int>> CrashLoadList;
 
     private void Start()
     {

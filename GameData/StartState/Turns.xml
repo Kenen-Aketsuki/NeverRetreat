@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TurnData SYSTEM "TurnData.dtd">
+<TurnData>
+    <Turn No="0" Allow="Human">
+        <MaxActiveBarrierAmmount>0</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>0</MaxActiveFissureAmmount>
+        <CrashBundith>114514</CrashBundith>
+        <StartStage>ZeroStage</StartStage>
+    </Turn>
+    <Turn No="1" Allow="Both">
+        <MaxActiveBarrierAmmount>3</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>1</MaxActiveFissureAmmount>
+        <CrashBundith>150</CrashBundith>
+        <reinforceList-Human>
+            <Reinforce TroopName="DawIV.101" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.102" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.103" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.111" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.112" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.113" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.121" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.122" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.123" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.101P" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.102P" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.s01E" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.s02E" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.101Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.102Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.103Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.111Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.112Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.113Pz" EnterPlace="Airpot"/>
+        </reinforceList-Human>
+    </Turn>
+    <Turn No="2">
+        <MaxActiveBarrierAmmount>3</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>2</MaxActiveFissureAmmount>
+        <CrashBundith>150</CrashBundith>
+        <reinforceList-Human>
+            <Reinforce TroopName="DawIV.201" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.202" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.203" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.211" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.212" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.213" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.221" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.222" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.223" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.201P" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.202P" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.s01M" EnterPlace="Airpot"/>
+            <Reinforce TroopName="DawIV.s02M" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.201Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.202Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.203Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.211Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.212Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.213Pz" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.101AAA" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="ForDII.102AAA" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="ForDII.103AAA" EnterPlace="Airpot"/>
+        </reinforceList-Human>
+    </Turn>
+    <Turn No="3">
+        <MaxActiveBarrierAmmount>2</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>3</MaxActiveFissureAmmount>
+        <CrashBundith>150</CrashBundith>
+        <reinforceList-Human>
+            <Reinforce TroopName="DawIV.s1AA" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.s2AA" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.s01Art" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.s02Art" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.s03Art" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.301" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.302" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.303" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.311" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.312" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.313" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.321" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.322" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.323" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.301P" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="DawIV.302P" EnterPlace="Airpot"/>
+            <Reinforce TroopName="ForDII.101SPA" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="ForDII.102SPA" EnterPlace="Airpot"/>  
+            <Reinforce TroopName="ForDII.103SPA" EnterPlace="Airpot"/>
+        </reinforceList-Human>
+    </Turn>
+    <Turn No="4">
+        <MaxActiveBarrierAmmount>2</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>4</MaxActiveFissureAmmount>
+        <CrashBundith>170</CrashBundith>
+        <reinforceList-Human>
+            <Reinforce TroopName="ForDII.101Rok" EnterPlace="Airpot" />  
+            <Reinforce TroopName="ForDII.102Rok" EnterPlace="Airpot" />
+            <Reinforce TroopName="ForDII.103Rok" EnterPlace="Airpot" />
+            <Reinforce TroopName="DawIV.101v" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.102v" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.103v" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.104vP" EnterPlace="Button-21"/>
+            <Reinforce TroopName="DawIV.201v" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.202v" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.203v" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.204vP" EnterPlace="Button-21" />
+        </reinforceList-Human>
+    </Turn>
+    <Turn No="5">
+        <MaxActiveBarrierAmmount>1</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>4</MaxActiveFissureAmmount>
+        <CrashBundith>170</CrashBundith>
+        <reinforceList-Human>
+            <Reinforce TroopName="LRV41.Mx11" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Mx12" EnterPlace="Top-16" />
+            <Reinforce TroopName="LRV41.Mx13" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Mx21" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Mx22" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Mx23" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Tk11" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Tk12" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.Tk13" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.SPA1" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.SPA2" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.AME1" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.AME2" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.AME3" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.EME1" EnterPlace="Top-16" />  
+            <Reinforce TroopName="LRV41.EME2" EnterPlace="Top-16" />
+        </reinforceList-Human>
+    </Turn>
+    <Turn No="6">
+        <MaxActiveBarrierAmmount>1</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>4</MaxActiveFissureAmmount>
+        <CrashBundith>170</CrashBundith>
+    </Turn>
+    <Turn No="7">
+        <MaxActiveBarrierAmmount>0</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>5</MaxActiveFissureAmmount>
+        <CrashBundith>200</CrashBundith>
+    </Turn>
+    <Turn No="8">
+        <MaxActiveBarrierAmmount>0</MaxActiveBarrierAmmount>
+        <MaxActiveFissureAmmount>5</MaxActiveFissureAmmount>
+        <CrashBundith>200</CrashBundith>
+    </Turn>
+
+
+</TurnData>

@@ -1,0 +1,20 @@
+<!ELEMENT TurnData (Turn+)>
+<!ELEMENT Turn (MaxActiveBarrierAmmount,MaxActiveFissureAmmount,CrashBundith,reinforceList-Human?,reinforceList-Crash?,StartStage?,MobilizationRate?)>
+<!ATTLIST Turn No CDATA #REQUIRED><!-- 回合编号-->
+<!ATTLIST Turn Allow (Human|Crash|Both) #IMPLIED><!-- 本回合允许行动，不填默认未Both-->
+<!ATTLIST Turn isSave (True|False) #IMPLIED><!-- 是否为存档，默认为false-->
+
+<!ELEMENT MaxActiveBarrierAmmount (#PCDATA)><!-- 最大安定节点激活数 -->
+<!ELEMENT MaxActiveFissureAmmount (#PCDATA)><!-- 最大次元裂隙激活数 -->
+<!ELEMENT reinforceList-Human (Reinforce+)><!-- 人类援助 -->
+<!ELEMENT reinforceList-Crash (Reinforce+)><!-- 崩溃援助 -->
+
+<!ELEMENT Reinforce EMPTY>
+<!ATTLIST Reinforce TroopName CDATA #REQUIRED><!-- 部队番号 -->
+<!ATTLIST Reinforce EnterPlace CDATA #REQUIRED><!-- 部队入场位置 -->
+<!ATTLIST Reinforce ResTurn CDATA #IMPLIED><!-- 剩余回合数，不写默认本回合入场 -->
+
+<!ELEMENT StartStage (#PCDATA)><!-- 执行列表，不填则从Strategy阶段开始顺序执行-->
+
+<!ELEMENT CrashBundith (#PCDATA)><!-- 崩坏带宽 -->
+<!ELEMENT MobilizationRate (#PCDATA)><!-- 当前动员率-->

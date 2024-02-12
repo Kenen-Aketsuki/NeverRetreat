@@ -419,7 +419,20 @@ public static class Map
             }
         }
     }
+    //获取当前崩坏方带宽
+    public static void UpdateCrashBindwith()
+    {
+        int count = 0;
+        //统计棋子
+        for (int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
+        {
+            count += FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData().crashLoad;
+        }
+        //统计裂隙
+        count += FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == "DimensionFissure").ToList().Count * 10;
 
+        GameManager.GM.CrashBandwidth = count;
+    }
 
 
     //A*寻路算法，用于判定路径存在

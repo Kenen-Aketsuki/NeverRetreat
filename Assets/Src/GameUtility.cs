@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using Unity.Mathematics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,6 +14,7 @@ public static class GameUtility
     public static Tuple<int, int> columRange;
     public static Tuple<int, int> rowRange;
 
+    public static TurnData saveTurn;
     public static float TileMapCellStep { get { return 2.16f; } }
 
     public static bool fromSave;
@@ -24,17 +27,16 @@ public static class GameUtility
         从预设中读取棋子(fromSave, Save);
 
         //录入回合信息
+        从预设中读取回合信息();
+        saveTurn = null;
         if (fromSave)
         {
-
+            //读取存档的回合信息
+            saveTurn = new()
         }
-        else
-        {
-
-        }
+        
 
         //布设棋子堆叠标志
-        //布设棋子堆叠标志();
         Map.UpdatePieceStackSign();
 
     }
@@ -381,36 +383,30 @@ public static class GameUtility
             ref FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().listIndex);
     }
 
-    public static void 布设棋子堆叠标志()
+    public static void 从预设中读取回合信息()
     {
-        //清空棋子堆叠标志
-        FixGameData.FGD.MultiPieceMap.ClearAllTiles();
-        //人类方
-        foreach(Tuple<string,int,int> child in FixGameData.FGD.HumanPiecePool.childList)
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.Load(FixSystemData.GameInitDirectory + "\\Turns.xml");
+        
+        XmlNode TurnRoot = xmlDoc.DocumentElement;
+        List<TurnData> turnList = new List<TurnData>();
+        foreach(XmlNode node in TurnRoot.ChildNodes)
         {
-            Vector3Int tmp = new Vector3Int(child.Item2, child.Item3, 0);
-            List<GameObject> lst = FixGameData.FGD.HumanPiecePool.getChildByPos(tmp);
-            if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null && 
-                lst.Count > 1)
-            {
-                //Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
-                FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
-                
-            }
+            turnList.Add(new TurnData(node));
         }
-        //崩坏方
-        foreach (Tuple<string, int, int> child in FixGameData.FGD.CrashPiecePool.childList)
-        {
-            Vector3Int tmp = new Vector3Int(child.Item2, child.Item3, 0);
-            if (FixGameData.FGD.MultiPieceMap.GetTile(tmp) == null &&
-                FixGameData.FGD.CrashPiecePool.getChildByPos(tmp).Count > 1)
-            {
-                Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
-                FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
-            }
-        }
+        FixGameData.FGD.TurnDatas = turnList.OrderBy(x => x.TurnNo).ToList();
+        FixGameData.FGD.MaxRoundCount = FixGameData.FGD.TurnDatas[turnList.Count - 1].TurnNo;
     }
 
+    public static void 读取存档的回合信息()
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.Load(FixSystemData.SaveDirectory + "\\" + Save + "\\Turns.xml");
+
+        XmlNode TurnRoot = xmlDoc.DocumentElement;
+
+        saveTurn = new TurnData(TurnRoot.FirstChild);
+    }
     //生成行目录
     static public void GenColumIndex(List<Tuple<string, int, int>> childList,ref Dictionary<int, Tuple<int, int>> listIndex)
     {
