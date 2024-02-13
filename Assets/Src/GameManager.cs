@@ -57,26 +57,32 @@ public class GameManager : MonoBehaviour
     //获取机器状态
     public MachineState GetMachineState(){return machineState;}
 
-    int stageMode = 5;
+    public int stageMode = 5;
     public void NextStage()//进入下一阶段
     {
-        
         StageEnd();
-        Stage = (TurnStage)(((int)Stage + 1) % stageMode);
+        int tmp = (int)Stage;
+        tmp++;
+        tmp = tmp % stageMode;
+        Stage = (TurnStage)tmp;
+        //Stage = (TurnStage)(((int)Stage + 1) % stageMode);
         StageStart();
     }
 
     public void StageStart()
     {
+        Map.UpdateCrashBindwith();
         switch (Stage)
         {
             case 0:
+                stageMode = 5;
                 TurnSwitch();
                 StrategyStageStart();
                 break;
             case TurnStage.ZeroTurn:
-
                 stageMode = 6;
+
+
                 break;
         }
     }
@@ -90,7 +96,6 @@ public class GameManager : MonoBehaviour
                 break;
             case TurnStage.ZeroTurn:
 
-                stageMode = 5;
                 break;
 
         }
@@ -119,14 +124,13 @@ public class GameManager : MonoBehaviour
 
             CurrentTurnCount = data.TurnNo;
         }
-
-        Map.UpdateCrashBindwith();
     }
     //切换回合
     void TurnSwitch()
     {
         CurrentTurnCount++;
         //加载对应回合的信息
+        LoadTurnData(null);
     }
 
     //各个阶段起止

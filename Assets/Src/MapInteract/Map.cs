@@ -423,10 +423,12 @@ public static class Map
     public static void UpdateCrashBindwith()
     {
         int count = 0;
+
         //统计棋子
         for (int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
         {
-            count += FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData().crashLoad;
+            OB_Piece tmpTrans = FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>();
+            if (tmpTrans != null)  count += tmpTrans.getPieceData().crashLoad;
         }
         //统计裂隙
         count += FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == "DimensionFissure").ToList().Count * 10;

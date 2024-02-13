@@ -49,9 +49,7 @@ public class CameraMov : MonoBehaviour
         {
             isDraging = false;
         }
-        if (isDraging &&
-            transform.position.y < borderRT.y && transform.position.y > borderLD.y &&
-            transform.position.x > borderLD.x && transform.position.x < borderRT.x)
+        if (isDraging)
         {
             transform.position -= (thisCam.ScreenToWorldPoint(Input.mousePosition) - mouseNow);
             mouseNow = thisCam.ScreenToWorldPoint(Input.mousePosition);

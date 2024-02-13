@@ -32,12 +32,16 @@ public static class GameUtility
         if (fromSave)
         {
             //读取存档的回合信息
-            saveTurn = new()
+            读取存档的回合信息();
         }
-        
 
         //布设棋子堆叠标志
         Map.UpdatePieceStackSign();
+
+        //加载回合信息
+        GameManager.GM.LoadTurnData(saveTurn);
+        //开始游戏
+        GameManager.GM.StageStart();
 
     }
 

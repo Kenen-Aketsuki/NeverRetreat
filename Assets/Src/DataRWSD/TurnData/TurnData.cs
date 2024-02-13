@@ -15,7 +15,7 @@ public class TurnData
     //崩坏方最大裂隙激活数
     public short MaxActiveFissureAmmount { get; private set; }
     //崩坏方最大裂隙带宽数
-    public short CrashBundith { get; private set; }
+    public int CrashBundith { get; private set; }
     
     //本回合起始阶段
     public TurnStage StartStage { get; private set; }
@@ -37,7 +37,7 @@ public class TurnData
         else MaxActiveFissureAmmount = 0;
 
         tmp = root.SelectSingleNode("CrashBundith");
-        if (tmp != null) CrashBundith = short.Parse(tmp.InnerText);
+        if (tmp != null) CrashBundith = int.Parse(tmp.InnerText);
         else CrashBundith = 0;
 
         tmp = root.SelectSingleNode("StartStage");

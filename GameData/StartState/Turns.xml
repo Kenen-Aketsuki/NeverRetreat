@@ -5,7 +5,7 @@
         <MaxActiveBarrierAmmount>0</MaxActiveBarrierAmmount>
         <MaxActiveFissureAmmount>0</MaxActiveFissureAmmount>
         <CrashBundith>114514</CrashBundith>
-        <StartStage>ZeroStage</StartStage>
+        <StartStage>ZeroTurn</StartStage>
     </Turn>
     <Turn No="1" Allow="Both">
         <MaxActiveBarrierAmmount>3</MaxActiveBarrierAmmount>

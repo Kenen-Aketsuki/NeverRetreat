@@ -10,6 +10,10 @@ public class OB_Piece : MonoBehaviour
 
     Piece Data;//棋子数据
     PieseTextShow PieceText;
+    //行动点，可用于进攻
+    public int ActionPoint = 0;
+    //特殊行动点，可用于火力支援、施法等行为。
+    public int SpecialActPoint = 0;
 
     public bool isVisiable { get; private set; }
     public Vector3Int piecePosition{ get { return FixGameData.FGD.InteractMap.WorldToCell(transform.position); } }
@@ -196,6 +200,7 @@ public class OB_Piece : MonoBehaviour
         }
 
         Destroy(Pse);
+        Map.UpdateCrashBindwith();
     }
     //回血
     public void Recover()
@@ -207,8 +212,11 @@ public class OB_Piece : MonoBehaviour
     public void OverTurn()
     {
         Data.OverTurn();
+        ActionPoint = 0;
+        SpecialActPoint = 3;
         UpdateData();
     }
+
     //恢复稳定性
     public void RecoverStable(int pt)
     {
