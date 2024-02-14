@@ -117,9 +117,20 @@
       },
       "url": "https://packages.unity.cn"
     },
+    "com.unity.barracuda": {
+      "version": "3.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.6.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0"
+      },
+      "url": "https://packages.unity.cn"
+    },
     "com.unity.burst": {
       "version": "1.8.11",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1"
@@ -206,6 +217,16 @@
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.cn"
+    },
+    "com.unity.ml-agents": {
+      "version": "file:../AI/ml-agents-release_19/com.unity.ml-agents",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.barracuda": "2.3.1-preview",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      }
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
