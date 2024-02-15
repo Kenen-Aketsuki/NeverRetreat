@@ -8,10 +8,12 @@ public class FixGameData : MonoBehaviour
 {
     public static FixGameData FGD;
     public Camera CameraNow;
+    public SelfCatchScroll scrollView;
 
     //棋子结构
     public GameObject PiecePrefab;
     public GameObject PieceInfoPrefab;
+    public GameObject UIPieceCell;
 
     //棋子本体所在
     public Transform HumanPieceParent;

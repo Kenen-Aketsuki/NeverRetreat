@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 214137663}
   - component: {fileID: 214137665}
   - component: {fileID: 214137664}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4314105657741627697}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -146,7 +145,7 @@ GameObject:
   - component: {fileID: 265734366}
   - component: {fileID: 265734368}
   - component: {fileID: 265734367}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +165,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1847837215728340920}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -281,7 +279,7 @@ GameObject:
   - component: {fileID: 821162387}
   - component: {fileID: 821162389}
   - component: {fileID: 821162388}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ATK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +299,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4314105657741627697}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -416,7 +413,7 @@ GameObject:
   - component: {fileID: 1548981001}
   - component: {fileID: 1548981003}
   - component: {fileID: 1548981002}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Slash 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +433,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4314105657741627697}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -551,7 +547,7 @@ GameObject:
   - component: {fileID: 1574848375}
   - component: {fileID: 1574848377}
   - component: {fileID: 1574848376}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DEF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,7 +567,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4314105657741627697}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -686,7 +681,7 @@ GameObject:
   - component: {fileID: 1657036190}
   - component: {fileID: 1657036192}
   - component: {fileID: 1657036191}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Battle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +701,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1847837215728340920}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -821,7 +815,7 @@ GameObject:
   - component: {fileID: 1662092402}
   - component: {fileID: 1662092404}
   - component: {fileID: 1662092403}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -841,7 +835,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4314105657741627697}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -956,7 +949,7 @@ GameObject:
   - component: {fileID: 1947998631}
   - component: {fileID: 1947998633}
   - component: {fileID: 1947998632}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,7 +969,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1847837215728340920}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1089,7 +1081,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1847837215728340920}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TwoMeta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1112,7 +1104,6 @@ RectTransform:
   - {fileID: 1947998631}
   - {fileID: 1657036190}
   m_Father: {fileID: 1225421426760223277}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1129,7 +1120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1225421426760223277}
   - component: {fileID: 2058428476}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PieceTextData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,7 +1145,6 @@ RectTransform:
   - {fileID: 1847837215728340920}
   - {fileID: 4314105657741627697}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1189,7 +1179,7 @@ GameObject:
   - component: {fileID: 1225421426830467426}
   - component: {fileID: 1225421426830467424}
   - component: {fileID: 1225421426830467427}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TroopName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1209,7 +1199,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1225421426760223277}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1324,7 +1313,7 @@ GameObject:
   - component: {fileID: 1225421426871209579}
   - component: {fileID: 1225421426871209577}
   - component: {fileID: 1225421426871209576}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PassiveArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1344,7 +1333,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1225421426760223277}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1459,7 +1447,7 @@ GameObject:
   - component: {fileID: 1225421428020738288}
   - component: {fileID: 1225421428020738302}
   - component: {fileID: 1225421428020738289}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ActiveArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1479,7 +1467,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1225421426760223277}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1592,7 +1579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4314105657741627697}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TreeMeta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1617,7 +1604,6 @@ RectTransform:
   - {fileID: 214137663}
   - {fileID: 821162387}
   m_Father: {fileID: 1225421426760223277}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

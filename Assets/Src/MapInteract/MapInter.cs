@@ -95,13 +95,30 @@ public class MapInter : MonoBehaviour
                     OB_Piece.needChenkVisibility.Add(GameManager.GM.currentPiece.piecePosition);
                     GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
                 }
-                    
+                break;
+            
+            case MachineState.WaitForcuse:
+            case MachineState.Idel:
+                UpdateForcuse();
+
+                GameManager.GM.SetMachineState(MachineState.WaitForcuse);
                 break;
             default:
-                Map.UpdateCrashBindwith();
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());
                 break;
         }
+
+    }
+    //设置关注
+    void UpdateForcuse()
+    {
+        if (MousePos == GameManager.GM.currentPosition) return;
+        List<GameObject> PieceLst = FixGameData.FGD.HumanPiecePool.getChildByPos(MousePos);
+        if(PieceLst.Count == 0) PieceLst = FixGameData.FGD.CrashPiecePool.getChildByPos(MousePos);
+
+        List<LandShape> LandLst = Map.GetPLaceInfo(MousePos, 0);
+
+        FixGameData.FGD.scrollView.UpdateCellChilds(PieceLst,LandLst);
 
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraMov : MonoBehaviour
 {
@@ -35,10 +36,6 @@ public class CameraMov : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) addSpd = 0.05f;
         if (Input.GetKeyUp(KeyCode.LeftShift)) addSpd = 0;
 
-        if (Input.mouseScrollDelta.y < 0 && thisCam.orthographicSize < 20) thisCam.orthographicSize += 0.5f;
-        if (Input.mouseScrollDelta.y > 0 && thisCam.orthographicSize > 2) thisCam.orthographicSize -= 0.5f;
-
-
         #region //мов╖
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -55,6 +52,11 @@ public class CameraMov : MonoBehaviour
             mouseNow = thisCam.ScreenToWorldPoint(Input.mousePosition);
         }
         #endregion
+
+        if (EventSystem.current.IsPointerOverGameObject() || Input.GetKey(KeyCode.Mouse1)) return;
+
+        if (Input.mouseScrollDelta.y < 0 && thisCam.orthographicSize < 20) thisCam.orthographicSize += 0.5f;
+        if (Input.mouseScrollDelta.y > 0 && thisCam.orthographicSize > 2) thisCam.orthographicSize -= 0.5f;
 
         if (needCul && borderRT == Vector2.zero)
         {

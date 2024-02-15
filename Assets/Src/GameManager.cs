@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public Dictionary<Vector3Int, CellInfo> MoveArea;
     //当前行动的棋子
     public OB_Piece currentPiece;
+    //当前关注的位置
+    public Vector3 currentPosition;
 
     //游戏管理
     //有限状态机当前状态
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentPosition = new Vector3Int(GameUtility.mapSize.x, GameUtility.mapSize.y);
         GM = this;
     }
     //设置机器状态
@@ -150,6 +153,7 @@ public class GameManager : MonoBehaviour
 public enum MachineState
 {
     Idel,
+    WaitForcuse,
     FocusOnPiece,
     WaitMoveTarget
 }

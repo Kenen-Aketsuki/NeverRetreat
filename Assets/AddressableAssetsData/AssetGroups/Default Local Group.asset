@@ -21,10 +21,12 @@ MonoBehaviour:
     m_Address: Assets/Prefab/PieceTextData.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3c1d21ca84e0f34ab27e3e79836b929
     m_Address: Assets/Prefab/PieceInGame.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: be6894f5b3261434a91bf4a113cfbdb0, type: 2}
   m_SchemaSet:
