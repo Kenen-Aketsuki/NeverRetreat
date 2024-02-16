@@ -7,6 +7,12 @@ using UnityEngine;
 
 public class LandShape
 {
+    public Tile Left = null;
+    public Tile Top = null;
+    public Tile Right = null;
+    public Tile Close = null;
+    public Tile Active = null;
+
     public string id;
     public string name;
     public int enterCount = 0;
@@ -154,15 +160,16 @@ public class LandShape
                 );
         }
     }
+
+    public Dictionary<FixData, Tuple<FixWay, float>> getGerenalAdj()
+    {
+        return Adjust;
+    }
 }
 
 //通常地形都是中立的，其效果对双方有效。
 public class BasicLandShape : LandShape //基础地形
 {
-    public Tile Left = null;
-    public Tile Top;
-    public Tile Right = null;
-
     public BasicLandShape(XmlNode root) : base(root)
     {
         id = root.Attributes["id"].Value;
@@ -222,10 +229,6 @@ public class BasicLandShape : LandShape //基础地形
 //设施通常是有所属的，其效果仅对一方有效，或对双方的效果不同。特殊地形同样使用这个结构存储。
 public class Facility : LandShape
 {
-    public Tile Left = null;
-    public Tile Top;
-    public Tile Right = null;
-
     public bool isRoad = false;
     public bool canLeftRuin = false;//是否留下废墟
     public bool isSpecialLandShape = false;//是否为特殊地形(不包括特殊设施)
@@ -376,9 +379,6 @@ public class Facility : LandShape
 
 public class SpecialFacility : LandShape
 {
-    public Tile Close;
-    public Tile Active;
-
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
     //获取带有敌我的加成
@@ -510,8 +510,6 @@ public class SpecialFacility : LandShape
 
 public class Zone : LandShape
 {
-    public Tile Top;
-
     public ArmyBelong Belone = ArmyBelong.Nutral;
 
     public Zone(XmlNode root) : base(root)

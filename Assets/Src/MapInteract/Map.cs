@@ -98,41 +98,41 @@ public static class Map
         Tuple<int, Vector3Int> sidePos = GetSideAddr(Pos, Dir);
         TileBase tmpName;
 
-        //基础地形
+        //基础地形 — 0
         tmpName = FixGameData.FGD.MapList[0].GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalBasicTerrainList[tmpName.name]);
         else lst.Add(null);
-        //河流
+        //河流 — 1
         tmpName = FixGameData.FGD.MapList[1 + sidePos.Item1].GetTile(sidePos.Item2);
         if (tmpName != null) lst.Add(FixSystemData.GlobalBasicTerrainList[tmpName.name.Split("_")[0]]);
         else lst.Add(null);
-        //道路
+        //道路 — 2
         tmpName = FixGameData.FGD.MapList[4 + sidePos.Item1].GetTile(sidePos.Item2);
         if (tmpName != null) lst.Add(FixSystemData.GlobalFacilityList[tmpName.name.Split("_")[0]]);
         else lst.Add(null);
-        //格内设施
+        //格内设施 — 3
         tmpName = FixGameData.FGD.MapList[7].GetTile(targetPos);
         if (tmpName != null && FixSystemData.GlobalFacilityList.ContainsKey(tmpName.name)) lst.Add(FixSystemData.GlobalFacilityList[tmpName.name]);
         else if(tmpName != null && FixSystemData.GlobalSpFacilityList.ContainsKey(tmpName.name)) lst.Add(FixSystemData.GlobalSpFacilityList[tmpName.name]);
         else lst.Add(null);
-        //格边设施
+        //格边设施 — 4
         tmpName = FixGameData.FGD.MapList[8 + sidePos.Item1].GetTile(sidePos.Item2);
         if (tmpName != null) lst.Add(FixSystemData.GlobalFacilityList[tmpName.name.Split("_")[0]]);
         else lst.Add(null);
-        //格边特殊地形
+        //格边特殊地形 — 5
         tmpName = FixGameData.FGD.MapList[11 + sidePos.Item1].GetTile(sidePos.Item2);
         if (tmpName != null) lst.Add(FixSystemData.GlobalSpecialTerrainList[tmpName.name.Split("_")[0]]);
         else lst.Add(null);
-        //格内特殊地形
+        //格内特殊地形 — 6
         tmpName = FixGameData.FGD.MapList[14].GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalSpecialTerrainList[tmpName.name]);
         else lst.Add(null);
 
-        //获取控制区
+        //获取控制区 — 7
         tmpName = FixGameData.FGD.ZOCMap.GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalZoneList[tmpName.name]);
         else lst.Add(null);
-        //获取安定结界
+        //获取安定结界 — 8
         tmpName = FixGameData.FGD.ZoneMap.GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalZoneList[tmpName.name]);
         else lst.Add(null);
@@ -404,6 +404,7 @@ public static class Map
             {
                 //Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
                 FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
+                OB_Piece.needChenkVisibility.Add(tmp);
             }
         }
         //崩坏方
@@ -416,8 +417,11 @@ public static class Map
             {
                 //Debug.Log(FixGameData.FGD.InteractMap.CellToWorld(tmp));
                 FixGameData.FGD.MultiPieceMap.SetTile(tmp, FixGameData.FGD.MultiPieceIcon);
+                OB_Piece.needChenkVisibility.Add(tmp);
             }
         }
+
+        
     }
     //获取当前崩坏方带宽
     public static void UpdateCrashBindwith()

@@ -61,6 +61,10 @@ public class Piece
     public ArmyBelong Belong;//部队从属
     public ArmyBelong LoyalTo;//部队效忠对象
 
+    public string StabilityStr { get { return Stability == 0 ? "<color=#01FF00> 正常" : Stability == 1 ? "<color=#ECFF00> 瘫痪" : "<color=#FF0000> 失能"; } }
+    public string ConnectStr { get { return ConnectState == 0 ? "<color=#01FF00> 正常" : ConnectState == 1 ? "<color=#ECFF00> 断补" : "<color=#FF0000> 孤立"; } }
+    public string SupplyStr { get { return SupplyState == 0 ? "<color=#01FF00> 正常" : "<color=#FF0000> 断补</color>"; } }
+    public string HealthStr { get { return !inCasualty ? "<color=#01FF00> 正常" : "<color=#FF0000> 减员</color>"; } }
     int Stability = 0;//判定是否为“正常”-“瘫痪”-“失能”
     int ConnectState = 0;//判定是否为 正常 - 失联 - 孤立
     int SupplyState = 0;//判定是否为 正常 - 断补
@@ -73,7 +77,6 @@ public class Piece
     int nMaxMOV;
     int cMaxMOV;
 
-    
     bool inCasualty = false;// 是否减员
     bool isUnsupply = false;//是否断补
     bool isConnected = true;//是否失联

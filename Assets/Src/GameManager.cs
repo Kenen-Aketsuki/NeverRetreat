@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     //当前行动的棋子
     public OB_Piece currentPiece;
     //当前关注的位置
-    public Vector3 currentPosition;
+    public Vector3Int currentPosition = new Vector3Int(114514, 1919810);
 
     //游戏管理
     //有限状态机当前状态
@@ -155,6 +155,7 @@ public enum MachineState
     Idel,
     WaitForcuse,
     FocusOnPiece,
+    FocusOnTerrain,
     WaitMoveTarget
 }
 //回合阶段

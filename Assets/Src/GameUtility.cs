@@ -38,6 +38,8 @@ public static class GameUtility
 
         //加载回合信息
         GameManager.GM.LoadTurnData(saveTurn);
+        //刷新棋子显示
+        OB_Piece.CheckVisibility();
         //开始游戏
         GameManager.GM.StageStart();
 
@@ -172,6 +174,7 @@ public static class GameUtility
                                 tarPos,
                                 0,
                                 FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["stayTime"] == null? FixSystemData.GlobalFacilityList[tileName].defaultExistTime:int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["stayTime"].Value),
+                                false,
                                 false
                                 ));
                         }
@@ -185,7 +188,8 @@ public static class GameUtility
                                 tarPos,
                                 0,
                                 int.MaxValue,
-                                false
+                                false,
+                                FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["active"] == null ? false : bool.Parse(FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["active"].Value)
                                 ));
                         }
                         
@@ -205,6 +209,7 @@ public static class GameUtility
                                 tarPos,
                                 1,
                                 FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"] == null ? FixSystemData.GlobalFacilityList[sideSplit[0]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"].Value.Split("-")[0]),
+                                true,
                                 false
                                 ));
                         }
@@ -218,7 +223,8 @@ public static class GameUtility
                                 tarPos,
                                 2,
                                 FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"] == null ? FixSystemData.GlobalFacilityList[sideSplit[1]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"].Value.Split("-")[1]),
-                                true
+                                true,
+                                false
                                 ));
                         }
                         if (sideSplit[2] != "X")
@@ -232,7 +238,8 @@ public static class GameUtility
                                 tarPos,
                                 3,
                                 FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"] == null ? FixSystemData.GlobalFacilityList[sideSplit[2]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityS").Attributes["stayTime"].Value.Split("-")[2]),
-                                true
+                                true,
+                                false
                                 ));
                         }
                     }
@@ -251,7 +258,8 @@ public static class GameUtility
                                 tarPos,
                                 1,
                                 FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[sideSplit[0]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"].Value.Split("-")[0]),
-                                true
+                                true,
+                                false
                                 ));
                         }
                         if (sideSplit[1] != "X")
@@ -264,7 +272,8 @@ public static class GameUtility
                                 tarPos,
                                 2,
                                 FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[sideSplit[1]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"].Value.Split("-")[1]),
-                                true
+                                true,
+                                false
                                 ));
                         }
                         if (sideSplit[2] != "X")
@@ -278,7 +287,8 @@ public static class GameUtility
                                 tarPos,
                                 3,
                                 FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[sideSplit[2]].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrainS").Attributes["stayTime"].Value.Split("-")[2]),
-                                true
+                                true,
+                                false
                                 ));
                         }
                     }
@@ -294,6 +304,7 @@ public static class GameUtility
                                 tarPos,
                                 0,
                                 FacilityRow[rowFac].SelectSingleNode("specialTerrain").Attributes["stayTime"] == null ? FixSystemData.GlobalSpecialTerrainList[tileName].defaultExistTime : int.Parse(FacilityRow[rowFac].SelectSingleNode("specialTerrain").Attributes["stayTime"].Value),
+                                false,
                                 false
                                 ));
                     }

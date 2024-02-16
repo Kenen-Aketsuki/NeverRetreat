@@ -116,8 +116,10 @@ public class FacilityDataCell
     public Vector3Int Positian { get; private set; }
     public int dir { get; private set; }
     public int LastTime { get; private set; }//存在时间
+    //是否激活
+    public bool active { get; private set; }
 
-    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide)
+    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide,bool active)
     {
         LastTime = lastTime;
         Id = id;
@@ -132,6 +134,7 @@ public class FacilityDataCell
             Positian = Pos;
             dir = 0;
         }
+        this.active = active;
     }
 
     public bool PassTime()

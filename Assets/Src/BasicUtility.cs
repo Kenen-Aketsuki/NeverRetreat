@@ -313,7 +313,11 @@ public static class BasicUtility
                     
                     tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
                     if(tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
-                    if(tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                    if(tmpFacLst.Count != 0)
+                    {
+                        tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                        tmp.SetAttribute("active", tmpFacLst[0].active.ToString());
+                    }
 
                     Row.AppendChild(tmp);
                 }

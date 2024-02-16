@@ -90,13 +90,13 @@ public class MapInter : MonoBehaviour
                 }
                 break;
             case MachineState.FocusOnPiece:
-                if( GameManager.GM.currentPiece.PrepareMove())
-                {
-                    OB_Piece.needChenkVisibility.Add(GameManager.GM.currentPiece.piecePosition);
-                    GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
-                }
-                break;
-            
+                //if( GameManager.GM.currentPiece.PrepareMove())
+                //{
+                //    OB_Piece.needChenkVisibility.Add(GameManager.GM.currentPiece.piecePosition);
+                //    GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
+                //}
+                //break;
+            case MachineState.FocusOnTerrain:
             case MachineState.WaitForcuse:
             case MachineState.Idel:
                 UpdateForcuse();
@@ -113,6 +113,7 @@ public class MapInter : MonoBehaviour
     void UpdateForcuse()
     {
         if (MousePos == GameManager.GM.currentPosition) return;
+        else GameManager.GM.currentPosition = MousePos;
         List<GameObject> PieceLst = FixGameData.FGD.HumanPiecePool.getChildByPos(MousePos);
         if(PieceLst.Count == 0) PieceLst = FixGameData.FGD.CrashPiecePool.getChildByPos(MousePos);
 

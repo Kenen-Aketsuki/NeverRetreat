@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.Playables;
 
 public class OB_Piece : MonoBehaviour
 {
@@ -338,7 +339,8 @@ public class OB_Piece : MonoBehaviour
         foreach(Vector3Int pie in needChenkVisibility)
         {
             List<GameObject> tmpl = pool.getChildByPos(pie);
-            if(tmpl.Count() > 0)
+
+            if (tmpl.Count() > 0)
             {
                 tmpl[0].SetActive(true);
             }

@@ -7,7 +7,7 @@
                 <basicTerrain>Mountain</basicTerrain>
                 <river>0-0-0</river><!-- 左-中-右，0为无1为有-->
                 <road>0-0-0</road><!-- 左-中-右，0为无1、2、3为一、二、三级道路-->
-                <facilityC stayTime="0">X</facilityC><!-- 中央设施 X为无，设施id指明设施-->
+                <facilityC stayTime="0" active="false">X</facilityC><!-- 中央设施 X为无，设施id指明设施-->
                 <facilityS stayTime="0-0-0">0-0-0</facilityS><!-- 左-中-右，0为无 设施id指明设施-->
                 <specialTerrain stayTime="0-0-0">X</specialTerrain><!-- 特殊地形 X为无-->
                 <specialTerrainS stayTime="0">0-0-0</specialTerrainS><!-- 格边特殊地形 0为无，地形id指明地形-->

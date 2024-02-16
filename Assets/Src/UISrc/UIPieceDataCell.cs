@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ using UnityEngine.UI;
 public class UIPieceDataCell : MonoBehaviour
 {
     public Piece Data { get; private set; }
+    public string TerrainID;
+    public FacilityDataCell FacData { get; private set; }
+    public LandShape LandData { get; private set; }
 
     //Í¼ÏñÊý¾Ý
     [SerializeField]
@@ -80,15 +84,20 @@ public class UIPieceDataCell : MonoBehaviour
         else PassiveArea.gameObject.SetActive(false);
     }
 
-    public void SetData(Piece Data, List<LandShape> LandLst)
+    public void SetData(Piece Data, LandShape Land,FacilityDataCell CellData)
     {
         this.Data = Data;
+        FacData = CellData;
+        LandData = Land;
 
-        if(Data == null)
+        if (Data == null)
         {
-            BasicLandShape tmp = LandLst[0] as BasicLandShape;
             GroundIcon.gameObject.SetActive(true);
-            GroundIcon.sprite = tmp.Top.sprite;
+
+            if (Land.Top != null) GroundIcon.sprite = Land.Top.sprite;
+            else if(CellData.active) GroundIcon.sprite = Land.Active.sprite;
+            else GroundIcon.sprite = Land.Close.sprite;
+
 
             BaseData_Three.gameObject.SetActive(false);
             BaseData_Two.gameObject.SetActive(false);
