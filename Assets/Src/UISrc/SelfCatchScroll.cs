@@ -148,6 +148,14 @@ public class SelfCatchScroll : MonoBehaviour
         SelectPiece();
     }
 
+    public void ClearCells()
+    {
+        for (int i = 0; i < ContentPannel.childCount; i++)
+        {
+            GameObject.Destroy(ContentPannel.GetChild(i).gameObject);
+        }
+    }
+
     void SelectPiece()
     {
         //Debug.Log(ContentPannel.childCount - currentItem - 1 + " — " + ContentPannel.childCount);
@@ -158,22 +166,35 @@ public class SelfCatchScroll : MonoBehaviour
 
         if (tar.Data != null && tar.Data.LoyalTo == GameManager.GM.ActionSide)
         {
+            if (GameManager.GM.currentPiece != null) GameManager.GM.currentPiece.gameObject.SetActive(false);
+
             GameManager.GM.currentPiece = pieceList[tar.name].GetComponent<OB_Piece>();
+            GameManager.GM.currentPiece.gameObject.SetActive(true);
 
             SetPieceTextShow(GameManager.GM.currentPiece.getPieceData());
-            
+            (FixGameData.FGD.uiManager.actUI as IUIHandler).OnPieceSelect(true);
+
+            //刷新选择
+            GameManager.GM.MoveArea = null;
+            FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+
+
             GameManager.GM.SetMachineState(MachineState.FocusOnPiece);
         }
         else if(tar.Data != null && tar.Data.LoyalTo != GameManager.GM.ActionSide)
         {
             SetPieceTextShow(pieceList[tar.name].GetComponent<OB_Piece>().getPieceData());
+            
+            (FixGameData.FGD.uiManager.actUI as IUIHandler).OnPieceSelect(false);
         }
         else
         {
             TerrainDataPannel.gameObject.SetActive(true);
             PieceDataPannel.gameObject.SetActive(false);
 
-            SetTerrainTextShow(tar);
+            
+
+            (FixGameData.FGD.uiManager.actUI as IUIHandler).OnTerrainSelect(SetTerrainTextShow(tar));
 
             GameManager.GM.currentPiece = null;
             GameManager.GM.SetMachineState(MachineState.FocusOnTerrain);
@@ -196,11 +217,12 @@ public class SelfCatchScroll : MonoBehaviour
 
         PieceDataPannel.GetComponent<RectTransform>().GetChild(2).GetComponent<TMP_Text>().text = str;
     }
-    void SetTerrainTextShow(UIPieceDataCell terrID)
+    bool SetTerrainTextShow(UIPieceDataCell terrID)
     {
         TerrainDataPannel.SetActive(true);
         PieceDataPannel.SetActive(false);
         string str = "";
+        bool isFac = false;
         if(terrID.FacData != null)
         {
             //写设施信息
@@ -216,6 +238,7 @@ public class SelfCatchScroll : MonoBehaviour
                 if((terrID.FacData.Data.Item2 as SpecialFacility).Belone == ArmyBelong.Human) str += "\n状态：" + (terrID.FacData.active ? "运行" : "待机");
                 else str += "\n状态：" + (terrID.FacData.active ? "激活态" : "先兆态");
             }
+            isFac = true;
         }
         else
         {
@@ -259,5 +282,7 @@ public class SelfCatchScroll : MonoBehaviour
         TerrainDataPannel.GetComponent<RectTransform>().GetChild(1).GetChild(0).GetChild(0).transform.localPosition -= new Vector3(-500, 50, 0);
         TerrainDataPannel.GetComponent<RectTransform>().GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = str;
         TerrainDataPannel.GetComponent<RectTransform>().GetChild(0).GetComponent<TMP_Text>().text = terrID.LandData.name;
+
+        return isFac;
     }
 }

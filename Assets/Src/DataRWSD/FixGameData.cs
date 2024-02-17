@@ -62,7 +62,7 @@ public class FixGameData : MonoBehaviour
     //回合信息
     public List<TurnData> TurnDatas;
 
-    //人类方部队准备列表
+    //人类方部队准备列表 信息： 部队番号-部队入场方式-距离入场所需时间
     public List<Tuple<string, string,int>> HumanLoadList;
     //崩坏方部队准备列表
     public List<Tuple<string, string,int>> CrashLoadList;

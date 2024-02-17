@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrectgyUI : MonoBehaviour
+public class StrectgyUI : MonoBehaviour , IUIHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnPieceSelect(bool isFriendly)
+    {
+
+    }
+
+    public void OnTerrainSelect(bool isFac)
+    {
+
+    }
+
+    public void UpdateShow()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    public string WhatShouldIDo()
     {
-        
+        return "";
     }
 }

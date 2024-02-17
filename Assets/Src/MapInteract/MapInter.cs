@@ -85,8 +85,11 @@ public class MapInter : MonoBehaviour
                 if( GameManager.GM.currentPiece.MoveTo(MousePos))
                 {
                     OB_Piece.needChenkVisibility.Add(MousePos);
+                    OB_Piece.needChenkVisibility.Add(GameManager.GM.currentPosition);
                     GameManager.GM.SetMachineState(MachineState.FocusOnPiece);
                     OB_Piece.CheckVisibility();
+                    (FixGameData.FGD.uiManager.actUI as IUIHandler).UpdateShow();
+                    UpdateForcuse();
                 }
                 break;
             case MachineState.FocusOnPiece:

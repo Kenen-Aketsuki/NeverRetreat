@@ -53,6 +53,8 @@ public class CameraMov : MonoBehaviour
         }
         #endregion
 
+        if (Input.GetKey(KeyCode.Z)) FixGameData.FGD.ZOCMap.gameObject.SetActive(!FixGameData.FGD.ZOCMap.gameObject.activeInHierarchy);
+
         if (EventSystem.current.IsPointerOverGameObject() || Input.GetKey(KeyCode.Mouse1)) return;
 
         if (Input.mouseScrollDelta.y < 0 && thisCam.orthographicSize < 20) thisCam.orthographicSize += 0.5f;

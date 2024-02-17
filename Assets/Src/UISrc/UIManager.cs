@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -66,6 +67,8 @@ public class UIManager : MonoBehaviour
     #endregion
     //UI管理
     //public UIIndex index;
+    //当前阶段激活的UI
+    public MonoBehaviour actUI;
 
     public void UI_SwitchStage()
     {
@@ -73,8 +76,21 @@ public class UIManager : MonoBehaviour
          FixGameData.FGD.uiIndex.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
     }
 
-    private void Update()
+    public void WhatToDo(Transform trs)
     {
-        
+        trs.gameObject.SetActive(!trs.gameObject.activeInHierarchy);
+        if (trs.gameObject.activeInHierarchy)
+        {
+            trs.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = (FixGameData.FGD.uiManager.actUI as IUIHandler).WhatShouldIDo();
+        }
+    }
+
+    public void GameStart(Transform trs)
+    {
+        if(GameManager.GM.GetMachineState() == MachineState.JustReady)
+        {
+            GameManager.GM.StageStart();
+            trs.gameObject.SetActive(false);
+        }
     }
 }

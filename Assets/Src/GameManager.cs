@@ -52,9 +52,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentPosition = new Vector3Int(GameUtility.mapSize.x, GameUtility.mapSize.y);
         GM = this;
     }
+    
+
     //设置机器状态
     public void SetMachineState(MachineState state){machineState = state;}
     //获取机器状态
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
     public void StageStart()
     {
         Map.UpdateCrashBindwith();
+        Map.UpdateZOC();
         FixGameData.FGD.uiIndex.turnData.UpdateInfo();
         switch (Stage)
         {
@@ -81,10 +83,15 @@ public class GameManager : MonoBehaviour
                 break;
             case TurnStage.ZeroTurn:
                 stageMode = 6;
-
+                ZeroTurnStageStart();
 
                 break;
         }
+
+        currentPiece = null;
+        currentPosition = new Vector3Int(114, 514);
+        machineState = MachineState.Idel;
+        FixGameData.FGD.uiIndex.scrollView.ClearCells();
     }
 
     public void StageEnd()
@@ -95,7 +102,7 @@ public class GameManager : MonoBehaviour
                 StrategyStageEnd();
                 break;
             case TurnStage.ZeroTurn:
-
+                ZeroTurnStageEnd();
                 break;
 
         }
@@ -134,6 +141,22 @@ public class GameManager : MonoBehaviour
     }
 
     //各个阶段起止
+    #region//第零阶段
+    void ZeroTurnStageStart()
+    {
+        FixGameData.FGD.uiIndex.TurnZeroUISet.SetActive(true);
+        for(int i=0;i< FixGameData.FGD.HumanPieceParent.childCount; i++)
+        {
+            FixGameData.FGD.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>().ResetMov();
+        }
+    }
+
+    void ZeroTurnStageEnd()
+    {
+        FixGameData.FGD.uiIndex.TurnZeroUISet.SetActive(false);
+    }
+    #endregion
+
     #region//策略阶段
     void StrategyStageStart()
     {
@@ -149,6 +172,8 @@ public class GameManager : MonoBehaviour
 //有限状态机状态
 public enum MachineState
 {
+    NotReadyYet,
+    JustReady,
     Idel,
     WaitForcuse,
     FocusOnPiece,

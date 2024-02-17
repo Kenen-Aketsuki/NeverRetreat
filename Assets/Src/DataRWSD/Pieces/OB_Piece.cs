@@ -15,8 +15,6 @@ public class OB_Piece : MonoBehaviour
     public int ActionPoint = 0;
     //特殊行动点，可用于火力支援、施法等行为。
     public int SpecialActPoint = 0;
-
-    public bool isVisiable { get; private set; }
     public Vector3Int piecePosition{ get { return FixGameData.FGD.InteractMap.WorldToCell(transform.position); } }
 
     [SerializeField]
@@ -126,11 +124,9 @@ public class OB_Piece : MonoBehaviour
         else AreaSlash.SetActive(false);
         //设置背景
         Color bakC;
-        UnityEngine.ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
+        ColorUtility.TryParseHtmlString("#" + Data.BackColor, out bakC);
         BaseColor.color = bakC;
         TroopType.sprite = BasicUtility.getPieceIcon(Data.PName.Split('/')[2]);
-        
-        isVisiable = true;
     }
     //自检，并更新棋子显示数据
     void UpdateData()
@@ -158,17 +154,6 @@ public class OB_Piece : MonoBehaviour
     public Piece getPieceData()
     {
         return Data;
-    }
-    //设置可见性
-    public void setVisibility(bool visible)
-    {
-        if (visible ^ isVisiable)//二者同或
-        {
-            isVisiable = visible;
-            PieceText.gameObject.SetActive(isVisiable);
-            //VisibaleMask.enabled = !visible;
-            //gameObject.SetActive(visible);
-        }
     }
 
     public Tuple<string, Vector2Int, string, int, int, bool> getPieceDataPack()

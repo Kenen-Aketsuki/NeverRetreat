@@ -38,8 +38,10 @@ public static class GameUtility
 
         //加载回合信息
         GameManager.GM.LoadTurnData(saveTurn);
+
+        GameManager.GM.SetMachineState(MachineState.JustReady);
         //开始游戏
-        GameManager.GM.StageStart();
+        //GameManager.GM.StageStart();
 
     }
 
