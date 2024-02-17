@@ -65,12 +65,12 @@ public class UIManager : MonoBehaviour
     }
     #endregion
     //UIπ‹¿Ì
-    public UIIndex index;
+    //public UIIndex index;
 
     public void UI_SwitchStage()
     {
         GameManager.GM.NextStage();
-        index.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
+         FixGameData.FGD.uiIndex.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
     }
 
     private void Update()

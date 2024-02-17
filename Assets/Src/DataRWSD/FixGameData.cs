@@ -8,7 +8,9 @@ public class FixGameData : MonoBehaviour
 {
     public static FixGameData FGD;
     public Camera CameraNow;
-    public SelfCatchScroll scrollView;
+    //public SelfCatchScroll scrollView;
+    public UIIndex uiIndex;
+    public UIManager uiManager;
 
     //Æå×Ó½á¹¹
     public GameObject PiecePrefab;

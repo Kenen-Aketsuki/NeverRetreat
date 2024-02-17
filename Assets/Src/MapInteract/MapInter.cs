@@ -119,7 +119,7 @@ public class MapInter : MonoBehaviour
 
         List<LandShape> LandLst = Map.GetPLaceInfo(MousePos, 0);
 
-        FixGameData.FGD.scrollView.UpdateCellChilds(PieceLst,LandLst);
+        FixGameData.FGD.uiIndex.scrollView.UpdateCellChilds(PieceLst,LandLst);
 
     }
 

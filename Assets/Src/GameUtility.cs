@@ -38,8 +38,6 @@ public static class GameUtility
 
         //加载回合信息
         GameManager.GM.LoadTurnData(saveTurn);
-        //刷新棋子显示
-        OB_Piece.CheckVisibility();
         //开始游戏
         GameManager.GM.StageStart();
 

@@ -197,8 +197,7 @@ public class Piece
 
     public void OverTurn() //过回合恢复
     {
-        if (inCasualty) restMOV = cMaxMOV;
-        else restMOV = nMaxMOV;
+        ResetMov();
 
         CulateSupplyConnection();//计算补给和通信影响
     }
@@ -260,6 +259,12 @@ public class Piece
     {
         restMOV -= (int)Math.Ceiling(cost);
         restMOV = Math.Max(0, restMOV);
+    }
+
+    public void ResetMov()
+    {
+        if (inCasualty) restMOV = cMaxMOV;
+        else restMOV = nMaxMOV;
     }
 }
 

@@ -212,10 +212,8 @@ public class OB_Piece : MonoBehaviour
     //过回合
     public void OverTurn()
     {
-        Data.OverTurn();
-        ActionPoint = 0;
-        SpecialActPoint = 3;
-        UpdateData();
+        Data.OverTurn();//重置移动力，结算影响
+        ResetAction();//自带更新
     }
 
     //恢复稳定性
@@ -351,5 +349,18 @@ public class OB_Piece : MonoBehaviour
         }
 
         needChenkVisibility.Clear();
+    }
+
+    public void ResetMov()
+    {
+        Data.ResetMov();
+        UpdateData();
+    }
+
+    public void ResetAction()
+    {
+        ActionPoint = 1;
+        SpecialActPoint = 3;
+        UpdateData();
     }
 }

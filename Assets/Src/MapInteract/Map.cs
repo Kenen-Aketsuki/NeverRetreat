@@ -421,7 +421,7 @@ public static class Map
             }
         }
 
-        
+        OB_Piece.CheckVisibility();
     }
     //获取当前崩坏方带宽
     public static void UpdateCrashBindwith()

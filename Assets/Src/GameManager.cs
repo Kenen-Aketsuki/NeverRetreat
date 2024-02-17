@@ -64,17 +64,14 @@ public class GameManager : MonoBehaviour
     public void NextStage()//进入下一阶段
     {
         StageEnd();
-        int tmp = (int)Stage;
-        tmp++;
-        tmp = tmp % stageMode;
-        Stage = (TurnStage)tmp;
-        //Stage = (TurnStage)(((int)Stage + 1) % stageMode);
+        Stage = (TurnStage)(((int)Stage + 1) % stageMode);
         StageStart();
     }
 
     public void StageStart()
     {
         Map.UpdateCrashBindwith();
+        FixGameData.FGD.uiIndex.turnData.UpdateInfo();
         switch (Stage)
         {
             case 0:
