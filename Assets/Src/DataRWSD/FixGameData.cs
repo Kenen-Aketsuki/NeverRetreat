@@ -64,6 +64,8 @@ public class FixGameData : MonoBehaviour
 
     //人类方部队准备列表 信息： 部队番号-部队入场方式-距离入场所需时间
     public List<Tuple<string, string,int>> HumanLoadList;
+    //人类方部队阵亡列表，用于回合初复活
+    public List<Tuple<string, string, int>> HumanDeathList;
     //崩坏方部队准备列表
     public List<Tuple<string, string,int>> CrashLoadList;
 
