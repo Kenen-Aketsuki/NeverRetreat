@@ -201,6 +201,15 @@
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
+    "com.unity.inputsystem": {
+      "version": "1.7.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.cn"
+    },
     "com.unity.localization": {
       "version": "1.4.4",
       "depth": 0,
@@ -226,6 +235,15 @@
         "com.unity.barracuda": "2.3.1-preview",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
+      }
+    },
+    "com.unity.ml-agents.extensions": {
+      "version": "file:../AI/ml-agents-release_19/com.unity.ml-agents.extensions",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.ml-agents": "2.2.1-exp.1",
+        "com.unity.modules.physics": "1.0.0"
       }
     },
     "com.unity.nuget.newtonsoft-json": {
