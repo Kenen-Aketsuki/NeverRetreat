@@ -341,7 +341,7 @@ public static class Map
     //Ë¢ÐÂ¿ØÖÆÇø
     public static void UpdateZOC()
     {
-        FixGameData.FGD.ZoneMap.ClearAllTiles();
+        FixGameData.FGD.ZOCMap.ClearAllTiles();
 
         ArmyBelong EnemySide = (ArmyBelong)(((int)GameManager.GM.ActionSide + 1) % 2);
         PiecePool EnemyPool;

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using UnityEngine;
 
@@ -90,7 +87,7 @@ public class Piece
     public bool isAir = false;//是否为空中单位(支援签)
 
     public bool canBattle {get{
-            if (nATK > 0 && !canAirBattle) return true;
+            if (nATK > 0 && !isAir) return true;
             else return false;
         }}//能否参与普通战斗
     public bool canSupport = false;//能否提供火力支援

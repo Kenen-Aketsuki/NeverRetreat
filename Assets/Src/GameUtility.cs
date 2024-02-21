@@ -39,6 +39,8 @@ public static class GameUtility
         //加载回合信息
         GameManager.GM.LoadTurnData(saveTurn);
 
+        FixGameData.FGD.CrashDeathList = FixSystemData.CrashOrganizationList.Keys.ToList();
+
         GameManager.GM.SetMachineState(MachineState.JustReady);
         //开始游戏
         //GameManager.GM.StageStart();

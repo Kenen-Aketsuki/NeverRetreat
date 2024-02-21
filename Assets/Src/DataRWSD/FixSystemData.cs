@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using UnityEngine.XR;
+using static System.Net.WebRequestMethods;
 
 public static class FixSystemData
 {
@@ -19,6 +20,7 @@ public static class FixSystemData
 
     public static string GameInitDirectory;//游戏初始化
     public static string SaveDirectory;//存档
+    public static string AIUrl = "http://127.0.0.1:5000";//Ai的Api
 
     //地形表
     public static Dictionary<string, BasicLandShape> GlobalBasicTerrainList = new Dictionary<string, BasicLandShape>();

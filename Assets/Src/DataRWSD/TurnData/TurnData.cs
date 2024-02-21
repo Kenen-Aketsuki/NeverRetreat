@@ -12,6 +12,9 @@ public class TurnData
     public short MaxActiveBarrierAmmount { get; private set; }
     //人类方动员率
     public short MobilizationRate { get; private set; }
+    //人类方预备役数量
+    public int PreTrainedAmount { get; private set; }
+
     //崩坏方最大裂隙激活数
     public short MaxActiveFissureAmmount { get; private set; }
     //崩坏方最大裂隙带宽数
@@ -70,6 +73,10 @@ public class TurnData
 
         tmp = root.SelectSingleNode("MobilizationRate");
         if (tmp != null) MobilizationRate = short.Parse(tmp.InnerText);
-        else MobilizationRate = 50;
+        else MobilizationRate = -1;
+
+        tmp = root.SelectSingleNode("TrainedTroopMount");
+        if (tmp != null) PreTrainedAmount = int.Parse(tmp.InnerText);
+        else PreTrainedAmount = -1;
     }
 }

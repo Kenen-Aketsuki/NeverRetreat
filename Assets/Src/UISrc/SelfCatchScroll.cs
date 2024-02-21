@@ -158,6 +158,7 @@ public class SelfCatchScroll : MonoBehaviour
 
     void SelectPiece()
     {
+        GameManager.GM.currentPiece = null;
         //Debug.Log(ContentPannel.childCount - currentItem - 1 + " ¡ª " + ContentPannel.childCount);
         UIPieceDataCell tar = ContentPannel.GetChild(ContentPannel.childCount - currentItem - 1).gameObject.GetComponent<UIPieceDataCell>();
         //UIPieceDataCell tar = ContentPannel.GetChild(0).gameObject.GetComponent<UIPieceDataCell>();
@@ -196,7 +197,7 @@ public class SelfCatchScroll : MonoBehaviour
 
             (FixGameData.FGD.uiManager.actUI as IUIHandler).OnTerrainSelect(SetTerrainTextShow(tar));
 
-            GameManager.GM.currentPiece = null;
+            
             GameManager.GM.SetMachineState(MachineState.FocusOnTerrain);
         }
     }

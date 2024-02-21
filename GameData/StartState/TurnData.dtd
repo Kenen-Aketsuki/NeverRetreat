@@ -1,5 +1,5 @@
 <!ELEMENT TurnData (Turn+)>
-<!ELEMENT Turn (MaxActiveBarrierAmmount,MaxActiveFissureAmmount,CrashBundith,reinforceList-Human?,reinforceList-Crash?,StartStage?,MobilizationRate?)>
+<!ELEMENT Turn (MaxActiveBarrierAmmount,MaxActiveFissureAmmount,CrashBundith,reinforceList-Human?,reinforceList-Crash?,StartStage?,MobilizationRate?,TrainedTroopMount?)>
 <!ATTLIST Turn No CDATA #REQUIRED><!-- 回合编号-->
 <!ATTLIST Turn Allow (Human|Crash|Both) #IMPLIED><!-- 本回合允许行动，不填默认未Both-->
 <!ATTLIST Turn isSave (True|False) #IMPLIED><!-- 是否为存档，默认为false-->
@@ -18,3 +18,4 @@
 
 <!ELEMENT CrashBundith (#PCDATA)><!-- 崩坏带宽 -->
 <!ELEMENT MobilizationRate (#PCDATA)><!-- 当前动员率-->
+<!ELEMENT TrainedTroopMount (#PCDATA)><!-- 预备役数量 -->

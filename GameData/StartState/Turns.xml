@@ -6,6 +6,8 @@
         <MaxActiveFissureAmmount>0</MaxActiveFissureAmmount>
         <CrashBundith>114514</CrashBundith>
         <StartStage>ZeroTurn</StartStage>
+        <MobilizationRate>50</MobilizationRate>
+        <TrainedTroopMount>10</TrainedTroopMount>
     </Turn>
     <Turn No="1" Allow="Both">
         <MaxActiveBarrierAmmount>3</MaxActiveBarrierAmmount>

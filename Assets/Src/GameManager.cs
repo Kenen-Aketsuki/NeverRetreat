@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     //当前行动的棋子
     public OB_Piece currentPiece;
     //当前关注的位置
-    public Vector3Int currentPosition = new Vector3Int(114514, 1919810);
+    public Vector3Int currentPosition;
 
     //游戏管理
     //有限状态机当前状态
@@ -35,9 +35,16 @@ public class GameManager : MonoBehaviour
     //人类方--动员率
     [SerializeField]
     public float MobilizationRate;
+    //人类方—预备役数量
+    [SerializeField]
+    public int PreTrainTroop;
     //人类方—可激活安定节点数量
     [SerializeField]
     public int MaxActiveStableNodeCount;
+    //崩坏意志 — 事件列表
+    [SerializeField]
+    public List<CrashEvents> HumanEventList = new List<CrashEvents>();
+
     //崩坏意志--带宽上限
     [SerializeField]
     public int MaxCrashBandwidth;
@@ -47,7 +54,9 @@ public class GameManager : MonoBehaviour
     //崩坏意志—可激活裂隙数
     [SerializeField]
     public int MaxActiveFissureCount;
-
+    //崩坏意志 — 事件列表
+    [SerializeField]
+    public List<CrashEvents> CrashEventList = new List<CrashEvents>();
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +74,20 @@ public class GameManager : MonoBehaviour
     public void NextStage()//进入下一阶段
     {
         StageEnd();
-        Stage = (TurnStage)(((int)Stage + 1) % stageMode);
+        if (ActionSide == ArmyBelong.Human)
+        {
+            Stage = (TurnStage)(((int)Stage + 1) % stageMode);
+            ActionSide = ArmyBelong.ModCrash;
+            ActionPool = FixGameData.FGD.CrashPiecePool;
+            EnemyPool = FixGameData.FGD.HumanPiecePool;
+        }
+        else
+        {
+            ActionSide = ArmyBelong.Human;
+            ActionPool = FixGameData.FGD.HumanPiecePool;
+            EnemyPool = FixGameData.FGD.CrashPiecePool;
+        }
+        
         StageStart();
     }
 
@@ -114,11 +136,12 @@ public class GameManager : MonoBehaviour
         if(data == null)
         {
             //为空，按照默认从第零回合开始
-            MobilizationRate = 50;
             MaxActiveFissureCount = FixGameData.FGD.TurnDatas[CurrentTurnCount].MaxActiveFissureAmmount;
             MaxActiveStableNodeCount = FixGameData.FGD.TurnDatas[CurrentTurnCount].MaxActiveBarrierAmmount;
             MaxCrashBandwidth = FixGameData.FGD.TurnDatas[CurrentTurnCount].CrashBundith;
             Stage = FixGameData.FGD.TurnDatas[CurrentTurnCount].StartStage;
+            if (FixGameData.FGD.TurnDatas[CurrentTurnCount].PreTrainedAmount > 0) PreTrainTroop = FixGameData.FGD.TurnDatas[CurrentTurnCount].PreTrainedAmount;
+            if (FixGameData.FGD.TurnDatas[CurrentTurnCount].MobilizationRate > 0) MobilizationRate = FixGameData.FGD.TurnDatas[CurrentTurnCount].MobilizationRate;
         }
         else
         {
@@ -128,6 +151,7 @@ public class GameManager : MonoBehaviour
             MaxActiveStableNodeCount = data.MaxActiveBarrierAmmount;
             MaxCrashBandwidth = data.CrashBundith;
             Stage = data.StartStage;
+            PreTrainTroop = data.PreTrainedAmount;
 
             CurrentTurnCount = data.TurnNo;
         }
@@ -138,6 +162,15 @@ public class GameManager : MonoBehaviour
         CurrentTurnCount++;
         //加载对应回合的信息
         LoadTurnData(null);
+        //重置所有棋子
+        for(int i = 0; i < FixGameData.FGD.HumanPieceParent.childCount; i++)
+        {
+            FixGameData.FGD.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>().OverTurn();
+        }
+        for (int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
+        {
+            FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().OverTurn();
+        }
     }
 
     //各个阶段起止
@@ -160,11 +193,13 @@ public class GameManager : MonoBehaviour
     #region//策略阶段
     void StrategyStageStart()
     {
+        FixGameData.FGD.uiIndex.StrategyUISet.SetActive(true);
+
 
     }
     void StrategyStageEnd()
     {
-
+        FixGameData.FGD.uiIndex.StrategyUISet.SetActive(false);
     }
     #endregion
 }
@@ -189,4 +224,19 @@ public enum TurnStage
     Support,//增援阶段
     Settle,//结算阶段
     ZeroTurn//第一回合特殊行动：人类方全体一次移动机会
+}
+
+public enum CrashEvents
+{
+    DataStrom,
+    SpaceSplit,
+    SpaceFix,
+    PosConfuse
+}
+
+public enum HumanEvents 
+{
+    MentalAD,
+    TrainTroop,
+    RetreatCiv
 }

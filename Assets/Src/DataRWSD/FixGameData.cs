@@ -8,7 +8,6 @@ public class FixGameData : MonoBehaviour
 {
     public static FixGameData FGD;
     public Camera CameraNow;
-    //public SelfCatchScroll scrollView;
     public UIIndex uiIndex;
     public UIManager uiManager;
 
@@ -62,12 +61,20 @@ public class FixGameData : MonoBehaviour
     //回合信息
     public List<TurnData> TurnDatas;
 
-    //人类方部队准备列表 信息： 部队番号-部队入场方式-距离入场所需时间
-    public List<Tuple<string, string,int>> HumanLoadList;
-    //人类方部队阵亡列表，用于回合初复活
-    public List<Tuple<string, string, int>> HumanDeathList;
+    //人类方部队准备列表 信息： 部队总信息-部队入场方式-距离入场所需时间
+    public List<Tuple<string, string,int>> HumanLoadList = new List<Tuple<string, string, int>>();
+    public List<Tuple<string, string, int>> HumanFixLoadList = new List<Tuple<string, string, int>>();
+    //人类方部队阵亡列表，用于回合初复活，内容为部队番号
+    public List<string> HumanDeathList = new List<string>();
+    //人类方支援签 — 以部队番号为Key，可用次数为Value
+    public Dictionary<string, int> HumanSupportDic =new Dictionary<string, int>();
+
     //崩坏方部队准备列表
-    public List<Tuple<string, string,int>> CrashLoadList;
+    public List<Tuple<string, string,int>> CrashLoadList=new List<Tuple<string, string, int>>();
+    //崩坏方部队支援可用，内容为部队番号
+    public List<string> CrashDeathList = new List<string>();
+    //崩坏方支援签
+    public Dictionary<string, int> CrashSupportDic=new Dictionary<string, int>();
 
     private void Start()
     {

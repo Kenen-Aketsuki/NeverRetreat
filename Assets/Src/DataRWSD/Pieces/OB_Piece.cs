@@ -198,7 +198,7 @@ public class OB_Piece : MonoBehaviour
     public void OverTurn()
     {
         Data.OverTurn();//重置移动力，结算影响
-        ResetAction();//自带更新
+        ResetAction();//重置行动力，自带更新
     }
 
     //恢复稳定性
@@ -334,6 +334,29 @@ public class OB_Piece : MonoBehaviour
         }
 
         needChenkVisibility.Clear();
+    }
+
+    //强制移动
+    public bool ForceMoveTo(Vector3Int Target)
+    {
+        PiecePool pool;
+        if (Data.LoyalTo == ArmyBelong.Human) pool = FixGameData.FGD.HumanPiecePool;
+        else pool = FixGameData.FGD.CrashPiecePool;
+
+        Path = null;
+        //寻路
+        Path = Map.AStarPathSerch(piecePosition, Target, 100);
+        if (Path != null)
+        {
+            PathCount = 0;
+            timer = -1;
+            needMove = true;
+            //棋子数据移动
+            pool.UpdateChildPos(name, Target);
+
+        }
+        else return false;
+        return true;
     }
 
     public void ResetMov()

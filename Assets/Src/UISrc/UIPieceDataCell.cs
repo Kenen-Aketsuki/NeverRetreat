@@ -114,4 +114,45 @@ public class UIPieceDataCell : MonoBehaviour
 
         DataInit();
     }
+
+    public string getPieceInfo()
+    {
+        bool isHuman = Data.Belong == ArmyBelong.Human;
+        string str = "";
+        //所属
+        str += "所属：" + (isHuman ? "人类势力" : "崩坏意志");
+        //部队名
+        string[] tmpArr = Data.PName.Split("/");
+        str += "\n番号：" + tmpArr[0] + " — " + tmpArr[1] + " \\ " +(Data.isAir ? "空中单位" : "地面单位");
+        //是否拥有带宽
+        if (!isHuman)
+        {
+            str += "\n占用带宽：" + Data.crashLoad;
+        }
+        //部队能力
+        str += "\n部队功能：";
+
+        //public bool canBattle//能否参与普通战斗
+        if (Data.canBattle) str += "常规作战\t";
+        //public bool canSupport = false;//能否提供火力支援
+        if (Data.canSupport) str += "火力支援\t";
+        //public bool canAirBattle = false;//能否参加空战
+        if (Data.canAirBattle) str += "对空打击\t";
+        //public bool canDoMagic = false;//能否施法
+        if (Data.canDoMagic) str += "施法\t";
+        //public bool canFixMod = false;//能否进行模组战
+        if (Data.canFixMod) str += "模组战\t";
+        //public bool canBild = false;//能否进行建造
+        if (Data.canBild) str += "建造\t";
+        //public bool canMental = false;//能否进行心理战
+        if (Data.canMental) str += "蛊惑人心\t";
+        //public bool canStrike = false;//能否进行火力打击
+        if (Data.canStrike) str += "对地打击";
+
+
+
+
+
+        return str;
+    }
 }
