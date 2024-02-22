@@ -62,12 +62,14 @@ public class FixGameData : MonoBehaviour
     public List<TurnData> TurnDatas;
 
     //人类方部队准备列表 信息： 部队总信息-部队入场方式-距离入场所需时间
-    public List<Tuple<string, string,int>> HumanLoadList = new List<Tuple<string, string, int>>();
+    public List<Tuple<string, string, int>> HumanLoadList = new List<Tuple<string, string, int>>();
     public List<Tuple<string, string, int>> HumanFixLoadList = new List<Tuple<string, string, int>>();
     //人类方部队阵亡列表，用于回合初复活，内容为部队番号
     public List<string> HumanDeathList = new List<string>();
     //人类方支援签 — 以部队番号为Key，可用次数为Value
-    public Dictionary<string, int> HumanSupportDic =new Dictionary<string, int>();
+    public Dictionary<string, int> HumanSupportDic = new Dictionary<string, int>();
+    //人类方可用事件
+    public List<SpecialEvent> HumanSpecialEventList = new List<SpecialEvent> { SpecialEvent.MentalAD,SpecialEvent.TrainTroop,SpecialEvent.RetreatCiv};
 
     //崩坏方部队准备列表
     public List<Tuple<string, string,int>> CrashLoadList=new List<Tuple<string, string, int>>();
@@ -75,6 +77,8 @@ public class FixGameData : MonoBehaviour
     public List<string> CrashDeathList = new List<string>();
     //崩坏方支援签
     public Dictionary<string, int> CrashSupportDic=new Dictionary<string, int>();
+    //崩坏方可用事件
+    public List<SpecialEvent> CrashSpecialEventList = new List<SpecialEvent> { SpecialEvent.DataStrom, SpecialEvent.SpaceSplit, SpecialEvent.SpaceFix,SpecialEvent.PosConfuse };
 
     private void Start()
     {
@@ -174,4 +178,11 @@ public class FacilityDataCell
         FixGameData.FGD.MapList[startAddr].SetTile(Positian, null);
 
     }
+
+    public void ChangeActive()
+    {
+        active = !active;
+        FixGameData.FGD.MapList[7].SetTile(Positian, active ? (Data.Item2 as SpecialFacility).Active : (Data.Item2 as SpecialFacility).Close);
+    }
 }
+

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public static class GameUtility
@@ -521,5 +522,49 @@ public static class GameUtility
         return false;
     }
     
+    public static string GetEventName(SpecialEvent evn)
+    {
+        switch (evn)
+        {
+            case SpecialEvent.DataStrom:
+                return "模组数据暴";
+            case SpecialEvent.SpaceSplit:
+                return "空间撕裂";
+            case SpecialEvent.SpaceFix:
+                return "空间修补";
+            case SpecialEvent.PosConfuse:
+                return "坐标映射乱流";
+            case SpecialEvent.MentalAD:
+                return "心理学宣传";
+            case SpecialEvent.TrainTroop:
+                return "预备役训练";
+            case SpecialEvent.RetreatCiv:
+                return "平民撤离";
+            default:
+                return "未知事件";
+        }
+    }
 
+    public static string GetEventInfo(SpecialEvent evn)
+    {
+        switch (evn)
+        {
+            case SpecialEvent.DataStrom:
+                return "大量异常数据席卷一片区域，其中的敌方单位受到 1 点安定度伤害。\n每回合仅触发1次。";
+            case SpecialEvent.SpaceSplit:
+                return "占据一定带宽在某个处部署一个先兆态的空间裂隙。\n每回合可用多次，但需要留有带宽。";
+            case SpecialEvent.SpaceFix:
+                return "选择一个裂隙移除，并立刻释放其占据的带宽。\n每回合可用多次，并立刻释放带宽。";
+            case SpecialEvent.PosConfuse:
+                return "将某个区域内的全部敌军坐标向随机方向移动0~3格距离，如果进入到不可进入的地块则直接消灭。此次移动不计算堆叠和控制区。\n每回合仅触发1次。";
+            case SpecialEvent.MentalAD:
+                return "本回合免疫敌方心理战部队的煽动（处于“孤立”和“失联”状态下的部队除外），同时有概率解散叛军与迎回被策反的部队。解散的叛军直接回归平民（动员率下降）。\n每回合仅触发1次。";
+            case SpecialEvent.TrainTroop:
+                return "以动员率上升为代价，增加预备役储量。每个不处于“失联”状态下的庇护所都可以提供1动员率，每个猎人公会都可以将1动员率转化为2预备役储量。\n每回合可用多次，但请留意动员率。";
+            case SpecialEvent.RetreatCiv:
+                return "从机场撤离平民，以动员率上升为代价获得分数。每个不处于“失联”状态下的庇护所都可以提供1动员率，每个机场最多可以把2动员率1：5转化为撤离点数。\n每回合可用多次，但请留意动员率。";
+            default:
+                return "未知事件";
+        }
+    }
 }

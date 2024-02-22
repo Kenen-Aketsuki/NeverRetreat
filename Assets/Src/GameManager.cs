@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public int MaxActiveStableNodeCount;
     //崩坏意志 — 事件列表
     [SerializeField]
-    public List<CrashEvents> HumanEventList = new List<CrashEvents>();
+    public List<SpecialEvent> HumanEventList = new List<SpecialEvent>();
 
     //崩坏意志--带宽上限
     [SerializeField]
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     public int MaxActiveFissureCount;
     //崩坏意志 — 事件列表
     [SerializeField]
-    public List<CrashEvents> CrashEventList = new List<CrashEvents>();
+    public List<SpecialEvent> CrashEventList = new List<SpecialEvent>();
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     public int stageMode = 5;
     public void NextStage()//进入下一阶段
     {
+        bool NextTurn = false;
         StageEnd();
         if (ActionSide == ArmyBelong.Human)
         {
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
             ActionSide = ArmyBelong.ModCrash;
             ActionPool = FixGameData.FGD.CrashPiecePool;
             EnemyPool = FixGameData.FGD.HumanPiecePool;
+            NextTurn = true;
         }
         else
         {
@@ -88,10 +90,10 @@ public class GameManager : MonoBehaviour
             EnemyPool = FixGameData.FGD.CrashPiecePool;
         }
         
-        StageStart();
+        StageStart(NextTurn);
     }
 
-    public void StageStart()
+    public void StageStart(bool NextTurn )
     {
         Map.UpdateCrashBindwith();
         Map.UpdateZOC();
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 stageMode = 5;
-                TurnSwitch();
+                if (NextTurn) TurnSwitch();
                 StrategyStageStart();
                 break;
             case TurnStage.ZeroTurn:
@@ -213,7 +215,8 @@ public enum MachineState
     WaitForcuse,
     FocusOnPiece,
     FocusOnTerrain,
-    WaitMoveTarget
+    WaitMoveTarget,
+    ActiveSpecialFac
 }
 //回合阶段
 public enum TurnStage
@@ -226,16 +229,14 @@ public enum TurnStage
     ZeroTurn//第一回合特殊行动：人类方全体一次移动机会
 }
 
-public enum CrashEvents
+public enum SpecialEvent
 {
+    //崩坏
     DataStrom,
     SpaceSplit,
     SpaceFix,
-    PosConfuse
-}
-
-public enum HumanEvents 
-{
+    PosConfuse,
+    //人类
     MentalAD,
     TrainTroop,
     RetreatCiv

@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour
     {
         if(GameManager.GM.GetMachineState() == MachineState.JustReady)
         {
-            GameManager.GM.StageStart();
+            GameManager.GM.StageStart(false);
             trs.gameObject.SetActive(false);
         }
     }

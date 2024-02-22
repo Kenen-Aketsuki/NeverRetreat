@@ -106,6 +106,13 @@ public class MapInter : MonoBehaviour
 
                 GameManager.GM.SetMachineState(MachineState.WaitForcuse);
                 break;
+            case MachineState.ActiveSpecialFac:
+                if(FixGameData.FGD.ZoneMap.GetTile(MousePos) != null)
+                {
+                    FixGameData.FGD.SpecialFacilityList.Find(x => x.Positian == MousePos).ChangeActive();
+                }
+                
+                break;
             default:
                 Debug.Log("δ֪��״̬:" + GameManager.GM.GetMachineState());
                 break;

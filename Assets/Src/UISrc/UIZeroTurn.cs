@@ -36,8 +36,7 @@ public class UIZeroTurn : MonoBehaviour , IUIHandler
 
     public void OnMoveClick()
     {
-        Debug.Log(GameManager.GM.currentPiece.name + "ÏëÒª³å´Ì£¬³å´Ì£¬³å£¡");
         GameManager.GM.currentPiece.PrepareMove();
-        GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
+        if (GameManager.GM.MoveArea != null && GameManager.GM.MoveArea.Count > 1) GameManager.GM.SetMachineState(MachineState.WaitMoveTarget);
     }
 }
