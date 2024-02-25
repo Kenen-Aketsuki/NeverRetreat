@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour
 //有限状态机状态
 public enum MachineState
 {
+    TestOnly,
     NotReadyYet,
     JustReady,
     Idel,
@@ -216,7 +217,8 @@ public enum MachineState
     FocusOnPiece,
     FocusOnTerrain,
     WaitMoveTarget,
-    ActiveSpecialFac
+    ActiveSpecialFac,
+    RecoverTroop
 }
 //回合阶段
 public enum TurnStage

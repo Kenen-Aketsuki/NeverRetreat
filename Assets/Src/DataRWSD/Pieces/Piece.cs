@@ -178,12 +178,14 @@ public class Piece
         return new Tuple<string, Vector2Int, string, int, int, bool>(Designation, pos, LoyalTo.ToString(), Stability, ConnectState, inCasualty);
     }
 
-    public void Recover() //恢复HP
+    public bool Recover() //恢复HP
     {
         if (inCasualty)
         {
             inCasualty = !inCasualty;
+            return true;
         }
+        return false;
     }
 
     public void RecoverStable(int pt)//恢复稳定性

@@ -113,6 +113,15 @@ public class MapInter : MonoBehaviour
                 }
                 
                 break;
+            case MachineState.RecoverTroop:
+                UpdateForcuse();
+
+                break;
+            case MachineState.TestOnly:
+                //仅测试用
+                if (GameManager.GM.currentPiece != null) GameManager.GM.currentPiece.TakeDemage(1);
+                GameManager.GM.SetMachineState(MachineState.Idel);
+                break;
             default:
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());
                 break;

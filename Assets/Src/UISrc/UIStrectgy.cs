@@ -18,6 +18,10 @@ public class UIStrectgy : MonoBehaviour , IUIHandler
     GameObject ActiveWindow;
     [SerializeField]
     GameObject ActiveConformBtn;
+    [SerializeField]
+    GameObject RecoverWindow;
+    [SerializeField]
+    GameObject RecoverConformBtn;
 
     int maxActiveAmount = 0;
     int usedActiveAmount = 0;
@@ -26,6 +30,7 @@ public class UIStrectgy : MonoBehaviour , IUIHandler
 
 
     bool startListenAmount = false;
+
 
     public void OnEnable()
     {
@@ -44,6 +49,7 @@ public class UIStrectgy : MonoBehaviour , IUIHandler
         SpecialFacList = FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == Facname).ToList();
         usedActiveAmount = FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == Facname && x.active).Count();
 
+        RecoverConformBtn.SetActive(true);
         UpdateShow();
     }
 
@@ -58,9 +64,25 @@ public class UIStrectgy : MonoBehaviour , IUIHandler
             else ActiveConformBtn.SetActive(false);
         }
     }
-    public void OnPieceSelect(bool isFriendly) { }
+    public void OnPieceSelect(bool isFriendly)
+    {
+        if (isFriendly)
+        {
+            RecoverConformBtn.SetActive(true);
+            RecoverWindow.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "剩余预备役：" + GameManager.GM.PreTrainTroop;
+        }
+        else
+        {
+            RecoverConformBtn.SetActive(false);
+            RecoverWindow.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "请选择一个减员的友方单位";
+        }
+    }
 
-    public void OnTerrainSelect(bool isFac) { }
+    public void OnTerrainSelect(bool isFac) 
+    {
+        RecoverConformBtn.SetActive(false);
+        RecoverWindow.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "请选择一个减员的友方单位";
+    }
 
     public void UpdateShow()
     {
@@ -112,6 +134,38 @@ public class UIStrectgy : MonoBehaviour , IUIHandler
         ActiveWindow.SetActive(false);
         startListenAmount = false;
         FixGameData.FGD.ZoneMap.ClearAllTiles();
+        UpdateShow();
+    }
+
+    public void RecoverTroop()
+    {
+        CrashPannel.SetActive(false);
+        HumanPannel.SetActive(false);
+        RecoverWindow.SetActive(true);
+
+        OnPieceSelect(false);
+
+        GameManager.GM.SetMachineState(MachineState.RecoverTroop);
+
+    }
+
+    public void RecoverPiece()
+    {
+        if (GameManager.GM.PreTrainTroop <= 0 || GameManager.GM.currentPiece == null) 
+        {
+            RecoverConformBtn.SetActive(false);
+            return;
+        }
+        bool tmp = GameManager.GM.currentPiece.Recover();
+        if (tmp) GameManager.GM.PreTrainTroop--;
+        RecoverWindow.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "剩余预备役：" + GameManager.GM.PreTrainTroop;
+        FixGameData.FGD.uiIndex.scrollView.UpdateCellChilds();
+    }
+
+    public void FinishRecover()
+    {
+        GameManager.GM.SetMachineState(MachineState.Idel);
+        RecoverWindow.SetActive(false);
         UpdateShow();
     }
 }

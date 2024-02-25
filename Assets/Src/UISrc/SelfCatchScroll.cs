@@ -83,10 +83,11 @@ public class SelfCatchScroll : MonoBehaviour
     public void UpdateCellChilds(List<GameObject> Datas,List<LandShape> basicTerrain)
     {
         //Çå¿Õ¼ÇÂ¼
-        for (int i = 0; i < ContentPannel.childCount; i++)
-        {
-            GameObject.Destroy(ContentPannel.GetChild(i).gameObject);
-        }
+        //for (int i = 0; i < ContentPannel.childCount; i++)
+        //{
+        //    GameObject.Destroy(ContentPannel.GetChild(i).gameObject);
+        //}
+        ClearCells();
         ContentPannel.localPosition = new Vector3(
                 ContentPannel.localPosition.x,
                 Mathf.MoveTowards(ContentPannel.localPosition.y, 0, snapingSpeed),
@@ -146,6 +147,15 @@ public class SelfCatchScroll : MonoBehaviour
         }
         
         SelectPiece();
+    }
+
+    public void UpdateCellChilds()
+    {
+        List<GameObject> PieceLst = FixGameData.FGD.HumanPiecePool.getChildByPos(GameManager.GM.currentPosition);
+        if (PieceLst.Count == 0) PieceLst = FixGameData.FGD.CrashPiecePool.getChildByPos(GameManager.GM.currentPosition);
+
+        List<LandShape> LandLst = Map.GetPLaceInfo(GameManager.GM.currentPosition, 0);
+        UpdateCellChilds(PieceLst, LandLst);
     }
 
     public void ClearCells()

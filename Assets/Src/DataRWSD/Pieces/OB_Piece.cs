@@ -189,10 +189,11 @@ public class OB_Piece : MonoBehaviour
         Map.UpdateCrashBindwith();
     }
     //回血
-    public void Recover()
+    public bool Recover()
     {
-        Data.Recover();
+        bool tmp = Data.Recover();
         UpdateData();
+        return tmp;
     }
     //过回合
     public void OverTurn()
