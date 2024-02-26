@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public static class Map
 {
@@ -439,7 +436,19 @@ public static class Map
 
         GameManager.GM.CrashBandwidth = count;
     }
-
+    //刷新安定结界
+    public static void UpdateStaticBarrier()
+    {
+        FixGameData.FGD.ZoneMap.ClearAllTiles();
+        foreach (FacilityDataCell cell in FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == "StaticBarrierNode" && x.active).ToList())
+        {
+            List<CellInfo> Area = PowerfulBrickAreaSearch(cell.Positian, 10);
+            foreach(CellInfo cellInfo in Area)
+            {
+                if (FixGameData.FGD.ZoneMap.GetTile(cellInfo.Positian) == null) FixGameData.FGD.ZoneMap.SetTile(cellInfo.Positian, FixSystemData.GlobalZoneList["StaticBarrier"].Top);
+            }
+        }
+    }
 
     //A*寻路算法，用于判定路径存在
     public static List<CellInfo> AStarPathSerch(Vector3Int Start,Vector3Int End,float Distence)

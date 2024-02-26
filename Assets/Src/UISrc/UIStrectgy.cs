@@ -84,6 +84,11 @@ public class UIStrectgy : MonoBehaviour , IUIHandler
         RecoverWindow.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "请选择一个减员的友方单位";
     }
 
+    public void OnPositionSelect(Vector3Int Pos)
+    {
+        EventSelectWindow.GetComponent<UIEventSelect>().SelectedPos(Pos);
+    }
+
     public void UpdateShow()
     {
         CrashPannel.SetActive(false);

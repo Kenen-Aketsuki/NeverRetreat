@@ -13,5 +13,6 @@ public class UIIndex : MonoBehaviour
     public TMP_Text TurnShowText;
     public SelfCatchScroll scrollView;
     public UITurnData turnData;
+    public UIHint HintUI;
 
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -42,8 +44,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public int MaxActiveStableNodeCount;
     //崩坏意志 — 事件列表
-    [SerializeField]
-    public List<SpecialEvent> HumanEventList = new List<SpecialEvent>();
+    public List<Tuple<SpecialEvent, Vector3Int>> HumanEventList = new List<Tuple<SpecialEvent, Vector3Int>>();
+
 
     //崩坏意志--带宽上限
     [SerializeField]
@@ -55,8 +57,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public int MaxActiveFissureCount;
     //崩坏意志 — 事件列表
-    [SerializeField]
-    public List<SpecialEvent> CrashEventList = new List<SpecialEvent>();
+    public List<Tuple<SpecialEvent, Vector3Int>> CrashEventList = new List<Tuple<SpecialEvent, Vector3Int>>();
 
     // Start is called before the first frame update
     void Start()
@@ -70,21 +71,24 @@ public class GameManager : MonoBehaviour
     //获取机器状态
     public MachineState GetMachineState(){return machineState;}
 
-    public int stageMode = 5;
+    int stageMode = 5;
     public void NextStage()//进入下一阶段
     {
         bool NextTurn = false;
-        StageEnd();
-        if (ActionSide == ArmyBelong.Human)
+        if (ActionSide == ArmyBelong.Human) NextTurn = true;
+
+        StageEnd(NextTurn);
+        if (NextTurn)
         {
+            //跳回合
             Stage = (TurnStage)(((int)Stage + 1) % stageMode);
             ActionSide = ArmyBelong.ModCrash;
             ActionPool = FixGameData.FGD.CrashPiecePool;
             EnemyPool = FixGameData.FGD.HumanPiecePool;
-            NextTurn = true;
         }
         else
         {
+            //跳玩家
             ActionSide = ArmyBelong.Human;
             ActionPool = FixGameData.FGD.HumanPiecePool;
             EnemyPool = FixGameData.FGD.CrashPiecePool;
@@ -108,7 +112,9 @@ public class GameManager : MonoBehaviour
             case TurnStage.ZeroTurn:
                 stageMode = 6;
                 ZeroTurnStageStart();
-
+                break;
+            case TurnStage.ModBattle:
+                ModeBattleStageStart();
                 break;
         }
 
@@ -118,15 +124,18 @@ public class GameManager : MonoBehaviour
         FixGameData.FGD.uiIndex.scrollView.ClearCells();
     }
 
-    public void StageEnd()
+    public void StageEnd(bool NextTurn)
     {
         switch (Stage)
         {
             case TurnStage.Strategy:
-                StrategyStageEnd();
+                StrategyStageEnd(NextTurn);
                 break;
             case TurnStage.ZeroTurn:
                 ZeroTurnStageEnd();
+                break;
+            case TurnStage.ModBattle:
+                ModeBattleStageEnd(NextTurn);
                 break;
 
         }
@@ -196,13 +205,50 @@ public class GameManager : MonoBehaviour
     void StrategyStageStart()
     {
         FixGameData.FGD.uiIndex.StrategyUISet.SetActive(true);
-
-
     }
-    void StrategyStageEnd()
+    void StrategyStageEnd(bool isTurnChange)
     {
+        if (isTurnChange)
+        {
+            //展开结界
+            Map.UpdateStaticBarrier();
+            //造成伤害
+            for (int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
+            {
+                var tmp = FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>();
+                if (FixGameData.FGD.MapList[14].GetTile(tmp.piecePosition) != null)
+                {
+                    tmp.TakeDemage(1);
+                }
+            }
+            //结算事件
+            Streagy.CulEvent();
+            //更改裂隙状态
+            foreach (FacilityDataCell fac in FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == "DimensionFissure"))
+            {
+                if (FixGameData.FGD.MapList[14].GetTile(fac.Positian) != null)
+                {
+                    fac.SetActive(false);
+                }
+            }
+
+        }
         FixGameData.FGD.uiIndex.StrategyUISet.SetActive(false);
+        Map.UpdateCrashBindwith();
     }
+    #endregion
+
+    #region //模组战阶段
+    void ModeBattleStageStart()
+    {
+
+    }
+
+    void ModeBattleStageEnd(bool isTurnChange)
+    {
+
+    }
+
     #endregion
 }
 
@@ -218,7 +264,8 @@ public enum MachineState
     FocusOnTerrain,
     WaitMoveTarget,
     ActiveSpecialFac,
-    RecoverTroop
+    RecoverTroop,
+    SelectEventPosition
 }
 //回合阶段
 public enum TurnStage

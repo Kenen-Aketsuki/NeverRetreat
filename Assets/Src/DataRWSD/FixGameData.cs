@@ -184,5 +184,11 @@ public class FacilityDataCell
         active = !active;
         FixGameData.FGD.MapList[7].SetTile(Positian, active ? (Data.Item2 as SpecialFacility).Active : (Data.Item2 as SpecialFacility).Close);
     }
+
+    public void SetActive(bool act)
+    {
+        active = act;
+        FixGameData.FGD.MapList[7].SetTile(Positian, active ? (Data.Item2 as SpecialFacility).Active : (Data.Item2 as SpecialFacility).Close);
+    }
 }
 

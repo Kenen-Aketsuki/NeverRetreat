@@ -115,11 +115,20 @@ public class MapInter : MonoBehaviour
                 break;
             case MachineState.RecoverTroop:
                 UpdateForcuse();
+                break;
+            case MachineState.SelectEventPosition:
 
+                (FixGameData.FGD.uiManager.actUI as IUIHandler).OnPositionSelect(MousePos);
+
+                GameManager.GM.SetMachineState(MachineState.Idel);
                 break;
             case MachineState.TestOnly:
                 //Ωˆ≤‚ ‘”√
-                if (GameManager.GM.currentPiece != null) GameManager.GM.currentPiece.TakeDemage(1);
+                for(int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
+                {
+                    Debug.Log(FixGameData.FGD.CrashPieceParent.GetChild(i).name);
+                }
+
                 GameManager.GM.SetMachineState(MachineState.Idel);
                 break;
             default:

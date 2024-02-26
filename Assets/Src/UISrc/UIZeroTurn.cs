@@ -21,6 +21,8 @@ public class UIZeroTurn : MonoBehaviour , IUIHandler
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
+    public void OnPositionSelect(Vector3Int Pos) { }
+
     public void UpdateShow()
     {
         if(GameManager.GM.GetMachineState() == MachineState.FocusOnPiece)
