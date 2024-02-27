@@ -67,7 +67,7 @@ public class FixGameData : MonoBehaviour
     //人类方部队阵亡列表，用于回合初复活，内容为部队番号
     public List<string> HumanDeathList = new List<string>();
     //人类方支援签 — 以部队番号为Key，可用次数为Value
-    public Dictionary<string, int> HumanSupportDic = new Dictionary<string, int>();
+    public Dictionary<string, Tuple<Piece, int>> HumanSupportDic = new Dictionary<string, Tuple<Piece, int>>();
     //人类方可用事件
     public List<SpecialEvent> HumanSpecialEventList = new List<SpecialEvent> { SpecialEvent.MentalAD,SpecialEvent.TrainTroop,SpecialEvent.RetreatCiv};
 
@@ -76,7 +76,7 @@ public class FixGameData : MonoBehaviour
     //崩坏方部队支援可用，内容为部队番号
     public List<string> CrashDeathList = new List<string>();
     //崩坏方支援签
-    public Dictionary<string, int> CrashSupportDic=new Dictionary<string, int>();
+    public Dictionary<string, Tuple<Piece,int>> CrashSupportDic=new Dictionary<string, Tuple<Piece, int>>();
     //崩坏方可用事件
     public List<SpecialEvent> CrashSpecialEventList = new List<SpecialEvent> { SpecialEvent.DataStrom, SpecialEvent.SpaceSplit, SpecialEvent.SpaceFix,SpecialEvent.PosConfuse };
 

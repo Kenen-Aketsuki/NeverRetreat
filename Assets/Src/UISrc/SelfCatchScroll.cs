@@ -172,7 +172,6 @@ public class SelfCatchScroll : MonoBehaviour
         //Debug.Log(ContentPannel.childCount - currentItem - 1 + " ¡ª " + ContentPannel.childCount);
         UIPieceDataCell tar = ContentPannel.GetChild(ContentPannel.childCount - currentItem - 1).gameObject.GetComponent<UIPieceDataCell>();
         //UIPieceDataCell tar = ContentPannel.GetChild(0).gameObject.GetComponent<UIPieceDataCell>();
-        Debug.Log(ContentPannel.childCount - currentItem - 1 + " ¡ª " + tar.name);
         //return;
 
         if (tar.Data != null && tar.Data.LoyalTo == GameManager.GM.ActionSide)

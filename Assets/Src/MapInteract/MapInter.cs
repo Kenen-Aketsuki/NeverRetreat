@@ -1,7 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -124,9 +123,9 @@ public class MapInter : MonoBehaviour
                 break;
             case MachineState.TestOnly:
                 //½ö²âÊÔÓÃ
-                for(int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
+                foreach(KeyValuePair<string,Tuple<Piece,int>> par in FixGameData.FGD.HumanSupportDic)
                 {
-                    Debug.Log(FixGameData.FGD.CrashPieceParent.GetChild(i).name);
+                    Debug.Log(par.Key + " ¡ª " + par.Value.Item1.PName + "//" + par.Value.Item2);
                 }
 
                 GameManager.GM.SetMachineState(MachineState.Idel);

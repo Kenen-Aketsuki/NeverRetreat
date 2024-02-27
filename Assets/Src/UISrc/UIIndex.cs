@@ -7,6 +7,7 @@ public class UIIndex : MonoBehaviour
 {
     public GameObject StrategyUISet;
     public GameObject TurnZeroUISet;
+    public GameObject ModBattleUISet;
     
     
     

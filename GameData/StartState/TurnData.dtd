@@ -1,4 +1,4 @@
-<!ELEMENT TurnData (Turn+)>
+<!ELEMENT TurnData (Turn+,BegianSupportList)>
 <!ELEMENT Turn (MaxActiveBarrierAmmount,MaxActiveFissureAmmount,CrashBundith,reinforceList-Human?,reinforceList-Crash?,StartStage?,MobilizationRate?,TrainedTroopMount?)>
 <!ATTLIST Turn No CDATA #REQUIRED><!-- 回合编号-->
 <!ATTLIST Turn Allow (Human|Crash|Both) #IMPLIED><!-- 本回合允许行动，不填默认未Both-->
@@ -19,3 +19,10 @@
 <!ELEMENT CrashBundith (#PCDATA)><!-- 崩坏带宽 -->
 <!ELEMENT MobilizationRate (#PCDATA)><!-- 当前动员率-->
 <!ELEMENT TrainedTroopMount (#PCDATA)><!-- 预备役数量 -->
+
+<!ELEMENT BegianSupportList (HumanList,CrashList)><!-- 双方的支援签列表 -->
+<!ELEMENT HumanList (Item+)><!-- 人类方列表-->
+<!ELEMENT CrashList (Item+)><!-- 崩坏方列表-->
+<!ELEMENT Item EMPTY><!-- 支援签项 -->
+<!ATTLIST Item TroopName ID #REQUIRED><!-- 部队番号 -->
+<!ATTLIST Item UseableTime CDATA #REQUIRED><!-- 可用次数-->

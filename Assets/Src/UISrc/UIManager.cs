@@ -72,8 +72,15 @@ public class UIManager : MonoBehaviour
 
     public void UI_SwitchStage()
     {
-        GameManager.GM.NextStage();
-         FixGameData.FGD.uiIndex.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
+        if (GameManager.GM.GetMachineState() == MachineState.FocusOnPiece ||
+            GameManager.GM.GetMachineState() == MachineState.FocusOnTerrain ||
+            GameManager.GM.GetMachineState() == MachineState.WaitForcuse ||
+            GameManager.GM.GetMachineState() == MachineState.Idel)
+        {
+            GameManager.GM.NextStage();
+            FixGameData.FGD.uiIndex.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
+        }
+        
     }
 
     public void WhatToDo(Transform trs)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Streagy
@@ -110,5 +111,18 @@ public class Streagy
             FixGameData.FGD.FacilityList.RemoveAt(addr);
             FixGameData.FGD.MapList[7].SetTile(Pos, null);
         }
+    }
+
+    //获取空中单位的支援签
+    public static void GetAirForce()
+    {
+        int potCount = FixGameData.FGD.FacilityList.Where(x => x.Id == "Airpot").Count();
+        Dictionary<string, Tuple<Piece, int>> tmp = new Dictionary<string, Tuple<Piece, int>>();
+        foreach (KeyValuePair<string, Tuple<Piece, int>> par in FixGameData.FGD.HumanSupportDic)
+        {
+            tmp.Add(par.Key, new Tuple<Piece, int>(par.Value.Item1, UnityEngine.Random.Range(0, 3) * potCount + 1));
+        }
+
+        FixGameData.FGD.HumanSupportDic = tmp.ToDictionary(x=>x.Key,x=>x.Value);
     }
 }

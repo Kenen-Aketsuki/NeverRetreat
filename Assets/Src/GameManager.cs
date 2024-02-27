@@ -24,12 +24,15 @@ public class GameManager : MonoBehaviour
     //有限状态机当前状态
     [SerializeField]
     MachineState machineState;
+    //能否更改机器状态
+    public bool CanMachineStateChange = true;
     //当前行动方
     public ArmyBelong ActionSide;
     //当前回合数
     public int CurrentTurnCount = 0;
     //当前回合阶段
     public TurnStage Stage;
+
 
     //人类方--最大动员率
     [SerializeField]
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour
     
 
     //设置机器状态
-    public void SetMachineState(MachineState state){machineState = state;}
+    public void SetMachineState(MachineState state){if(CanMachineStateChange) machineState = state;}
     //获取机器状态
     public MachineState GetMachineState(){return machineState;}
 
@@ -205,6 +208,7 @@ public class GameManager : MonoBehaviour
     void StrategyStageStart()
     {
         FixGameData.FGD.uiIndex.StrategyUISet.SetActive(true);
+        Streagy.GetAirForce();
     }
     void StrategyStageEnd(bool isTurnChange)
     {
@@ -241,12 +245,12 @@ public class GameManager : MonoBehaviour
     #region //模组战阶段
     void ModeBattleStageStart()
     {
-
+        FixGameData.FGD.uiIndex.ModBattleUISet.SetActive(true);
     }
 
     void ModeBattleStageEnd(bool isTurnChange)
     {
-
+        FixGameData.FGD.uiIndex.ModBattleUISet.SetActive(false);
     }
 
     #endregion
@@ -265,7 +269,8 @@ public enum MachineState
     WaitMoveTarget,
     ActiveSpecialFac,
     RecoverTroop,
-    SelectEventPosition
+    SelectEventPosition,
+    SelectEnemyPiece
 }
 //回合阶段
 public enum TurnStage

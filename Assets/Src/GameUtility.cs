@@ -4,7 +4,6 @@ using System.Linq;
 using System.Xml;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public static class GameUtility
@@ -399,6 +398,32 @@ public static class GameUtility
             ref FixGameData.FGD.CrashPieceParent.GetComponent<PiecePool>().listIndex);
     }
 
+    public static void 初始化支援签列表(XmlNode SupportList)
+    {
+        FixGameData.FGD.HumanSupportDic.Clear();
+        FixGameData.FGD.CrashSupportDic.Clear();
+
+        XmlNode HumanList = SupportList.FirstChild;
+        XmlNode CrashList = SupportList.LastChild;
+        foreach(XmlNode item in HumanList.ChildNodes)
+        {
+            string TroopName = item.Attributes["TroopName"].Value;
+            int useTime = int.Parse(item.Attributes["UseableTime"].Value);
+            Piece tmpPic = new Piece(FixSystemData.HumanOrganizationList[TroopName], null);
+            
+            FixGameData.FGD.HumanSupportDic.Add(TroopName,new Tuple<Piece, int>(tmpPic,useTime));
+        }
+
+        foreach (XmlNode item in CrashList.ChildNodes)
+        {
+            string TroopName = item.Attributes["TroopName"].Value;
+            int useTime = int.Parse(item.Attributes["UseableTime"].Value);
+            Piece tmpPic = new Piece(FixSystemData.CrashOrganizationList[TroopName], null);
+
+            FixGameData.FGD.CrashSupportDic.Add(TroopName, new Tuple<Piece, int>(tmpPic, useTime));
+        }
+    }
+
     public static void 从预设中读取回合信息()
     {
         XmlDocument xmlDoc = new XmlDocument();
@@ -408,10 +433,13 @@ public static class GameUtility
         List<TurnData> turnList = new List<TurnData>();
         foreach(XmlNode node in TurnRoot.ChildNodes)
         {
+            if (node.Name != "Turn") continue;
             turnList.Add(new TurnData(node));
         }
         FixGameData.FGD.TurnDatas = turnList.OrderBy(x => x.TurnNo).ToList();
         FixGameData.FGD.MaxRoundCount = FixGameData.FGD.TurnDatas[turnList.Count - 1].TurnNo;
+
+        初始化支援签列表(TurnRoot.SelectSingleNode("BegianSupportList"));
     }
 
     public static void 读取存档的回合信息()
@@ -422,6 +450,8 @@ public static class GameUtility
         XmlNode TurnRoot = xmlDoc.DocumentElement;
 
         saveTurn = new TurnData(TurnRoot.FirstChild);
+
+        初始化支援签列表(TurnRoot.SelectSingleNode("BegianSupportList"));
     }
     //生成行目录
     static public void GenColumIndex(List<Tuple<string, int, int>> childList,ref Dictionary<int, Tuple<int, int>> listIndex)

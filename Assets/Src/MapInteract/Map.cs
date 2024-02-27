@@ -433,6 +433,11 @@ public static class Map
         }
         //统计裂隙
         count += FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == "DimensionFissure").ToList().Count * 10;
+        //统计支援签
+        foreach (KeyValuePair<string, Tuple<Piece, int>> par in FixGameData.FGD.CrashSupportDic)
+        {
+            count += par.Value.Item1.crashLoad * par.Value.Item2;
+        }
 
         GameManager.GM.CrashBandwidth = count;
     }
@@ -447,6 +452,25 @@ public static class Map
             {
                 if (FixGameData.FGD.ZoneMap.GetTile(cellInfo.Positian) == null) FixGameData.FGD.ZoneMap.SetTile(cellInfo.Positian, FixSystemData.GlobalZoneList["StaticBarrier"].Top);
             }
+        }
+    }
+    //放置单纯的范围
+    public static void SetArea(Vector3Int Pos, int range,bool isSingel)
+    {
+        List<CellInfo> area = PowerfulBrickAreaSearch(Pos, range);
+        if(isSingel) FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+        foreach(CellInfo ifo in area)
+        {
+            FixGameData.FGD.MoveAreaMap.SetTile(ifo.Positian, FixGameData.FGD.MoveArea);
+        }
+    }
+    public static void SetArea(Vector3Int Pos, int range,Tile tile,bool isSingel)
+    {
+        List<CellInfo> area = PowerfulBrickAreaSearch(Pos, range);
+        if(isSingel) FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+        foreach (CellInfo ifo in area)
+        {
+            FixGameData.FGD.MoveAreaMap.SetTile(ifo.Positian, tile);
         }
     }
 

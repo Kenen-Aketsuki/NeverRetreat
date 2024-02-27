@@ -75,6 +75,7 @@
             <ATK>-1</ATK>
             <DEF>-1</DEF>
             <MOV>5</MOV>
+            <passiveArea>3</passiveArea>
             <crashLoad>3</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" canFixMod="True"/>

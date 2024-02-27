@@ -15,6 +15,8 @@ public class OB_Piece : MonoBehaviour
     //特殊行动点，可用于火力支援、施法等行为。
     public int SpecialActPoint = 0;
     public Vector3Int piecePosition{ get { return FixGameData.FGD.InteractMap.WorldToCell(transform.position); } }
+    //能否移动
+    public bool canMove { get { return Data.MOV > 0; } }
 
     [SerializeField]
     SpriteRenderer BaseColor;
