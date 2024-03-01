@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -123,13 +125,47 @@ public class MapInter : MonoBehaviour
                 break;
             case MachineState.TestOnly:
                 //仅测试用
-                foreach(KeyValuePair<string,Tuple<Piece,int>> par in FixGameData.FGD.HumanSupportDic)
+                FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+                if (MousePos == GameManager.GM.currentPosition) break;
+
+                int dir = Map.HexDirectionInt(GameManager.GM.currentPosition, MousePos);
+                int dir2 = (dir + 4) % 6 + 1;
+                int dir3 = dir % 6 + 1;
+
+                Debug.Log(dir + " - " + dir2 + " - " + dir3 + " - ");
+
+                List<CellInfo> area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, 3).Where(
+                    x => (Map.HexDirectionInt(GameManager.GM.currentPosition, x.Positian) == dir ||
+                    Map.HexDirectionInt(GameManager.GM.currentPosition, x.Positian) == dir2 ||
+                    Map.HexDirectionAxis(GameManager.GM.currentPosition, x.Positian) == dir3)).ToList();
+                foreach (CellInfo cell in area)
                 {
-                    Debug.Log(par.Key + " — " + par.Value.Item1.PName + "//" + par.Value.Item2);
+                    FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixGameData.FGD.MoveArea);
                 }
 
-                GameManager.GM.SetMachineState(MachineState.Idel);
-                break;
+
+                    //List<CellInfo> area = Map.PowerfulBrickAreaSearch(MousePos, 3);
+
+
+                    //foreach (CellInfo cell in area)
+                    //{
+                    //    int dir = Map.HexDirectionAxis(MousePos, cell.Positian);
+                    //    switch (dir)
+                    //    {
+                    //        case 0: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixGameData.FGD.MoveArea); break;
+                    //        case 1: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixGameData.FGD.MoveZocArea); break;
+                    //        case 2: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixSystemData.GlobalZoneList["StaticBarrier"].Top); break;
+                    //        case 3: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixSystemData.GlobalZoneList["ZOC"].Top); break;
+                    //        case 4: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixSystemData.GlobalSpecialTerrainList["FrozenZone"].Top); break;
+                    //        case 5: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixSystemData.GlobalSpecialTerrainList["Ice"].Top); break;
+                    //        case 6: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixSystemData.GlobalSpecialTerrainList["PosDisorderZone"].Top); break;
+                    //        default: FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixSystemData.GlobalSpecialTerrainList["FlameZone"].Top); break;
+                    //    }
+                    //}
+                    //Debug.Log(Map.HexDirectionInt(Vector3Int.zero, MousePos));
+
+                    //GameManager.GM.SetMachineState(MachineState.Idel);
+                    break;
             default:
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());
                 break;

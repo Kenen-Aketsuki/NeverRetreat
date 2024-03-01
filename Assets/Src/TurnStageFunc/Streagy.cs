@@ -53,16 +53,16 @@ public class Streagy
             if (FixGameData.FGD.ZoneMap.GetTile(tmp.Positian) != null) continue;
 
             FixGameData.FGD.MapList[14].SetTile(tmp.Positian, tmp.Data.Item2.Top);
-            int addr = FixGameData.FGD.FacilityList.FindIndex(x => x.Id == "DataDisorderZone" && x.Positian == tmp.Positian);
+            int addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "DataDisorderZone" && x.Positian == tmp.Positian);
             if(addr == -1)
             {
                 //加入
-                FixGameData.FGD.FacilityList.Add(tmp);
+                FixGameData.FGD.SpecialTerrainList.Add(tmp);
             }
             else
             {
                 //刷新
-                FixGameData.FGD.FacilityList[addr] = tmp;
+                FixGameData.FGD.SpecialTerrainList[addr] = tmp;
             }
         }
     }
@@ -79,16 +79,16 @@ public class Streagy
             if (FixGameData.FGD.ZoneMap.GetTile(tmp.Positian) != null) continue;
 
             FixGameData.FGD.MapList[14].SetTile(tmp.Positian, tmp.Data.Item2.Top);
-            int addr = FixGameData.FGD.FacilityList.FindIndex(x => x.Id == "PosDisorderZone" && x.Positian == tmp.Positian);
+            int addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "PosDisorderZone" && x.Positian == tmp.Positian);
             if (addr == -1)
             {
                 //加入
-                FixGameData.FGD.FacilityList.Add(tmp);
+                FixGameData.FGD.SpecialTerrainList.Add(tmp);
             }
             else
             {
                 //刷新
-                FixGameData.FGD.FacilityList[addr] = tmp;
+                FixGameData.FGD.SpecialTerrainList[addr] = tmp;
             }
         }
     }

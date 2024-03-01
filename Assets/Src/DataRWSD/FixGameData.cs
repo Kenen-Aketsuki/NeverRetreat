@@ -42,6 +42,8 @@ public class FixGameData : MonoBehaviour
     public Tilemap ZOCMap;
     //ÒÆ¶¯·¶Î§µØÍ¼
     public Tilemap MoveAreaMap;
+    //¹¥»÷·¶Î§
+    public Tilemap AttackAreaMap;
 
     //ÌØÊâÍßÆ¬
     public Tile InteractFill;//Ìî³ä½»»¥ÓÃ

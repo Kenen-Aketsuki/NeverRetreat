@@ -50,10 +50,6 @@ public static class Map
         Vector3Int endPos;
         switch (direction)
         {
-            case 0:
-                endPos = new Vector3Int(11, 45, 14);
-                map = 0;
-                break;
             case 1:
                 endPos = Pos;
                 map = 0;
@@ -455,22 +451,13 @@ public static class Map
         }
     }
     //放置单纯的范围
-    public static void SetArea(Vector3Int Pos, int range,bool isSingel)
+    public static void SetArea(Vector3Int Pos, int range,Tilemap map,Tile tile,bool isSingel)
     {
         List<CellInfo> area = PowerfulBrickAreaSearch(Pos, range);
-        if(isSingel) FixGameData.FGD.MoveAreaMap.ClearAllTiles();
-        foreach(CellInfo ifo in area)
-        {
-            FixGameData.FGD.MoveAreaMap.SetTile(ifo.Positian, FixGameData.FGD.MoveArea);
-        }
-    }
-    public static void SetArea(Vector3Int Pos, int range,Tile tile,bool isSingel)
-    {
-        List<CellInfo> area = PowerfulBrickAreaSearch(Pos, range);
-        if(isSingel) FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+        if(isSingel) map.ClearAllTiles();
         foreach (CellInfo ifo in area)
         {
-            FixGameData.FGD.MoveAreaMap.SetTile(ifo.Positian, tile);
+            map.SetTile(ifo.Positian, tile);
         }
     }
 
@@ -701,7 +688,7 @@ public static class Map
         int x = pos.x + (pos.y - (pos.y < 0 ? 1 : 0)) / 2 - (Math.Abs(pos.y) + 1) % 2;
         int y = pos.y;
 
-        return new Vector3Int(x, y, pos.z);
+        return new Vector3Int(x + 1, y, pos.z);
     }
     //求距离
     public static int HexDistence(Vector3Int pos1,Vector3Int pos2)
@@ -710,6 +697,91 @@ public static class Map
         pos2 = CellTo120Dig(pos2);
 
         return Math.Max(Math.Max(Math.Abs(pos1.x - pos2.x), Math.Abs(pos1.y - pos2.y)), Math.Abs(pos1.y - pos2.y - pos1.x + pos2.x));
+    }
+    //求方向
+    public static Vector3 HexDirection(Vector3Int start,Vector3Int end)
+    {
+        end = CellTo120Dig(end);
+        start = CellTo120Dig(start);
+        Vector3 tmp = end - start;
+        tmp = tmp / tmp.magnitude;
+
+        //tmp = new Vector3(Mathf.Round(tmp.x), Mathf.Round(tmp.y));
+
+        return tmp;
+    }
+    //求方向，但是整数六向
+    public static int HexDirectionInt(Vector3Int start, Vector3Int end)
+    {
+        
+        int dir = 0;
+        Vector3 Hdir = HexDirection(start, end);
+        if (Hdir.x == float.NaN || Hdir.y == float.NaN) return 0;
+
+        if (Hdir.x >= 0 && Hdir.y < 0)
+        {
+            dir = 1;
+        }
+        else if (Hdir.x > 0 && Hdir.x > Hdir.y)
+        {
+            dir = 2;
+        }
+        else if (Hdir.x > 0 && Hdir.x <= Hdir.y)
+        {
+            dir = 3;
+        }
+        else if (Hdir.x <= 0 && Hdir.y > 0)
+        {
+            dir = 4;
+        }
+        else if (Hdir.x <= 0 && Hdir.x < Hdir.y)
+        {
+            dir = 5;
+        }
+        else if (Hdir.x < 0 && Hdir.x >= Hdir.y)
+        {
+            dir = 6;
+        }
+
+        return dir;
+
+    }
+    //求方向，但是在坐标轴
+    public static int HexDirectionAxis(Vector3Int start, Vector3Int end)
+    {
+
+        int dir;
+        Vector3 Hdir = HexDirection(start, end);
+        if (Hdir.x == float.NaN || Hdir.y == float.NaN) return 0;
+
+        if (Hdir.x == 0 && Hdir.y < 0)
+        {
+            dir = 1;
+        }
+        else if (Hdir.x > 0 && Hdir.y == 0)
+        {
+            dir = 2;
+        }
+        else if (Hdir.x > 0 && Hdir.x == Hdir.y)
+        {
+            dir = 3;
+        }
+        else if (Hdir.x == 0 && Hdir.y > 0)
+        {
+            dir = 4;
+        }
+        else if (Hdir.x < 0 && Hdir.y == 0)
+        {
+            dir = 5;
+        }
+        else if (Hdir.x < 0 && Hdir.x == Hdir.y)
+        {
+            dir = 6;
+        }
+        else dir = 7;
+
+        return dir;
+
     }
 }
 

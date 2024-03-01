@@ -75,7 +75,13 @@ public class UIModBattle : MonoBehaviour , IUIHandler
 
     public void OnPositionSelect(Vector3Int Pos)
     {
-        if (FixGameData.FGD.MoveAreaMap.GetTile(Pos) == null) ModBattle.CommitAttack(currentAttack, Pos);
+        if (FixGameData.FGD.MoveAreaMap.GetTile(Pos) == null &&
+            FixGameData.FGD.AttackAreaMap.GetTile(Pos) != null)
+        {
+            ModBattle.CommitAttack(currentAttack, Pos);
+            GameManager.GM.currentPiece.SpecialActPoint--;
+            if (GameManager.GM.currentPiece.SpecialActPoint == 0) StopPosSelect();
+        }
     }
 
     public void UpdateShow()
@@ -140,7 +146,7 @@ public class UIModBattle : MonoBehaviour , IUIHandler
             
             if (tarP.getPieceData().canFixMod)
             {
-                Map.SetArea(tarP.piecePosition, tarP.getPieceData().passiveArea, FixGameData.FGD.MoveZocArea,false);
+                Map.SetArea(tarP.piecePosition, tarP.getPieceData().passiveArea,FixGameData.FGD.MoveAreaMap, FixSystemData.GlobalZoneList["ZOC"].Top,false);
                 //Map.SetArea(tarP.piecePosition, tarP.getPieceData().passiveArea);
             }
         }
@@ -164,7 +170,8 @@ public class UIModBattle : MonoBehaviour , IUIHandler
         FixGameData.FGD.uiIndex.HintUI.gameObject.SetActive(true);
         FixGameData.FGD.uiIndex.HintUI.SetText("ÇëÑ¡Ôñ´ò»÷Î»ÖÃ");
         needListenPieceData = true;
-        
+
+        ModBattle.PrepareAttack(name);
 
         GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
         GameManager.GM.CanMachineStateChange = false;
@@ -176,6 +183,7 @@ public class UIModBattle : MonoBehaviour , IUIHandler
         PosSelectView.SetActive(false);
         needListenPieceData = false;
         FixGameData.FGD.uiIndex.HintUI.gameObject.SetActive(false);
+        FixGameData.FGD.AttackAreaMap.ClearAllTiles();
 
         GameManager.GM.CanMachineStateChange = true;
         GameManager.GM.SetMachineState(MachineState.FocusOnPiece);

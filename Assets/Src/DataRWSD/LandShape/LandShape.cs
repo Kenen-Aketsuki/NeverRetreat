@@ -161,6 +161,19 @@ public class LandShape
         }
     }
 
+    public Tile GetSideTile(int dir)
+    {
+        Debug.Log(dir);
+
+        switch (dir)
+        {
+            case 1:return Left;
+            case 2: return Top;
+            case 3: return Right;
+            default:return null;
+        }
+    }
+
     public Dictionary<FixData, Tuple<FixWay, float>> getGerenalAdj()
     {
         return Adjust;

@@ -83,10 +83,6 @@ public class SelfCatchScroll : MonoBehaviour
     public void UpdateCellChilds(List<GameObject> Datas,List<LandShape> basicTerrain)
     {
         //清空记录
-        //for (int i = 0; i < ContentPannel.childCount; i++)
-        //{
-        //    GameObject.Destroy(ContentPannel.GetChild(i).gameObject);
-        //}
         ClearCells();
         ContentPannel.localPosition = new Vector3(
                 ContentPannel.localPosition.x,
@@ -94,22 +90,14 @@ public class SelfCatchScroll : MonoBehaviour
                 ContentPannel.localPosition.z);
         currentItem = 0;
 
+        //清空选择的棋子
+        GameManager.GM.currentPiece = null;
+
         //放置地块
         GameObject newPiece = GameObject.Instantiate(Item.gameObject, ContentPannel);
         newPiece.name = "基础地形信息";
         UIPieceDataCell ps = newPiece.GetComponent<UIPieceDataCell>();
         ps.SetData(null, basicTerrain[0], null);
-
-        //GameObject newPiece;
-        //UIPieceDataCell ps;
-        //foreach (LandShape shp in basicTerrain)
-        //{
-        //    if (shp == null) continue;
-        //    newPiece = Object.Instantiate(Item.gameObject, ContentPannel);
-        //    newPiece.name = shp.id;
-        //    ps = newPiece.GetComponent<UIPieceDataCell>();
-        //    ps.SetData(null, shp,null);
-        //}
 
         FacilityDataCell dataCell = null;
         //放置设施
@@ -137,6 +125,7 @@ public class SelfCatchScroll : MonoBehaviour
 
 
         //放置棋子
+        Datas.Reverse();
         pieceList = Datas.ToDictionary(x => x.name, x=>x);
         foreach (GameObject Data in Datas)
         {
@@ -168,7 +157,7 @@ public class SelfCatchScroll : MonoBehaviour
 
     void SelectPiece()
     {
-        GameManager.GM.currentPiece = null;
+        //GameManager.GM.currentPiece = null;
         //Debug.Log(ContentPannel.childCount - currentItem - 1 + " — " + ContentPannel.childCount);
         UIPieceDataCell tar = ContentPannel.GetChild(ContentPannel.childCount - currentItem - 1).gameObject.GetComponent<UIPieceDataCell>();
         //UIPieceDataCell tar = ContentPannel.GetChild(0).gameObject.GetComponent<UIPieceDataCell>();
@@ -177,6 +166,7 @@ public class SelfCatchScroll : MonoBehaviour
         if (tar.Data != null && tar.Data.LoyalTo == GameManager.GM.ActionSide)
         {
             if (GameManager.GM.currentPiece != null) GameManager.GM.currentPiece.gameObject.SetActive(false);
+            //foreach (KeyValuePair<string, GameObject> par in pieceList) par.Value.SetActive(false);
 
             GameManager.GM.currentPiece = pieceList[tar.name].GetComponent<OB_Piece>();
             GameManager.GM.currentPiece.gameObject.SetActive(true);
@@ -194,7 +184,9 @@ public class SelfCatchScroll : MonoBehaviour
         else if(tar.Data != null && tar.Data.LoyalTo != GameManager.GM.ActionSide)
         {
             SetPieceTextShow(pieceList[tar.name].GetComponent<OB_Piece>().getPieceData());
-            
+
+            GameManager.GM.currentPiece = null;
+
             (FixGameData.FGD.uiManager.actUI as IUIHandler).OnPieceSelect(false);
         }
         else
@@ -202,12 +194,24 @@ public class SelfCatchScroll : MonoBehaviour
             TerrainDataPannel.gameObject.SetActive(true);
             PieceDataPannel.gameObject.SetActive(false);
 
-            
+            GameManager.GM.currentPiece = null;
 
             (FixGameData.FGD.uiManager.actUI as IUIHandler).OnTerrainSelect(SetTerrainTextShow(tar));
 
             
             GameManager.GM.SetMachineState(MachineState.FocusOnTerrain);
+        }
+    }
+
+    public void SelectPieceWithoutFocus()
+    {
+        int i = 0;
+        List<GameObject> lst = GameManager.GM.ActionPool.getChildByPos(GameManager.GM.currentPosition);
+
+        foreach(var piece in pieceList)
+        {
+            Debug.Log(piece.Key + " - " + lst[i].name);
+            i++;
         }
     }
 
@@ -295,4 +299,6 @@ public class SelfCatchScroll : MonoBehaviour
 
         return isFac;
     }
+
+    
 }
