@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using Unity.MLAgentsExamples;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
@@ -150,8 +151,8 @@ public class ModBattle
         {
             //主方向
             tmpT = Map.GetSideAddr(area.Positian, mainDir);
-            FacilityDataCell tmp = new FacilityDataCell("Firewall", tmpT.Item2, mainDir, 2, true, false);
-            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmp.Positian, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+            FacilityDataCell tmp = new FacilityDataCell("Firewall", tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
             int addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "Firewall" && x.Positian == tmp.Positian && x.dir == mainDir);
             if (addr == -1)
             {
@@ -166,8 +167,8 @@ public class ModBattle
 
             //主方向加一
             tmpT = Map.GetSideAddr(area.Positian, mainDir2);
-            tmp = new FacilityDataCell("Firewall", tmpT.Item2, mainDir2, 2, true, false);
-            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmp.Positian, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+            tmp = new FacilityDataCell("Firewall", tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
             addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "Firewall" && x.Positian == tmp.Positian && x.dir == mainDir2);
             if (addr == -1)
             {
@@ -181,13 +182,13 @@ public class ModBattle
             }
         }
 
-        return;
+        //副方向
         foreach (CellInfo area in Area2)
         {
             //主方向
             tmpT = Map.GetSideAddr(area.Positian, mainDir);
-            FacilityDataCell tmp = new FacilityDataCell("Firewall", tmpT.Item2, mainDir, 2, true, false);
-            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmp.Positian, tmp.Data.Item2.GetSideTile(mainDir));
+            FacilityDataCell tmp = new FacilityDataCell("Firewall", tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
             int addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "Firewall" && x.Positian == tmp.Positian && x.dir == mainDir);
             if (addr == -1)
             {
@@ -202,8 +203,8 @@ public class ModBattle
 
             //副方向
             tmpT = Map.GetSideAddr(area.Positian, subDir);
-            tmp = new FacilityDataCell("Firewall", tmpT.Item2, subDir, 2, true, false);
-            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmp.Positian, tmp.Data.Item2.GetSideTile(subDir));
+            tmp = new FacilityDataCell("Firewall", tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
             addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "Firewall" && x.Positian == tmp.Positian && x.dir == subDir);
             if (addr == -1)
             {
@@ -217,5 +218,20 @@ public class ModBattle
             }
         }
 
+        //补全
+        tmpT = Map.GetSideAddr(Pos, subDir);
+        FacilityDataCell tmpFac = new FacilityDataCell("Firewall", tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+        FixGameData.FGD.MapList[11 + tmpT.Item1].SetTile(tmpT.Item2, tmpFac.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+        int addrS = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == "Firewall" && x.Positian == tmpFac.Positian && x.dir == mainDir);
+        if (addrS == -1)
+        {
+            //加入
+            FixGameData.FGD.SpecialTerrainList.Add(tmpFac);
+        }
+        else
+        {
+            //刷新
+            FixGameData.FGD.SpecialTerrainList[addrS] = tmpFac;
+        }
     }
 }

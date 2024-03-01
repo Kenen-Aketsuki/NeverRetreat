@@ -63,15 +63,18 @@ public static class Map
                 map = 2;
                 break;
             case 4:
-                endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y + 1, Pos.z);
+                //endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y + 1, Pos.z);
+                endPos = GetRoundSlotPos(Pos, 4);
                 map = 0;
                 break;
             case 5:
-                endPos = new Vector3Int(Pos.x - 1, Pos.y, Pos.z);
+                //endPos = new Vector3Int(Pos.x - 1, Pos.y, Pos.z);
+                endPos = GetRoundSlotPos(Pos, 5);
                 map = 1;
                 break;
             case 6:
-                endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y - 1, Pos.z);
+                //endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y - 1, Pos.z);
+                endPos = GetRoundSlotPos(Pos, 6);
                 map = 2;
                 break;
             default:
