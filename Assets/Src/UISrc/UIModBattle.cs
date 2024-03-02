@@ -86,8 +86,17 @@ public class UIModBattle : MonoBehaviour , IUIHandler
 
     public void UpdateShow()
     {
-        PieceSet.transform.GetChild(0).gameObject.SetActive(GameManager.GM.currentPiece.canMove);
-        PieceSet.transform.GetChild(1).gameObject.SetActive(GameManager.GM.currentPiece.ActionPoint > 0);
+        if(GameManager.GM.currentPiece != null)
+        {
+            PieceSet.transform.GetChild(0).gameObject.SetActive(GameManager.GM.currentPiece.canMove);
+            PieceSet.transform.GetChild(1).gameObject.SetActive(GameManager.GM.currentPiece.ActionPoint > 0);
+        }
+        else
+        {
+            PieceSet.transform.GetChild(0).gameObject.SetActive(false);
+            PieceSet.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        
         if(nowActive != null)
         {
             nowActive.SetActive(false);

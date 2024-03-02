@@ -62,6 +62,7 @@ public class Piece
     public string ConnectStr { get { return ConnectState == 0 ? "<color=#01FF00> 正常" : ConnectState == 1 ? "<color=#ECFF00> 断补" : "<color=#FF0000> 孤立"; } }
     public string SupplyStr { get { return SupplyState == 0 ? "<color=#01FF00> 正常" : "<color=#FF0000> 断补</color>"; } }
     public string HealthStr { get { return !inCasualty ? "<color=#01FF00> 正常" : "<color=#FF0000> 减员</color>"; } }
+    
     int Stability = 0;//判定是否为“正常”-“瘫痪”-“失能”
     int ConnectState = 0;//判定是否为 正常 - 失联 - 孤立
     int SupplyState = 0;//判定是否为 正常 - 断补
@@ -265,6 +266,8 @@ public class Piece
         if (inCasualty) restMOV = cMaxMOV;
         else restMOV = nMaxMOV;
     }
+
+    public int GetStability() { return Stability; }
 }
 
 

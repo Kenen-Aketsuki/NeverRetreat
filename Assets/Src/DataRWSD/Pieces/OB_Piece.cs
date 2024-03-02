@@ -188,6 +188,9 @@ public class OB_Piece : MonoBehaviour
 
         Destroy(Pse);
         Map.UpdateCrashBindwith();
+
+        //更新ZOC
+        Map.UpdateZOC();
     }
     //回血
     public bool Recover()
@@ -231,6 +234,8 @@ public class OB_Piece : MonoBehaviour
             transform.SetParent(FixGameData.FGD.CrashPieceParent);
         }
         UpdateData();
+        //更新ZOC
+        Map.UpdateZOC();
     }
 
     //准备移动

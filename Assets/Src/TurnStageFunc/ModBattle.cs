@@ -12,7 +12,6 @@ public class ModBattle
     
     public static void CommitAttack(string nam,Vector3Int Pos)
     {
-        Debug.Log(nam);
 
         switch (nam)
         {
@@ -26,19 +25,19 @@ public class ModBattle
                 CommitModEase(Pos);
                 break;
             case "DataOverLoad":
-                // 当status等于"DataOverLoad"时执行的代码  
+                CommitDataOverLoad(Pos);
                 break;
             case "AttackPatch":
-                // 当status等于"AttackPatch"时执行的代码  
+                CommitAttackPatch(Pos);
                 break;
             case "FireWall":
                 CommitFireWall(Pos);
                 break;
             case "DefencePatch":
-                // 当status等于"DefencePatch"时执行的代码  
+                CommitDefencePatch(Pos);
                 break;
             default:
-                // 当status不是上述任何一个值时执行的默认代码  
+                Debug.Log("未知技能:" + nam);
                 break;
         }
     }
@@ -232,6 +231,51 @@ public class ModBattle
         {
             //刷新
             FixGameData.FGD.SpecialTerrainList[addrS] = tmpFac;
+        }
+    }
+
+    static void CommitDataOverLoad(Vector3Int Pos)
+    {
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(Pos, 1);
+        foreach (CellInfo Cell in Area)
+        {
+            if (FixGameData.FGD.MoveAreaMap.GetTile(Cell.Positian) != null) continue;
+            
+            List<GameObject> tmp = GameManager.GM.EnemyPool.getChildByPos(Cell.Positian);
+            foreach (GameObject pic in tmp)
+            {
+                pic.GetComponent<OB_Piece>().TakeUnstable(2);
+            }
+        }
+    }
+
+    static void CommitAttackPatch(Vector3Int Pos)
+    {
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(Pos, 1);
+        foreach (CellInfo Cell in Area)
+        {
+            if (FixGameData.FGD.MoveAreaMap.GetTile(Cell.Positian) != null) continue;
+
+            List<GameObject> tmp = GameManager.GM.EnemyPool.getChildByPos(Cell.Positian);
+            foreach (GameObject pic in tmp)
+            {
+                pic.GetComponent<OB_Piece>().TakeDemage(pic.GetComponent<OB_Piece>().getPieceData().GetStability());
+            }
+        }
+    }
+
+    static void CommitDefencePatch(Vector3Int Pos)
+    {
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(Pos, 1);
+        foreach (CellInfo Cell in Area)
+        {
+            if (FixGameData.FGD.MoveAreaMap.GetTile(Cell.Positian) != null) continue;
+
+            List<GameObject> tmp = GameManager.GM.ActionPool.getChildByPos(Cell.Positian);
+            foreach (GameObject pic in tmp)
+            {
+                pic.GetComponent<OB_Piece>().RecoverStable(2);
+            }
         }
     }
 }
