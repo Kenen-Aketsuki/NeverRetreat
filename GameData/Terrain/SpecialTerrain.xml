@@ -43,7 +43,7 @@
                 <adjust target="RRK" way="ADD" number="-3" />
                 <adjust target="STK" way="ADD" number="-1" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
         </Data>
     </Terrain>
 
@@ -82,7 +82,7 @@
             <battleAdjust>
                 <adjust target="NA" way="NOPE" number="0" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
         </Data>
     </Terrain>
 
@@ -94,7 +94,7 @@
                 <adjust target="MOV" way="ALL" number="0" />
                 <adjust target="RRK" way="ADD" number="-2" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
         </Data>
     </Terrain>
 
@@ -106,7 +106,7 @@
             <battleAdjust target="Enemy">
                 <adjust target="HP" way="ADD" number="-1" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
             <canZoc>False</canZoc>
         </Data>
     </Terrain>
@@ -118,7 +118,7 @@
             <battleAdjust>
                 <adjust target="MOV" way="ALL" number="0" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
             <canZoc>False</canZoc>
         </Data>
     </Terrain>

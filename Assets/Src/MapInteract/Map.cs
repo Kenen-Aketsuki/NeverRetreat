@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 public static class Map
 {
@@ -257,6 +260,22 @@ public static class Map
 
         return height;
     }
+    //获取目标高度用于火力打击
+    public static int GetCellHeightForStrick(Vector3Int Pos,int Dir)
+    {
+        int Height = -1;
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+
+        for (int i = 0; i < Lands.Count; i++)
+        {
+            LandShape Land = Lands[i];
+            if (Land == null) continue;
+
+            if(Land.height >=0) Height = Land.height;
+        }
+        return Height;
+    }
+
     //获取目标方向的攻击力(带修正)
     public static float GetTargetATK(Vector3Int Pos,int Dir,ArmyBelong ActionSide, float BaseATK)
     {
@@ -338,19 +357,9 @@ public static class Map
     public static void UpdateZOC()
     {
         FixGameData.FGD.ZOCMap.ClearAllTiles();
+        FixGameData.FGD.FriendZOCMap.ClearAllTiles();
 
-        ArmyBelong EnemySide = (ArmyBelong)(((int)GameManager.GM.ActionSide + 1) % 2);
-        PiecePool EnemyPool;
-        if(EnemySide == ArmyBelong.Human)
-        {
-            EnemyPool = FixGameData.FGD.HumanPiecePool;
-        }
-        else
-        {
-            EnemyPool = FixGameData.FGD.CrashPiecePool;;
-        }
-
-        foreach(Tuple<string,int,int> piece in EnemyPool.childList)
+        foreach(Tuple<string,int,int> piece in GameManager.GM.EnemyPool.childList)
         {
             Vector3Int pos = new Vector3Int(piece.Item2, piece.Item3, 0);
             FixGameData.FGD.ZOCMap.SetTile(pos, FixSystemData.GlobalZoneList["ZOC"].Top);
@@ -365,6 +374,20 @@ public static class Map
             }
         }
 
+        foreach (Tuple<string, int, int> piece in GameManager.GM.ActionPool.childList)
+        {
+            Vector3Int pos = new Vector3Int(piece.Item2, piece.Item3, 0);
+            FixGameData.FGD.FriendZOCMap.SetTile(pos, FixSystemData.GlobalZoneList["ZOC"].Top);
+
+            for (int i = 1; i < 7; i++)
+            {
+                Vector3Int tmp = GetRoundSlotPos(pos, i);
+                if (FixGameData.FGD.ZoneMap.GetTile(tmp) != null || !canSetZoc(pos, i)) continue;
+                FixGameData.FGD.FriendZOCMap.SetTile(
+                    tmp,
+                    FixSystemData.GlobalZoneList["ZOC"].Top);
+            }
+        }
     }
     //刷新移动区
     public static void UpdateMoveArea()
@@ -685,11 +708,38 @@ public static class Map
 
         return Area;
     }
+
+    //获取线区域
+    public static List<CellInfo> LineSerch(Vector3Int Start,Vector3Int End)
+    {
+        float Dis = HexDistence(Start, End);
+        Func<float, float, float, float> lerp = (x1, x2, pointNo) =>
+        {
+            float t = pointNo / Dis;
+            return x1 + (x2 - x1) * t;
+        };
+        List<CellInfo> Path = new List<CellInfo>();//路径
+        Vector3 sta = FixGameData.FGD.InteractMap.CellToWorld(Start);
+        Vector3 ed = FixGameData.FGD.InteractMap.CellToWorld(End);
+        Vector3Int LastPos = Start;
+        for (int i = 0; i <= Dis; i++)
+        {
+            Vector3Int tmpPos = FixGameData.FGD.InteractMap.WorldToCell(new Vector3(lerp(sta.x, ed.x, i), lerp(sta.y, ed.y, i)));
+
+            //Vector3Int tmpPos = new Vector3Int(lerp(Start.x, End.x, i), lerp(Start.y, End.y, i));
+            Path.Add(new CellInfo(tmpPos, LastPos,false));
+            LastPos = tmpPos;
+        }
+
+        return Path;
+    }
+
+
     //类直角到120度极坐标转换
     public static Vector3Int CellTo120Dig(Vector3Int pos)
     {
-        int x = pos.x + (pos.y - (pos.y < 0 ? 1 : 0)) / 2 - (Math.Abs(pos.y) + 1) % 2;
-        int y = pos.y;
+        int x = pos.y;
+        int y = pos.x + (pos.y - (pos.y < 0 ? 1 : 0)) / 2 - (Math.Abs(pos.y) + 1) % 2; 
 
         return new Vector3Int(x + 1, y, pos.z);
     }
@@ -713,78 +763,111 @@ public static class Map
 
         return tmp;
     }
-    //求方向，但是整数六向
-    public static int HexDirectionInt(Vector3Int start, Vector3Int end)
-    {
+    ////求方向，但是整数六向
+    //public static int HexDirectionInt(Vector3Int start, Vector3Int end)
+    //{
         
+    //    int dir = 0;
+    //    Vector3 Hdir = HexDirection(start, end);
+    //    if (Hdir.x == float.NaN || Hdir.y == float.NaN) return 0;
+
+    //    if (Hdir.x >= 0 && Hdir.y < 0)
+    //    {
+    //        dir = 1;
+    //    }
+    //    else if (Hdir.x > 0 && Hdir.x > Hdir.y)
+    //    {
+    //        dir = 2;
+    //    }
+    //    else if (Hdir.x > 0 && Hdir.x <= Hdir.y)
+    //    {
+    //        dir = 3;
+    //    }
+    //    else if (Hdir.x <= 0 && Hdir.y > 0)
+    //    {
+    //        dir = 4;
+    //    }
+    //    else if (Hdir.x <= 0 && Hdir.x < Hdir.y)
+    //    {
+    //        dir = 5;
+    //    }
+    //    else if (Hdir.x < 0 && Hdir.x >= Hdir.y)
+    //    {
+    //        dir = 6;
+    //    }
+
+    //    return dir;
+
+    //}
+    ////求方向，但是在坐标轴
+    //public static int HexDirectionAxis(Vector3Int start, Vector3Int end)
+    //{
+
+    //    int dir;
+    //    Vector3 Hdir = HexDirection(start, end);
+    //    if (Hdir.x == float.NaN || Hdir.y == float.NaN) return 0;
+
+    //    if (Hdir.x == 0 && Hdir.y < 0)
+    //    {
+    //        dir = 1;
+    //    }
+    //    else if (Hdir.x > 0 && Hdir.y == 0)
+    //    {
+    //        dir = 2;
+    //    }
+    //    else if (Hdir.x > 0 && Hdir.x == Hdir.y)
+    //    {
+    //        dir = 3;
+    //    }
+    //    else if (Hdir.x == 0 && Hdir.y > 0)
+    //    {
+    //        dir = 4;
+    //    }
+    //    else if (Hdir.x < 0 && Hdir.y == 0)
+    //    {
+    //        dir = 5;
+    //    }
+    //    else if (Hdir.x < 0 && Hdir.x == Hdir.y)
+    //    {
+    //        dir = 6;
+    //    }
+    //    else dir = 7;
+
+    //    return dir;
+
+    //}
+    
+    //求方向，但是整数六向
+    public static int HexDirectionInt(Vector3Int start,Vector3Int end)
+    {
         int dir = 0;
         Vector3 Hdir = HexDirection(start, end);
-        if (Hdir.x == float.NaN || Hdir.y == float.NaN) return 0;
 
-        if (Hdir.x >= 0 && Hdir.y < 0)
-        {
-            dir = 1;
-        }
-        else if (Hdir.x > 0 && Hdir.x > Hdir.y)
-        {
-            dir = 2;
-        }
-        else if (Hdir.x > 0 && Hdir.x <= Hdir.y)
-        {
-            dir = 3;
-        }
-        else if (Hdir.x <= 0 && Hdir.y > 0)
-        {
-            dir = 4;
-        }
-        else if (Hdir.x <= 0 && Hdir.x < Hdir.y)
-        {
-            dir = 5;
-        }
-        else if (Hdir.x < 0 && Hdir.x >= Hdir.y)
-        {
-            dir = 6;
-        }
+        if (Hdir.x < 0 && Hdir.y >= 0) dir = 1;
+        else if (Hdir.x >= 0 && Hdir.x < Hdir.y) dir = 2;
+        else if (Hdir.y > 0 && Hdir.y <= Hdir.x) dir = 3;
+        else if (Hdir.x > 0 && Hdir.y <= 0) dir = 4;
+        else if (Hdir.y < Hdir.x && Hdir.x <= 0) dir = 5;
+        else if (Hdir.x <= Hdir.y && Hdir.y < 0) dir = 6;
 
         return dir;
-
     }
     //求方向，但是在坐标轴
     public static int HexDirectionAxis(Vector3Int start, Vector3Int end)
     {
-
         int dir;
         Vector3 Hdir = HexDirection(start, end);
-        if (Hdir.x == float.NaN || Hdir.y == float.NaN) return 0;
 
-        if (Hdir.x == 0 && Hdir.y < 0)
-        {
-            dir = 1;
-        }
-        else if (Hdir.x > 0 && Hdir.y == 0)
-        {
-            dir = 2;
-        }
-        else if (Hdir.x > 0 && Hdir.x == Hdir.y)
-        {
-            dir = 3;
-        }
-        else if (Hdir.x == 0 && Hdir.y > 0)
-        {
-            dir = 4;
-        }
-        else if (Hdir.x < 0 && Hdir.y == 0)
-        {
-            dir = 5;
-        }
-        else if (Hdir.x < 0 && Hdir.x == Hdir.y)
-        {
-            dir = 6;
-        }
+        if (Hdir.x == float.NaN || Hdir.y == float.NaN) dir = 0;
+        else if (Hdir.x == -1 && Hdir.y == 0) dir = 1;
+        else if (Hdir.x == 0 && Hdir.y == 1) dir = 2;
+        else if (Hdir.y == Hdir.x && Hdir.x > 0) dir = 3;
+        else if (Hdir.x == 1 && Hdir.y == 0) dir = 4;
+        else if (Hdir.y == -1 && Hdir.x == 0) dir = 5;
+        else if (Hdir.x == Hdir.y && Hdir.y < 0) dir = 6;
         else dir = 7;
 
         return dir;
-
     }
 }
 
@@ -850,6 +933,13 @@ public class CellInfo
         Vector3Int fm = Map.CellTo120Dig(Pos);
         Vector3Int ed = Map.CellTo120Dig(Start);
         distance = Math.Max(Math.Max(Math.Abs(fm.x - ed.x), Math.Abs(fm.y - ed.y)), Math.Abs(fm.y - ed.y - fm.x + ed.x));
+    }
+
+    public CellInfo(Vector3Int Pos,Vector3Int from,bool none)
+    {
+        Positian = Pos;
+
+        fromDir = (Map.HexDirectionAxis(from, Pos) + 2) % 6 + 1;
     }
 
     public void setMove(float mov)

@@ -105,6 +105,9 @@ public class GameManager : MonoBehaviour
         Map.UpdateCrashBindwith();
         Map.UpdateZOC();
         FixGameData.FGD.uiIndex.turnData.UpdateInfo();
+        FixGameData.FGD.AttackAreaMap.ClearAllTiles();
+        FixGameData.FGD.MoveAreaMap.ClearAllTiles();
+
         switch (Stage)
         {
             case 0:
@@ -118,6 +121,9 @@ public class GameManager : MonoBehaviour
                 break;
             case TurnStage.ModBattle:
                 ModeBattleStageStart();
+                break;
+            case TurnStage.Action:
+                ActionStageStart();
                 break;
         }
 
@@ -139,6 +145,9 @@ public class GameManager : MonoBehaviour
                 break;
             case TurnStage.ModBattle:
                 ModeBattleStageEnd(NextTurn);
+                break;
+            case TurnStage.Action:
+                ActionStageEnd();
                 break;
 
         }
@@ -254,6 +263,19 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region//行动阶段
+    void ActionStageStart()
+    {
+        FixGameData.FGD.uiIndex.ActionUISet.SetActive(true);
+    }
+
+    void ActionStageEnd()
+    {
+        FixGameData.FGD.uiIndex.ActionUISet.SetActive(false);
+    }
+
+    #endregion
 }
 
 //有限状态机状态
@@ -267,6 +289,7 @@ public enum MachineState
     FocusOnPiece,
     FocusOnTerrain,
     WaitMoveTarget,
+    WaitForceMoveTarget,
     ActiveSpecialFac,
     RecoverTroop,
     SelectEventPosition,

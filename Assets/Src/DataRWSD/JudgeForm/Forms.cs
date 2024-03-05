@@ -123,7 +123,7 @@ public class FireRankForm : Form
         int move;
         //计算偏移量
         if(dis  < 10) move = dis - 1;
-        else move = (int)Math.Floor((double)(dis / 2)) + 5;
+        else move = (int)Math.Floor((double)(dis / 2)) + 4;
 
         //判定偏移量是否越界，并返回火力值
         if(move >= getFromColumIndex(id).Item3)

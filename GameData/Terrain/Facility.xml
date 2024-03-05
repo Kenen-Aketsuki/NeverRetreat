@@ -103,7 +103,7 @@
             <battleAdjust>
                 <adjust target="MOV" way="ADD" number="1" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
         </Data>
     </Terrain>
     
@@ -126,7 +126,7 @@
             <battleAdjust target="All">
                 <adjust target="HP" way="ADD" number="-2" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
             
         </Data>
     </Terrain>
@@ -138,7 +138,7 @@
             <battleAdjust target="Enemy">
                 <adjust target="HP" way="ADD" number="-1" />
             </battleAdjust>
-            <height>0</height>
+            <height>-1</height>
         </Data>
     </Terrain>
 
