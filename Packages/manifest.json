@@ -8,8 +8,6 @@
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.inputsystem": "1.7.0",
     "com.unity.localization": "1.4.4",
-    "com.unity.ml-agents": "file:../AI/ml-agents-release_19/com.unity.ml-agents",
-    "com.unity.ml-agents.extensions": "file:../AI/ml-agents-release_19/com.unity.ml-agents.extensions",
     "com.unity.test-framework": "1.1.33",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.7.6",
