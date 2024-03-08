@@ -557,4 +557,9 @@ public class ActionStage
             }
         }
     }
+
+    public static void Spell_ChannelBlocking(Vector3Int Pos)
+    {
+
+    }
 }
