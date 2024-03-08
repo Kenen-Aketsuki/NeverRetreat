@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.PlayerSettings;
 
 public class MapInter : MonoBehaviour
 {
@@ -140,13 +141,7 @@ public class MapInter : MonoBehaviour
             case MachineState.TestOnly:
                 //仅测试用
 
-                FixGameData.FGD.AttackAreaMap.ClearAllTiles();
-                List<CellInfo> Line = Map.LineSerch(GameManager.GM.currentPosition, MousePos);
-                foreach (CellInfo cell in Line)
-                {
-                    FixGameData.FGD.AttackAreaMap.SetTile(cell.Positian, FixGameData.FGD.MoveZocArea);
-                    Debug.Log("此处高度: " + Map.GetCellHeightForStrick(cell.Positian, cell.fromDir));
-                }
+                ActionStage.Spell_ReverseEngineering(MousePos);
 
                 ActionStage.canHit(MousePos);
                 //for(int i = 1; i < 7; i++)

@@ -134,7 +134,7 @@ public class OB_Piece : MonoBehaviour
     {
         //自检
         //检查补给与通信情况
-        CheckSupplyConnect();
+        //CheckSupplyConnect();
 
         //更新文本
         PieceText.InitText(gameObject.name, Data);
@@ -285,7 +285,8 @@ public class OB_Piece : MonoBehaviour
         UpdateData();
 
     }
-    //检查联络与补给
+    
+    //检查联络与补给，在回合末进行
     public void CheckSupplyConnect()
     {
         bool Connect = true;//默认未失联
@@ -352,7 +353,8 @@ public class OB_Piece : MonoBehaviour
 
         Path = null;
         //寻路
-        Path = Map.AStarPathSerch(piecePosition, Target, 100);
+        //Path = Map.AStarPathSerch(piecePosition, Target, 100);
+        Path = Map.LineSerch(piecePosition, Target);
         if (Path != null)
         {
             PathCount = 0;

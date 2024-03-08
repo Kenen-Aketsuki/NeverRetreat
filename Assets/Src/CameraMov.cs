@@ -53,7 +53,7 @@ public class CameraMov : MonoBehaviour
         }
         #endregion
 
-        if (Input.GetKeyDown(KeyCode.Z)) FixGameData.FGD.ZOCMap.gameObject.SetActive(!FixGameData.FGD.ZOCMap.gameObject.activeInHierarchy);
+        if (Input.GetKeyDown(KeyCode.Z)) FixGameData.FGD.EnemyZOCMap.gameObject.SetActive(!FixGameData.FGD.ZOCMap.gameObject.activeInHierarchy);
 
         if (EventSystem.current.IsPointerOverGameObject() || Input.GetKey(KeyCode.Mouse1)) return;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE TerrainData SYSTEM "TerrainData.dtd">
 <TerrainData>
-    <Terrain Type="SpecialTerrain" id="Ice">
+    <Terrain Type="SpecialTerrain" id="Ice" belone="Human">
         <name>冰层</name>
         <Data>
             <enterCost>1</enterCost>
@@ -12,7 +12,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="IceRiver" atSide="True">
+    <Terrain Type="SpecialTerrain" id="IceRiver" atSide="True" belone="Human">
         <name>冰河</name>
         <Data>
             <enterCost>0</enterCost>
@@ -23,7 +23,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="FrozenZone">
+    <Terrain Type="SpecialTerrain" id="FrozenZone" belone="Human">
         <name>冰刺区</name>
         <Data>
             <enterCost>2</enterCost>
@@ -35,7 +35,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="SpecialTerrain" id="FlameZone">
+    <Terrain Type="SpecialTerrain" id="FlameZone" belone="Human">
         <name>烈焰区</name>
         <Data>
             <enterCost>0</enterCost>

@@ -163,8 +163,6 @@ public class LandShape
 
     public Tile GetSideTile(int dir)
     {
-        Debug.Log(dir);
-
         switch (dir)
         {
             case 1:return Left;

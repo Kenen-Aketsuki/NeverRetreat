@@ -39,7 +39,11 @@ public class FixGameData : MonoBehaviour
     //堆叠标志
     public Tilemap MultiPieceMap;
     //控制区
-    public Tilemap ZOCMap;
+    public Tilemap ZOCMap { get {
+            if (GameManager.GM.currentPiece == null) return EnemyZOCMap;
+            return GameManager.GM.currentPiece.getPieceData().LoyalTo == GameManager.GM.ActionSide ? EnemyZOCMap : FriendZOCMap;
+        } }
+    public Tilemap EnemyZOCMap;
     public Tilemap FriendZOCMap;
     //移动范围地图
     public Tilemap MoveAreaMap;

@@ -16,12 +16,17 @@ public class UIActionStage : MonoBehaviour , IUIHandler
     GameObject TerrainPannel;
     [SerializeField]
     GameObject PosSelectView;
+    [SerializeField]
+    GameObject SpellList;
+
 
     GameObject currentActive;
 
     string waitPosTar;
+    string currentSpell;
 
     bool needListen = false;
+    bool needCloseSpellList = false;
 
     // Update is called once per frame
     public void Update()
@@ -76,7 +81,10 @@ public class UIActionStage : MonoBehaviour , IUIHandler
                 break;
             case "Strick":
                 if(ActionStage.CommitFireStrick(Pos)) GameManager.GM.currentPiece.SpecialActPoint -= 2;
-                if (GameManager.GM.currentPiece.SpecialActPoint <= 0) StopPosSelect();
+                if(GameManager.GM.currentPiece.SpecialActPoint <= 0) StopPosSelect();
+                break;
+            case "Spell":
+                if (FixGameData.FGD.AttackAreaMap.GetTile(Pos) != null) ActionStage.CastSpell(currentSpell, Pos);
                 break;
         }
         //waitPosTar = "";
@@ -159,15 +167,70 @@ public class UIActionStage : MonoBehaviour , IUIHandler
         GameManager.GM.CanMachineStateChange = false;
     }
 
+    public void CastSpell()
+    {
+        currentActive.SetActive(false);
+        SpellList.SetActive(true);
+        needCloseSpellList = true;
+        if (GameManager.GM.ActionSide == ArmyBelong.Human)
+        {
+            SpellList.transform.GetChild(1).gameObject.SetActive(true);
+            SpellList.transform.GetChild(2).gameObject.SetActive(true);
+            SpellList.transform.GetChild(3).gameObject.SetActive(true);
+            SpellList.transform.GetChild(4).gameObject.SetActive(true);
+            SpellList.transform.GetChild(5).gameObject.SetActive(false);
+            SpellList.transform.GetChild(6).gameObject.SetActive(false);
+            SpellList.transform.GetChild(7).gameObject.SetActive(false);
+            SpellList.transform.GetChild(8).gameObject.SetActive(false);
+        }
+        else
+        {
+            SpellList.transform.GetChild(1).gameObject.SetActive(false);
+            SpellList.transform.GetChild(2).gameObject.SetActive(false);
+            SpellList.transform.GetChild(3).gameObject.SetActive(false);
+            SpellList.transform.GetChild(4).gameObject.SetActive(false);
+            SpellList.transform.GetChild(5).gameObject.SetActive(true);
+            SpellList.transform.GetChild(6).gameObject.SetActive(true);
+            SpellList.transform.GetChild(7).gameObject.SetActive(true);
+            SpellList.transform.GetChild(8).gameObject.SetActive(true);
+        }
+    }
+
+    public void SpellSelect(string SpellNam)
+    {
+        ActionStage.PrepareSpell(SpellNam);
+
+        currentSpell = SpellNam;
+        waitPosTar = "Spell";
+        needListen = true;
+
+        SpellList.SetActive(false);
+        PosSelectView.SetActive(true);
+
+        GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
+        GameManager.GM.CanMachineStateChange = false;
+    }
+
     public void StopPosSelect()
     {
-        currentActive.SetActive(true);
+        if (needCloseSpellList)
+        {
+            SpellList.SetActive(true);
+            needCloseSpellList = false;
+            GameManager.GM.CanMachineStateChange = false;
+        }
+        else
+        {
+            SpellList.SetActive(false);
+            currentActive.SetActive(true);
+            GameManager.GM.CanMachineStateChange = true;
+        }
         PosSelectView.SetActive(false);
 
         FixGameData.FGD.MoveAreaMap.ClearAllTiles();
         FixGameData.FGD.AttackAreaMap.ClearAllTiles();
 
-        GameManager.GM.CanMachineStateChange = true;
+        
         GameManager.GM.SetMachineState(MachineState.Idel);
         waitPosTar = "";
         needListen = false;

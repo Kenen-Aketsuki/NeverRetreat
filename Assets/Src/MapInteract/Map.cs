@@ -184,13 +184,13 @@ public static class Map
     {
         float supply = -1;
         List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
-        for(int i = 0; i < Lands.Count; i++)
+        for (int i = 0; i < Lands.Count; i++)
         {
             LandShape Land = Lands[i];
             if (Land == null) continue;
             //统计共有
             if (supply < 0 && Land.enterCount != -2) supply = Land.enterCount;
-            else if(Land.name == "控制区")
+            else if (Land.name == "控制区")
             {
                 supply = -1;
                 break;
@@ -356,19 +356,19 @@ public static class Map
     //刷新控制区
     public static void UpdateZOC()
     {
-        FixGameData.FGD.ZOCMap.ClearAllTiles();
+        FixGameData.FGD.EnemyZOCMap.ClearAllTiles();
         FixGameData.FGD.FriendZOCMap.ClearAllTiles();
 
         foreach(Tuple<string,int,int> piece in GameManager.GM.EnemyPool.childList)
         {
             Vector3Int pos = new Vector3Int(piece.Item2, piece.Item3, 0);
-            FixGameData.FGD.ZOCMap.SetTile(pos, FixSystemData.GlobalZoneList["ZOC"].Top);
+            FixGameData.FGD.EnemyZOCMap.SetTile(pos, FixSystemData.GlobalZoneList["ZOC"].Top);
 
             for(int i = 1; i < 7; i++)
             {
                 Vector3Int tmp = GetRoundSlotPos(pos, i);
-                if (FixGameData.FGD.ZoneMap.GetTile(tmp) != null || !canSetZoc(pos, i)) continue;
-                FixGameData.FGD.ZOCMap.SetTile(
+                if (FixGameData.FGD.EnemyZOCMap.GetTile(tmp) != null || !canSetZoc(pos, i)) continue;
+                FixGameData.FGD.EnemyZOCMap.SetTile(
                     tmp, 
                     FixSystemData.GlobalZoneList["ZOC"].Top);
             }
