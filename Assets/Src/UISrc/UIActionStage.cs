@@ -18,6 +18,16 @@ public class UIActionStage : MonoBehaviour , IUIHandler
     GameObject PosSelectView;
     [SerializeField]
     GameObject SpellList;
+    [SerializeField]
+    GameObject AttackSelectView;
+
+    [SerializeField]
+    List<Vector3Int> AttackPosList = new List<Vector3Int>();
+    Vector3Int AttackTarPos;
+    [SerializeField]
+    float ATK;
+    [SerializeField]
+    float DEF;
 
 
     GameObject currentActive;
@@ -31,9 +41,14 @@ public class UIActionStage : MonoBehaviour , IUIHandler
     // Update is called once per frame
     public void Update()
     {
-        if (needListen)
+        if (needListen && waitPosTar != "Attack")
         {
             PosSelectView.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "可用攻击次数: " + GameManager.GM.currentPiece.SpecialActPoint;
+        }else if(needListen && waitPosTar == "Attack")
+        {
+            AttackSelectView.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = 
+                "攻守战力比: " + ATK +"/" + DEF + 
+                " 战果评级: " + FixSystemData.battleJudgeForm.GetRRK(ATK,DEF);
         }
     }
 
@@ -54,6 +69,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler
         FriendPiecePannel.SetActive(isFriend);
         EnemyPiecePannel.SetActive(!isFriend);
         TerrainPannel.SetActive(false);
+
         currentActive = isFriend ? FriendPiecePannel : EnemyPiecePannel;
 
         UpdateShow();
@@ -81,10 +97,31 @@ public class UIActionStage : MonoBehaviour , IUIHandler
                 break;
             case "Strick":
                 if(ActionStage.CommitFireStrick(Pos)) GameManager.GM.currentPiece.SpecialActPoint -= 2;
-                if(GameManager.GM.currentPiece.SpecialActPoint <= 0) StopPosSelect();
+                else
+                {
+                    FixGameData.FGD.uiIndex.HintUI.SetText("弹药用尽");
+                    FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
+                }
+                if (GameManager.GM.currentPiece.SpecialActPoint <= 0) StopPosSelect();
                 break;
             case "Spell":
                 if (FixGameData.FGD.AttackAreaMap.GetTile(Pos) != null) ActionStage.CastSpell(currentSpell, Pos);
+                break;
+            case "Attack":
+                int addr = AttackPosList.FindIndex(x => x == Pos);
+                if(addr != -1)
+                {
+                    AttackPosList.RemoveAt(addr);
+                }
+                else if(Map.HexDistence(Pos,AttackTarPos) == 1 && GameManager.GM.ActionPool.getChildByPos(Pos).Count != 0)
+                {
+                    AttackPosList.Add(Pos);
+                }
+
+                ActionStage.CulATK(ref ATK, ref DEF, AttackPosList, AttackTarPos);
+                Map.SetArea(Map.PowerfulBrickAreaSearch(AttackTarPos, 1), FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
+                Map.SetArea(AttackPosList, FixGameData.FGD.AttackAreaMap, FixSystemData.GlobalZoneList["ZOC"].Top, false);
+
                 break;
         }
         //waitPosTar = "";
@@ -94,6 +131,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler
 
     public void UpdateShow()
     {
+        if (waitPosTar == "Attack") return;
+
         switch (currentActive.name)
         {
             case "FriendPiece":
@@ -104,6 +143,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler
                 currentActive.transform.GetChild(4).gameObject.SetActive(GameManager.GM.currentPiece.getPieceData().canBild);
                 break;
             case "EnemyPiece":
+                currentActive.transform.GetChild(0).gameObject.SetActive(true);
+                currentActive.transform.GetChild(1).gameObject.SetActive(FixGameData.FGD.SupportDic().Where(x=>x.Value.Item2 != 0).Count() != 0);
 
                 break;
             case "Terrain":
@@ -152,11 +193,14 @@ public class UIActionStage : MonoBehaviour , IUIHandler
     public void FireStrick()
     {
         if (GameManager.GM.currentPiece.SpecialActPoint <= 0) return;
-        Map.SetArea(GameManager.GM.currentPosition,
-            GameManager.GM.currentPiece.getPieceData().activeArea,
-            FixGameData.FGD.AttackAreaMap,
-            FixGameData.FGD.MoveArea,
-            true);
+        //Map.SetArea(GameManager.GM.currentPosition,
+        //    GameManager.GM.currentPiece.getPieceData().activeArea,
+        //    FixGameData.FGD.AttackAreaMap,
+        //    FixGameData.FGD.MoveArea,
+        //    true);
+        List<CellInfo> area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, GameManager.GM.currentPiece.getPieceData().activeArea).Where(x => ActionStage.canHit(x.Positian)).ToList();
+        Map.SetArea(area, FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveZocArea, true);
+
         waitPosTar = "Strick";
         needListen = true;
 
@@ -211,6 +255,33 @@ public class UIActionStage : MonoBehaviour , IUIHandler
         GameManager.GM.CanMachineStateChange = false;
     }
 
+    public void PrepareAttack()
+    {
+        waitPosTar = "Attack";
+        needListen = true;
+
+        currentActive.SetActive(false);
+        AttackSelectView.SetActive(true);
+
+        GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
+        GameManager.GM.CanMachineStateChange = false;
+
+        AttackTarPos = GameManager.GM.currentPosition;
+        AttackPosList.Clear();
+
+        ActionStage.CulATK(ref ATK, ref DEF, AttackPosList, AttackTarPos);
+        Map.SetArea(Map.PowerfulBrickAreaSearch(AttackTarPos, 1), FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
+        Map.SetArea(AttackPosList, FixGameData.FGD.AttackAreaMap, FixSystemData.GlobalZoneList["ZOC"].Top, false);
+
+    }
+
+    public void StartAngriff()
+    {
+        ActionStage.CommitAttack(ATK, DEF, AttackPosList, AttackTarPos);
+        
+        StopPosSelect();
+    }
+
     public void StopPosSelect()
     {
         if (needCloseSpellList)
@@ -226,6 +297,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler
             GameManager.GM.CanMachineStateChange = true;
         }
         PosSelectView.SetActive(false);
+        AttackSelectView.SetActive(false);
 
         FixGameData.FGD.MoveAreaMap.ClearAllTiles();
         FixGameData.FGD.AttackAreaMap.ClearAllTiles();
@@ -235,4 +307,6 @@ public class UIActionStage : MonoBehaviour , IUIHandler
         waitPosTar = "";
         needListen = false;
     }
+
+    
 }

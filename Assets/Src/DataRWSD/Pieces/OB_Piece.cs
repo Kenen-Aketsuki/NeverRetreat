@@ -299,7 +299,7 @@ public class OB_Piece : MonoBehaviour
         {
             for (int i = 1; i < 7; i++)
             {
-                countZoc += FixGameData.FGD.ZOCMap.HasTile(Map.GetRoundSlotPos(piecePosition, i)) ? 1 : 0;
+                countZoc += FixGameData.FGD.ZOCMap().HasTile(Map.GetRoundSlotPos(piecePosition, i)) ? 1 : 0;
             }
             if (countZoc == 6) Connect = false;
         }
@@ -319,7 +319,7 @@ public class OB_Piece : MonoBehaviour
                 break;
             }
         }
-        Data.UpdateSupplyConnection(unSupply, Connect);
+        Data.CulateSupplyConnection(unSupply, Connect);
 
     }
     //检查是否需要隐藏

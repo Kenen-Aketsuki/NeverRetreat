@@ -15,5 +15,6 @@ public class UIIndex : MonoBehaviour
     public SelfCatchScroll scrollView;
     public UITurnData turnData;
     public UIHint HintUI;
+    public GameObject PieceDataCellPrefab;
 
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 public class ActionStage
 {
@@ -26,19 +27,21 @@ public class ActionStage
             }
         };
 
-        if (!canHit(Pos))
-        {
-            FixGameData.FGD.uiIndex.HintUI.SetText("火炮无法命中");
-            FixGameData.FGD.uiIndex.HintUI.SetExitTime(3);
-            return false;
-        }
-        
+        //if (!canHit(Pos))
+        //{
+        //    FixGameData.FGD.uiIndex.HintUI.SetText("火炮无法命中");
+        //    FixGameData.FGD.uiIndex.HintUI.SetExitTime(3);
+        //    return false;
+        //}
+
+        List<GameObject> targets = GameManager.GM.EnemyPool.getChildByPos(Pos);
+        if (targets.Count == 0 || FixGameData.FGD.AttackAreaMap.GetTile(Pos) == null) return false;
+
         string fireRank = FixSystemData.fireRankForm.getData(GameManager.GM.currentPiece.getPieceData().PName.Split("/")[2], Map.HexDistence(Pos, GameManager.GM.currentPosition));
         string[] resuSet = FixSystemData.fireStrikeJudgeForm.getResult(fireRank).Split("+");
 
-        List<GameObject> targets = GameManager.GM.EnemyPool.getChildByPos(Pos);
         Action<int[], List<GameObject>> tarAct;
-        if (targets.Count == 0) return false;
+        
 
         foreach (string res in resuSet)
         {
@@ -56,6 +59,9 @@ public class ActionStage
 
             if (tarAct != null) tarAct(dmgSet, targets);
         }
+
+        Map.UpdatePieceStackSign();
+        Map.UpdateZOC();
         return true;
     }
 
@@ -106,7 +112,7 @@ public class ActionStage
             //Debug.Log("高度：" + (TanTheta * i * 500 - Mathf.Pow(i * 500, 2) * gCosTheta2V));
             float t = i * 500 / Vx;
             float h = Vh * t - 0.5f * g * Mathf.Pow(t, 2);
-            Debug.Log("地块高度" + Map.GetCellHeightForStrick(Line[i].Positian, Line[i].fromDir) + "  高度：" + h);
+            //Debug.Log("地块高度" + Map.GetCellHeightForStrick(Line[i].Positian, Line[i].fromDir) + "  高度：" + h);
 
             if (h < Map.GetCellHeightForStrick(Line[i].Positian, Line[i].fromDir))
             {
@@ -180,7 +186,7 @@ public class ActionStage
                 Spell_ReverseEngineering(Pos);
                 break;
             case "ChannelBlocking":
-                
+                Spell_ChannelBlocking(Pos);
                 break;
             case "TrojanVirus":
                 Spell_TrojanVirus(Pos);
@@ -308,6 +314,8 @@ public class ActionStage
         }
         OB_Piece.needChenkVisibility = BackArea.Select(x => x.Positian).ToList();
         OB_Piece.CheckVisibility();
+        Map.UpdateZOC();
+
     }
 
     static void Spell_ArcaneBarrier(Vector3Int Pos)
@@ -560,6 +568,133 @@ public class ActionStage
 
     public static void Spell_ChannelBlocking(Vector3Int Pos)
     {
+
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(Pos, 1);
+        foreach(CellInfo cell in Area)
+        {
+            List<GameObject> Pieces = GameManager.GM.EnemyPool.getChildByPos(cell.Positian);
+            foreach(GameObject p in Pieces)
+            {
+                p.GetComponent<OB_Piece>().getPieceData().CulateSupplyConnection(true, false);
+            }
+
+        }
+
+    }
+
+    //计算双方战斗力
+    public static void CulATK(ref float ATK,ref float DEF, List<Vector3Int> AtkLst, Vector3Int DefPos)
+    {
+        DEF = 0;
+        ATK = 0;
+
+        foreach(GameObject pic in GameManager.GM.EnemyPool.getChildByPos(DefPos))
+        {
+            DEF += pic.GetComponent<OB_Piece>().getPieceData().DEF;
+        }
+
+        DEF = Map.GetTargetDEFK(DefPos, (ArmyBelong)(((int)GameManager.GM.ActionSide + 1) % 2), DEF);
+
+        foreach(Vector3Int pos in AtkLst)
+        {
+            float tmpAtk = 0;
+            foreach (GameObject pic in GameManager.GM.ActionPool.getChildByPos(pos))
+            {
+                tmpAtk += pic.GetComponent<OB_Piece>().getPieceData().ATK;
+            }
+            tmpAtk = Map.GetTargetATK(pos,Map.HexDirectionInt(DefPos,pos),GameManager.GM.ActionSide,tmpAtk);
+
+            ATK += tmpAtk;
+        }
+
+    }
+
+    //发起进攻
+    public static void CommitAttack(float ATK,float DEF,List<Vector3Int> AtkLst,Vector3Int DefPos)
+    {
+        double rrk = FixSystemData.battleJudgeForm.GetRRK(ATK, DEF);
+        string Result = FixSystemData.battleJudgeForm.GetResult(rrk);
+        Debug.Log(Result);
+        if (Result == "X") return;
+
+        int dmg;
+        bool hasNum = int.TryParse(Result.Substring(0, 1), out dmg);
+
+        string ActSide = hasNum ? Result.Substring(1, 1) : Result.Substring(0, 1);
+        int retDis = hasNum ? Result.Substring(2).Length : Result.Substring(1).Length;
+        ArmyBelong SufferSide;
+        Vector3Int RetCenter;
+
+        Debug.Log("作用方：" + ActSide + "受伤：" + dmg + "后撤距离：" + retDis);
+        List<OB_Piece> SufferList = new List<OB_Piece>();
+
+        if(ActSide == "A")
+        {
+            //选择作用棋子
+            foreach (Vector3Int pos in AtkLst)
+            {
+                List<OB_Piece> tmp = GameManager.GM.ActionPool.getChildByPos(pos).Select(x => x.GetComponent<OB_Piece>()).ToList();
+                SufferList.AddRange(tmp);
+            }
+            SufferSide = GameManager.GM.ActionSide;
+            RetCenter = DefPos;
+        }
+        else
+        {
+            //选择作用棋子
+            SufferList = GameManager.GM.EnemyPool.getChildByPos(DefPos).Select(x => x.GetComponent<OB_Piece>()).ToList();
+            SufferSide = (ArmyBelong)(((int)GameManager.GM.ActionSide + 1) % 2);
+
+            RetCenter = FixGameData.FGD.InteractMap.WorldToCell(
+                    new Vector3(AtkLst.Average(x => FixGameData.FGD.InteractMap.CellToWorld(x).x), AtkLst.Average(x => FixGameData.FGD.InteractMap.CellToWorld(x).y))
+                );
+        } 
+
+
+        //结算伤害
+        for (int i = 0; i < dmg; i++)
+        {
+            int luckyGuy = UnityEngine.Random.Range(0, SufferList.Count);
+            SufferList[luckyGuy].TakeDemage(1);
+        }
+        //结算移动
+        List<CellInfo> BackArea;
+        List<OB_Piece> killList = new List<OB_Piece>();
+        //试着移动
+        foreach (OB_Piece pic in SufferList)
+        {
+            int curDis = Map.HexDistence(pic.piecePosition, RetCenter);
+
+            int dir = Map.HexDirectionInt(RetCenter, pic.piecePosition);
+            int dir2 = (dir + 4) % 6 + 1;
+            int dir3 = dir % 6 + 1;
+            //获取区域
+            BackArea = Map.PowerfulBrickAreaSearch(pic.piecePosition, retDis).Where(
+                x => (Map.HexDirectionInt(RetCenter, x.Positian) == dir ||
+                Map.HexDirectionInt(RetCenter, x.Positian) == dir2 ||
+                Map.HexDirectionAxis(RetCenter, x.Positian) == dir3) &&
+                Map.HexDistence(pic.piecePosition,x.Positian) == retDis &&
+                Map.HexDistence(RetCenter, x.Positian) > curDis).ToList();
+            //按照可行性排序
+            _ = BackArea.OrderBy(x => Map.GetNearMov(x.Positian, 0, SufferSide)).ToList();
+
+            int counter = 0;
+            foreach(CellInfo cell in BackArea)
+            {
+                if (pic.ForceMoveTo(cell.Positian))
+                {
+                    break;
+                }
+                counter++;
+            }
+            if (counter == BackArea.Count) killList.Add(pic);
+
+        }
+        //杀死无法移动者
+        for(int i = 0; i < killList.Count; i++)
+        {
+            killList[0].TakeDemage(100);
+        }
 
     }
 }

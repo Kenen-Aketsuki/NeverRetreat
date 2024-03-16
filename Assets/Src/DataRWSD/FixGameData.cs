@@ -39,10 +39,12 @@ public class FixGameData : MonoBehaviour
     //堆叠标志
     public Tilemap MultiPieceMap;
     //控制区
-    public Tilemap ZOCMap { get {
-            if (GameManager.GM.currentPiece == null) return EnemyZOCMap;
-            return GameManager.GM.currentPiece.getPieceData().LoyalTo == GameManager.GM.ActionSide ? EnemyZOCMap : FriendZOCMap;
-        } }
+    public Tilemap ZOCMap(bool needFriend = false)
+    {
+        if (GameManager.GM.currentPiece == null && needFriend) return FriendZOCMap;
+        else if (GameManager.GM.currentPiece == null) return EnemyZOCMap;
+        return GameManager.GM.currentPiece.getPieceData().LoyalTo == GameManager.GM.ActionSide ? EnemyZOCMap : FriendZOCMap;
+    }
     public Tilemap EnemyZOCMap;
     public Tilemap FriendZOCMap;
     //移动范围地图
@@ -86,6 +88,20 @@ public class FixGameData : MonoBehaviour
     public Dictionary<string, Tuple<Piece,int>> CrashSupportDic=new Dictionary<string, Tuple<Piece, int>>();
     //崩坏方可用事件
     public List<SpecialEvent> CrashSpecialEventList = new List<SpecialEvent> { SpecialEvent.DataStrom, SpecialEvent.SpaceSplit, SpecialEvent.SpaceFix,SpecialEvent.PosConfuse };
+
+    //获取支援签
+    public Dictionary<string, Tuple<Piece, int>> SupportDic()
+    {
+        if(GameManager.GM.ActionSide == ArmyBelong.Human)
+        {
+            return HumanSupportDic;
+        }
+        else
+        {
+            return CrashSupportDic;
+        }
+    }
+
 
     private void Start()
     {

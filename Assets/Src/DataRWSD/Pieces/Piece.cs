@@ -76,8 +76,6 @@ public class Piece
     int cMaxMOV;
 
     bool inCasualty = false;// 是否减员
-    bool isUnsupply = false;//是否断补
-    bool isConnected = true;//是否失联
     bool canCasualty { get
         {
             if(cATK < 0 && cDEF < 0 && cMaxMOV < 0) return false;
@@ -199,7 +197,7 @@ public class Piece
     {
         ResetMov();
 
-        CulateSupplyConnection();//计算补给和通信影响
+        //CulateSupplyConnection();//计算补给和通信影响
     }
 
     public bool TakeDemage(int Dmg)//受伤,返回是否存活
@@ -228,13 +226,13 @@ public class Piece
         }
     }
 
-    public void UpdateSupplyConnection(bool Unsupplyed,bool connected)//更新断补与联络状态
-    {
-        isUnsupply = Unsupplyed;
-        isConnected = connected;
-    }
+    //public void UpdateSupplyConnection(bool Unsupplyed,bool connected)//更新断补与联络状态
+    //{
+    //    isUnsupply = Unsupplyed;
+    //    isConnected = connected;
+    //}
     
-    public void CulateSupplyConnection()//结算断补与联络buff
+    public void CulateSupplyConnection(bool isUnsupply,bool isConnected)//结算断补与联络buff
     {
         if (isUnsupply)
         {

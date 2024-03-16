@@ -2,11 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public static class Map
 {
@@ -90,7 +87,7 @@ public static class Map
     }
     //获取相邻格子的数据,传入当前位置、方向
     //列表顺序：0 基础地形 - 1 河流 - 2 道路 - 3 格内设施 - 4 格边设施 - 5 格边特殊地形 - 6 格内特殊地形 - 7 控制区 - 8 安定结界
-    public static List<LandShape> GetPLaceInfo(Vector3Int Pos,int Dir)
+    public static List<LandShape> GetPLaceInfo(Vector3Int Pos,int Dir,bool RequireFriend = false)
     {
         List<LandShape> lst = new List<LandShape>();
         Vector3Int targetPos = GetRoundSlotPos(Pos, Dir);
@@ -128,7 +125,7 @@ public static class Map
         else lst.Add(null);
 
         //获取控制区 — 7
-        tmpName = FixGameData.FGD.ZOCMap.GetTile(targetPos);
+        tmpName = FixGameData.FGD.ZOCMap(RequireFriend).GetTile(targetPos);
         if (tmpName != null) lst.Add(FixSystemData.GlobalZoneList[tmpName.name]);
         else lst.Add(null);
         //获取安定结界 — 8
@@ -201,10 +198,10 @@ public static class Map
     }
     
     //检查能否延申控制区
-    static bool canSetZoc(Vector3Int Pos, int Dir)
+    static bool canSetZoc(Vector3Int Pos, int Dir,bool isFriend)
     {
         bool canset = true;
-        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+        List<LandShape> Lands = GetPLaceInfo(Pos, Dir, isFriend);
 
         for (int i = 0; i < Lands.Count; i++)
         {
@@ -367,7 +364,7 @@ public static class Map
             for(int i = 1; i < 7; i++)
             {
                 Vector3Int tmp = GetRoundSlotPos(pos, i);
-                if (FixGameData.FGD.EnemyZOCMap.GetTile(tmp) != null || !canSetZoc(pos, i)) continue;
+                if (FixGameData.FGD.EnemyZOCMap.GetTile(tmp) != null || !canSetZoc(pos, i,false)) continue;
                 FixGameData.FGD.EnemyZOCMap.SetTile(
                     tmp, 
                     FixSystemData.GlobalZoneList["ZOC"].Top);
@@ -382,7 +379,7 @@ public static class Map
             for (int i = 1; i < 7; i++)
             {
                 Vector3Int tmp = GetRoundSlotPos(pos, i);
-                if (FixGameData.FGD.ZoneMap.GetTile(tmp) != null || !canSetZoc(pos, i)) continue;
+                if (FixGameData.FGD.ZoneMap.GetTile(tmp) != null || !canSetZoc(pos, i,true)) continue;
                 FixGameData.FGD.FriendZOCMap.SetTile(
                     tmp,
                     FixSystemData.GlobalZoneList["ZOC"].Top);
@@ -396,7 +393,7 @@ public static class Map
         foreach (KeyValuePair<Vector3Int, CellInfo> pos in GameManager.GM.MoveArea)
         {
             if(pos.Value.moveCost == float.PositiveInfinity) continue;
-            if (FixGameData.FGD.ZOCMap.HasTile(pos.Key))
+            if (FixGameData.FGD.ZOCMap().HasTile(pos.Key))
             {
                 FixGameData.FGD.MoveAreaMap.SetTile(pos.Key, FixGameData.FGD.MoveZocArea);
             }
@@ -484,6 +481,24 @@ public static class Map
         foreach (CellInfo ifo in area)
         {
             map.SetTile(ifo.Positian, tile);
+        }
+    }
+
+    public static void SetArea(List<CellInfo> area, Tilemap map, Tile tile, bool isSingel)
+    {
+        if (isSingel) map.ClearAllTiles();
+        foreach (CellInfo ifo in area)
+        {
+            map.SetTile(ifo.Positian, tile);
+        }
+    }
+
+    public static void SetArea(List<Vector3Int> area,Tilemap map,Tile tile, bool isSingel)
+    {
+        if (isSingel) map.ClearAllTiles();
+        foreach (Vector3Int ifo in area)
+        {
+            map.SetTile(ifo, tile);
         }
     }
 
@@ -712,6 +727,7 @@ public static class Map
     //获取线区域
     public static List<CellInfo> LineSerch(Vector3Int Start,Vector3Int End)
     {
+        
         float Dis = HexDistence(Start, End);
         Func<float, float, float, float> lerp = (x1, x2, pointNo) =>
         {
@@ -719,6 +735,8 @@ public static class Map
             return x1 + (x2 - x1) * t;
         };
         List<CellInfo> Path = new List<CellInfo>();//路径
+        if (Dis <= 0) return Path;
+
         Vector3 sta = FixGameData.FGD.InteractMap.CellToWorld(Start);
         Vector3 ed = FixGameData.FGD.InteractMap.CellToWorld(End);
         Vector3Int LastPos = Start;

@@ -141,9 +141,11 @@ public class MapInter : MonoBehaviour
             case MachineState.TestOnly:
                 //Ωˆ≤‚ ‘”√
 
-                ActionStage.Spell_ReverseEngineering(MousePos);
+                //ActionStage.Spell_ReverseEngineering(MousePos);
+                List<CellInfo> area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, 5).Where(x=> ActionStage.canHit(x.Positian)).ToList();
+                Map.SetArea(area, FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveZocArea, true);
 
-                ActionStage.canHit(MousePos);
+                Debug.Log("rua");
                 //for(int i = 1; i < 7; i++)
                 //{
                 //    Vector3Int tar = Map.GetRoundSlotPos(MousePos, i);
