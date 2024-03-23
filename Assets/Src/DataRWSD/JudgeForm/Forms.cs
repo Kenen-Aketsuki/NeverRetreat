@@ -151,7 +151,20 @@ public class FireStrikeJudgeForm : Form
         int addr;
         int rank = int.Parse(fireRank);
         if (rank < 2) rank = 2;
+        if (rank > 12) rank = 12;
         addr = getFromColumIndex(rank - 2).Item2;
+
+        addr += new Random().Next(0, 5);
+
+        return getFromDataSet(addr);
+    }
+
+    public string getResult(int fireRank)
+    {
+        int addr;
+        if (fireRank < 2) fireRank = 2;
+        if (fireRank > 12) fireRank = 12;
+        addr = getFromColumIndex(fireRank - 2).Item2;
 
         addr += new Random().Next(0, 5);
 

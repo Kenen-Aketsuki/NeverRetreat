@@ -9,12 +9,13 @@ public class UIIndex : MonoBehaviour
     public GameObject TurnZeroUISet;
     public GameObject ModBattleUISet;
     public GameObject ActionUISet;
-    
-    
+
+    public GameObject AirStrickWindow;
+    public GameObject RenforceWindow;
+
     public TMP_Text TurnShowText;
     public SelfCatchScroll scrollView;
     public UITurnData turnData;
     public UIHint HintUI;
-    public GameObject PieceDataCellPrefab;
 
 }

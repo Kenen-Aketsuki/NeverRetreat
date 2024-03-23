@@ -13,6 +13,9 @@ public interface IUIHandler
     abstract public void UpdateShow();
 
     abstract public string WhatShouldIDo();
+}
 
-    
+public interface IAirStrick
+{
+    abstract public void AirStrickCall(Dictionary<Piece, int> FriendList, Dictionary<Piece, int> EnemyList,int GroundDefence);
 }

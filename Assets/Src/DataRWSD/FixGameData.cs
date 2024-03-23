@@ -101,7 +101,8 @@ public class FixGameData : MonoBehaviour
             return CrashSupportDic;
         }
     }
-
+    //其它数值
+    public int maxAirDefenceDis = 0;
 
     private void Start()
     {

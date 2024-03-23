@@ -133,6 +133,7 @@ public class Piece
         #endregion
         //读取能力
         #region
+        _ = data.ChildNodes;
         tmp = data.SelectSingleNode("ability");
         if (tmp.Attributes["canSupport"] != null) canSupport = bool.Parse(tmp.Attributes["canSupport"].Value);
         if (tmp.Attributes["canAirBattle"] != null) canAirBattle = bool.Parse(tmp.Attributes["canAirBattle"].Value);
@@ -169,6 +170,12 @@ public class Piece
         }catch (Exception)
         {
 
+        }
+
+        
+        if (canAirBattle && passiveArea > FixGameData.FGD.maxAirDefenceDis)
+        {
+            FixGameData.FGD.maxAirDefenceDis = passiveArea;
         }
     }
 

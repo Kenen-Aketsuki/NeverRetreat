@@ -80,7 +80,7 @@
             <cMOV>3</cMOV>
             <activeArea>10</activeArea>
         </Datas>
-        <ability canSupport="True" canAirBattle="True" />
+        <ability canSupport="True" canAirBattle="False" />
     </Piece>
 
     <Piece id="Engineer">
@@ -105,7 +105,7 @@
             <cATK>5</cATK>
             <cDEF>3</cDEF>
             <cMOV>2</cMOV>
-            <activeArea>4</activeArea>
+            <passiveArea>4</passiveArea>
         </Datas>
         <ability canSupport="False" canAirBattle="True" />
     </Piece>
@@ -199,7 +199,7 @@
             <cATK>10</cATK>
             <cDEF>3</cDEF>
             <cMOV>4</cMOV>
-            <activeArea>6</activeArea>
+            <passiveArea>6</passiveArea>
         </Datas>
         <ability canSupport="False" canAirBattle="True" />
     </Piece>

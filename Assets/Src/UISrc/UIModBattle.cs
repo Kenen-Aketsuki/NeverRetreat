@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 
-public class UIModBattle : MonoBehaviour , IUIHandler
+public class UIModBattle : MonoBehaviour , IUIHandler,IAirStrick
 {
     [SerializeField]
     GameObject PieceSet;
@@ -184,6 +184,17 @@ public class UIModBattle : MonoBehaviour , IUIHandler
 
         GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
         GameManager.GM.CanMachineStateChange = false;
+    }
+
+    public void PrepareAirStrick()
+    {
+        FixGameData.FGD.uiIndex.AirStrickWindow.GetComponent<UIAirStrickSelect>().SetData(this, true);
+        FixGameData.FGD.uiIndex.AirStrickWindow.SetActive(true);
+    }
+
+    public void AirStrickCall(Dictionary<Piece, int> FriendList, Dictionary<Piece, int> EnemyList, int GroundDefence)
+    {
+        ModBattle.ModBattleAirStrick(FriendList, EnemyList, GroundDefence);
     }
 
     public void StopPosSelect()

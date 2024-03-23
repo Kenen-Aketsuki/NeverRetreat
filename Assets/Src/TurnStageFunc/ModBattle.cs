@@ -275,4 +275,9 @@ public class ModBattle
             }
         }
     }
+
+    public static void ModBattleAirStrick(Dictionary<Piece, int> FriendList, Dictionary<Piece, int> EnemyList, int GroundEnemySup)
+    {
+
+    }
 }

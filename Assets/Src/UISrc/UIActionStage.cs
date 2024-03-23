@@ -1,10 +1,11 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UIActionStage : MonoBehaviour , IUIHandler
+public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 {
     [SerializeField]
     GameObject TextHint;
@@ -144,7 +145,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler
                 break;
             case "EnemyPiece":
                 currentActive.transform.GetChild(0).gameObject.SetActive(true);
-                currentActive.transform.GetChild(1).gameObject.SetActive(FixGameData.FGD.SupportDic().Where(x=>x.Value.Item2 != 0).Count() != 0);
+                if (GameManager.GM.ActionSide == ArmyBelong.ModCrash) currentActive.transform.GetChild(1).gameObject.SetActive(FixGameData.FGD.SupportDic().Where(x => x.Value.Item2 != 0).Count() != 0 && FixGameData.FGD.ZoneMap.GetTile(GameManager.GM.currentPosition) == null);
+                else currentActive.transform.GetChild(1).gameObject.SetActive(FixGameData.FGD.SupportDic().Where(x => x.Value.Item2 != 0).Count() != 0);
 
                 break;
             case "Terrain":
@@ -156,6 +158,11 @@ public class UIActionStage : MonoBehaviour , IUIHandler
     public string WhatShouldIDo()
     {
         return "这是最重要的阶段，你需要穷尽各种手段组织有效的进攻或防御来达到你的战术目标。";
+    }
+
+    public void AirStrickCall(Dictionary<Piece, int> FriendList, Dictionary<Piece, int> EnemyList, int GroundDefence)
+    {
+        ActionStage.CommitAirStrick(FriendList, EnemyList, GroundDefence);
     }
 
     public void ReadyToMove()
@@ -277,8 +284,22 @@ public class UIActionStage : MonoBehaviour , IUIHandler
 
     public void StartAngriff()
     {
+        if(AttackPosList.Count == 0)
+        {
+            StopPosSelect();
+            return;
+        }
+
         ActionStage.CommitAttack(ATK, DEF, AttackPosList, AttackTarPos);
         
+        foreach(Vector3Int pos in AttackPosList)
+        {
+            foreach(OB_Piece pic in GameManager.GM.ActionPool.getChildByPos(pos).Select(x => x.GetComponent<OB_Piece>()))
+            {
+                pic.ActionPoint--;
+            }
+        }
+
         StopPosSelect();
     }
 
@@ -308,5 +329,9 @@ public class UIActionStage : MonoBehaviour , IUIHandler
         needListen = false;
     }
 
-    
+    public void PrepareAirStrick()
+    {
+        FixGameData.FGD.uiIndex.AirStrickWindow.GetComponent<UIAirStrickSelect>().SetData(this, false);
+        FixGameData.FGD.uiIndex.AirStrickWindow.SetActive(true);
+    }
 }

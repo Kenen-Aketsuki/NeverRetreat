@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
+using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
 
 public class ActionStage
@@ -41,7 +40,7 @@ public class ActionStage
         string[] resuSet = FixSystemData.fireStrikeJudgeForm.getResult(fireRank).Split("+");
 
         Action<int[], List<GameObject>> tarAct;
-        
+
 
         foreach (string res in resuSet)
         {
@@ -600,6 +599,7 @@ public class ActionStage
             float tmpAtk = 0;
             foreach (GameObject pic in GameManager.GM.ActionPool.getChildByPos(pos))
             {
+                if (pic.GetComponent<OB_Piece>().ActionPoint == 0) continue;
                 tmpAtk += pic.GetComponent<OB_Piece>().getPieceData().ATK;
             }
             tmpAtk = Map.GetTargetATK(pos,Map.HexDirectionInt(DefPos,pos),GameManager.GM.ActionSide,tmpAtk);
@@ -624,8 +624,6 @@ public class ActionStage
         int retDis = hasNum ? Result.Substring(2).Length : Result.Substring(1).Length;
         ArmyBelong SufferSide;
         Vector3Int RetCenter;
-
-        Debug.Log("作用方：" + ActSide + "受伤：" + dmg + "后撤距离：" + retDis);
         List<OB_Piece> SufferList = new List<OB_Piece>();
 
         if(ActSide == "A")
@@ -695,6 +693,86 @@ public class ActionStage
         {
             killList[0].TakeDemage(100);
         }
+    }
+
+    public static void CommitAirStrick(Dictionary<Piece, int> FriendList, Dictionary<Piece, int> EnemyList,int GroundEnemySup)
+    {
+        //统计双方空战战力比
+        int ATK = 0;
+        int ATKtoGround = 0;
+        foreach(KeyValuePair<Piece, int> pair in FriendList)
+        {
+            ATK += pair.Key.DEF * pair.Value;
+            if (!pair.Key.canAirBattle)
+            {
+                ATKtoGround += pair.Key.ATK * pair.Value;
+            }
+        }
+
+        int DEF = 0;
+        foreach (KeyValuePair<Piece, int> pair in EnemyList)
+        {
+            DEF += pair.Key.ATK * pair.Value;
+        }
+
+        DEF += GroundEnemySup;//地面防空火力
+
+        //判定
+        string resu = FixSystemData.airBattleJudgeForm.getResult(ATK, DEF);
+
+        switch (resu[resu.Length - 1])
+        {
+            case 'D':
+                ATKtoGround -= int.Parse(resu.Substring(0, resu.Length - 1));
+                break;
+            case 'X':
+                break;
+            case 'C':
+                return;
+        }
+        //结算
+        string[] resuSet = FixSystemData.fireStrikeJudgeForm.getResult(ATKtoGround).Split("+");
+
+        //承受伤害
+        Action<int[], List<GameObject>> TakeAllDMG = (x, targetSet) =>
+        {
+            for (int i = 0; i < x.Length; i++)
+            {
+                targetSet[i].GetComponent<OB_Piece>().TakeDemage(x[i]);
+            }
+        };
+        //承受稳定度
+        Action<int[], List<GameObject>> TakeAllStabel = (x, targetSet) =>
+        {
+            for (int i = 0; i < x.Length; i++)
+            {
+                targetSet[i].GetComponent<OB_Piece>().TakeUnstable(x[i]);
+            }
+        };
+
+        Action<int[], List<GameObject>> tarAct;
+        List<GameObject> targets = GameManager.GM.EnemyPool.getChildByPos(GameManager.GM.currentPosition);
+
+        if (resuSet[0] == "X") return;
+        foreach (string res in resuSet)
+        {
+            int dmg = int.Parse(res.Substring(0, res.Length - 1));
+
+            int[] dmgSet = new int[targets.Count];
+            for (int i = 0; i < dmg; i++)
+            {
+                dmgSet[UnityEngine.Random.Range(0, targets.Count)]++;
+            }
+
+            if (res.EndsWith("K")) tarAct = TakeAllDMG;
+            else if (res.EndsWith("D")) tarAct = TakeAllStabel;
+            else tarAct = null;
+
+            if (tarAct != null) tarAct(dmgSet, targets);
+        }
+
+        Map.UpdatePieceStackSign();
+        Map.UpdateZOC();
 
     }
 }
