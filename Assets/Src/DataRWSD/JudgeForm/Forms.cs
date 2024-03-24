@@ -68,6 +68,8 @@ public class BattleJudgeForm : Form
 
     public string GetResult(double rrk)
     {
+        rrk = rrk > 11 ? 11 : rrk;
+        rrk = rrk < 0 ? 0 : rrk;
         int Address;
         
         //¼ÆËãµØÖ·Æ«ÒÆ

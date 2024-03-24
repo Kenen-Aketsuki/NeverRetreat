@@ -95,9 +95,10 @@
     <Piece id="Soar-Net" isAir="True">
         <name>空网</name>
         <Datas>
-            <ATK>-1</ATK>
+            <ATK>2</ATK>
             <DEF>5</DEF>
             <MOV>-1</MOV>
+            <activeArea>5</activeArea>
             <crashLoad>4</crashLoad>
         </Datas>
         <ability canSupport="False" canAirBattle="False" canFixMod="True"/>

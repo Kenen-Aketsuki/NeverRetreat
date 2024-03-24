@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
@@ -29,7 +30,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
     float ATK;
     [SerializeField]
     float DEF;
-
+    [SerializeField]
+    int RRKMend;
 
     GameObject currentActive;
 
@@ -49,7 +51,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
         {
             AttackSelectView.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = 
                 "攻守战力比: " + ATK +"/" + DEF + 
-                " 战果评级: " + FixSystemData.battleJudgeForm.GetRRK(ATK,DEF);
+                " 战果评级: " + FixSystemData.battleJudgeForm.GetRRK(ATK,DEF) + RRKMend.ToString();
         }
     }
 
@@ -106,7 +108,12 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
                 if (GameManager.GM.currentPiece.SpecialActPoint <= 0) StopPosSelect();
                 break;
             case "Spell":
-                if (FixGameData.FGD.AttackAreaMap.GetTile(Pos) != null) ActionStage.CastSpell(currentSpell, Pos);
+                if (FixGameData.FGD.AttackAreaMap.GetTile(Pos) != null)
+                {
+                    ActionStage.CastSpell(currentSpell, Pos);
+                    GameManager.GM.currentPiece.SpecialActPoint--;
+                }
+                if (GameManager.GM.currentPiece.SpecialActPoint <= 0) StopPosSelect();
                 break;
             case "Attack":
                 int addr = AttackPosList.FindIndex(x => x == Pos);
@@ -205,7 +212,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
         //    FixGameData.FGD.AttackAreaMap,
         //    FixGameData.FGD.MoveArea,
         //    true);
-        List<CellInfo> area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, GameManager.GM.currentPiece.getPieceData().activeArea).Where(x => ActionStage.canHit(x.Positian)).ToList();
+        List<CellInfo> area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, GameManager.GM.currentPiece.getPieceData().activeArea).Where(x => ActionStage.canHit(x.Positian,Vector3Int.zero)).ToList();
         Map.SetArea(area, FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveZocArea, true);
 
         waitPosTar = "Strick";
@@ -275,11 +282,39 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
         AttackTarPos = GameManager.GM.currentPosition;
         AttackPosList.Clear();
-
-        ActionStage.CulATK(ref ATK, ref DEF, AttackPosList, AttackTarPos);
+        
         Map.SetArea(Map.PowerfulBrickAreaSearch(AttackTarPos, 1), FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
-        Map.SetArea(AttackPosList, FixGameData.FGD.AttackAreaMap, FixSystemData.GlobalZoneList["ZOC"].Top, false);
+        //Map.SetArea(AttackPosList, FixGameData.FGD.AttackAreaMap, FixSystemData.GlobalZoneList["ZOC"].Top, false);
+        Regex reg = new Regex(".*正常.*");
+        RRKMend = 0;
+        foreach (Vector3Int pos in Map.PowerfulBrickAreaSearch(AttackTarPos, FixGameData.FGD.maxFireSupportDic).Select(x => x.Positian))
+        {
+            int supListC = GameManager.GM.ActionPool.getChildByPos(pos)
+                .Select(x => x.GetComponent<OB_Piece>().getPieceData())
+                .Where(x => x.canSupport &&
+                    Map.HexDistence(pos, AttackTarPos) <= x.activeArea &&
+                    ActionStage.canHit(AttackTarPos, pos, x.PieceID, true)
+                ).Count();
+            if (supListC > 0)
+            {
+                RRKMend += supListC;
+                continue;
+            }
 
+            supListC = GameManager.GM.EnemyPool.getChildByPos(pos)
+                .Select(x => x.GetComponent<OB_Piece>().getPieceData())
+                .Where(x => x.canSupport &&
+                    reg.IsMatch(x.ConnectStr) &&
+                    reg.IsMatch(x.SupplyStr) &&
+                    reg.IsMatch(x.HealthStr) &&
+                    Map.HexDistence(pos, AttackTarPos) <= x.activeArea &&
+                    ActionStage.canHit(AttackTarPos, pos, x.PieceID, true)
+                ).Count();
+            if (supListC > 0)
+            {
+                RRKMend -= supListC;
+            }
+        }
     }
 
     public void StartAngriff()
@@ -290,7 +325,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
             return;
         }
 
-        ActionStage.CommitAttack(ATK, DEF, AttackPosList, AttackTarPos);
+        ActionStage.CommitAttack(ATK, DEF, AttackPosList, AttackTarPos,RRKMend);
         
         foreach(Vector3Int pos in AttackPosList)
         {

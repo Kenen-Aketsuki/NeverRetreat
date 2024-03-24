@@ -337,10 +337,10 @@ public static class Map
         return (int)Math.Floor(HP);
     }
     //获取战果加成
-    public static int GetBattleRRK(Vector3Int Pos, int Dir, ArmyBelong ActionSide,int RRK)
+    public static int GetBattleRRK(Vector3Int Pos, ArmyBelong ActionSide,double RRK)
     {
         float RRKmend = 0;
-        List<LandShape> Lands = GetPLaceInfo(Pos, Dir);
+        List<LandShape> Lands = GetPLaceInfo(Pos, 0);
         foreach (LandShape Land in Lands)
         {
             if (Land == null) continue;

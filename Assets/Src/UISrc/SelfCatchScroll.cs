@@ -277,12 +277,9 @@ public class SelfCatchScroll : MonoBehaviour
                 " *DEF修正与边设施、地形无关";
             
             str += "\n战果修正 \t";
-            for (int i = 1; i < 7; i++)
-            {
-                float tmpf = Map.GetBattleRRK(Map.GetRoundSlotPos(GameManager.GM.currentPosition, i), (i + 2) % 6 + 1, GameManager.GM.ActionSide, 0);
-                str += tmpf + "\t";
-            }
-            str += "\n战果以进攻方角度描述，修正值大于0表示优势，小于0表示劣势";
+            str += Map.GetBattleRRK(GameManager.GM.currentPosition, GameManager.GM.ActionSide, 0) + "\t";
+
+            str += "* 战果以进攻方角度描述，修正值大于0表示优势，小于0表示劣势";
 
             str += "\n格边高度 \t";
             for (int i = 1; i < 7; i++)

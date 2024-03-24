@@ -103,6 +103,7 @@ public class FixGameData : MonoBehaviour
     }
     //其它数值
     public int maxAirDefenceDis = 0;
+    public int maxFireSupportDic = 0;
 
     private void Start()
     {

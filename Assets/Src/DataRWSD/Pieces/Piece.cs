@@ -54,7 +54,7 @@ public class Piece
     string TroopName;//部队名称(显示)
     string PieceName;//兵种名称(显示)
     string Designation;//番号(程序)
-    string PieceID;//兵种id(程序)
+    public string PieceID { get; private set; }//兵种id(程序)
     public ArmyBelong Belong;//部队从属
     public ArmyBelong LoyalTo;//部队效忠对象
 
@@ -176,6 +176,11 @@ public class Piece
         if (canAirBattle && passiveArea > FixGameData.FGD.maxAirDefenceDis)
         {
             FixGameData.FGD.maxAirDefenceDis = passiveArea;
+        }
+
+        if (canSupport && activeArea > FixGameData.FGD.maxFireSupportDic)
+        {
+            FixGameData.FGD.maxFireSupportDic = activeArea;
         }
     }
 

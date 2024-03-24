@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class ModBattle
@@ -278,6 +279,55 @@ public class ModBattle
 
     public static void ModBattleAirStrick(Dictionary<Piece, int> FriendList, Dictionary<Piece, int> EnemyList, int GroundEnemySup)
     {
+        //统计双方空战战力比
+        int ATK = 0;
+        int DealDmg = 0;
+        foreach (KeyValuePair<Piece, int> pair in FriendList)
+        {
+            ATK += pair.Key.DEF * pair.Value;
+            if (!pair.Key.canAirBattle)
+            {
+                DealDmg += pair.Key.ATK * pair.Value;
+            }
+        }
+
+        int DEF = 0;
+        foreach (KeyValuePair<Piece, int> pair in EnemyList)
+        {
+            DEF += pair.Key.ATK * pair.Value;
+        }
+
+        DEF += GroundEnemySup;//地面防空火力
+
+        //判定
+        string resu = FixSystemData.airBattleJudgeForm.getResult(ATK, DEF);
+        
+
+        switch (resu[resu.Length - 1])
+        {
+            case 'D':
+                DealDmg -= int.Parse(resu.Substring(0, resu.Length - 1));
+                break;
+            case 'X':
+                break;
+            case 'C':
+                return;
+        }
+        //结算
+        
+        foreach (KeyValuePair<Piece, int> pair in FriendList)
+        {
+            List<CellInfo> area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition,pair.Key.activeArea);
+            foreach(Vector3Int pos in area.Select(x => x.Positian))
+            {
+                List<GameObject> targets = GameManager.GM.EnemyPool.getChildByPos(GameManager.GM.currentPosition);
+                foreach(GameObject target in targets)
+                {
+                    target.GetComponent<OB_Piece>().TakeUnstable(DealDmg);
+                }
+            }
+        }
+
 
     }
 }

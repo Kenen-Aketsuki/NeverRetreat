@@ -64,10 +64,11 @@ public class ActionStage
         return true;
     }
 
-    static int getWeponVelocity()
+    static int getWeponVelocity(string nam = "")
     {
+        if (nam == "") nam = GameManager.GM.currentPiece.getPieceData().PName.Split("/")[2];
         int V = 0;
-        switch (GameManager.GM.currentPiece.getPieceData().PName.Split("/")[2])
+        switch (nam)
         {
             case "Artillery":
                 V = 564;
@@ -82,14 +83,56 @@ public class ActionStage
         return V;
     }
 
-    public static bool canHit(Vector3Int Target)
+    //public static bool canHit(Vector3Int Target)
+    //{
+    //    int Velocity = getWeponVelocity();
+    //    //int Velocity = 564;
+
+    //    if (Velocity == 0) return true;
+
+    //    int HexDis = Map.HexDistence(Target, GameManager.GM.currentPosition);
+    //    //int HexDis = Map.HexDistence(Target, Vector3Int.zero);
+    //    int Distance = HexDis * 500;//距离，单位:米
+    //    float g = 9.8f;//重力加速度，米/秒^2
+
+
+    //    float aTheta = Mathf.Asin(Distance * g / Mathf.Pow(Velocity, 2)) / 2;
+
+
+    //    if (aTheta < -1 || aTheta > 1) return false;
+
+    //    float Vx = Velocity * Mathf.Cos(aTheta);
+    //    float Vh = Velocity * Mathf.Sin(aTheta);
+
+    //    List<CellInfo> Line = Map.LineSerch(GameManager.GM.currentPosition, Target);
+    //    //List<CellInfo> Line = Map.LineSerch(Vector3Int.zero, Target);
+
+    //    for (int i = 1; i < Line.Count - 1; i++)
+    //    {
+    //        //Debug.Log("高度：" + (TanTheta * i * 500 - Mathf.Pow(i * 500, 2) * gCosTheta2V));
+    //        float t = i * 500 / Vx;
+    //        float h = Vh * t - 0.5f * g * Mathf.Pow(t, 2);
+    //        //Debug.Log("地块高度" + Map.GetCellHeightForStrick(Line[i].Positian, Line[i].fromDir) + "  高度：" + h);
+
+    //        if (h < Map.GetCellHeightForStrick(Line[i].Positian, Line[i].fromDir))
+    //        {
+    //            return false;
+    //        }
+    //    }
+
+    //    return true;
+
+    //}
+
+    public static bool canHit(Vector3Int Target,Vector3Int LunchPos, string nam = "",bool needPos = false)
     {
-        int Velocity = getWeponVelocity();
+        int Velocity = getWeponVelocity(nam);
         //int Velocity = 564;
 
         if (Velocity == 0) return true;
+        if (!needPos) LunchPos = GameManager.GM.currentPosition;
 
-        int HexDis = Map.HexDistence(Target, GameManager.GM.currentPosition);
+        int HexDis = Map.HexDistence(Target, LunchPos);
         //int HexDis = Map.HexDistence(Target, Vector3Int.zero);
         int Distance = HexDis * 500;//距离，单位:米
         float g = 9.8f;//重力加速度，米/秒^2
@@ -103,7 +146,7 @@ public class ActionStage
         float Vx = Velocity * Mathf.Cos(aTheta);
         float Vh = Velocity * Mathf.Sin(aTheta);
 
-        List<CellInfo> Line = Map.LineSerch(GameManager.GM.currentPosition, Target);
+        List<CellInfo> Line = Map.LineSerch(LunchPos, Target);
         //List<CellInfo> Line = Map.LineSerch(Vector3Int.zero, Target);
 
         for (int i = 1; i < Line.Count - 1; i++)
@@ -574,7 +617,7 @@ public class ActionStage
             List<GameObject> Pieces = GameManager.GM.EnemyPool.getChildByPos(cell.Positian);
             foreach(GameObject p in Pieces)
             {
-                p.GetComponent<OB_Piece>().getPieceData().CulateSupplyConnection(true, false);
+                p.GetComponent<OB_Piece>().CulateSupplyConnection(true, false);
             }
 
         }
@@ -610,9 +653,13 @@ public class ActionStage
     }
 
     //发起进攻
-    public static void CommitAttack(float ATK,float DEF,List<Vector3Int> AtkLst,Vector3Int DefPos)
+    public static void CommitAttack(float ATK,float DEF,List<Vector3Int> AtkLst,Vector3Int DefPos,int RRKMend)
     {
         double rrk = FixSystemData.battleJudgeForm.GetRRK(ATK, DEF);
+        //RRK修正
+        rrk = Map.GetBattleRRK(DefPos, GameManager.GM.ActionSide, rrk) + RRKMend;
+        
+
         string Result = FixSystemData.battleJudgeForm.GetResult(rrk);
         Debug.Log(Result);
         if (Result == "X") return;

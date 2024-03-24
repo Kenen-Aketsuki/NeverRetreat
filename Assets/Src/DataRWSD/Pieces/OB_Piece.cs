@@ -14,6 +14,7 @@ public class OB_Piece : MonoBehaviour
     public int ActionPoint = 0;
     //特殊行动点，可用于火力支援、施法等行为。
     public int SpecialActPoint = 0;
+
     public Vector3Int piecePosition{ get { return FixGameData.FGD.InteractMap.WorldToCell(transform.position); } }
     //能否移动
     public bool canMove { get { return Data.MOV > 0; } }
@@ -322,6 +323,13 @@ public class OB_Piece : MonoBehaviour
         Data.CulateSupplyConnection(unSupply, Connect);
 
     }
+
+    public void CulateSupplyConnection(bool isUnsupply, bool isConnected)
+    {
+        Data.CulateSupplyConnection(isUnsupply, isConnected);
+        UpdateData();
+    }
+
     //检查是否需要隐藏
     public static void CheckVisibility()
     {
