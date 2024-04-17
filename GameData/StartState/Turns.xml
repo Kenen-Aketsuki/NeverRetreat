@@ -149,10 +149,10 @@
 
     <BegianSupportList>
         <HumanList>
-            <Item TroopName="RiseSun.AtkAir" UseableTime="0" />
-            <Item TroopName="RiseSun.Bomer" UseableTime="0" />
-            <Item TroopName="RiseSun.Fight" UseableTime="0" />
-            <Item TroopName="RiseSun.UAV" UseableTime="0" />
+            <Item TroopName="RiseSun.AtkAir" UseableTime="2" />
+            <Item TroopName="RiseSun.Bomer" UseableTime="2" />
+            <Item TroopName="RiseSun.Fight" UseableTime="2" />
+            <Item TroopName="RiseSun.UAV" UseableTime="2" />
         </HumanList>
         <CrashList>
             <Item TroopName="Crash.SNet" UseableTime="0" />

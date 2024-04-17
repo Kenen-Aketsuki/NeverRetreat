@@ -131,6 +131,10 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
                 Map.SetArea(AttackPosList, FixGameData.FGD.AttackAreaMap, FixSystemData.GlobalZoneList["ZOC"].Top, false);
 
                 break;
+            case "Mental":
+                ActionStage.CommitMentalAttack(Pos);
+
+                break;
         }
         //waitPosTar = "";
         
@@ -369,4 +373,19 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
         FixGameData.FGD.uiIndex.AirStrickWindow.GetComponent<UIAirStrickSelect>().SetData(this, false);
         FixGameData.FGD.uiIndex.AirStrickWindow.SetActive(true);
     }
+
+    public void PrepareMentalAttack()
+    {
+        waitPosTar = "Mental";
+        needListen = true;
+
+        currentActive.SetActive(false);
+        PosSelectView.SetActive(true);
+
+        Map.SetArea(Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, 1), FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
+
+        GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
+        GameManager.GM.CanMachineStateChange = false;
+    }
+
 }

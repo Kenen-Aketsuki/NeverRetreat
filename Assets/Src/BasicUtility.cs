@@ -119,7 +119,7 @@ public static class BasicUtility
         }
     }
 
-    public static string SpawnPiece(string TroopName,Vector3Int Pos,XmlNode SaveData, bool needSort)//以部队番号为名，生成一个棋子,SaveData为null说明这是新棋子,needSort代表是否按照顺序加入
+    public static GameObject SpawnPiece(string TroopName,Vector3Int Pos,XmlNode SaveData, bool needSort)//以部队番号为名，生成一个棋子,SaveData为null说明这是新棋子,needSort代表是否按照顺序加入
     {
         Transform parent;
         Piece PData;
@@ -160,7 +160,7 @@ public static class BasicUtility
             pool.AddChildNoOrder(newPiece.name, Pos);
         }
 
-        return newPiece.name;
+        return newPiece;
     }
 
     public static Sprite getPieceIcon( string name )

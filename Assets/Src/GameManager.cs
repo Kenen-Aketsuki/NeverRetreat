@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public float MaxMobilizationRate;
     //人类方--动员率
     [SerializeField]
-    public float MobilizationRate;
+    public int MobilizationRate;
     //人类方—预备役数量
     [SerializeField]
     public int PreTrainTroop;

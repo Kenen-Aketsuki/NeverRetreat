@@ -34,6 +34,15 @@ public class Streagy
         {
             switch (tuple.Item1)
             {
+                case SpecialEvent.MentalAD:
+                    Event_MentalAD();
+                    break;
+                case SpecialEvent.TrainTroop:
+                    Event_TrainTroop();
+                    break;
+                case SpecialEvent.RetreatCiv:
+                    Event_RetreatCiv();
+                    break;
                 default:
                     Debug.Log("未知事件：" + tuple.Item1);
                     break;
@@ -112,6 +121,76 @@ public class Streagy
             FixGameData.FGD.MapList[7].SetTile(Pos, null);
         }
     }
+
+    public static void Event_MentalAD()
+    {
+        List<Tuple<string, int, int>> rec = FixGameData.FGD.CrashPiecePool.childList.Where(x => !x.Item1.Contains("Crash")).ToList();
+
+        foreach (Tuple<string, int, int> troop in rec)
+        {
+            if (!troop.Item1.Contains("Human")) FixGameData.FGD.CrashPiecePool.getChildByID(troop.Item1).GetComponent<OB_Piece>().Betray();
+            else FixGameData.FGD.CrashPiecePool.getChildByID(troop.Item1).GetComponent<OB_Piece>().TakeDemage(100);
+        }
+    }
+
+    public static void Event_TrainTroop()
+    {
+        List<FacilityDataCell> shelterList = FixGameData.FGD.FacilityList.Where(x => x.Id == "Shelter").ToList();
+        List<FacilityDataCell> guildList = FixGameData.FGD.FacilityList.Where(x => x.Id == "HunterGuild").ToList();
+
+        int usableShelter = 0;
+        int usableGuild = guildList.Count();
+
+        foreach(FacilityDataCell cell in shelterList)
+        {
+            foreach(FacilityDataCell endCell in guildList.OrderBy(x => Map.HexDistence(x.Positian, cell.Positian)))
+            {
+                List<CellInfo> path = Map.AStarPathSerch(cell.Positian, endCell.Positian, 20);
+                if(path != null)
+                {
+                    usableShelter++;
+                    break;
+                }
+            }
+        }
+
+        int finalNum = Math.Min(usableGuild, usableShelter);
+        finalNum = Math.Min(finalNum, 100 - GameManager.GM.MobilizationRate);
+        GameManager.GM.MobilizationRate += finalNum;
+        GameManager.GM.PreTrainTroop += finalNum * 2;
+
+    }
+
+    public static void Event_RetreatCiv()
+    {
+        List<FacilityDataCell> shelterList = FixGameData.FGD.FacilityList.Where(x => x.Id == "Shelter").ToList();
+        List<FacilityDataCell> guildList = FixGameData.FGD.FacilityList.Where(x => x.Id == "Airpot").ToList();
+
+        int usableShelter = 0;
+        int usableGuild = guildList.Count();
+
+        foreach (FacilityDataCell cell in shelterList)
+        {
+            FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixGameData.FGD.MoveArea);
+            foreach (FacilityDataCell endCell in guildList.OrderBy(x=>Map.HexDistence(x.Positian,cell.Positian)))
+            {
+                FixGameData.FGD.AttackAreaMap.SetTile(endCell.Positian, FixGameData.FGD.MoveArea);
+                List<CellInfo> path = Map.AStarPathSerch(cell.Positian, endCell.Positian, 20);
+                if (path != null)
+                {
+                    FixGameData.FGD.MoveAreaMap.SetTile(cell.Positian, FixGameData.FGD.MoveZocArea);
+                    usableShelter++;
+                    break;
+                }
+            }
+        }
+
+        int finalNum = Math.Min(usableGuild, usableShelter);
+        finalNum = Math.Min(finalNum, 100 - GameManager.GM.MobilizationRate);
+        GameManager.GM.MobilizationRate += finalNum;
+        FixGameData.FGD.retreatCivScore += finalNum * 5;
+    }
+
 
     //获取空中单位的支援签
     public static void GetAirForce()

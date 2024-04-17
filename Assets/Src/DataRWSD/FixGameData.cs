@@ -105,6 +105,9 @@ public class FixGameData : MonoBehaviour
     public int maxAirDefenceDis = 0;
     public int maxFireSupportDic = 0;
 
+    public int retreatCivScore = 0;
+
+
     private void Start()
     {
         FGD = this;

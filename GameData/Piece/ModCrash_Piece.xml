@@ -125,4 +125,15 @@
         </Datas>
         <ability canSupport="False" canAirBattle="False"/>
     </Piece>
+
+    <Piece id="Infantry-Betray">
+        <name>被蛊惑者</name>
+        <Datas>
+            <ATK>4</ATK>
+            <DEF>4</DEF>
+            <MOV>5</MOV>
+            <crashLoad>0</crashLoad>
+        </Datas>
+        <ability canSupport="False" canAirBattle="False" canFixMod="False"/>
+    </Piece>
 </PieceInfo>

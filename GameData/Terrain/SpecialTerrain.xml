@@ -80,7 +80,7 @@
         <Data>
             <enterCost>0</enterCost>
             <battleAdjust>
-                <adjust target="NA" way="NOPE" number="0" />
+                <adjust target="MOV" way="ALL" number="0" />
             </battleAdjust>
             <height>-1</height>
         </Data>

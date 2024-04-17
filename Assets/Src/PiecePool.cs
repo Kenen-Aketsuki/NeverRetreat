@@ -10,7 +10,7 @@ public class PiecePool : MonoBehaviour
 {
     int counter = 0;
     
-    //子对象列表
+    //子对象列表,棋子id-x坐标-y坐标
     public List<Tuple<string, int, int>> childList = new List<Tuple<string, int, int>>();
     //行目录 行号：起始坐标，长度
     public Dictionary<int, Tuple<int, int>> listIndex = new Dictionary<int, Tuple<int, int>>();

@@ -110,10 +110,19 @@ public class UIReforenceWindow : MonoBehaviour
 
     void SelectPiece()
     {
-        int addr = currentItem + halfFachInt;
-        SelectedPiece = ContentPannel.GetChild(addr).GetComponent<UIPieceDataCell>();
-        Text.text = SelectedPiece.getPieceInfo();
-        MountShow.text = SelectList[SelectedPiece.Data.PDesignation].Item2.ToString();
+        if (ContentPannel.childCount == 0)
+        {
+            SelectedPiece = null;
+            Text.text = "无可用部队";
+            MountShow.text = "0";
+        }
+        else
+        {
+            int addr = currentItem + halfFachInt;
+            SelectedPiece = ContentPannel.GetChild(addr).GetComponent<UIPieceDataCell>();
+            Text.text = SelectedPiece.getPieceInfo();
+            MountShow.text = SelectList[SelectedPiece.Data.PDesignation].Item2.ToString();
+        }
     }
 
     void UpdatePieceList()

@@ -141,49 +141,9 @@ public class MapInter : MonoBehaviour
                 break;
             case MachineState.TestOnly:
                 //仅测试用
-                LineRenderer runder = GameObject.Find("LinRender").GetComponent<LineRenderer>();
-                LineRenderer runderE = GameObject.Find("LinRenderE").GetComponent<LineRenderer>();
-                runder.positionCount = 1;
-                runder.SetPosition(0, FixGameData.FGD.InteractMap.CellToWorld(MousePos + Vector3Int.back));
-                runderE.positionCount = 1;
-                runderE.SetPosition(0, FixGameData.FGD.InteractMap.CellToWorld(MousePos + Vector3Int.back));
+                Streagy.Event_RetreatCiv();
 
-                Regex reg = new Regex(".*正常.*");
-                int rrk = 0;
-                foreach (Vector3Int pos in Map.PowerfulBrickAreaSearch(MousePos, FixGameData.FGD.maxFireSupportDic).Select(x => x.Positian))
-                {
-                    int supListC = GameManager.GM.ActionPool.getChildByPos(pos)
-                        .Select(x => x.GetComponent<OB_Piece>().getPieceData())
-                        .Where(x => x.canSupport &&
-                            Map.HexDistence(pos, MousePos) <= x.activeArea &&
-                            ActionStage.canHit(MousePos, pos, x.PieceID, true)
-                        ).Count();
-                    if (supListC > 0)
-                    {
-                        runderE.positionCount++;
-                        runderE.SetPosition(runderE.positionCount - 1, FixGameData.FGD.InteractMap.CellToWorld(pos + Vector3Int.back));
 
-                        rrk += supListC;
-                        continue;
-                    }
-
-                    supListC = GameManager.GM.EnemyPool.getChildByPos(pos)
-                        .Select(x => x.GetComponent<OB_Piece>().getPieceData())
-                        .Where(x => x.canSupport &&
-                            reg.IsMatch(x.ConnectStr) &&
-                            reg.IsMatch(x.SupplyStr) &&
-                            reg.IsMatch(x.HealthStr) &&
-                            Map.HexDistence(pos, MousePos) <= x.activeArea &&
-                            ActionStage.canHit(MousePos, pos, x.PieceID, true)
-                        ).Count();
-                    if (supListC > 0)
-                    {
-                        runder.positionCount++;
-                        runder.SetPosition(runder.positionCount - 1, FixGameData.FGD.InteractMap.CellToWorld(pos + Vector3Int.back));
-                        rrk -= supListC;
-                    }
-                }
-                Debug.Log(rrk);
                 break;
             default:
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());

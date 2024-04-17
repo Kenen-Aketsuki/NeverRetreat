@@ -822,4 +822,39 @@ public class ActionStage
         Map.UpdateZOC();
 
     }
+
+    public static void CommitMentalAttack(Vector3Int TarPos)
+    {
+        if (GameManager.GM.HumanEventList.Where(x=>x.Item1 == SpecialEvent.MentalAD).Count() > 0) return;
+
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, 2);
+        int dir = Map.HexDirectionInt(GameManager.GM.currentPosition, TarPos);
+        int dir2 = (dir + 4) % 6 + 1;
+        int dir3 = dir % 6 + 1;
+        Area = Area.Where(
+            x => (Map.HexDirectionInt(GameManager.GM.currentPosition, x.Positian) == dir ||
+            Map.HexDirectionInt(GameManager.GM.currentPosition, x.Positian) == dir2 ||
+            Map.HexDirectionAxis(GameManager.GM.currentPosition, x.Positian) == dir3)).ToList();
+
+
+        Map.SetArea(Area, FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
+
+        foreach(Vector3Int pos in Area.Select(x => x.Positian))
+        {
+            List<GameObject> pieces = GameManager.GM.EnemyPool.getChildByPos(pos);
+            foreach(GameObject piece in pieces)
+            {
+                piece.GetComponent<OB_Piece>().Betray();
+            }
+
+            if(pieces.Count == 0 && Map.GetPLaceInfo(pos, 0)[3]?.id == "Shelter")
+            {
+                GameObject tmp = BasicUtility.SpawnPiece("Human.Betray", pos, null, true);
+                tmp.GetComponent<OB_Piece>().Betray();
+            }
+
+        }
+
+
+    }
 }

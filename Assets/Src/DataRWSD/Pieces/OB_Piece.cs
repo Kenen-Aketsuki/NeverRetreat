@@ -74,9 +74,10 @@ public class OB_Piece : MonoBehaviour
             }
             else
             {
-                if (PathCount < Path.Count)
+                if (PathCount < Path?.Count)
                 {
                     transform.position = FixGameData.FGD.InteractMap.CellToWorld(Path[PathCount].Positian);
+                    CheckGround(piecePosition, Path[PathCount].fromDir);
                     PathCount++;
                     timer = 0.1f;
                 }
@@ -187,6 +188,8 @@ public class OB_Piece : MonoBehaviour
             FixGameData.FGD.CrashPiecePool.DelChildByID(Pse.name);
         }
 
+        if (Data.PDesignation == "Human.Betray") GameManager.GM.MobilizationRate--;
+
         Destroy(Pse);
         Map.UpdateCrashBindwith();
 
@@ -286,7 +289,45 @@ public class OB_Piece : MonoBehaviour
         UpdateData();
 
     }
-    
+    //检查脚下
+    public void CheckGround(Vector3Int pos,int dir)
+    {
+        List<LandShape> land = Map.GetPLaceInfo(pos, dir);
+        if (land[6]?.id == "PosDisorderZone")
+        {
+            int randX = UnityEngine.Random.Range(GameUtility.mapSize.x / 2, -1 * GameUtility.mapSize.x / 2);
+            int randY = UnityEngine.Random.Range(GameUtility.mapSize.y / 2, -1 * GameUtility.mapSize.y / 2);
+
+            PiecePool pool;
+            if (Data.LoyalTo == ArmyBelong.Human) pool = FixGameData.FGD.HumanPiecePool;
+            else pool = FixGameData.FGD.CrashPiecePool;
+
+            Vector3Int Target = new Vector3Int(randX, randY, 0);
+
+            if (Map.GetNearMov(Target, 0, GameManager.GM.ActionSide) != -1)
+            {
+                Debug.Log("我是谁我在哪？");
+                transform.position = FixGameData.FGD.InteractMap.CellToWorld(Target);
+                pool.UpdateChildPos(name, Target);
+            }
+            else
+            {
+                Debug.Log("寄咯");
+                Death(gameObject, Data);
+            }
+
+
+
+        }
+        else if(land[6]?.id == "DataDisorderZone")
+        {
+            CulateSupplyConnection(true, false);
+        }
+
+
+    }
+
+
     //检查联络与补给，在回合末进行
     public void CheckSupplyConnect()
     {
@@ -361,7 +402,7 @@ public class OB_Piece : MonoBehaviour
 
         Path = null;
         //寻路
-        //Path = Map.AStarPathSerch(piecePosition, Target, 100);
+        //Path = Map.AStarPathSerch(piecePosition, Target, 500);
         Path = Map.LineSerch(piecePosition, Target);
         if (Path != null)
         {

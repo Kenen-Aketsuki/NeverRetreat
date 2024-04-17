@@ -12,4 +12,5 @@
     <Troop designation="Crash.SNet" name="崩坏意志·空网" type="Soar-Net" Belong="ModCrash" />
     <Troop designation="Crash.SStay" name="崩坏意志·滞空种" type="Soar-Stay" Belong="ModCrash" />
     <Troop designation="Crash.GAtk" name="崩坏意志·袭略种" type="Soar-Attack" Belong="ModCrash" />
+    <Troop designation="Human.Betray" name="被蛊惑的叛军" type="Infantry-Betray" Belong="Human" />
 </TroopInfo>
