@@ -72,8 +72,8 @@ public class RollAcademiy : MonoBehaviour
     string CreateJsonPayload(string nam)
     {
         // 创建一个要发送的JSON对象  
-        var data = new RuaJson();
-        data.Rua = nam;
+        var data = new CGFDataJson("Yeet","Nop",Vector3Int.down);
+        
 
         // 将对象转换为JSON字符串  
         string jsonPayload = JsonUtility.ToJson(data);
@@ -83,11 +83,4 @@ public class RollAcademiy : MonoBehaviour
         return jsonPayload;
     }
 
-}
-
-public class RuaJson
-{
-    public string Rua;
-    [SerializeField]
-    string yeet = "Don't";
 }

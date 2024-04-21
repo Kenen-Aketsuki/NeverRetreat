@@ -17,47 +17,7 @@ public class DataLoader : MonoBehaviour
     {
         BasicUtility.DataInit();//加载数据
 
-        //测试
-        /*
-        int i = 0, j = 0;
-        foreach(KeyValuePair<string,XmlNode> key in FixSystemData.HumanOrganizationList)
-        {
-            BasicUtility.SpawnPiece(key.Key, new Vector3Int(i, j, 10));
-            j += 3;
-            if (j >= 30) j = 0;
-            if (j == 0) i += 3;
-        }
-        i = 0; j = -3;
-        foreach (KeyValuePair<string, XmlNode> key in FixSystemData.CrashOrganizationList)
-        {
-            BasicUtility.SpawnPiece(key.Key, new Vector3Int(i, j, 10));
-            j -= 3;
-            if (j >= 30) j = 0;
-            if (j == 0) i += 3;
-        }
-        */
-        //map.SetTile(new Vector3Int(21, 21, 0), tile);
-        //map.BoxFill(new Vector3Int(0, 0, 0), tile, -21, -21, 21, 21);
-        /*
-        Dictionary<string,XmlNode>.KeyCollection KeyList = FixSystemData.HumanOrganizationList.Keys;
-        int i = -21,j;
-        TileBase tile;
-        for (; i <= 21; i++)
-        {
-            for (j = -21; j <= 21; j++)
-            {
-                (string a, XmlNode b) = FixSystemData.HumanOrganizationList.ElementAt(j + 21);
-                if (j % 2 == 0 && i % 2 == 0) 
-                {
-                    tile = tile1;
-                    BasicUtility.SpawnPiece(a, map.CellToWorld(new Vector3Int(i, j, 0)));
-                }
-                else tile = tile2;
-                map.SetTile(new Vector3Int(i, j, 0), tile);
-            }
-            Debug.Log(i);
-        }
-        */
+        HttpConnect.instance.InitServe(x=>Debug.Log("Serve init success"));// 初始化服务端
         
         //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("Airpot", new Vector3Int(-1, 3), 0, 114514, false));
         //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("MetroStation", new Vector3Int(-1, 3), 0, int.MaxValue, false));
@@ -65,15 +25,15 @@ public class DataLoader : MonoBehaviour
         //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("MetroStation", new Vector3Int(1, -5), 0, int.MaxValue, false));
 
         //GameUtility.mapSize = new Vector2Int(42, 42);
-        //BasicUtility.saveTerrain("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Terrain.xml");
-        //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Trash.xml");
+        //BasicUtility.saveTerrain("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\Saves\\ExampelSave\\Terrain.xml");
+        //BasicUtility.saveFacillitys("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\Saves\\ExampelSave\\Facility.xml");
         //GameUtility.从预设中读取地图(false, "");
 
-        //BasicUtility.savePieceAsDefault("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\GameData\\StartState\\Piece.xml");
-        //GameUtility.从预设中读取棋子(false, "");
+        //BasicUtility.savePiece("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\Saves\\ExampelSave\\Piece.xml");
+        //GameUtility.从预设中读取棋子(true, "ExampelSave");
 
-        GameUtility.fromSave = false;
-        GameUtility.Save = "";
+        GameUtility.fromSave = true;
+        GameUtility.Save = "ExampelSave";
         GameUtility.游戏初始化();
 
         //List<Tuple<string, int, int>> clist = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList;

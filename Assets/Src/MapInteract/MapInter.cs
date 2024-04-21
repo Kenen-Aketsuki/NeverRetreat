@@ -141,11 +141,12 @@ public class MapInter : MonoBehaviour
                 break;
             case MachineState.TestOnly:
                 //仅测试用
-                Streagy.Event_RetreatCiv();
+                HttpConnect.instance.SendBattleFieldEnv(GameManager.GM.currentPiece);
 
 
                 break;
             default:
+                HttpConnect.instance.UpdatePieceKey();
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());
                 break;
         }

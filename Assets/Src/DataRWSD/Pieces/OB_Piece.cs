@@ -287,6 +287,8 @@ public class OB_Piece : MonoBehaviour
         Map.UpdatePieceStackSign();
         //检查我双方的补给与联络
         UpdateData();
+        //更新行动目标
+        if (Data.PieceID == "Govermant") GameManager.GM.ActionTargetPos = piecePosition;
 
     }
     //检查脚下

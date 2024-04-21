@@ -25,23 +25,23 @@ class InfantryRobot(nn.Module): #步兵类型
 
         self.liner = nn.Linear(glbSuper.hidden_size,output_size) # 全连接层输出
 
-    def forward(self, x, hidden_prev):
+    def forward(self, x):
+        hidden_prev = torch.zeros(1, glbSuper.num_layers, glbSuper.hidden_size)
         out,hidden_prev = self.rnn(x,hidden_prev)
         out = out.view(-1,glbSuper.hidden_size)
         out = self.liner(out)
         out = out.unsqueeze(dim = 0)
-        indices = torch.tensor([14])
-        out = torch.index_select(out,1,indices)
+        # indices = torch.tensor([14])
+        # out = torch.index_select(out,1,indices)
 
-        return out,hidden_prev
+        return out
 
-    def backward(self):
+    def backward(self, loss):
+        sto = data_storge.data_storge()
+        sto.model_dict['normal'][0].zero_grad()
+        loss.backward()
+        sto.model_dict['normal'][1].step()
 
-        pass
-
-    def getLoss(self,distence,currentHP,fullHP,dealDMG):
-        return distence + fullHP / currentHP - dealDMG
-
-# model = InfantryRobot(glbSuper.input_size,glbSuper.hidden_size,glbSuper.num_layers)
-# torch.save(model.state_dict(),glbSuper.normal_model_path)
+#model = InfantryRobot(glbSuper.input_size,glbSuper.hidden_size,glbSuper.num_layers)
+#torch.save(model.state_dict(),glbSuper.normal_model_path)
 

@@ -1,3 +1,5 @@
+import random
+
 import torch
 import datetime
 import numpy as np
@@ -62,7 +64,7 @@ def getdata():
 def tarin_RNN(data):
     model = InfantryRobot(input_size, hidden_size, num_layers)
     print('model:\n', model)
-    criterion = nn.MSELoss()
+    criterion = glbSuper.CustomBattleLoss()
     optimizer = optim.Adam(model.parameters(), lr)
     # 初始化h
     hidden_prev = torch.zeros(1, 1, hidden_size)
@@ -78,14 +80,14 @@ def tarin_RNN(data):
 
         output, hidden_prev = model(x, hidden_prev)
         hidden_prev = hidden_prev.detach()
-
-        loss = criterion(output, y)
+        loss = criterion(10,5,5,3,5)
         model.zero_grad()
         loss.backward()
         optimizer.step()
 
         if iter % 100 == 0:
             print("Iteration: {} loss {}".format(iter, loss.item()))
+            print(loss)
             l.append(loss.item())
 
     ##############################绘制损失函数#################################
@@ -130,22 +132,22 @@ def RNN_pre(model, data, hidden_prev):
 
 
 def main():
-    # data = getdata()
-    # start = datetime.datetime.now()
-    # hidden_pre, model = tarin_RNN(data)
-    # end = datetime.datetime.now()
-    # print('The training time: %s' % str(end - start))
-    # RNN_pre(model, data, hidden_pre)
-    #
-    # torch.save(model.state_dict(),glbSuper.model_path + "test_model.pth")
     data = getdata()
     start = datetime.datetime.now()
-    hidden_pre = hidden_prev = torch.zeros(1, 1, hidden_size)
-    model = InfantryRobot(input_size, hidden_size, num_layers)
-    model.load_state_dict(torch.load(glbSuper.model_path + "test_model.pth"))
+    hidden_pre, model = tarin_RNN(data)
     end = datetime.datetime.now()
     print('The training time: %s' % str(end - start))
     RNN_pre(model, data, hidden_pre)
+
+    torch.save(model.state_dict(),glbSuper.model_path + "test_model.pth")
+    # data = getdata()
+    # start = datetime.datetime.now()
+    # hidden_pre = hidden_prev = torch.zeros(1, 1, hidden_size)
+    # model = InfantryRobot(input_size, hidden_size, num_layers)
+    # model.load_state_dict(torch.load(glbSuper.model_path + "test_model.pth"))
+    # end = datetime.datetime.now()
+    # print('The training time: %s' % str(end - start))
+    # RNN_pre(model, data, hidden_pre)
 
 
 if __name__ == '__main__':

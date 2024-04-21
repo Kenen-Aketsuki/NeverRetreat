@@ -41,7 +41,7 @@
     </Piece>
 
     <Piece id="Machine-Grope">
-        <name>机械化集群</name>
+        <name>机械集群</name>
         <Datas>
             <ATK>6</ATK>
             <DEF>6</DEF>

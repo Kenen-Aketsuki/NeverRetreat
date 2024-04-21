@@ -474,6 +474,8 @@ public static class GameUtility
     //行优先快速排序
     public static void QuickSortColumNo(ref List<Tuple<string, int, int>> numList)//行坐标排序
     {
+        if (numList.Count == 0) return;
+
         //快速排序
         int anix;//快排轴枢
         Tuple<string, int, int> anixKey;//轴数值

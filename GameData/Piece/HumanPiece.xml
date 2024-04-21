@@ -281,7 +281,7 @@
         <ability canSupport="False" canAirBattle="False" canFixMod="True"/>
     </Piece>
 
-    <Piece id="Govermant">
+    <Piece id="GovermentVIP">
         <name>政府要员</name>
         <Datas>
             <ATK>-1</ATK>

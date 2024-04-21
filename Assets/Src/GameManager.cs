@@ -62,10 +62,13 @@ public class GameManager : MonoBehaviour
     //崩坏意志 — 事件列表
     public List<Tuple<SpecialEvent, Vector3Int>> CrashEventList = new List<Tuple<SpecialEvent, Vector3Int>>();
 
-    // Start is called before the first frame update
+    //行动目标地点
+    public Vector3Int ActionTargetPos;
+
     void Start()
     {
         GM = this;
+        ActionTargetPos = Vector3Int.zero;
     }
     
 

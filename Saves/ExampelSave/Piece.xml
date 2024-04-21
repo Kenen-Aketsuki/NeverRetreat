@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PieceData>
+  <Human>
+    <Piece troopName="DawIII.101" xPos="23" yPos="11" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.102" xPos="21" yPos="12" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+  </Human>
+  <Crash>
+    <Piece troopName="Crash.Blade" xPos="21" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.MhnGrp" xPos="20" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="22" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="19" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+  </Crash>
+</PieceData>
