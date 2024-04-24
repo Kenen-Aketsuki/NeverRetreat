@@ -236,6 +236,110 @@ public class ActionStage
         }
     }
 
+    public static void BuildFacility(string FacName, Vector3Int Pos)
+    {
+        int dis = 1;
+        int mainDir = Map.HexDirectionAxis(GameManager.GM.currentPosition, Pos);
+        int subDir = (mainDir + 4) % 6 + 1;
+        int mainDir2 = mainDir % 6 + 1;
+
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, dis).Where(x => Map.HexDistence(GameManager.GM.currentPosition, x.Positian) == dis).ToList();
+        //主方向，和一个主方向加一
+        List<CellInfo> Area1 = Area.Where(x => Map.HexDirectionInt(GameManager.GM.currentPosition, x.Positian) == mainDir ||
+        Map.HexDirectionAxis(GameManager.GM.currentPosition, x.Positian) == mainDir2).ToList();
+        //副方向
+        List<CellInfo> Area2 = Area.Where(x => Map.HexDirectionInt(GameManager.GM.currentPosition, x.Positian) == subDir).ToList();
+
+        Tuple<int, Vector3Int> tmpT;
+        //主方向上
+        foreach (CellInfo area in Area1)
+        {
+            //主方向
+            tmpT = Map.GetSideAddr(area.Positian, mainDir);
+            FacilityDataCell tmp = new FacilityDataCell(FacName, tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[8 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+            int addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == FacName && x.Positian == tmp.Positian && x.dir == mainDir);
+            if (addr == -1)
+            {
+                //加入
+                FixGameData.FGD.SpecialTerrainList.Add(tmp);
+            }
+            else
+            {
+                //刷新
+                FixGameData.FGD.SpecialTerrainList[addr] = tmp;
+            }
+
+            //主方向加一
+            tmpT = Map.GetSideAddr(area.Positian, mainDir2);
+            tmp = new FacilityDataCell(FacName, tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[8 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+            addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == FacName && x.Positian == tmp.Positian && x.dir == mainDir2);
+            if (addr == -1)
+            {
+                //加入
+                FixGameData.FGD.SpecialTerrainList.Add(tmp);
+            }
+            else
+            {
+                //刷新
+                FixGameData.FGD.SpecialTerrainList[addr] = tmp;
+            }
+        }
+
+        //副方向
+        foreach (CellInfo area in Area2)
+        {
+            //主方向
+            tmpT = Map.GetSideAddr(area.Positian, mainDir);
+            FacilityDataCell tmp = new FacilityDataCell(FacName, tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[8 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+            int addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == FacName && x.Positian == tmp.Positian && x.dir == mainDir);
+            if (addr == -1)
+            {
+                //加入
+                FixGameData.FGD.SpecialTerrainList.Add(tmp);
+            }
+            else
+            {
+                //刷新
+                FixGameData.FGD.SpecialTerrainList[addr] = tmp;
+            }
+
+            //副方向
+            tmpT = Map.GetSideAddr(area.Positian, subDir);
+            tmp = new FacilityDataCell(FacName, tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+            FixGameData.FGD.MapList[8 + tmpT.Item1].SetTile(tmpT.Item2, tmp.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+            addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == FacName && x.Positian == tmp.Positian && x.dir == subDir);
+            if (addr == -1)
+            {
+                //加入
+                FixGameData.FGD.SpecialTerrainList.Add(tmp);
+            }
+            else
+            {
+                //刷新
+                FixGameData.FGD.SpecialTerrainList[addr] = tmp;
+            }
+        }
+
+        //补全
+        tmpT = Map.GetSideAddr(Pos, subDir);
+        FacilityDataCell tmpFac = new FacilityDataCell(FacName, tmpT.Item2, tmpT.Item1 + 1, 2, true, false);
+        FixGameData.FGD.MapList[8 + tmpT.Item1].SetTile(tmpT.Item2, tmpFac.Data.Item2.GetSideTile(tmpT.Item1 + 1));
+        int addrS = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Id == FacName && x.Positian == tmpFac.Positian && x.dir == mainDir);
+        if (addrS == -1)
+        {
+            //加入
+            FixGameData.FGD.SpecialTerrainList.Add(tmpFac);
+        }
+        else
+        {
+            //刷新
+            FixGameData.FGD.SpecialTerrainList[addrS] = tmpFac;
+        }
+    }
+
     static void Spell_PrefectFreeze(Vector3Int Pos)
     {
         int Hexdir = Map.HexDirectionAxis(GameManager.GM.currentPosition, Pos);
@@ -856,5 +960,36 @@ public class ActionStage
         }
 
 
+    }
+
+    public static void BuildDefenceArea(Vector3Int Pos)
+    {
+        int addr = FixGameData.FGD.FacilityList.FindIndex(
+            x => x.Positian == Pos &&
+                x.dir == 0 &&
+                x.Id == "DefenceArea"
+                );
+
+        FacilityDataCell temp = new FacilityDataCell("DefenceArea", Pos, 0, 2, false);
+        FixGameData.FGD.MapList[7].SetTile(Pos, temp.Data.Item2.Top);
+        
+        if (addr == -1)
+        {
+            FixGameData.FGD.FacilityList.Add(temp);
+        }
+        else
+        {
+
+            FixGameData.FGD.FacilityList[addr] = temp;
+        }
+    }
+
+    public static void DoEmergencyMaintenance(Vector3Int Pos)
+    {
+        List<GameObject> targets = GameManager.GM.ActionPool.getChildByPos(Pos);
+        foreach(GameObject piece in targets)
+        {
+            piece.GetComponent<OB_Piece>().RecoverStable(1);
+        }
     }
 }

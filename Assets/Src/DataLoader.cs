@@ -17,8 +17,8 @@ public class DataLoader : MonoBehaviour
     {
         BasicUtility.DataInit();//加载数据
 
-        HttpConnect.instance.InitServe(x=>Debug.Log("Serve init success"));// 初始化服务端
-        
+        //HttpConnect.instance.InitServe(x=>Debug.Log("Serve init success"));// 初始化服务端
+
         //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("Airpot", new Vector3Int(-1, 3), 0, 114514, false));
         //FixGameData.FGD.FacilityList.Add(new FacilityDataCell("MetroStation", new Vector3Int(-1, 3), 0, int.MaxValue, false));
 
@@ -32,8 +32,12 @@ public class DataLoader : MonoBehaviour
         //BasicUtility.savePiece("D:\\轩辕明月\\桌游\\毕业设计\\NeverRetreat\\Saves\\ExampelSave\\Piece.xml");
         //GameUtility.从预设中读取棋子(true, "ExampelSave");
 
-        GameUtility.fromSave = true;
-        GameUtility.Save = "ExampelSave";
+        //GameUtility.fromSave = true;
+        //GameUtility.Save = "ExampelSave";
+        //GameUtility.游戏初始化();
+
+        GameUtility.fromSave = false;
+        GameUtility.Save = "";
         GameUtility.游戏初始化();
 
         //List<Tuple<string, int, int>> clist = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList;

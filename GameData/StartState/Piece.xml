@@ -103,7 +103,7 @@
     <Piece troopName="Guard.102" xPos="13" yPos="18" />
     <Piece troopName="Guard.103" xPos="12" yPos="20" />
     <Piece troopName="Guard.104v" xPos="13" yPos="21" />
-    <Piece troopName="GovermantVIP" xPos="13" yPos="20" />
+    <Piece troopName="Goverment" xPos="13" yPos="20" />
   </Human>
   <Crash>
     <Piece troopName="Crash.Blade" xPos="35" yPos="3" />

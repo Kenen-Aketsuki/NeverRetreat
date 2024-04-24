@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class OB_Piece : MonoBehaviour
 {
@@ -35,8 +36,10 @@ public class OB_Piece : MonoBehaviour
     int PathCount = 0;
 
     //棋子状态
+    bool needCheckGround = true; // 是否检查脚下
     bool needMove = false;//是否需要移动
     float timer;
+    int invisiableDmg = 0;
 
     //获取地图坐标
     public Vector3Int PosInMap { get
@@ -45,6 +48,10 @@ public class OB_Piece : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        PieceText = Instantiate(FixGameData.FGD.PieceInfoPrefab).GetComponent<PieseTextShow>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -77,7 +84,7 @@ public class OB_Piece : MonoBehaviour
                 if (PathCount < Path?.Count)
                 {
                     transform.position = FixGameData.FGD.InteractMap.CellToWorld(Path[PathCount].Positian);
-                    CheckGround(piecePosition, Path[PathCount].fromDir);
+                    if(needCheckGround) CheckGround(Path[PathCount], Path[PathCount].fromDir);
                     PathCount++;
                     timer = 0.1f;
                 }
@@ -114,9 +121,10 @@ public class OB_Piece : MonoBehaviour
             parent = FixGameData.FGD.DataCrashPieceParent;
         }
         //创建文本显示器
-        GameObject TextData = Instantiate(FixGameData.FGD.PieceInfoPrefab, parent);
-        TextData.name = Data.PDesignation;
-        PieceText = TextData.GetComponent<PieseTextShow>();
+        //GameObject TextData = Instantiate(FixGameData.FGD.PieceInfoPrefab, parent);
+        PieceText.gameObject.name = Data.PDesignation;
+        PieceText.transform.parent = parent;
+        //PieceText = TextData.GetComponent<PieseTextShow>();
         PieceText.setParPice(transform);
         PieceText.InitText(gameObject.name, Data);
         
@@ -190,7 +198,11 @@ public class OB_Piece : MonoBehaviour
 
         if (Data.PDesignation == "Human.Betray") GameManager.GM.MobilizationRate--;
 
+        needChenkVisibility.Add(Pse.GetComponent<OB_Piece>().piecePosition);
         Destroy(Pse);
+        CheckVisibility();
+        
+
         Map.UpdateCrashBindwith();
 
         //更新ZOC
@@ -282,7 +294,10 @@ public class OB_Piece : MonoBehaviour
     //移动结束
     public void EndMove()
     {
+        needCheckGround = true;
         Path.Clear();
+        TakeDemage(-invisiableDmg);
+
         //重新布设棋子堆叠标志
         Map.UpdatePieceStackSign();
         //检查我双方的补给与联络
@@ -292,38 +307,35 @@ public class OB_Piece : MonoBehaviour
 
     }
     //检查脚下
-    public void CheckGround(Vector3Int pos,int dir)
+    public void CheckGround(CellInfo cell,int dir)
     {
+        Vector3Int pos = cell.Positian;
+        dir = Mathf.Max(0, dir);
+        Debug.Log(dir);
         List<LandShape> land = Map.GetPLaceInfo(pos, dir);
         if (land[6]?.id == "PosDisorderZone")
         {
-            int randX = UnityEngine.Random.Range(GameUtility.mapSize.x / 2, -1 * GameUtility.mapSize.x / 2);
-            int randY = UnityEngine.Random.Range(GameUtility.mapSize.y / 2, -1 * GameUtility.mapSize.y / 2);
+            //踩到坐标紊乱区
+            EndMove();
 
-            PiecePool pool;
-            if (Data.LoyalTo == ArmyBelong.Human) pool = FixGameData.FGD.HumanPiecePool;
-            else pool = FixGameData.FGD.CrashPiecePool;
+            FixGameData.FGD.CameraNow.transform.position = transform.position + new Vector3Int(0, 0, -10);
+            //随机生成终点
+            List<CellInfo> area = Map.PowerfulBrickAreaSearch(piecePosition, 10);
+            Vector3Int target = area[UnityEngine.Random.Range(0, area.Count)].Positian;
 
-            Vector3Int Target = new Vector3Int(randX, randY, 0);
-
-            if (Map.GetNearMov(Target, 0, GameManager.GM.ActionSide) != -1)
-            {
-                Debug.Log("我是谁我在哪？");
-                transform.position = FixGameData.FGD.InteractMap.CellToWorld(Target);
-                pool.UpdateChildPos(name, Target);
-            }
-            else
-            {
-                Debug.Log("寄咯");
-                Death(gameObject, Data);
-            }
-
-
-
+            if (TPMoveTo(target)) Death(gameObject, Data);
         }
         else if(land[6]?.id == "DataDisorderZone")
         {
+            //踩到数据紊乱区
             CulateSupplyConnection(true, false);
+        }else if (land[4]?.id == "Landmine")
+        {
+            invisiableDmg += (int)land[4].HP_All.Item2;
+        }
+        else if(land[4]?.id == "IFFLandmine")
+        {
+            invisiableDmg += (int)land[4].HP_IFF(Data.LoyalTo).Item2;
         }
 
 
@@ -392,6 +404,22 @@ public class OB_Piece : MonoBehaviour
             }
         }
 
+        pool = GameManager.GM.EnemyPool;
+
+        foreach (Vector3Int pie in needChenkVisibility)
+        {
+            List<GameObject> tmpl = pool.getChildByPos(pie);
+
+            if (tmpl.Count() > 0)
+            {
+                tmpl[0].SetActive(true);
+            }
+            for (int i = 1; i < tmpl.Count; i++)
+            {
+                tmpl[i].SetActive(false);
+            }
+        }
+
         needChenkVisibility.Clear();
     }
 
@@ -418,7 +446,29 @@ public class OB_Piece : MonoBehaviour
         else return false;
         return true;
     }
+    //瞬移
+    public bool TPMoveTo(Vector3Int Target)
+    {
+        if (Map.GetNearMov(Target, 0, Data.LoyalTo) == -1) return false;
+        
+        PiecePool pool;
+        if (Data.LoyalTo == ArmyBelong.Human) pool = FixGameData.FGD.HumanPiecePool;
+        else pool = FixGameData.FGD.CrashPiecePool;
 
+        needChenkVisibility.Add(piecePosition);
+
+        pool.UpdateChildPos(name, Target);
+        transform.position = FixGameData.FGD.InteractMap.CellToWorld(Target);
+        PieceText.transform.position = FixGameData.FGD.InteractMap.CellToWorld(Target);
+
+        needChenkVisibility.Add(Target);
+
+        CheckVisibility();
+
+        return true;
+    }
+
+    //重置移动力
     public void ResetMov()
     {
         Data.ResetMov();

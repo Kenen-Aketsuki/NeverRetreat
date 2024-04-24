@@ -23,5 +23,5 @@
     <Troop designation="Guard.102" name="政府近卫团·二连" type="Infantry-GovGuard" Belong="Human" />
     <Troop designation="Guard.103" name="政府近卫团·三连" type="Infantry-GovGuard" Belong="Human" />
     <Troop designation="Guard.104v" name="政府近卫团·机械化步兵连" type="Machine-Infantry" Belong="Human" />
-    <Troop designation="GovermantVIP" name="政府要员" type="Govermant" Belong="Human" />
+    <Troop designation="Goverment" name="政府要员" type="GovermentVIP" Belong="Human" />
 </TroopInfo>

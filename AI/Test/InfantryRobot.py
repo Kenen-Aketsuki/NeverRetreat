@@ -2,7 +2,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import numpy as np
-from matplotlib import pyplot as plt
+import torch.nn.functional as F
+
 import glbSuper
 import data_storge
 
@@ -40,8 +41,17 @@ class InfantryRobot(nn.Module): #步兵类型
         sto = data_storge.data_storge()
         sto.model_dict['normal'][0].zero_grad()
         loss.backward()
-        sto.model_dict['normal'][1].step()
+        sto.model_dict['normal'][0].step()
 
+    def command_translate(self, y):
+        y = torch.squeeze(y)
+        y = y.split(3)
+        command_resu = F.softmax(y[0],dim=-1)
+        dir = y[1].item()
+        dir = 6 if dir > 6 else 0 if dir < 0 else dir
+        _,max = torch.max(command_resu,dim = -1)
+
+        return (max.item(),dir)
 #model = InfantryRobot(glbSuper.input_size,glbSuper.hidden_size,glbSuper.num_layers)
 #torch.save(model.state_dict(),glbSuper.normal_model_path)
 

@@ -250,3 +250,11 @@ public class AccuretEnyData
         return data;
     }
 }
+
+public class BackwardData // 反向传播的数据
+{
+    public int distence;
+    public int inCasualty;
+    public int dealDmg;
+
+}

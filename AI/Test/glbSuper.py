@@ -23,10 +23,10 @@ class CustomBattleLoss(nn.Module):
     def __init__(self):
         super(CustomBattleLoss, self).__init__()
 
-    def forward(self, distance, currentHP, fullHP, dealDmg, enyCount, command_state):
+    def forward(self, distance, isCasualty, dealDmg, enyCount, command_state):
         # 计算均方误差
         if command_state:
-            loss = distance * dis_fix_rate + fullHP / currentHP - dealDmg - enyCount + 3
+            loss = distance * dis_fix_rate + isCasualty - dealDmg - enyCount + 3
         else:
             loss = 100
         return torch.tensor(loss,requires_grad=True)

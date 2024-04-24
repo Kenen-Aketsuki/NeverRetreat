@@ -108,7 +108,7 @@ public class FixGameData : MonoBehaviour
     public int retreatCivScore = 0;
 
 
-    private void Start()
+    private void Awake()
     {
         FGD = this;
     }
@@ -162,7 +162,7 @@ public class FacilityDataCell
     //ÊÇ·ñ¼¤»î
     public bool active { get; private set; }
 
-    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide,bool active)
+    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide,bool active = false)
     {
         LastTime = lastTime;
         Id = id;

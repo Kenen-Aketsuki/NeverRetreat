@@ -47,7 +47,10 @@ def get_env_data():
     resu = storge.model_dict['normal'][0].forward(batch)
     print(resu)
 
-    return "OK"
+    resu = storge.model_dict['normal'][0].command_translate(resu)
+    print(resu)
+
+    return resu.__str__()
 
 @app.route("/AiBackword",methods=["Post"]) # 发送棋子的环境信息
 def backword_ai():

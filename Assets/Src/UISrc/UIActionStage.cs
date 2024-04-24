@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +21,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
     GameObject SpellList;
     [SerializeField]
     GameObject AttackSelectView;
+    [SerializeField]
+    GameObject FacSelectView;
 
     [SerializeField]
     List<Vector3Int> AttackPosList = new List<Vector3Int>();
@@ -34,12 +35,13 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
     int RRKMend;
 
     GameObject currentActive;
+    //子页面栈
+    Stack<GameObject> activeViewStack = new Stack<GameObject>();
 
     string waitPosTar;
     string currentSpell;
 
     bool needListen = false;
-    bool needCloseSpellList = false;
 
     // Update is called once per frame
     public void Update()
@@ -95,8 +97,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
         {
             case "Metro":
             case "Move":
-                currentActive.SetActive(true);
-                PosSelectView.SetActive(false);
+                StopPosSelect();
                 break;
             case "Strick":
                 if(ActionStage.CommitFireStrick(Pos)) GameManager.GM.currentPiece.SpecialActPoint -= 2;
@@ -133,7 +134,10 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
                 break;
             case "Mental":
                 ActionStage.CommitMentalAttack(Pos);
-
+                break;
+            case "Facility":
+                ActionStage.BuildFacility(currentSpell, Pos);
+                GameManager.GM.currentPiece.SpecialActPoint -= 1;
                 break;
         }
         //waitPosTar = "";
@@ -179,6 +183,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
     public void ReadyToMove()
     {
         PosSelectView.SetActive(true);
+        activeViewStack.Push(PosSelectView);
+
         currentActive.SetActive(false);
         PosSelectView.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "选择移动目的地";
 
@@ -203,6 +209,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
         }
         PosSelectView.SetActive(true);
         currentActive.SetActive(false);
+        activeViewStack.Push(PosSelectView);
+
         PosSelectView.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "选择移动目的地";
 
         GameManager.GM.SetMachineState(MachineState.WaitForceMoveTarget);
@@ -224,6 +232,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
         currentActive.SetActive(false);
         PosSelectView.SetActive(true);
+        activeViewStack.Push(PosSelectView);
 
         GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
         GameManager.GM.CanMachineStateChange = false;
@@ -233,7 +242,8 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
     {
         currentActive.SetActive(false);
         SpellList.SetActive(true);
-        needCloseSpellList = true;
+        activeViewStack.Push(SpellList);
+
         if (GameManager.GM.ActionSide == ArmyBelong.Human)
         {
             SpellList.transform.GetChild(1).gameObject.SetActive(true);
@@ -268,6 +278,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
         SpellList.SetActive(false);
         PosSelectView.SetActive(true);
+        activeViewStack.Push(PosSelectView);
 
         GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
         GameManager.GM.CanMachineStateChange = false;
@@ -280,6 +291,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
         currentActive.SetActive(false);
         AttackSelectView.SetActive(true);
+        activeViewStack.Push(AttackSelectView);
 
         GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
         GameManager.GM.CanMachineStateChange = false;
@@ -344,20 +356,13 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
     public void StopPosSelect()
     {
-        if (needCloseSpellList)
-        {
-            SpellList.SetActive(true);
-            needCloseSpellList = false;
-            GameManager.GM.CanMachineStateChange = false;
-        }
+        activeViewStack.Pop().SetActive(false);
+        if (activeViewStack.Count > 0) activeViewStack.Peek().SetActive(true);
         else
         {
-            SpellList.SetActive(false);
             currentActive.SetActive(true);
             GameManager.GM.CanMachineStateChange = true;
         }
-        PosSelectView.SetActive(false);
-        AttackSelectView.SetActive(false);
 
         FixGameData.FGD.MoveAreaMap.ClearAllTiles();
         FixGameData.FGD.AttackAreaMap.ClearAllTiles();
@@ -381,6 +386,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
         currentActive.SetActive(false);
         PosSelectView.SetActive(true);
+        activeViewStack.Push(PosSelectView);
 
         Map.SetArea(Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, 1), FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
 
@@ -388,4 +394,46 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
         GameManager.GM.CanMachineStateChange = false;
     }
 
+    public void PrepareBuildFacility()
+    {
+        currentActive.SetActive(false);
+        FacSelectView.SetActive(true);
+        activeViewStack.Push(FacSelectView);
+        needListen = true;
+    }
+
+    public void SelectBuild(string facId)
+    {
+        if(facId == "DefenceArea" && GameManager.GM.currentPiece.SpecialActPoint <= 1 ||
+            GameManager.GM.currentPiece.SpecialActPoint <= 0)
+        {
+            FixGameData.FGD.uiIndex.HintUI.SetText("行动点不足");
+            FixGameData.FGD.uiIndex.HintUI.gameObject.SetActive(true);
+            return;
+        }
+
+        if (facId == "DefenceArea")
+        {
+            ActionStage.BuildDefenceArea(GameManager.GM.currentPosition);
+            GameManager.GM.currentPiece.SpecialActPoint -= 2;
+            return;
+        }else if(facId == "EmergencyMaintenance")
+        {
+            ActionStage.DoEmergencyMaintenance(GameManager.GM.currentPosition);
+            GameManager.GM.currentPiece.SpecialActPoint -= 1;
+            return;
+        }
+
+        waitPosTar = "Facility";
+        currentSpell = facId;
+        List<CellInfo> Area = Map.PowerfulBrickAreaSearch(GameManager.GM.currentPosition, 1);
+        Map.SetArea(Area, FixGameData.FGD.AttackAreaMap, FixGameData.FGD.MoveArea, true);
+        
+        activeViewStack.Peek().SetActive(false);
+        PosSelectView.SetActive(true);
+        activeViewStack.Push(PosSelectView);
+
+        GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
+        GameManager.GM.CanMachineStateChange = false;
+    }
 }
