@@ -72,7 +72,7 @@ public class FixGameData : MonoBehaviour
 
     //人类方部队准备列表 信息： 部队总信息-部队入场方式-距离入场所需时间
     public List<Tuple<string, string, int>> HumanLoadList = new List<Tuple<string, string, int>>();
-    public List<Tuple<string, string, int>> HumanFixLoadList = new List<Tuple<string, string, int>>();
+    //public List<Tuple<string, string, int>> HumanFixLoadList = new List<Tuple<string, string, int>>();
     //人类方部队阵亡列表，用于回合初复活，内容为部队番号
     public List<string> HumanDeathList = new List<string>();
     //人类方支援签 — 以部队番号为Key，可用次数为Value
@@ -162,7 +162,7 @@ public class FacilityDataCell
     //是否激活
     public bool active { get; private set; }
 
-    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide,bool active = false)
+    public FacilityDataCell(string id, Vector3Int Pos,int Dir,int lastTime,bool atSide,bool active = true)
     {
         LastTime = lastTime;
         Id = id;

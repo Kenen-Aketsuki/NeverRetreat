@@ -146,7 +146,9 @@ public class MapInter : MonoBehaviour
 
                 break;
             default:
-                HttpConnect.instance.UpdatePieceKey();
+                //HttpConnect.instance.UpdatePieceKey();
+
+                FixGameData.FGD.HumanLoadList.Clear();
                 Debug.Log("δ֪��״̬:" + GameManager.GM.GetMachineState());
                 break;
         }

@@ -163,6 +163,40 @@ public static class BasicUtility
         return newPiece;
     }
 
+    public static GameObject SpawnPiece(Piece PData, Vector3Int Pos, bool needSort)
+    {
+        Transform parent;
+        PiecePool pool;
+
+        if (PData.Belong == ArmyBelong.Human)
+        {
+            parent = FixGameData.FGD.HumanPieceParent;
+
+        }
+        else
+        {
+            parent = FixGameData.FGD.CrashPieceParent;
+        }
+
+        GameObject newPiece = UnityEngine.Object.Instantiate(FixGameData.FGD.PiecePrefab, parent);
+        newPiece.transform.position = FixGameData.FGD.InteractMap.CellToWorld(Pos);
+        newPiece.name = parent.gameObject.GetComponent<PiecePool>().getRedomNo() + PData.PDesignation;
+        OB_Piece ps = newPiece.GetComponent<OB_Piece>();
+        ps.setPieceData(PData);
+
+        pool = parent.gameObject.GetComponent<PiecePool>();
+        if (needSort)
+        {
+            pool.AddChildInOrder(newPiece.name, Pos);
+        }
+        else
+        {
+            pool.AddChildNoOrder(newPiece.name, Pos);
+        }
+
+        return newPiece;
+    }
+
     public static Sprite getPieceIcon( string name )
     {
         string path = FixSystemData.PieceDirectory + "/img";

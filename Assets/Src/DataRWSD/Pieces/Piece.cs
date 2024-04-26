@@ -103,6 +103,7 @@ public class Piece
     public bool isTwo { get {return cATK == cDEF && nATK == nDEF;} }
     public Piece(XmlNode root,XmlNode otherData)
     {
+
         TroopName = root.Attributes["name"].Value;
         Designation = root.Attributes["designation"].Value;
         PieceID = root.Attributes["type"].Value;

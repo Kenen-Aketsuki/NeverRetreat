@@ -9,6 +9,7 @@ public class UIIndex : MonoBehaviour
     public GameObject TurnZeroUISet;
     public GameObject ModBattleUISet;
     public GameObject ActionUISet;
+    public GameObject SupportUISet;
 
     public GameObject AirStrickWindow;
     public GameObject RenforceWindow;

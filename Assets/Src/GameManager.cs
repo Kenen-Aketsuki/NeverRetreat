@@ -128,11 +128,14 @@ public class GameManager : MonoBehaviour
             case TurnStage.Action:
                 ActionStageStart();
                 break;
+            case TurnStage.Support:
+                SupportStageStart();
+                break;
         }
 
         currentPiece = null;
         currentPosition = new Vector3Int(114, 514);
-        machineState = MachineState.Idel;
+        SetMachineState(MachineState.Idel);
         FixGameData.FGD.uiIndex.scrollView.ClearCells();
     }
 
@@ -152,6 +155,9 @@ public class GameManager : MonoBehaviour
             case TurnStage.Action:
                 ActionStageEnd();
                 break;
+            case TurnStage.Support:
+                SupportStageEnd();
+                break;
 
         }
     }
@@ -161,13 +167,18 @@ public class GameManager : MonoBehaviour
         MaxMobilizationRate = 50;
         if(data == null)
         {
+            data = FixGameData.FGD.TurnDatas[CurrentTurnCount];
             //为空，按照默认从第零回合开始
-            MaxActiveFissureCount = FixGameData.FGD.TurnDatas[CurrentTurnCount].MaxActiveFissureAmmount;
-            MaxActiveStableNodeCount = FixGameData.FGD.TurnDatas[CurrentTurnCount].MaxActiveBarrierAmmount;
-            MaxCrashBandwidth = FixGameData.FGD.TurnDatas[CurrentTurnCount].CrashBundith;
-            Stage = FixGameData.FGD.TurnDatas[CurrentTurnCount].StartStage;
-            if (FixGameData.FGD.TurnDatas[CurrentTurnCount].PreTrainedAmount > 0) PreTrainTroop = FixGameData.FGD.TurnDatas[CurrentTurnCount].PreTrainedAmount;
-            if (FixGameData.FGD.TurnDatas[CurrentTurnCount].MobilizationRate > 0) MobilizationRate = FixGameData.FGD.TurnDatas[CurrentTurnCount].MobilizationRate;
+            MaxActiveFissureCount = data.MaxActiveFissureAmmount;
+            MaxActiveStableNodeCount = data.MaxActiveBarrierAmmount;
+            MaxCrashBandwidth = data.CrashBundith;
+            Stage = data.StartStage;
+            if (data.PreTrainedAmount > 0) PreTrainTroop = data.PreTrainedAmount;
+            if (data.MobilizationRate > 0) MobilizationRate = data.MobilizationRate;
+
+            //读取增援
+            FixGameData.FGD.HumanLoadList.AddRange(data.HumanReinforceList);
+            FixGameData.FGD.CrashLoadList.AddRange(data.CrashReinforceList);
         }
         else
         {
@@ -178,7 +189,12 @@ public class GameManager : MonoBehaviour
             MaxCrashBandwidth = data.CrashBundith;
             Stage = data.StartStage;
             PreTrainTroop = data.PreTrainedAmount;
+            //读取增援
+            //读取增援
+            FixGameData.FGD.HumanLoadList.AddRange(data.HumanReinforceList);
+            FixGameData.FGD.CrashLoadList.AddRange(data.CrashReinforceList);
 
+            //设置当前回合数
             CurrentTurnCount = data.TurnNo;
         }
     }
@@ -279,6 +295,41 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region //增援阶段
+
+    void SupportStageStart()
+    {
+        List<Tuple<string, string, int>> temp;
+        if (ActionSide == ArmyBelong.Human) temp = FixGameData.FGD.HumanLoadList;
+        else temp = FixGameData.FGD.CrashLoadList;
+
+        if(temp.Count > 0)
+        {
+            FixGameData.FGD.uiIndex.SupportUISet.SetActive(true);
+            SetMachineState(MachineState.Supporting);
+            CanMachineStateChange = false;
+        }
+        else
+        {
+            NextStage();
+        }
+
+        
+    }
+
+    void SupportStageEnd()
+    {
+        FixGameData.FGD.uiIndex.SupportUISet.SetActive(false);
+
+        if (ActionSide == ArmyBelong.Human) FixGameData.FGD.HumanLoadList = FixGameData.FGD.HumanLoadList.Where(x => x.Item3 != 0).ToList();
+        else FixGameData.FGD.CrashLoadList = FixGameData.FGD.CrashLoadList.Where(x => x.Item3 != 0).ToList();
+
+        CanMachineStateChange = true;
+        SetMachineState(MachineState.Idel);
+    }
+
+    #endregion
 }
 
 //有限状态机状态
@@ -296,7 +347,8 @@ public enum MachineState
     ActiveSpecialFac,
     RecoverTroop,
     SelectEventPosition,
-    SelectEnemyPiece
+    SelectEnemyPiece,
+    Supporting
 }
 //回合阶段
 public enum TurnStage

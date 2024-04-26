@@ -98,14 +98,14 @@
             <Reinforce TroopName="ForDII.101Rok" EnterPlace="Airpot" />  
             <Reinforce TroopName="ForDII.102Rok" EnterPlace="Airpot" />
             <Reinforce TroopName="ForDII.103Rok" EnterPlace="Airpot" />
-            <Reinforce TroopName="DawIV.101v" EnterPlace="Button-21" />
-            <Reinforce TroopName="DawIV.102v" EnterPlace="Button-21" />
-            <Reinforce TroopName="DawIV.103v" EnterPlace="Button-21" />
-            <Reinforce TroopName="DawIV.104vP" EnterPlace="Button-21"/>
-            <Reinforce TroopName="DawIV.201v" EnterPlace="Button-21" />
-            <Reinforce TroopName="DawIV.202v" EnterPlace="Button-21" />
-            <Reinforce TroopName="DawIV.203v" EnterPlace="Button-21" />
-            <Reinforce TroopName="DawIV.204vP" EnterPlace="Button-21" />
+            <Reinforce TroopName="DawIV.101v" EnterPlace="Bottom-21" />
+            <Reinforce TroopName="DawIV.102v" EnterPlace="Bottom-21" />
+            <Reinforce TroopName="DawIV.103v" EnterPlace="Bottom-21" />
+            <Reinforce TroopName="DawIV.104vP" EnterPlace="Bottom-21"/>
+            <Reinforce TroopName="DawIV.201v" EnterPlace="Bottom-21" />
+            <Reinforce TroopName="DawIV.202v" EnterPlace="Bottom-21" />
+            <Reinforce TroopName="DawIV.203v" EnterPlace="Bottom-21" />
+            <Reinforce TroopName="DawIV.204vP" EnterPlace="Bottom-21" />
         </reinforceList-Human>
     </Turn>
     <Turn No="5">

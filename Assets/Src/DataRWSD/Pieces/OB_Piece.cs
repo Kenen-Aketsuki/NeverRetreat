@@ -37,7 +37,7 @@ public class OB_Piece : MonoBehaviour
 
     //棋子状态
     bool needCheckGround = true; // 是否检查脚下
-    bool needMove = false;//是否需要移动
+    public bool needMove { get; private set; }//是否需要移动
     float timer;
     int invisiableDmg = 0;
 
@@ -51,6 +51,7 @@ public class OB_Piece : MonoBehaviour
     private void Awake()
     {
         PieceText = Instantiate(FixGameData.FGD.PieceInfoPrefab).GetComponent<PieseTextShow>();
+        needMove = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -197,6 +198,7 @@ public class OB_Piece : MonoBehaviour
         }
 
         if (Data.PDesignation == "Human.Betray") GameManager.GM.MobilizationRate--;
+        else if (Data.PDesignation.Contains("Infantry")) FixGameData.FGD.HumanDeathList.Add(Data.PDesignation);
 
         needChenkVisibility.Add(Pse.GetComponent<OB_Piece>().piecePosition);
         Destroy(Pse);
@@ -311,7 +313,6 @@ public class OB_Piece : MonoBehaviour
     {
         Vector3Int pos = cell.Positian;
         dir = Mathf.Max(0, dir);
-        Debug.Log(dir);
         List<LandShape> land = Map.GetPLaceInfo(pos, dir);
         if (land[6]?.id == "PosDisorderZone")
         {
@@ -474,11 +475,34 @@ public class OB_Piece : MonoBehaviour
         Data.ResetMov();
         UpdateData();
     }
-
+    //重置行动点
     public void ResetAction()
     {
         ActionPoint = 1;
         SpecialActPoint = 3;
         UpdateData();
+    }
+    
+    //强制杀死
+    public static void Kill(GameObject Pse, Piece Data)
+    {
+        if (Data.LoyalTo == ArmyBelong.Human)
+        {
+            FixGameData.FGD.HumanPiecePool.DelChildByID(Pse.name);
+        }
+        else
+        {
+            FixGameData.FGD.CrashPiecePool.DelChildByID(Pse.name);
+        }
+
+        needChenkVisibility.Add(Pse.GetComponent<OB_Piece>().piecePosition);
+        Destroy(Pse);
+        CheckVisibility();
+
+
+        Map.UpdateCrashBindwith();
+
+        //更新ZOC
+        Map.UpdateZOC();
     }
 }

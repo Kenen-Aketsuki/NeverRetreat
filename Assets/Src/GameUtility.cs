@@ -176,7 +176,6 @@ public static class GameUtility
                                 tarPos,
                                 0,
                                 FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["stayTime"] == null? FixSystemData.GlobalFacilityList[tileName].defaultExistTime:int.Parse(FacilityRow[rowFac].SelectSingleNode("facilityC").Attributes["stayTime"].Value),
-                                false,
                                 false
                                 ));
                         }
