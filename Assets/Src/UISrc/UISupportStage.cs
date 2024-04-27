@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class UISupportStage : MonoBehaviour
 {
+    [SerializeField]
+    int rua;
 
     private void OnEnable()
     {
@@ -20,10 +22,12 @@ public class UISupportStage : MonoBehaviour
     IEnumerator LoadPiece(List<Tuple<string, string, int>> orgList)
     {
         List<Tuple<string, string, int>> usablePiece = orgList.Where(x => x.Item3 == 0).ToList();
+        rua = 0;
 
         foreach(Tuple<string, string, int> pair in usablePiece)
         {
-            Debug.Log(pair.Item1 + " " + pair.Item2 + " " + pair.Item3);
+            rua++;
+            Debug.Log(pair.Item1 + "-" + pair.Item2);
             string[] enterPls = pair.Item2.Split("-");
             int center = enterPls.Count() > 2 ? int.Parse(enterPls[1]) : 0;
 
@@ -43,6 +47,7 @@ public class UISupportStage : MonoBehaviour
 
             if(piece != null) // 棋子移动结束前阻塞
             {
+                Debug.Log("a");
                 OB_Piece pic = piece.GetComponent<OB_Piece>();
                 while (pic.needMove) yield return null;
             }

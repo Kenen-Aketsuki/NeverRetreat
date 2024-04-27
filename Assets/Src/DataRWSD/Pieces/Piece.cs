@@ -220,7 +220,7 @@ public class Piece
             if (canCasualty && !inCasualty) inCasualty = !inCasualty;
             else return false;
         }
-        if (restMOV > cMaxMOV) restMOV = cMaxMOV;
+        if (restMOV > cMaxMOV && inCasualty) restMOV = cMaxMOV;
 
         return true;
     }

@@ -9,33 +9,36 @@ public class UIHint : MonoBehaviour
     TMP_Text textArea;
     [SerializeField]
     float exitTime;
-    bool startCount;
+
+    private void OnEnable()
+    {
+        if (exitTime == -1)
+        {
+            exitTime = 2;
+        }
+    }
 
     private void Update()
     {
-        if (startCount)
+        if (exitTime > 0)
         {
-            if(exitTime > 0)
-            {
-                exitTime -= Time.deltaTime;
-            }
-            else
-            {
-                startCount = false;
-                gameObject.SetActive(false);
-            }
+            exitTime -= Time.deltaTime;
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
     public void SetText(string str)
     {
         textArea.text = str;
+        exitTime = -1;
     }
 
     public void SetExitTime(float time)
     {
         exitTime = time;
-        startCount = true;
         gameObject.SetActive(true);
     }
 }

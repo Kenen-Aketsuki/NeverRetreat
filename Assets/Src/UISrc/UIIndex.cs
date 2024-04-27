@@ -10,6 +10,7 @@ public class UIIndex : MonoBehaviour
     public GameObject ModBattleUISet;
     public GameObject ActionUISet;
     public GameObject SupportUISet;
+    public GameObject CalculateUISet;
 
     public GameObject AirStrickWindow;
     public GameObject RenforceWindow;
@@ -18,5 +19,6 @@ public class UIIndex : MonoBehaviour
     public SelfCatchScroll scrollView;
     public UITurnData turnData;
     public UIHint HintUI;
+    public GameObject GameOverShow;
 
 }

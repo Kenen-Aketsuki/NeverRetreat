@@ -188,7 +188,8 @@ public class Streagy
         int finalNum = Math.Min(usableGuild, usableShelter);
         finalNum = Math.Min(finalNum, 100 - GameManager.GM.MobilizationRate);
         GameManager.GM.MobilizationRate += finalNum;
-        FixGameData.FGD.retreatCivScore += finalNum * 5;
+        //FixGameData.FGD.retreatCivScore += finalNum * 5;
+        FixGameData.FGD.resultMem.RetreatCiv(finalNum);
     }
 
 

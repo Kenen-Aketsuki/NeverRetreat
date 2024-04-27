@@ -97,6 +97,7 @@ public class Support
         if (!piece.GetComponent<OB_Piece>().MoveTo(endPos))
         {
             OB_Piece.Kill(piece, Data);
+            piece = null;
             return false;
         }
 

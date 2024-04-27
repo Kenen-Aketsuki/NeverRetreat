@@ -141,14 +141,14 @@ public class MapInter : MonoBehaviour
                 break;
             case MachineState.TestOnly:
                 //仅测试用
-                HttpConnect.instance.SendBattleFieldEnv(GameManager.GM.currentPiece);
+                //HttpConnect.instance.SendBattleFieldEnv(GameManager.GM.currentPiece);
 
-
+                GameManager.GM.GameEnd();
                 break;
             default:
                 //HttpConnect.instance.UpdatePieceKey();
-
-                FixGameData.FGD.HumanLoadList.Clear();
+                
+                
                 Debug.Log("未知的状态:" + GameManager.GM.GetMachineState());
                 break;
         }

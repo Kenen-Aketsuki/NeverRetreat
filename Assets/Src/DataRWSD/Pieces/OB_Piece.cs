@@ -39,6 +39,7 @@ public class OB_Piece : MonoBehaviour
     bool needCheckGround = true; // 是否检查脚下
     public bool needMove { get; private set; }//是否需要移动
     float timer;
+    [SerializeField]
     int invisiableDmg = 0;
 
     //获取地图坐标
@@ -73,6 +74,7 @@ public class OB_Piece : MonoBehaviour
 
     private void Update()
     {
+
         if (needMove)
         {
             //移动到坐标
@@ -85,7 +87,8 @@ public class OB_Piece : MonoBehaviour
                 if (PathCount < Path?.Count)
                 {
                     transform.position = FixGameData.FGD.InteractMap.CellToWorld(Path[PathCount].Positian);
-                    if(needCheckGround) CheckGround(Path[PathCount], Path[PathCount].fromDir);
+                    //if(needCheckGround) CheckGround(Path[PathCount], Path[PathCount].fromDir);
+                    if (needCheckGround) CheckGround(Path[PathCount]);
                     PathCount++;
                     timer = 0.1f;
                 }
@@ -198,7 +201,8 @@ public class OB_Piece : MonoBehaviour
         }
 
         if (Data.PDesignation == "Human.Betray") GameManager.GM.MobilizationRate--;
-        else if (Data.PDesignation.Contains("Infantry")) FixGameData.FGD.HumanDeathList.Add(Data.PDesignation);
+        else if (Data.PieceID.Contains("Infantry")) FixGameData.FGD.HumanDeathList.Add(Data.PDesignation);
+        else if (Data.PieceID == "GovermentVIP") FixGameData.FGD.resultMem.KillGOV();
 
         needChenkVisibility.Add(Pse.GetComponent<OB_Piece>().piecePosition);
         Destroy(Pse);
@@ -298,7 +302,11 @@ public class OB_Piece : MonoBehaviour
     {
         needCheckGround = true;
         Path.Clear();
-        TakeDemage(-invisiableDmg);
+        if (invisiableDmg != 0)
+        {
+            TakeDemage(-invisiableDmg);
+            invisiableDmg = 0;
+        }
 
         //重新布设棋子堆叠标志
         Map.UpdatePieceStackSign();
@@ -342,7 +350,45 @@ public class OB_Piece : MonoBehaviour
 
     }
 
+    public void CheckGround(CellInfo cell)
+    {
+        //若此处无法站立，则死亡
+        if (Map.GetNearMov(cell.Positian, 0, Data.LoyalTo) == -1) Death(gameObject, Data);
 
+        Tuple<int, Vector3Int> sidePos = Map.GetSideAddr(cell.Positian, cell.fromDir);
+
+        //检查设施
+        int addr = FixGameData.FGD.FacilityList.FindIndex(x => x.Positian == sidePos.Item2 && x.dir == sidePos.Item1);
+        FacilityDataCell fac = addr == -1 ? null : FixGameData.FGD.FacilityList[addr];
+        if (fac != null && (fac.Id == "Landmine" || fac.Id == "IFFLandmine"))
+        {
+            invisiableDmg += (int)fac.Data.Item2.HP_All.Item2;
+            invisiableDmg += (int)fac.Data.Item2.HP_IFF(Data.LoyalTo).Item2;
+            fac.RemoveSelf();
+            FixGameData.FGD.FacilityList.RemoveAt(addr);
+        }
+        //检查地形
+        addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Positian == cell.Positian);
+        fac = addr == -1 ? null : FixGameData.FGD.SpecialTerrainList[addr];
+        if (fac != null && fac.Id == "PosDisorderZone")
+        {
+            //踩到坐标紊乱区
+            EndMove();
+
+            FixGameData.FGD.CameraNow.transform.position = transform.position + new Vector3Int(0, 0, -10);
+            //随机生成终点
+            List<CellInfo> area = Map.PowerfulBrickAreaSearch(piecePosition, 10);
+            Vector3Int target = area[UnityEngine.Random.Range(0, area.Count)].Positian;
+
+            if (TPMoveTo(target)) Death(gameObject, Data);
+        }else if (fac != null && fac.Id == "DataDisorderZone")
+        {
+            CulateSupplyConnection(true, false);
+        }
+
+        
+
+    }
     //检查联络与补给，在回合末进行
     public void CheckSupplyConnect()
     {

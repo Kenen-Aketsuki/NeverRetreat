@@ -131,6 +131,9 @@ public class GameManager : MonoBehaviour
             case TurnStage.Support:
                 SupportStageStart();
                 break;
+            case TurnStage.Settle:
+                CalculateStageStart();
+                break;
         }
 
         currentPiece = null;
@@ -158,7 +161,9 @@ public class GameManager : MonoBehaviour
             case TurnStage.Support:
                 SupportStageEnd();
                 break;
-
+            case TurnStage.Settle:
+                CalculateStageEnd();
+                break;
         }
     }
     //加载回合信息
@@ -213,6 +218,13 @@ public class GameManager : MonoBehaviour
         {
             FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().OverTurn();
         }
+    }
+
+    public void GameEnd()
+    {
+        SetMachineState(MachineState.GameOver);
+        FixGameData.FGD.uiIndex.GameOverShow.SetActive(true);
+        Debug.Log("游戏结束");
     }
 
     //各个阶段起止
@@ -330,6 +342,27 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region //结算阶段
+    void CalculateStageStart()
+    {
+        if (ActionSide == ArmyBelong.ModCrash)
+        {
+            NextStage();
+            return;
+        }
+        FixGameData.FGD.uiIndex.CalculateUISet.SetActive(true);
+        SetMachineState(MachineState.Calculating);
+        CanMachineStateChange = false;
+    }
+
+    void CalculateStageEnd()
+    {
+        CanMachineStateChange = true;
+        SetMachineState(MachineState.Idel);
+        FixGameData.FGD.uiIndex.CalculateUISet.SetActive(false);
+    }
+    #endregion
 }
 
 //有限状态机状态
@@ -348,7 +381,9 @@ public enum MachineState
     RecoverTroop,
     SelectEventPosition,
     SelectEnemyPiece,
-    Supporting
+    Supporting,
+    Calculating,
+    GameOver
 }
 //回合阶段
 public enum TurnStage
@@ -373,3 +408,4 @@ public enum SpecialEvent
     TrainTroop,
     RetreatCiv
 }
+

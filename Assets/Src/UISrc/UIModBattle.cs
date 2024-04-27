@@ -176,8 +176,8 @@ public class UIModBattle : MonoBehaviour , IUIHandler,IAirStrick
         //选定坐标
         nowActive.SetActive(false);
         PosSelectView.SetActive(true);
-        FixGameData.FGD.uiIndex.HintUI.gameObject.SetActive(true);
         FixGameData.FGD.uiIndex.HintUI.SetText("请选择打击位置");
+        FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
         needListenPieceData = true;
 
         ModBattle.PrepareAttack(name);

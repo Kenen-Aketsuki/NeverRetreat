@@ -157,6 +157,11 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
                 currentActive.transform.GetChild(2).gameObject.SetActive(GameManager.GM.currentPiece.getPieceData().canStrike);
                 currentActive.transform.GetChild(3).gameObject.SetActive(GameManager.GM.currentPiece.getPieceData().canDoMagic);
                 currentActive.transform.GetChild(4).gameObject.SetActive(GameManager.GM.currentPiece.getPieceData().canBild);
+
+                bool canRetreat = GameManager.GM.currentPiece.getPieceData().PieceID == "GovermentVIP";
+                currentActive.transform.GetChild(5).gameObject.SetActive(canRetreat);
+
+
                 break;
             case "EnemyPiece":
                 currentActive.transform.GetChild(0).gameObject.SetActive(true);
@@ -408,7 +413,7 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
             GameManager.GM.currentPiece.SpecialActPoint <= 0)
         {
             FixGameData.FGD.uiIndex.HintUI.SetText("行动点不足");
-            FixGameData.FGD.uiIndex.HintUI.gameObject.SetActive(true);
+            FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
             return;
         }
 
@@ -435,5 +440,22 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
         GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
         GameManager.GM.CanMachineStateChange = false;
+    }
+
+    public void RetreatPiece()
+    {
+        if (Map.GetPLaceInfo(GameManager.GM.currentPosition, 0)[3]?.id != "Airpot" ||
+            GameManager.GM.MobilizationRate < 90)
+        {
+            FixGameData.FGD.uiIndex.HintUI.SetText(
+                $"政府要员只能在动员率超过90%时通过机场撤离，当前动员率为{GameManager.GM.MobilizationRate}%"
+            );
+            FixGameData.FGD.uiIndex.HintUI.SetExitTime(2);
+            return;
+        }
+        OB_Piece.Kill(GameManager.GM.currentPiece.gameObject, GameManager.GM.currentPiece.getPieceData());
+        FixGameData.FGD.resultMem.RetreatGOV();
+        GameManager.GM.currentPiece = null;
+        
     }
 }

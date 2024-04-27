@@ -104,13 +104,16 @@ public class FixGameData : MonoBehaviour
     //其它数值
     public int maxAirDefenceDis = 0;
     public int maxFireSupportDic = 0;
-
-    public int retreatCivScore = 0;
+    //撤退分
+    //public int retreatCivScore = 0;
+    //战果
+    public ResultMem resultMem;
 
 
     private void Awake()
     {
         FGD = this;
+        resultMem = new ResultMem();
     }
 
     public static Vector3Int MapToWorld(int x,int y)//存档坐标转游戏地图坐标
@@ -195,7 +198,7 @@ public class FacilityDataCell
             //本格设施
             startAddr = tmpf.isSpecialLandShape ? 14 : 7;
         }
-        else if((Data.Item1 == typeof(Facility) && dir != 0))
+        else if(Data.Item1 == typeof(Facility) && dir != 0)
         {
             Facility tmpf = (Facility)Data.Item2;
             //本格设施
@@ -220,3 +223,70 @@ public class FacilityDataCell
     }
 }
 
+//记录游戏战果
+public class ResultMem
+{
+    bool GOVGone;
+    bool GOV_Exit;
+    int retreatScore;
+
+    public ResultMem()
+    {
+        GOVGone = false;
+        GOV_Exit = false;
+        retreatScore = 0;
+    }
+
+    public void RetreatCiv(int amount)
+    {
+        retreatScore += amount;
+    }
+
+    public void RetreatGOV()
+    {
+        GOVGone = true;
+        GOV_Exit = true;
+    }
+
+    public void KillGOV()
+    {
+        GOVGone = true;
+        GOV_Exit = false;
+    }
+
+    public int FinalScore()
+    {
+        int score = 0;
+        //平民撤离
+        score += 5 * retreatScore;
+        //预备役储备
+        score += 3 * GameManager.GM.PreTrainTroop;
+        //坚守回合
+        score += GameManager.GM.CurrentTurnCount;
+        //撤离官员
+        if (GOV_Exit) score *= 2;
+
+        return score;
+    }
+
+    public bool CanGameEnd()
+    {
+        return GameManager.GM.CurrentTurnCount >= FixGameData.FGD.MaxRoundCount || GOVGone;
+    }
+
+    public EndingType GetEndType()
+    {
+        if (GOV_Exit && retreatScore > 25) return EndingType.Perfict;
+        else if (retreatScore > 25) return EndingType.Good;
+        else if (GOV_Exit) return EndingType.Normal;
+        else return EndingType.Bad;
+    }
+}
+
+public enum EndingType
+{
+    Perfict,//完美结局，政府撤离，平民撤离数量足够
+    Good,//好结局，撤离足够多平民
+    Normal,//普通结局，仅撤离政府
+    Bad //坏结局，政府没撤离，平民撤离少
+}

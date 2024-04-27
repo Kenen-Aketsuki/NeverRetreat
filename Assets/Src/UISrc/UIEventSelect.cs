@@ -96,8 +96,8 @@ public class UIEventSelect : MonoBehaviour
             SelectedEvent.Add(new Tuple<SpecialEvent, Vector3Int>(evn, Vector3Int.zero));
             if((int)CurrentEvent < 4)
             {
-                FixGameData.FGD.uiIndex.HintUI.gameObject.SetActive(true);
                 FixGameData.FGD.uiIndex.HintUI.SetText("选择事件位置");
+                FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
 
                 GameManager.GM.SetMachineState(MachineState.SelectEventPosition);
                 gameObject.SetActive(false);
