@@ -86,7 +86,6 @@ public class Support
         Dictionary<Vector3Int, CellInfo> MovArea = Map.DijkstraPathSerch(Pos, Data.MOV).Where(x => x.Value.moveCost != float.PositiveInfinity).ToDictionary(x => x.Key, x => x.Value);
 
         if (MovArea.Count == 1 && Map.GetNearMov(Pos, 0, GameManager.GM.ActionSide) == -1) return false;
-
         FixGameData.FGD.CameraNow.transform.position = FixGameData.FGD.InteractMap.CellToWorld(Pos) + new Vector3(0, 0, -10);
 
         Vector3Int endPos = MovArea.OrderByDescending(x => Map.HexDistence(x.Key, Pos)).ToList()[Random.Range(0, MovArea.Count)].Key;

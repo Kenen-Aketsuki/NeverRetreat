@@ -16,7 +16,7 @@ public class UIGameOver : MonoBehaviour
 
     private void OnEnable()
     {
-        //endingType = FixGameData.FGD.resultMem.GetEndType();
+        endingType = FixGameData.FGD.resultMem.GetEndType();
         setInfo();
         StartCoroutine(MoveCam());
     }

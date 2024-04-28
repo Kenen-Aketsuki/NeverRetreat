@@ -317,44 +317,8 @@ public class OB_Piece : MonoBehaviour
 
     }
     //检查脚下
-    public void CheckGround(CellInfo cell,int dir)
-    {
-        Vector3Int pos = cell.Positian;
-        dir = Mathf.Max(0, dir);
-        List<LandShape> land = Map.GetPLaceInfo(pos, dir);
-        if (land[6]?.id == "PosDisorderZone")
-        {
-            //踩到坐标紊乱区
-            EndMove();
-
-            FixGameData.FGD.CameraNow.transform.position = transform.position + new Vector3Int(0, 0, -10);
-            //随机生成终点
-            List<CellInfo> area = Map.PowerfulBrickAreaSearch(piecePosition, 10);
-            Vector3Int target = area[UnityEngine.Random.Range(0, area.Count)].Positian;
-
-            if (TPMoveTo(target)) Death(gameObject, Data);
-        }
-        else if(land[6]?.id == "DataDisorderZone")
-        {
-            //踩到数据紊乱区
-            CulateSupplyConnection(true, false);
-        }else if (land[4]?.id == "Landmine")
-        {
-            invisiableDmg += (int)land[4].HP_All.Item2;
-        }
-        else if(land[4]?.id == "IFFLandmine")
-        {
-            invisiableDmg += (int)land[4].HP_IFF(Data.LoyalTo).Item2;
-        }
-
-
-    }
-
     public void CheckGround(CellInfo cell)
     {
-        //若此处无法站立，则死亡
-        if (Map.GetNearMov(cell.Positian, 0, Data.LoyalTo) == -1) Death(gameObject, Data);
-
         Tuple<int, Vector3Int> sidePos = Map.GetSideAddr(cell.Positian, cell.fromDir);
 
         //检查设施
@@ -389,6 +353,12 @@ public class OB_Piece : MonoBehaviour
         
 
     }
+
+    public bool CheckStand()
+    {
+        //若此处无法站立，则死亡
+        return Map.GetNearMov(piecePosition, 0, Data.LoyalTo) == -1;
+    }
     //检查联络与补给，在回合末进行
     public void CheckSupplyConnect()
     {
@@ -412,8 +382,11 @@ public class OB_Piece : MonoBehaviour
         if (Data.Belong == ArmyBelong.Human) tarId = "HunterGuild";
         else tarId = "DimensionFissure";
 
+        List<FacilityDataCell> facList = FixGameData.FGD.FacilityList.Where(x => x.Id == tarId).ToList();
+        facList.AddRange(FixGameData.FGD.SpecialFacilityList.Where(x => x.Id == tarId));
+
         //从近到远排序工会
-        foreach (FacilityDataCell dta in FixGameData.FGD.FacilityList.Where(x=>x.Id == tarId).OrderBy(x=>Map.HexDistence(piecePosition,x.Positian)).ToList())
+        foreach (FacilityDataCell dta in facList.OrderBy(x => Map.HexDistence(piecePosition, x.Positian)))
         {
             //依次寻路，若有则直接跳出，否则认为没有。
             if (Map.AStarPathSerch(piecePosition, dta.Positian, 20) != null)
@@ -496,8 +469,6 @@ public class OB_Piece : MonoBehaviour
     //瞬移
     public bool TPMoveTo(Vector3Int Target)
     {
-        if (Map.GetNearMov(Target, 0, Data.LoyalTo) == -1) return false;
-        
         PiecePool pool;
         if (Data.LoyalTo == ArmyBelong.Human) pool = FixGameData.FGD.HumanPiecePool;
         else pool = FixGameData.FGD.CrashPiecePool;

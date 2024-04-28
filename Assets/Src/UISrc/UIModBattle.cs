@@ -171,6 +171,13 @@ public class UIModBattle : MonoBehaviour , IUIHandler,IAirStrick
 
     public void DoModAttck(string name)
     {
+        if (GameManager.GM.currentPiece.SpecialActPoint <= 0)
+        {
+            FixGameData.FGD.uiIndex.HintUI.SetText("行动点不足");
+            FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
+            return;
+        }
+
         currentAttack = name;
 
         //选定坐标

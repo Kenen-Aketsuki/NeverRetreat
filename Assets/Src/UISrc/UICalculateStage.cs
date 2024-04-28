@@ -6,13 +6,13 @@ public class UICalculateStage : MonoBehaviour
 {
     private void OnEnable()
     {
+        Calculate.EndStageCalculate();
         if (FixGameData.FGD.resultMem.CanGameEnd())
         {
             GameManager.GM.GameEnd();
         }
         else
         {
-            Calculate.EndStageCalculate();
             StartCoroutine(Delay());
         }
     }

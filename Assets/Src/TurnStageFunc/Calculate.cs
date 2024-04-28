@@ -22,15 +22,15 @@ public class Calculate
         for (int i = 0; i < FixGameData.FGD.HumanPieceParent.childCount; i++)
         {
             OB_Piece pic = FixGameData.FGD.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>();
-            pic.CheckGround(new CellInfo(pic.piecePosition, Vector3Int.zero));
             pic.CheckSupplyConnect();
+            if (pic.CheckStand()) OB_Piece.Death(pic.gameObject, pic.getPieceData());
         }
 
         for (int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
         {
             OB_Piece pic = FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>();
-            pic.CheckGround(new CellInfo(pic.piecePosition, Vector3Int.zero));
             pic.CheckSupplyConnect();
+            if (pic.CheckStand()) OB_Piece.Death(pic.gameObject, pic.getPieceData());
         }
     }
 

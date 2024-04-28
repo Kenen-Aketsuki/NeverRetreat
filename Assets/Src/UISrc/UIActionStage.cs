@@ -51,9 +51,12 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
             PosSelectView.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "可用攻击次数: " + GameManager.GM.currentPiece.SpecialActPoint;
         }else if(needListen && waitPosTar == "Attack")
         {
-            AttackSelectView.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = 
-                "攻守战力比: " + ATK +"/" + DEF + 
-                " 战果评级: " + FixSystemData.battleJudgeForm.GetRRK(ATK,DEF) + RRKMend.ToString();
+            string str = "攻守战力比: " + ATK + "/" + DEF +
+                " 战果评级: " + FixSystemData.battleJudgeForm.GetRRK(ATK, DEF);
+
+            if (RRKMend.ToString().StartsWith("-")) str += RRKMend.ToString();
+            else str += "+" + RRKMend.ToString();
+            AttackSelectView.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = str;
         }
     }
 
@@ -245,6 +248,13 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
     public void CastSpell()
     {
+        if (GameManager.GM.currentPiece.SpecialActPoint <= 0)
+        {
+            FixGameData.FGD.uiIndex.HintUI.SetText("行动点不足");
+            FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
+            return;
+        }
+
         currentActive.SetActive(false);
         SpellList.SetActive(true);
         activeViewStack.Push(SpellList);
@@ -386,6 +396,13 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
     public void PrepareMentalAttack()
     {
+        if (GameManager.GM.currentPiece.SpecialActPoint <= 0)
+        {
+            FixGameData.FGD.uiIndex.HintUI.SetText("行动点不足");
+            FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
+            return;
+        }
+
         waitPosTar = "Mental";
         needListen = true;
 
@@ -401,6 +418,13 @@ public class UIActionStage : MonoBehaviour , IUIHandler , IAirStrick
 
     public void PrepareBuildFacility()
     {
+        if (GameManager.GM.currentPiece.SpecialActPoint <= 0)
+        {
+            FixGameData.FGD.uiIndex.HintUI.SetText("行动点不足");
+            FixGameData.FGD.uiIndex.HintUI.SetExitTime(1);
+            return;
+        }
+
         currentActive.SetActive(false);
         FacSelectView.SetActive(true);
         activeViewStack.Push(FacSelectView);
