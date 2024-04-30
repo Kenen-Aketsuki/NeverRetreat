@@ -823,8 +823,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -936}
-  m_SizeDelta: {x: 929.71, y: 652.66}
+  m_AnchoredPosition: {x: 0.000061035, y: -965.17}
+  m_SizeDelta: {x: 1319.75, y: 652.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &182566632
 MonoBehaviour:
@@ -1213,7 +1213,7 @@ GameObject:
   - component: {fileID: 423354528}
   - component: {fileID: 423354527}
   m_Layer: 5
-  m_Name: Option
+  m_Name: CheckConnect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1282,7 +1282,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 423354528}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1707344567}
+        m_TargetAssemblyTypeName: UITitleEvents, Assembly-CSharp
+        m_MethodName: checkHttpConnection
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1086395972}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &423354528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2437,7 +2449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8BBE\u7F6E"
+  m_text: "\u68C0\u67E5\u8FDE\u63A5"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8ece954f778554e46ad0c130fb6f5f85, type: 2}
   m_sharedMaterial: {fileID: 6811364152968882085, guid: 8ece954f778554e46ad0c130fb6f5f85, type: 2}
@@ -3609,6 +3621,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609180623}
   m_CullTransparentMesh: 1
+--- !u!1 &1640037757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1640037759}
+  - component: {fileID: 1640037758}
+  m_Layer: 0
+  m_Name: NetConnector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1640037758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640037757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c29ae0027892034baf5217d00087a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1640037759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640037757}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.45217, y: -0.26074618, z: 675.0944}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1688794999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4737,3 +4793,4 @@ SceneRoots:
   - {fileID: 858500817}
   - {fileID: 1707344565}
   - {fileID: 1868321876}
+  - {fileID: 1640037759}

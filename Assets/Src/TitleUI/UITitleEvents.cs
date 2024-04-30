@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using TMPro;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,17 +35,17 @@ public class UITitleEvents : MonoBehaviour
         ani.SetBool("startGame", false);
 
         UnNamedCount = 0;
-        foreach(string path in Directory.GetDirectories(FixSystemData.SaveDirectory))
+        foreach (string path in Directory.GetDirectories(FixSystemData.SaveDirectory))
         {
             Debug.Log(Path.GetFileName(path));
-            if(Regex.Match(path, @"誓死坚守\d+").Success)
+            if (Regex.Match(path, @"誓死坚守\d+").Success)
             {
                 UnNamedCount++;
             }
         }
 
     }
-    
+
     public void GameInit(bool isNew)
     {
         if (SaveElement.onlySelect == null && !isNew) return;
@@ -63,7 +65,7 @@ public class UITitleEvents : MonoBehaviour
 
         ani.SetBool("startGame", true);
     }
-    
+
     public void NewGame()
     {
         ani.SetBool("DisStart", true);
@@ -91,7 +93,7 @@ public class UITitleEvents : MonoBehaviour
     {
         StartCoroutine(StartGame());
     }
-    
+
     public void saveNameSet(TMP_Text change)
     {
         Debug.Log(change.text);
@@ -111,6 +113,24 @@ public class UITitleEvents : MonoBehaviour
     {
         faceAI = !faceAI;
         txt.text = "游戏模式：" + (faceAI ? "PVE" : "PVP");
+    }
+
+    public void checkHttpConnection(TMP_Text txt)
+    {
+        txt.text = "连接中…";
+        Action<string> callback = x =>
+        {
+            if(x == "OK")
+            {
+                txt.text = "正常连接";
+            }
+            else
+            {
+                txt.text = "连接出错";
+            }
+            
+        };
+        HttpConnect.instance.InitServe(callback);
     }
 
     IEnumerator UpdateSaveList(List<SaveData> saveList)

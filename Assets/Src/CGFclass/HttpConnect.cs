@@ -13,6 +13,7 @@ public class HttpConnect : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void InitServe(Action<string> callback = null)
@@ -59,7 +60,7 @@ public class HttpConnect : MonoBehaviour
             }
             else
             {
-                Debug.LogError(webRequest.error);
+                callback(webRequest.error);
             }
         }
     }
