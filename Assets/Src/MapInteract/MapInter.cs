@@ -143,7 +143,9 @@ public class MapInter : MonoBehaviour
                 //仅测试用
                 //HttpConnect.instance.SendBattleFieldEnv(GameManager.GM.currentPiece);
 
-                GameManager.GM.GameEnd();
+                GameUtility.Save = "TestSave";
+                GameUtility.saveData = new SaveData("TestSave", "PVP");
+                GameUtility.保存游戏();
                 break;
             default:
                 //HttpConnect.instance.UpdatePieceKey();

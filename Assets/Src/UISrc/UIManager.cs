@@ -70,6 +70,11 @@ public class UIManager : MonoBehaviour
     //当前阶段激活的UI
     public MonoBehaviour actUI;
 
+    private void Update()
+    {
+        FixGameData.FGD.uiIndex.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
+    }
+
     public void UI_SwitchStage()
     {
         if (GameManager.GM.GetMachineState() == MachineState.FocusOnPiece ||
@@ -78,7 +83,6 @@ public class UIManager : MonoBehaviour
             GameManager.GM.GetMachineState() == MachineState.Idel)
         {
             GameManager.GM.NextStage();
-            FixGameData.FGD.uiIndex.TurnShowText.text = GameManager.GM.CurrentTurnCount + " / " + FixGameData.FGD.MaxRoundCount;
         }
         
     }

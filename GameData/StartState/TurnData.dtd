@@ -3,6 +3,7 @@
 <!ATTLIST Turn No CDATA #REQUIRED><!-- 回合编号-->
 <!ATTLIST Turn Allow (Human|Crash|Both) #IMPLIED><!-- 本回合允许行动，不填默认未Both-->
 <!ATTLIST Turn isSave (True|False) #IMPLIED><!-- 是否为存档，默认为false-->
+<!ATTLIST Turn startFrom (Human|Crash) #IMPLIED><!-- 起始方，默认为Crash-->
 
 <!ELEMENT MaxActiveBarrierAmmount (#PCDATA)><!-- 最大安定节点激活数 -->
 <!ELEMENT MaxActiveFissureAmmount (#PCDATA)><!-- 最大次元裂隙激活数 -->

@@ -46,7 +46,6 @@ public static class Map
     public static Tuple<int, Vector3Int> GetSideAddr(Vector3Int Pos, int direction)
     {
         int map;
-        int y = Math.Abs(Pos.y);
         Vector3Int endPos;
         switch (direction)
         {
@@ -78,7 +77,7 @@ public static class Map
                 map = 2;
                 break;
             default:
-                endPos = Vector3Int.zero;
+                endPos = Pos;
                 map = 0;
                 break;
         }

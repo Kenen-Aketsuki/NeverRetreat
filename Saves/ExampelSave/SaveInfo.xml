@@ -1,0 +1,7 @@
+<!DOCTYPE SaveInfo SYSTEM "../GameSave.dtd">
+<SaveInfo>
+    <saveName>训练用场景</saveName>
+    <saveTime>1919/8/10</saveTime>
+    <gameMode>PVE</gameMode>
+    <currentTurn>0</currentTurn>
+</SaveInfo>

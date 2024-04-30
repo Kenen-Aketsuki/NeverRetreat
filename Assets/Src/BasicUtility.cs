@@ -357,68 +357,102 @@ public static class BasicUtility
                 }
                 //编写设施(格边)
                 tmpStr = "";
+                string tmpStaytime = "";
                 tmpTile = gamedata.MapList[8].GetTile(pos);
                 if (tmpTile != null) 
                 {
                     tmpStr += tmpTile.name + "-";
-                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
-                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
-                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count != 0) tmpStaytime += tmpFacLst[0].LastTime.ToString();
 
-                }  else tmpStr += "X-";
+                }
+                else
+                {
+                    tmpStr += "X-";
+                    tmpStaytime += "X";
+                }
 
                 tmpTile = gamedata.MapList[9].GetTile(pos);
                 if (tmpTile != null)
                 {
                     tmpStr += tmpTile.name + "-";
-                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
-                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
-                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
-                } else tmpStr += "X-";
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count != 0) tmpStaytime += "-" + tmpFacLst[0].LastTime.ToString();
+                }
+                else
+                {
+                    tmpStr += "X-";
+                    tmpStaytime += "-X";
+                }
                 
                 tmpTile = gamedata.MapList[10].GetTile(pos);
                 if (tmpTile != null) 
                 {
                     tmpStr += tmpTile.name;
-                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && x.Id == tmpTile.name).ToList();
-                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
-                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
-                } else tmpStr += "X";
+                    tmpFacLst = FixGameData.FGD.FacilityList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count == 0) tmpFacLst = FixGameData.FGD.SpecialFacilityList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count != 0) tmpStaytime += "-" + tmpFacLst[0].LastTime.ToString();
+                }
+                else
+                {
+                    tmpStr += "X";
+                    tmpStaytime += "-X";
+                }
+
                 if (tmpStr != "X-X-X")
                 {
                     tmp = xmlDoc.CreateElement("facilityS");
                     tmp.InnerText = tmpStr;
+                    tmp.SetAttribute("stayTime", tmpStaytime);
                     Row.AppendChild(tmp);
                 }
                 //特殊地形(格边)
                 tmpStr = "";
+                tmpStaytime = "";
                 tmpTile = gamedata.MapList[11].GetTile(pos);
                 if (tmpTile != null) 
                 {
                     tmpStr += tmpTile.name + "-";
-                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
-                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
-                } else tmpStr += "X-";
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count != 0) tmpStaytime += tmpFacLst[0].LastTime.ToString(); 
+                } else
+                {
+                    tmpStr += "X-";
+                    tmpStaytime += "X";
+                }
 
                 tmpTile = gamedata.MapList[12].GetTile(pos);
                 if (tmpTile != null) 
                 {
                     tmpStr += tmpTile.name + "-";
-                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
-                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
-                } else tmpStr += "X-";
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count != 0) tmpStaytime += "-" + tmpFacLst[0].LastTime.ToString();
+                } else
+                {
+                    tmpStr += "X-";
+                    tmpStaytime += "-X";
+                }
 
                 tmpTile = gamedata.MapList[13].GetTile(pos);
                 if (tmpTile != null) 
                 {
                     tmpStr += tmpTile.name;
-                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && x.Id.StartsWith(tmpTile.name)).ToList();
-                    if (tmpFacLst.Count != 0) tmp.SetAttribute("stayTime", tmpFacLst[0].LastTime.ToString());
-                } else tmpStr += "X";
+                    tmpFacLst = FixGameData.FGD.SpecialTerrainList.Where(x => x.Positian == pos && tmpTile.name.StartsWith(x.Id)).ToList();
+                    if (tmpFacLst.Count != 0) tmpStaytime += "-" + tmpFacLst[0].LastTime.ToString();
+                }
+                else
+                {
+                    tmpStr += "X";
+                    tmpStaytime += "-X";
+                }
+
                 if (tmpStr != "X-X-X")
                 {
                     tmp = xmlDoc.CreateElement("specialTerrainS");
                     tmp.InnerText = tmpStr;
+                    tmp.SetAttribute("stayTime", tmpStaytime);
                     Row.AppendChild(tmp);
                 }
                 //特殊地形(格内)
@@ -463,8 +497,8 @@ public static class BasicUtility
         //保存人类方棋子
         for (int i= 0; i < gamedata.HumanPieceParent.childCount; i++)
         {
-            //pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData();
-            pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<rua>().getData();
+            pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceDataPack();
+            //pData = gamedata.HumanPieceParent.GetChild(i).GetComponent<rua>().getData();
 
             tmp = xmlDoc.CreateElement("Piece");
             tmp.SetAttribute("troopName", pData.Item1);
@@ -482,8 +516,8 @@ public static class BasicUtility
         //保存崩坏方棋子
         for (int i = 0; i < gamedata.CrashPieceParent.childCount; i++)
         {
-            //pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceData();
-            pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<rua>().getData();
+            pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>().getPieceDataPack();
+            //pData = gamedata.CrashPieceParent.GetChild(i).GetComponent<rua>().getData();
 
             tmp = xmlDoc.CreateElement("Piece");
             tmp.SetAttribute("troopName", pData.Item1);
@@ -551,7 +585,151 @@ public static class BasicUtility
         xmlDoc.Save(path);
     }
 
+    public static void saveTurnData(string path)//保存回合信息
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        XmlDeclaration Dec = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+        xmlDoc.AppendChild(Dec);
+        XmlNode root = xmlDoc.CreateElement("TurnData");
+        xmlDoc.AppendChild(root);
 
+        TurnData data = FixGameData.FGD.TurnDatas[GameManager.GM.CurrentTurnCount];
+        XmlElement temp = xmlDoc.CreateElement("Turn");
+        temp.SetAttribute("No", GameManager.GM.CurrentTurnCount.ToString());
+        temp.SetAttribute("startFrom", GameManager.GM.ActionSide.ToString());
+        temp.SetAttribute("isSave", "true");
+        root.AppendChild(temp);
+        root = temp;
+
+        temp = xmlDoc.CreateElement("MaxActiveBarrierAmmount");
+        temp.InnerText = data.MaxActiveBarrierAmmount.ToString();
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("MaxActiveFissureAmmount");
+        temp.InnerText = data.MaxActiveFissureAmmount.ToString();
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("CrashBundith");
+        temp.InnerText = data.CrashBundith.ToString();
+        root.AppendChild(temp);
+
+
+        temp = xmlDoc.CreateElement("StartStage");
+        temp.InnerText =GameManager.GM.Stage.ToString();
+        root.AppendChild(temp);
+        
+        temp = xmlDoc.CreateElement("MobilizationRate");
+        temp.InnerText = GameManager.GM.MobilizationRate.ToString();
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("TrainedTroopMount");
+        temp.InnerText = GameManager.GM.PreTrainTroop.ToString();
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("CurrentResult");
+        Tuple<bool, bool, int> resu = FixGameData.FGD.resultMem.GetCurrentResu();
+        temp.SetAttribute("GovGone", resu.Item1.ToString());
+        temp.SetAttribute("GovExit", resu.Item2.ToString());
+        temp.SetAttribute("RetreatCiv", resu.Item3.ToString());
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("reinforceList-Human");
+        foreach(Tuple<string,string,int> reforce in FixGameData.FGD.HumanLoadList)
+        {
+            XmlElement reftrop = xmlDoc.CreateElement("Reinforce");
+            reftrop.SetAttribute("TroopName", reforce.Item1);
+            reftrop.SetAttribute("EnterPlace", reforce.Item2);
+            reftrop.SetAttribute("ResTurn", reforce.Item3.ToString());
+            temp.AppendChild(reftrop);
+        }
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("reinforceList-Crash");
+        foreach (Tuple<string, string, int> reforce in FixGameData.FGD.CrashLoadList)
+        {
+            XmlElement reftrop = xmlDoc.CreateElement("Reinforce");
+            reftrop.SetAttribute("TroopName", reforce.Item1);
+            reftrop.SetAttribute("EnterPlace", reforce.Item2);
+            reftrop.SetAttribute("ResTurn", reforce.Item3.ToString());
+            temp.AppendChild(reftrop);
+        }
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("BegianSupportList");
+        XmlElement temp2 = xmlDoc.CreateElement("HumanList");
+        foreach (KeyValuePair<string,Tuple<Piece,int>> sup in FixGameData.FGD.HumanSupportDic)
+        {
+            XmlElement reftrop = xmlDoc.CreateElement("Item");
+            reftrop.SetAttribute("TroopName", sup.Key);
+            reftrop.SetAttribute("UseableTime", sup.Value.Item2.ToString());
+            temp2.AppendChild(reftrop);
+        }
+        temp.AppendChild(temp2);
+
+        temp2 = xmlDoc.CreateElement("CrashList");
+        foreach (KeyValuePair<string, Tuple<Piece, int>> sup in FixGameData.FGD.CrashSupportDic)
+        {
+            XmlElement reftrop = xmlDoc.CreateElement("Item");
+            reftrop.SetAttribute("TroopName", sup.Key);
+            reftrop.SetAttribute("UseableTime", sup.Value.Item2.ToString());
+            temp2.AppendChild(reftrop);
+        }
+        temp.AppendChild(temp2);
+
+        root.AppendChild(temp);
+        xmlDoc.Save(path);
+    }
+
+    public static void saveSaveData(string path)
+    {
+        GameUtility.saveData.setSavingData(GameManager.GM.CurrentTurnCount);
+        XmlDocument xmlDoc = new XmlDocument();
+        XmlDeclaration Dec = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", "yes");
+        xmlDoc.AppendChild(Dec);
+        XmlNode root = xmlDoc.CreateElement("SaveInfo");
+        xmlDoc.AppendChild(root);
+        
+        XmlElement temp = xmlDoc.CreateElement("saveName");
+        temp.InnerText = GameUtility.saveData.saveName;
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("saveTime");
+        temp.InnerText = GameUtility.saveData.saveTime;
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("gameMode");
+        temp.InnerText = GameUtility.saveData.gameMode;
+        root.AppendChild(temp);
+
+        temp = xmlDoc.CreateElement("currentTurn");
+        temp.InnerText = GameUtility.saveData.currentTurn.ToString();
+        root.AppendChild(temp);
+
+        xmlDoc.Save(path);
+    }
+
+    public static List<SaveData> LoadSaves()
+    {
+        List<SaveData> resu = new List<SaveData>();
+        XmlDocument doc = new XmlDocument();
+        foreach(string file in Directory.GetDirectories(FixSystemData.SaveDirectory))
+        {
+            SaveData data = null;
+            string path = file + "\\SaveInfo.xml";
+            
+            //校验完整性
+            if (File.Exists(path))
+            {
+                doc.Load(path);
+                data = new SaveData(doc.DocumentElement, Path.GetFileName(file));
+
+                resu.Add(data);
+            }
+        }
+
+
+        return resu;
+    }
 }
 
 public enum ArmyBelong

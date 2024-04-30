@@ -322,19 +322,20 @@ public class OB_Piece : MonoBehaviour
         Tuple<int, Vector3Int> sidePos = Map.GetSideAddr(cell.Positian, cell.fromDir);
 
         //检查设施
-        int addr = FixGameData.FGD.FacilityList.FindIndex(x => x.Positian == sidePos.Item2 && x.dir == sidePos.Item1);
+        int addr = FixGameData.FGD.FacilityList.FindIndex(x => x.Positian == sidePos.Item2 && x.dir == sidePos.Item1 + 1);
         FacilityDataCell fac = addr == -1 ? null : FixGameData.FGD.FacilityList[addr];
         if (fac != null && (fac.Id == "Landmine" || fac.Id == "IFFLandmine"))
         {
             invisiableDmg += (int)fac.Data.Item2.HP_All.Item2;
-            invisiableDmg += (int)fac.Data.Item2.HP_IFF(Data.LoyalTo).Item2;
+            Tuple<FixWay, float> fix = fac.Data.Item2.HP_IFF(Data.LoyalTo);
+            invisiableDmg += (int)(fix != null ? fix.Item2 : 0);
             fac.RemoveSelf();
             FixGameData.FGD.FacilityList.RemoveAt(addr);
         }
         //检查地形
         addr = FixGameData.FGD.SpecialTerrainList.FindIndex(x => x.Positian == cell.Positian);
         fac = addr == -1 ? null : FixGameData.FGD.SpecialTerrainList[addr];
-        if (fac != null && fac.Id == "PosDisorderZone")
+        if (fac != null && fac.Id == "PosDisorderZone" && Data.LoyalTo == ArmyBelong.Human)
         {
             //踩到坐标紊乱区
             EndMove();
@@ -345,7 +346,7 @@ public class OB_Piece : MonoBehaviour
             Vector3Int target = area[UnityEngine.Random.Range(0, area.Count)].Positian;
 
             if (TPMoveTo(target)) Death(gameObject, Data);
-        }else if (fac != null && fac.Id == "DataDisorderZone")
+        }else if (fac != null && fac.Id == "DataDisorderZone" && Data.LoyalTo == ArmyBelong.Human)
         {
             CulateSupplyConnection(true, false);
         }

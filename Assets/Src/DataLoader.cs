@@ -9,13 +9,9 @@ using UnityEngine.Tilemaps;
 
 public class DataLoader : MonoBehaviour
 {
-    public Tilemap map;
-    public TileBase tile1;
-    public TileBase tile2;
-
     void Start()
     {
-        BasicUtility.DataInit();//加载数据
+        //BasicUtility.DataInit();//加载数据
 
         //HttpConnect.instance.InitServe(x=>Debug.Log("Serve init success"));// 初始化服务端
 
@@ -36,8 +32,8 @@ public class DataLoader : MonoBehaviour
         //GameUtility.Save = "ExampelSave";
         //GameUtility.游戏初始化();
 
-        GameUtility.fromSave = false;
-        GameUtility.Save = "";
+        //GameUtility.fromSave = false;
+        //GameUtility.Save = "";
         GameUtility.游戏初始化();
 
         //List<Tuple<string, int, int>> clist = FixGameData.FGD.HumanPieceParent.GetComponent<PiecePool>().childList;

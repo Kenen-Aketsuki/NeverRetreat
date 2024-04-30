@@ -1,0 +1,6 @@
+<!ELEMENT SaveInfo (saveName,saveTime,gameMode,currentTurn)>
+
+<!ELEMENT saveTime (#PCDATA)>
+<!ELEMENT saveName (#PCDATA)>
+<!ELEMENT gameMode (#PCDATA)>
+<!ELEMENT currentTurn (#PCDATA)>

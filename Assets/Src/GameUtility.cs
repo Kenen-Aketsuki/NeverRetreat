@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using Unity.Mathematics;
@@ -13,10 +14,11 @@ public static class GameUtility
     public static Tuple<int, int> rowRange;
 
     public static TurnData saveTurn;
-    public static float TileMapCellStep { get { return 2.16f; } }
 
-    public static bool fromSave;
-    public static string Save;
+    public static bool fromSave = false;
+    public static string Save = "";
+
+    public static SaveData saveData;
 
     public static void 游戏初始化()
     {
@@ -27,7 +29,7 @@ public static class GameUtility
         //录入回合信息
         从预设中读取回合信息();
         saveTurn = null;
-        if (fromSave)
+        if (fromSave && File.Exists(FixSystemData.SaveDirectory +  Save + "\\Turns.xml"))
         {
             //读取存档的回合信息
             读取存档的回合信息();
@@ -54,9 +56,9 @@ public static class GameUtility
         xmlDoc.Load(FixSystemData.GameInitDirectory + "\\Terrain.xml");
         XmlNode TerrainRoot = xmlDoc.DocumentElement;
 
-        if (fromSave)
+        if (fromSave && File.Exists(FixSystemData.SaveDirectory + Save + "\\Facility.xml"))
         {
-            xmlDoc.Load(FixSystemData.SaveDirectory + "\\" + Save + "\\Facility.xml");
+            xmlDoc.Load(FixSystemData.SaveDirectory +  Save + "\\Facility.xml");
         }
         else
         {
@@ -328,18 +330,14 @@ public static class GameUtility
             columNo++;
         }
 
-        
-        
-        
-
     }
 
     public static void 从预设中读取棋子(bool fromSave,string Save)
     {
         XmlDocument xmlDoc = new XmlDocument();
-        if (fromSave)
+        if (fromSave && File.Exists(FixSystemData.SaveDirectory  + Save + "\\Piece.xml"))
         {
-            xmlDoc.Load(FixSystemData.SaveDirectory + "\\" + Save + "\\Piece.xml");
+            xmlDoc.Load(FixSystemData.SaveDirectory + Save + "\\Piece.xml");
         }
         else
         {
@@ -444,13 +442,21 @@ public static class GameUtility
     public static void 读取存档的回合信息()
     {
         XmlDocument xmlDoc = new XmlDocument();
-        xmlDoc.Load(FixSystemData.SaveDirectory + "\\" + Save + "\\Turns.xml");
+        xmlDoc.Load(FixSystemData.SaveDirectory + Save + "\\Turns.xml");
 
         XmlNode TurnRoot = xmlDoc.DocumentElement;
 
         saveTurn = new TurnData(TurnRoot.FirstChild);
 
-        初始化支援签列表(TurnRoot.SelectSingleNode("BegianSupportList"));
+        初始化支援签列表(TurnRoot.FirstChild.SelectSingleNode("BegianSupportList"));
+    }
+
+    public static void 保存游戏()
+    {
+        BasicUtility.saveTurnData(FixSystemData.SaveDirectory + Save + "\\Turns.xml");
+        BasicUtility.saveFacillitys(FixSystemData.SaveDirectory + Save + "\\Facility.xml");
+        BasicUtility.savePiece(FixSystemData.SaveDirectory + Save + "\\Piece.xml");
+        BasicUtility.saveSaveData(FixSystemData.SaveDirectory + Save + "\\SaveInfo.xml");
     }
     //生成行目录
     static public void GenColumIndex(List<Tuple<string, int, int>> childList,ref Dictionary<int, Tuple<int, int>> listIndex)

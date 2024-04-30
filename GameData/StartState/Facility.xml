@@ -70,12 +70,6 @@
       </Row>
     </Colum>
     <Colum CNo="10">
-      <Row RNo="24">
-        <specialTerrain>HumanZOC</specialTerrain>
-      </Row>
-      <Row RNo="25">
-        <specialTerrain>HumanZOC</specialTerrain>
-      </Row>
       <Row RNo="29">
         <facilityC>MetroStation</facilityC>
       </Row>

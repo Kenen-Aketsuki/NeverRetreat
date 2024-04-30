@@ -62,7 +62,7 @@ public static class FixSystemData
         GameInitDirectory = dataDirectory + "\\StartState";
         if (!Directory.Exists(GameInitDirectory)) GameInitDirectory = "MISS";
 
-        SaveDirectory = rootDirectory + "\\Saves";
+        SaveDirectory = rootDirectory + "\\Saves\\";
         if (!Directory.Exists(SaveDirectory)) SaveDirectory = "MISS";
 
     }

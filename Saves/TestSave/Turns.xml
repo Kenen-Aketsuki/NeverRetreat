@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TurnData>
+  <Turn No="1" startFrom="Human" isSave="true">
+    <MaxActiveBarrierAmmount>3</MaxActiveBarrierAmmount>
+    <MaxActiveFissureAmmount>1</MaxActiveFissureAmmount>
+    <CrashBundith>150</CrashBundith>
+    <StartStage>Action</StartStage>
+    <MobilizationRate>50</MobilizationRate>
+    <TrainedTroopMount>10</TrainedTroopMount>
+    <CurrentResult GovGone="False" GovExit="False" RetreatCiv="0" />
+    <reinforceList-Human>
+      <Reinforce TroopName="DawIV.101" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.102" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.103" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.111" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.112" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.113" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.121" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.122" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.123" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.101P" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.102P" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.s01E" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="DawIV.s02E" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="ForDII.101Pz" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="ForDII.102Pz" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="ForDII.103Pz" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="ForDII.111Pz" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="ForDII.112Pz" EnterPlace="Airpot" ResTurn="0" />
+      <Reinforce TroopName="ForDII.113Pz" EnterPlace="Airpot" ResTurn="0" />
+    </reinforceList-Human>
+    <reinforceList-Crash />
+    <BegianSupportList>
+      <HumanList>
+        <Item TroopName="RiseSun.AtkAir" UseableTime="3" />
+        <Item TroopName="RiseSun.Bomer" UseableTime="5" />
+        <Item TroopName="RiseSun.Fight" UseableTime="3" />
+        <Item TroopName="RiseSun.UAV" UseableTime="1" />
+      </HumanList>
+      <CrashList>
+        <Item TroopName="Crash.SNet" UseableTime="0" />
+        <Item TroopName="Crash.SStay" UseableTime="3" />
+        <Item TroopName="Crash.GAtk" UseableTime="3" />
+      </CrashList>
+    </BegianSupportList>
+  </Turn>
+</TurnData>

@@ -230,11 +230,11 @@ public class ResultMem
     bool GOV_Exit;
     int retreatScore;
 
-    public ResultMem()
+    public ResultMem(bool GOVGone = false,bool GOV_Exit = false, int retreatScore = 0)
     {
-        GOVGone = false;
-        GOV_Exit = false;
-        retreatScore = 0;
+        this.GOVGone = GOVGone;
+        this.GOV_Exit = GOV_Exit;
+        this.retreatScore = retreatScore;
     }
 
     public void RetreatCiv(int amount)
@@ -280,6 +280,11 @@ public class ResultMem
         else if (retreatScore > 25) return EndingType.Good;
         else if (GOV_Exit) return EndingType.Normal;
         else return EndingType.Bad;
+    }
+
+    public Tuple<bool,bool,int> GetCurrentResu()
+    {
+        return new Tuple<bool, bool, int>(GOVGone,GOV_Exit,retreatScore);
     }
 }
 

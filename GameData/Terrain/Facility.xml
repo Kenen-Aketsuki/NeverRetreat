@@ -142,7 +142,7 @@
         </Data>
     </Terrain>
 
-    <Terrain Type="TempFacility" id="Roadblock" belone="Human">
+    <Terrain Type="TempFacility" id="Roadblock" atSide="True" belone="Human">
         <name>路障</name>
         <Data>
             <enterCost>NA</enterCost>

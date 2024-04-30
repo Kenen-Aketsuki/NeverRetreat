@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
             MaxCrashBandwidth = data.CrashBundith;
             Stage = data.StartStage;
             PreTrainTroop = data.PreTrainedAmount;
-            //读取增援
+            ActionSide = data.StartSide;
             //读取增援
             FixGameData.FGD.HumanLoadList.AddRange(data.HumanReinforceList);
             FixGameData.FGD.CrashLoadList.AddRange(data.CrashReinforceList);

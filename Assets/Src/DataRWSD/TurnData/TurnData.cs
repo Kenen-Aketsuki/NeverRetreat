@@ -22,14 +22,38 @@ public class TurnData
     
     //本回合起始阶段
     public TurnStage StartStage { get; private set; }
+    //本回合起始方
+    public ArmyBelong StartSide { get; private set; }
+
     //人类方支援列表
     public List<Tuple<string,string,int>> HumanReinforceList = new List<Tuple<string,string,int>>();
     //崩坏方支援列表
     public List<Tuple<string, string,int>> CrashReinforceList = new List<Tuple<string, string,int>>();
 
+    public bool isSave { get; private set; }
+
     public TurnData(XmlNode root)
     {
         TurnNo = short.Parse(root.Attributes["No"].Value);
+        object tmpSide;
+        if(Enum.TryParse(typeof(ArmyBelong), root.Attributes["startFrom"]?.Value, out tmpSide))
+        {
+            StartSide = (ArmyBelong)tmpSide;
+        }
+        else
+        {
+            StartSide = ArmyBelong.ModCrash;
+        }
+
+        bool tmpBoo;
+        if (bool.TryParse(root.Attributes["isSave"]?.Value, out tmpBoo))
+        {
+            isSave = tmpBoo;
+        }
+        else
+        {
+            isSave = false;
+        }
 
         XmlNode tmp = root.SelectSingleNode("MaxActiveBarrierAmmount");
         if (tmp != null) MaxActiveBarrierAmmount = short.Parse(tmp.InnerText);
