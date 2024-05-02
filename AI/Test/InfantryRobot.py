@@ -45,10 +45,11 @@ class InfantryRobot(nn.Module): #步兵类型
 
     def command_translate(self, y):
         y = torch.squeeze(y)
+        if y.dim() > 1: y = y[-1,:]
         y = y.split(3)
         command_resu = F.softmax(y[0],dim=-1)
+        print(y)
         dir = y[1].item()
-        dir = 6 if dir > 6 else 0 if dir < 0 else dir
         _,max = torch.max(command_resu,dim = -1)
 
         return (max.item(),dir)

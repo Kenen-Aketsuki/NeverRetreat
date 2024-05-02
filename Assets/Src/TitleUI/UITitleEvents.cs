@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using TMPro;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,7 +36,6 @@ public class UITitleEvents : MonoBehaviour
         UnNamedCount = 0;
         foreach (string path in Directory.GetDirectories(FixSystemData.SaveDirectory))
         {
-            Debug.Log(Path.GetFileName(path));
             if (Regex.Match(path, @" ƒÀ¿º· ÿ\d+").Success)
             {
                 UnNamedCount++;
@@ -133,15 +131,20 @@ public class UITitleEvents : MonoBehaviour
         HttpConnect.instance.InitServe(callback);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     IEnumerator UpdateSaveList(List<SaveData> saveList)
     {
         for(int i = 0; i < saveParent.childCount; i++)
         {
             Destroy(saveParent.GetChild(i).gameObject);
         }
-        SaveElement.onlySelect = null;
         yield return null;
-        foreach(SaveData data in saveList)
+        SaveElement.onlySelect = null;
+        foreach (SaveData data in saveList)
         {
             GameObject saveItem = Instantiate(saveElement, saveParent);
             saveItem.GetComponent<SaveElement>().setData(data);

@@ -7,7 +7,7 @@
     <StartStage>Action</StartStage>
     <MobilizationRate>50</MobilizationRate>
     <TrainedTroopMount>10</TrainedTroopMount>
-    <CurrentResult GovGone="False" GovExit="False" RetreatCiv="0" />
+    <CurrentResult GovGone="false" GovExit="false" RetreatCiv="0" />
     <reinforceList-Human>
       <Reinforce TroopName="DawIV.101" EnterPlace="Airpot" ResTurn="0" />
       <Reinforce TroopName="DawIV.102" EnterPlace="Airpot" ResTurn="0" />

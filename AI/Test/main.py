@@ -28,9 +28,9 @@ def update_piece_key():
 def get_env_data():
     jsonMsg = request.json
     pieceId = jsonMsg.get('pieceId')
-    resu = ds.data_storge.envdata_to_tensor(ds.data_storge.get_instance(), jsonMsg)
-
     storge = ds.data_storge.get_instance()
+    resu = storge.envdata_to_tensor(jsonMsg)
+
     if pieceId in storge.piece_env:
         storge.piece_env[pieceId].append(resu)
     else:
@@ -40,7 +40,7 @@ def get_env_data():
         storge.piece_env[pieceId].pop(0)
 
     # 解析
-    batch = torch.stack(storge.piece_env[pieceId], dim=0)
+    batch = torch.stack(storge.piece_env[pieceId], dim=1)
     print(batch.shape)
 
     # 前向传播

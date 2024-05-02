@@ -91,7 +91,7 @@ public class HttpConnect : MonoBehaviour
             }
             else
             {
-                Debug.LogError(webRequest.error);
+                callback(webRequest.error);
             }
         }
     }

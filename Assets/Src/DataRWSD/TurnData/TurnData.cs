@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TurnData
 {
@@ -31,6 +32,8 @@ public class TurnData
     public List<Tuple<string, string,int>> CrashReinforceList = new List<Tuple<string, string,int>>();
 
     public bool isSave { get; private set; }
+
+    public ResultMem currentResu { get; private set; }
 
     public TurnData(XmlNode root)
     {
@@ -102,5 +105,15 @@ public class TurnData
         tmp = root.SelectSingleNode("TrainedTroopMount");
         if (tmp != null) PreTrainedAmount = int.Parse(tmp.InnerText);
         else PreTrainedAmount = -1;
+
+        tmp = root.SelectSingleNode("CurrentResult");
+        if (tmp != null)
+        {
+            currentResu = new ResultMem(
+                bool.Parse(tmp.Attributes["GovGone"].Value),
+                bool.Parse(tmp.Attributes["GovExit"].Value),
+                int.Parse(tmp.Attributes["RetreatCiv"].Value));
+        }
+        else currentResu = null;
     }
 }

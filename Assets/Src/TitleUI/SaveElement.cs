@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveElement : MonoBehaviour
@@ -19,7 +20,7 @@ public class SaveElement : MonoBehaviour
 
         set
         {
-            _onlySelect?.transform.GetChild(4).gameObject.SetActive(false);
+            if (!_onlySelect.IsDestroyed()) _onlySelect?.transform.GetChild(4).gameObject.SetActive(false);
             value?.transform.GetChild(4).gameObject.SetActive(true);
 
             _onlySelect = value;

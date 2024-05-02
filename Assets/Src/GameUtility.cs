@@ -35,6 +35,11 @@ public static class GameUtility
             读取存档的回合信息();
         }
 
+        if(saveTurn?.currentResu != null)
+        {
+            FixGameData.FGD.resultMem = saveTurn.currentResu;
+        }
+
         //布设棋子堆叠标志
         Map.UpdatePieceStackSign();
 
@@ -46,6 +51,19 @@ public static class GameUtility
         GameManager.GM.SetMachineState(MachineState.JustReady);
         //开始游戏
         //GameManager.GM.StageStart();
+        Debug.Log(saveData?.gameMode);
+        switch (saveData?.gameMode)
+        {
+            case "PVP":
+                GameManager.GM.TControl = new PVPTurn();
+                break;
+            case "PVE":
+
+                break;
+            case "TRA":
+                GameManager.GM.TControl = new TRATurn();
+                break;
+        }
 
     }
 

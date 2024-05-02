@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour
     public int CurrentTurnCount = 0;
     //当前回合阶段
     public TurnStage Stage;
-
+    //回合始末控制
+    public ITurnControl TControl;
 
     //人类方--最大动员率
     [SerializeField]
@@ -116,23 +117,23 @@ public class GameManager : MonoBehaviour
             case 0:
                 stageMode = 5;
                 if (NextTurn) TurnSwitch();
-                StrategyStageStart();
+                TControl.StrategyStageStart();
                 break;
             case TurnStage.ZeroTurn:
                 stageMode = 6;
-                ZeroTurnStageStart();
+                TControl.ZeroTurnStageStart();
                 break;
             case TurnStage.ModBattle:
-                ModeBattleStageStart();
+                TControl.ModeBattleStageStart();
                 break;
             case TurnStage.Action:
-                ActionStageStart();
+                TControl.ActionStageStart();
                 break;
             case TurnStage.Support:
-                SupportStageStart();
+                TControl.SupportStageStart();
                 break;
             case TurnStage.Settle:
-                CalculateStageStart();
+                TControl.CalculateStageStart();
                 break;
         }
 
@@ -147,22 +148,22 @@ public class GameManager : MonoBehaviour
         switch (Stage)
         {
             case TurnStage.Strategy:
-                StrategyStageEnd(NextTurn);
+                TControl.StrategyStageEnd(NextTurn);
                 break;
             case TurnStage.ZeroTurn:
-                ZeroTurnStageEnd();
+                TControl.ZeroTurnStageEnd();
                 break;
             case TurnStage.ModBattle:
-                ModeBattleStageEnd(NextTurn);
+                TControl.ModeBattleStageEnd(NextTurn);
                 break;
             case TurnStage.Action:
-                ActionStageEnd();
+                TControl.ActionStageEnd(NextTurn);
                 break;
             case TurnStage.Support:
-                SupportStageEnd();
+                TControl.SupportStageEnd();
                 break;
             case TurnStage.Settle:
-                CalculateStageEnd();
+                TControl.CalculateStageEnd();
                 break;
         }
     }
@@ -227,6 +228,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("游戏结束");
     }
 
+    /*
     //各个阶段起止
     #region//第零阶段
     void ZeroTurnStageStart()
@@ -363,6 +365,7 @@ public class GameManager : MonoBehaviour
         FixGameData.FGD.uiIndex.CalculateUISet.SetActive(false);
     }
     #endregion
+    */
 }
 
 //有限状态机状态

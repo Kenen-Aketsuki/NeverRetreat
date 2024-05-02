@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.PlayerSettings;
 
 public class MapInter : MonoBehaviour
 {
@@ -143,9 +142,11 @@ public class MapInter : MonoBehaviour
                 //仅测试用
                 //HttpConnect.instance.SendBattleFieldEnv(GameManager.GM.currentPiece);
 
-                GameUtility.Save = "TestSave";
-                GameUtility.saveData = new SaveData("TestSave", "PVP");
-                GameUtility.保存游戏();
+                //GameUtility.Save = "TestSave";
+                //GameUtility.saveData = new SaveData("TestSave", "PVP");
+                //GameUtility.保存游戏();
+
+                Debug.Log(FixGameData.FGD.resultMem.FinalScore());
                 break;
             default:
                 //HttpConnect.instance.UpdatePieceKey();

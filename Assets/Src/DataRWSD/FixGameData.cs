@@ -113,7 +113,12 @@ public class FixGameData : MonoBehaviour
     private void Awake()
     {
         FGD = this;
-        resultMem = new ResultMem();
+    }
+
+    private void Start()
+    {
+        if(resultMem == null) resultMem = new ResultMem();
+
     }
 
     public static Vector3Int MapToWorld(int x,int y)//存档坐标转游戏地图坐标

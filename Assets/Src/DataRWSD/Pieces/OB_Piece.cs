@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class OB_Piece : MonoBehaviour
 {
@@ -19,6 +18,14 @@ public class OB_Piece : MonoBehaviour
     public Vector3Int piecePosition{ get { return FixGameData.FGD.InteractMap.WorldToCell(transform.position); } }
     //能否移动
     public bool canMove { get { return Data.MOV > 0; } }
+    //是否为精英单位
+    public bool isSpecialPiece { get {
+            return Data.canSupport ||
+                Data.canDoMagic ||
+                Data.canBild ||
+                Data.canFixMod ||
+                Data.canMental;
+        } }
 
     [SerializeField]
     SpriteRenderer BaseColor;
