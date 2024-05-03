@@ -8,24 +8,21 @@ import numpy as np
 
 class data_storge:
     _instance = None
-    def __init__(self):
-        print("init……")
-        self.piece_env = dict() #棋子经历的环境变动
-        #self.piece_result_env = dict() #棋子上次决策的结果
-        self.model_dict = dict() #模型字典
-        self.load_model() #加载模型
-        self.rua = "Enter init"
-
-        self.piece_type_dict = dict() #棋子兵种字典
-        self.load_piece_key()
-
     def __new__(cls):
         if not cls._instance:
             cls._instance = super(data_storge, cls).__new__(cls)
+
+            print("init……")
+            cls.piece_env = dict()  # 棋子经历的环境变动
+            cls.piece_result_env = dict()  # 棋子上次决策的结果
+            cls.model_dict = dict()  # 模型字典 normal-常规单位 special-有特殊行动的单位
+            cls.load_model(cls)  # 加载模型
+            cls.rua = "Enter init"
+
+            cls.piece_type_dict = dict()  # 棋子兵种字典
+            cls.load_piece_key(cls)
+
         return cls._instance
-
-
-
 
     @staticmethod
     def get_instance():
@@ -33,6 +30,10 @@ class data_storge:
             data_storge()  # 触发__new__方法创建单例
         return data_storge._instance
 
+    @staticmethod
+    def reset_instance():
+        data_storge._instance = None
+        return data_storge()
 
     def load_model(self):
         # 存入常规模型
@@ -75,7 +76,6 @@ class data_storge:
             array.append(int(str[i]))
 
         return torch.from_numpy(np.array(array))
-
 
     def envdata_to_tensor(self,jsonData):
         resu = data_storge.piecetype_to_vector(
@@ -124,3 +124,21 @@ class data_storge:
 
         resu = resu.unsqueeze(0)
         return resu.float()
+
+
+    def get_loss(self,pieceId,command_resu):
+        print("计算损失值")
+        #distance, isCasualty, dealDmg, enyCount, command_state
+        criterion = glbSuper.CustomBattleLoss()
+
+        last_resu = self.piece_result_env[pieceId]
+        distance = int(last_resu.get("distance")) - int(command_resu.get("distance"))
+        absDistance = int(command_resu.get("distance"))
+        isCasualty = int(command_resu.get("inCasualty"))
+        dealDmg = int(command_resu.get("dealDmg"))
+        enyCount = int(last_resu.get("enemyCount")) - int(command_resu.get("enemyCount"))
+        command_state = bool(command_resu.get("commandState"))
+
+        loss = criterion(absDistance,distance,isCasualty,dealDmg,enyCount,command_state)
+        print("损失值:\n",loss)
+        return loss

@@ -180,6 +180,10 @@ public class PVPTurn : ITurnControl
 
 public class TRATurn : ITurnControl
 {
+    int maxCommandTime = 10;
+    string lastPiece = "";
+    int currentCommandTime = 0;
+
     #region//第零阶段
     public void ZeroTurnStageStart()
     {
@@ -196,6 +200,7 @@ public class TRATurn : ITurnControl
     public void StrategyStageStart()
     {
         GameManager.GM.NextStage();
+        FixGameData.FGD.uiIndex.TrainUISet.SetActive(true);
     }
     public void StrategyStageEnd(bool isTurnChange)
     {
@@ -219,6 +224,12 @@ public class TRATurn : ITurnControl
     #region//行动阶段
     public void ActionStageStart()
     {
+        if (GameManager.GM.ActionSide != ArmyBelong.ModCrash)
+        {
+            GameManager.GM.NextStage();
+            return;
+        }
+
         CommandControl.CC.ToActionPiece.Clear();
         for (int i = 0; i < GameManager.GM.ActionPool.transform.childCount; i++)
         {
@@ -263,21 +274,52 @@ public class TRATurn : ITurnControl
 
     IEnumerator AIAgentWork()
     {
+        if(!UITrainStage.keepTrain) yield break;
+        CommandControl.CC.AttackList.Clear();
         bool isHttpWait = false;
         while (CommandControl.CC.ToActionPiece.Count > 0)
         {
+            //提取棋子
             OB_Piece currentPiece = CommandControl.CC.ToActionPiece.Dequeue();
             string command = "N/A";
+            if(currentPiece.gameObject.name == lastPiece)
+            {
+                currentCommandTime++;
+            }
+            else
+            {
+                currentCommandTime = 0;
+                lastPiece = currentPiece.gameObject.name;
+            }
+
+            if (currentCommandTime >= maxCommandTime) continue;
+            //前向传播
             isHttpWait = true;
             HttpConnect.instance.SendBattleFieldEnv(currentPiece, x => {
                 command = x;
                 isHttpWait = false;
             });
+            while(isHttpWait) yield return null; // 阻塞
 
-            while(isHttpWait) yield return null;
-
-            CommandControl.CC.CommandTranslate(command, currentPiece);
+            //反向传播
+            bool canBack;
+            bool commandState = CommandControl.CC.CommandTranslate(command, currentPiece, out canBack);
+            isHttpWait = true;
+            if (canBack)
+            {
+                BackwardData BAKdata = new BackwardData(currentPiece, 0, commandState);
+                HttpConnect.instance.SendCommandResult(BAKdata, x =>
+                {
+                    Debug.Log("返回" + x);
+                    isHttpWait = false;
+                });
+            }
+            while (isHttpWait) yield return null;// 阻塞
 
         }
+
+        if(!UITrainStage.stepTrain) GameManager.GM.NextStage();
     }
+
+
 }

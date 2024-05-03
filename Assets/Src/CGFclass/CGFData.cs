@@ -253,8 +253,35 @@ public class AccuretEnyData
 
 public class BackwardData // 反向传播的数据
 {
-    public int distence;
-    public int inCasualty;
-    public int dealDmg;
+    public string pieceId;//棋子ID
+    public int distance; // 到达目标点距离
+    public int inCasualty; // 是否重创
+    public int dealDmg; // 造成伤害
+    public int enemyCount;//周边敌人数量
+    public bool commandState;//指令状况
+    public bool isSpecial;//是否为特殊单位
 
+    public BackwardData(OB_Piece pic,int dealDmg,bool commandState)
+    {
+        this.commandState = commandState;
+        this.dealDmg = dealDmg;
+
+        pieceId = pic.gameObject.name;
+        distance = Map.HexDistence(pic.piecePosition, GameManager.GM.ActionTargetPos);
+        inCasualty = Regex.Match(pic.getPieceData().HealthStr, ".*正常.*").Success ? 0 : 1;
+        isSpecial = pic.isSpecialPiece;
+
+        enemyCount = 0;
+        foreach (CellInfo cell in Map.PowerfulBrickAreaSearch(pic.piecePosition, 10))
+        {
+            enemyCount += GameManager.GM.EnemyPool.getChildByPos(cell.Positian).Count;
+        }
+    }
+
+    public string CreateJson()
+    {
+        string jsonPayload = JsonConvert.SerializeObject(this);
+
+        return jsonPayload;
+    }
 }

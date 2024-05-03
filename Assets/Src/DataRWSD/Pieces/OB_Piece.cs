@@ -304,6 +304,7 @@ public class OB_Piece : MonoBehaviour
         }else return false;
         return true;
     }
+
     //ÒÆ¶¯½áÊø
     public void EndMove()
     {

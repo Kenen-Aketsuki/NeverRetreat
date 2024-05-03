@@ -11,9 +11,11 @@ public class UIIndex : MonoBehaviour
     public GameObject ActionUISet;
     public GameObject SupportUISet;
     public GameObject CalculateUISet;
+    public GameObject TrainUISet;
 
     public GameObject AirStrickWindow;
     public GameObject RenforceWindow;
+    public GameObject PauseGameWindow;
 
     public TMP_Text TurnShowText;
     public SelfCatchScroll scrollView;

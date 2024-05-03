@@ -66,5 +66,10 @@ public class CameraMov : MonoBehaviour
             borderLD = borderRT * new Vector2(-1, -1);
             needCul = false;
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            FixGameData.FGD.uiIndex.PauseGameWindow.SetActive(true);
+        }
     }
 }

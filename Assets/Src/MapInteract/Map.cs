@@ -37,7 +37,7 @@ public static class Map
                 endPos = new Vector3Int(Pos.x - (y + 1) % 2, Pos.y - 1, Pos.z);
                 break;
             default:
-                endPos = Vector3Int.zero;
+                endPos = Pos;
                 break;
         }
         return endPos;

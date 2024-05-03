@@ -16,10 +16,16 @@ public class HttpConnect : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void CheckConnect(Action<string> callback = null)
+    {
+        if (callback == null) callback = x => Debug.Log("服务端返回: " + x);
+        StartCoroutine(GetRequest(FixSystemData.AIUrl, callback));
+    }
+
     public void InitServe(Action<string> callback = null)
     {
         if (callback == null) callback = x => Debug.Log("服务端返回: " + x);
-        StartCoroutine(GetRequest("http://127.0.0.1:5000/ServeInit", callback));
+        StartCoroutine(GetRequest(FixSystemData.AIUrl + "/ServeInit", callback));
     }
 
     public void SendBattleFieldEnv(OB_Piece piece, Action<string> callback = null)
@@ -28,15 +34,24 @@ public class HttpConnect : MonoBehaviour
         CGFDataJson priObj = new CGFDataJson(piece,GameManager.GM.ActionTargetPos);
         string json = CGFDataJson.CreateJson(priObj);
 
-        StartCoroutine(PostRequest("http://127.0.0.1:5000/PostEnvData", json, callback));
+        StartCoroutine(PostRequest(FixSystemData.AIUrl + "/PostEnvData", json, callback));
+    }
+
+    public void SendCommandResult(BackwardData data, Action<string> callback = null)
+    {
+        if (callback == null) callback = x => Debug.Log("服务端返回: " + x);
+
+        string json = data.CreateJson();
+
+        StartCoroutine(PostRequest(FixSystemData.AIUrl + "/AiBackword", json, callback));
     }
 
     public void UpdatePieceKey(Action<string> callback = null)
     {
         if (callback == null) callback = x => Debug.Log("服务端返回: " + x);
         string json = JsonConvert.SerializeObject(FixSystemData.GlobalPieceDataList.Keys);
-            
-        StartCoroutine(PostRequest("http://127.0.0.1:5000/UpdatePieceKey", json, callback));
+
+        StartCoroutine(PostRequest(FixSystemData.AIUrl + "UpdatePieceKey", json, callback));
     }
 
     public void JustGetRequest(string url, Action<string> callback = null)
