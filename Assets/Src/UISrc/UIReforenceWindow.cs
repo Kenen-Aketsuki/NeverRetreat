@@ -189,7 +189,7 @@ public class UIReforenceWindow : MonoBehaviour
                     FixGameData.FGD.CrashLoadList.Add(new Tuple<string, string, int>(
                     pare.Key,
                     "DimensionFissure",
-                    UnityEngine.Random.Range(0, 1)
+                    UnityEngine.Random.Range(0, 2)
                     ));
             }
             GameManager.GM.CrashBandwidth += TmpBindWide;

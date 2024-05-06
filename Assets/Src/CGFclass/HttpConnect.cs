@@ -51,7 +51,14 @@ public class HttpConnect : MonoBehaviour
         if (callback == null) callback = x => Debug.Log("服务端返回: " + x);
         string json = JsonConvert.SerializeObject(FixSystemData.GlobalPieceDataList.Keys);
 
-        StartCoroutine(PostRequest(FixSystemData.AIUrl + "UpdatePieceKey", json, callback));
+        StartCoroutine(PostRequest(FixSystemData.AIUrl + "/UpdatePieceKey", json, callback));
+    }
+
+    public void ResetAIData(Action<string> callback = null)
+    {
+        if (callback == null) callback = x => Debug.Log("服务端返回: " + x);
+
+        StartCoroutine(GetRequest(FixSystemData.AIUrl + "/PassTurn", callback));
     }
 
     public void JustGetRequest(string url, Action<string> callback = null)

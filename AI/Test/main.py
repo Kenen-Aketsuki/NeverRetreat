@@ -89,3 +89,11 @@ def save_model():
     torch.save(storge.model_dict["normal"][0].state_dict(), glbSuper.normal_model_path)
     #torch.save(storge.model_dict["special"][0], glbSuper.special_model_path)
     return "OK"
+
+@app.route("/PassTurn")
+def pass_turn():
+    print("重置数据")
+    storge = ds.data_storge.get_instance()
+    storge.piece_env.clear()
+    storge.piece_result_env.clear()
+    return "OK"

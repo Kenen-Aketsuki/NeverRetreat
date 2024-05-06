@@ -146,7 +146,13 @@ public class MapInter : MonoBehaviour
                 //GameUtility.saveData = new SaveData("TestSave", "PVP");
                 //GameUtility.±£¥Ê”Œœ∑();
 
-                Debug.Log(FixGameData.FGD.resultMem.FinalScore());
+                //Debug.Log(FixGameData.FGD.resultMem.FinalScore());
+
+                for(int i = 0; i < 4; i++)
+                {
+                    Debug.Log((SpecialEvent)i);
+                }
+
                 break;
             default:
                 //HttpConnect.instance.UpdatePieceKey();

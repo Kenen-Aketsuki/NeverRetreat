@@ -1,38 +1,50 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <PieceData>
-  <Human />
+  <Human>
+    <Piece troopName="DawIII.101" xPos="21" yPos="21" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.113" xPos="18" yPos="22" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.102" xPos="21" yPos="20" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.103" xPos="20" yPos="22" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.123" xPos="17" yPos="19" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.121" xPos="15" yPos="18" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.102P" xPos="19" yPos="24" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.112" xPos="17" yPos="20" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.101P" xPos="22" yPos="22" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.122" xPos="16" yPos="19" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="DawIII.111" xPos="18" yPos="21" LoyalTo="Human" stability="0" connectState="0" inCasualty="False" />
+  </Human>
   <Crash>
-    <Piece troopName="Crash.Blade" xPos="0" yPos="-15" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="9" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="0" yPos="-11" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="9" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="0" yPos="-13" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="9" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="0" yPos="-9" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="9" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="-1" yPos="-15" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="8" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="-1" yPos="-11" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="8" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="-1" yPos="-13" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="8" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="-1" yPos="-9" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="8" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="1" yPos="-15" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="10" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="1" yPos="-11" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="10" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="1" yPos="-13" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="10" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="1" yPos="-9" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Blade" xPos="10" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="-2" yPos="-15" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="7" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="-2" yPos="-11" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="7" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="-2" yPos="-13" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="7" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="-2" yPos="-9" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
-    <Piece troopName="Crash.Gun" xPos="7" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="21" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="30" yPos="27" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="21" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="30" yPos="31" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="21" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="30" yPos="29" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="21" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="30" yPos="33" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="20" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="29" yPos="27" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="20" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="29" yPos="31" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="20" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="29" yPos="29" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="20" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="29" yPos="33" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="22" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="31" yPos="27" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="22" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="31" yPos="31" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="22" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="31" yPos="29" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="22" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Blade" xPos="31" yPos="33" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="19" yPos="6" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="28" yPos="27" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="19" yPos="10" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="28" yPos="31" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="19" yPos="8" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="28" yPos="29" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="19" yPos="12" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
+    <Piece troopName="Crash.Gun" xPos="28" yPos="33" LoyalTo="ModCrash" stability="0" connectState="0" inCasualty="False" />
   </Crash>
 </PieceData>

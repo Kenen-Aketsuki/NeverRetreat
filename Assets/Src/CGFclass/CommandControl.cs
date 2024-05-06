@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class CommandControl
@@ -18,8 +20,9 @@ public class CommandControl
     public Dictionary<Vector3Int,List<OB_Piece>> AttackList = new Dictionary<Vector3Int,List<OB_Piece>>();
     //行动结束棋子
     public List<OB_Piece> EndMovePiece = new List<OB_Piece>();
+    
 
-    public bool CommandTranslate(string command,OB_Piece piece, out bool canBack)
+    public bool CommandTranslate(string command,OB_Piece piece, out bool canBack, bool canAttack = true)
     {
         command = command.Replace("(", "").Replace(")", "");
         string[] commands = command.Split(',');
@@ -40,6 +43,8 @@ public class CommandControl
 
             dir = Mathf.Max(dir, 1);
             dir = Mathf.Min(dir, 6);
+
+            if (canAttack && act == 1) act = 0;
 
             Debug.Log(piece.gameObject.name + " — " + act + "-" + dir);
 
@@ -74,10 +79,16 @@ public class CommandControl
     public bool MoveCommand(OB_Piece pic, int dir)
     {
         pic.PrepareMove();
+
+
         Vector3Int end = Map.GetRoundSlotPos(pic.piecePosition, dir);
+        OB_Piece.needChenkVisibility.Add(pic.piecePosition);
+        OB_Piece.needChenkVisibility.Add(end);
+
         bool moveResu = pic.MoveTo(end);
         if (moveResu) ToActionPiece.Enqueue(pic);
-        
+
+        OB_Piece.CheckVisibility();
         return moveResu;
     }
 
@@ -85,7 +96,8 @@ public class CommandControl
     {
         Vector3Int target = Map.GetRoundSlotPos(pic.piecePosition, dir);
         List<GameObject> picList = GameManager.GM.EnemyPool.getChildByPos(target);
-        if(picList.Count == 0)
+        if(picList.Count == 0 ||
+            pic.ActionPoint <= 0)
         {
             ToActionPiece.Enqueue(pic);
             return false;
@@ -104,5 +116,56 @@ public class CommandControl
     {
         EndMovePiece.Add(pic);
         return true;
+    }
+
+    //结算进攻
+    public void AttackCauclate()
+    {
+        Regex reg = new Regex(".*正常.*");
+        foreach (KeyValuePair<Vector3Int, List<OB_Piece>> battle in AttackList)
+        {
+            float ATK = 0;
+            float DEF = 0;
+            ActionStage.CulATK(ref ATK, ref DEF, battle.Value, battle.Key);
+
+            int RRKMend = 0;
+            foreach (Vector3Int pos in Map.PowerfulBrickAreaSearch(battle.Key, FixGameData.FGD.maxFireSupportDic).Select(x => x.Positian))
+            {
+                int supListC = GameManager.GM.ActionPool.getChildByPos(pos)
+                    .Select(x => x.GetComponent<OB_Piece>().getPieceData())
+                    .Where(x => x.canSupport &&
+                        Map.HexDistence(pos, battle.Key) <= x.activeArea &&
+                        ActionStage.canHit(battle.Key, pos, x.PieceID, true)
+                    ).Count();
+                if (supListC > 0)
+                {
+                    RRKMend += supListC;
+                    continue;
+                }
+
+                supListC = GameManager.GM.EnemyPool.getChildByPos(pos)
+                    .Select(x => x.GetComponent<OB_Piece>().getPieceData())
+                    .Where(x => x.canSupport &&
+                        reg.IsMatch(x.ConnectStr) &&
+                        reg.IsMatch(x.SupplyStr) &&
+                        reg.IsMatch(x.HealthStr) &&
+                        Map.HexDistence(pos, battle.Key) <= x.activeArea &&
+                        ActionStage.canHit(battle.Key, pos, x.PieceID, true)
+                    ).Count();
+                if (supListC > 0)
+                {
+                    RRKMend -= supListC;
+                }
+            }
+
+            ActionStage.CommitAttack(ATK, DEF, battle.Value, battle.Key, RRKMend);
+
+            foreach(OB_Piece pic in battle.Value)
+            {
+                pic.ActionPoint--;
+                //棋子回到待行动序列
+                ToActionPiece.Enqueue(pic);
+            }
+        }
     }
 }

@@ -198,6 +198,8 @@ public class OB_Piece : MonoBehaviour
     //À¿Õˆ
     public static void Death(GameObject Pse,Piece Data)
     {
+        Debug.Log(Pse.name + "’ÛÕˆ");
+
         if(Data.LoyalTo == ArmyBelong.Human)
         {
             FixGameData.FGD.HumanPiecePool.DelChildByID(Pse.name);

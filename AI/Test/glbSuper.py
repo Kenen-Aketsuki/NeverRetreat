@@ -12,12 +12,12 @@ num_time_step = 10 #训练时间窗的长度
 input_size = 156 #输入维度
 hidden_size = 300 #隐藏层维度
 num_layers = 1 #隐含层层数
-lr = 0.1 #学习率
+lr = 0.01 #学习率
 
-dis_fix_rate = 0.5 #描述到达目标地点的距离在整体中的占比
+dis_fix_rate = 0.3 #描述到达目标地点的距离在整体中的占比
 hp_fix_rate = 1
-errCmd_fix_rate = 2 #非法指令
-total_fix_rate = 0.5#总体修正
+errCmd_fix_rate = 5 #非法指令
+total_fix_rate = 0.8#总体修正
 
 train_times = 100 #训练的次数
 

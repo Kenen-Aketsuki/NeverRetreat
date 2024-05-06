@@ -12,6 +12,7 @@ public class UIIndex : MonoBehaviour
     public GameObject SupportUISet;
     public GameObject CalculateUISet;
     public GameObject TrainUISet;
+    public GameObject AIActiveUISet;
 
     public GameObject AirStrickWindow;
     public GameObject RenforceWindow;

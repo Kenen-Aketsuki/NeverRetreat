@@ -58,7 +58,7 @@ public static class GameUtility
                 GameManager.GM.TControl = new PVPTurn();
                 break;
             case "PVE":
-
+                GameManager.GM.TControl = new PVETurn();
                 break;
             case "TRA":
                 GameManager.GM.TControl = new TRATurn();

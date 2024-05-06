@@ -53,6 +53,7 @@ class InfantryRobot(nn.Module): #步兵类型
 
     def command_translate(self, y):
         y = torch.squeeze(y)
+        y = torch.abs(y)
         print("预测结果：",y)
 
         if y.dim() > 1: y = y[-1,:]
@@ -67,6 +68,6 @@ class InfantryRobot(nn.Module): #步兵类型
         print("\n指令：",max.item(),"\n方向：", int(dir))
 
         return (max.item(),int(dir))
-model = InfantryRobot(glbSuper.input_size,glbSuper.hidden_size,glbSuper.num_layers)
-torch.save(model.state_dict(),glbSuper.normal_model_path)
+# model = InfantryRobot(glbSuper.input_size,glbSuper.hidden_size,glbSuper.num_layers)
+# torch.save(model.state_dict(),glbSuper.normal_model_path)
 
