@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MapData>
+  <Size>42*42</Size>
+  <Map>
+    <Colum CNo="3">
+      <Row RNo="41">
+        <facilityC stayTime="2147483647" active="False">DimensionFissure</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="11">
+      <Row RNo="18">
+        <facilityC stayTime="2147483647" active="False">StaticBarrierNode</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="19">
+      <Row RNo="0">
+        <facilityC>DimensionFissure_Act</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="26">
+      <Row RNo="13">
+        <facilityC stayTime="2147483647" active="False">StaticBarrierNode</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="29">
+      <Row RNo="42">
+        <facilityC>DimensionFissure_Act</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="31">
+      <Row RNo="4">
+        <specialTerrainS stayTime="X-X-1">X-X-Firewall_R</specialTerrainS>
+      </Row>
+    </Colum>
+    <Colum CNo="32">
+      <Row RNo="4">
+        <specialTerrainS stayTime="X-X-1">X-X-Firewall_R</specialTerrainS>
+      </Row>
+      <Row RNo="5">
+        <specialTerrainS stayTime="1-X-1">Firewall_L-X-Firewall_R</specialTerrainS>
+      </Row>
+      <Row RNo="6">
+        <specialTerrainS stayTime="1-X-X">Firewall_L-X-X</specialTerrainS>
+      </Row>
+      <Row RNo="33">
+        <facilityC stayTime="2147483647" active="False">StaticBarrierNode</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="33">
+      <Row RNo="0">
+        <facilityC stayTime="2147483647" active="False">DimensionFissure</facilityC>
+      </Row>
+      <Row RNo="4">
+        <specialTerrainS stayTime="X-X-1">X-X-Firewall_R</specialTerrainS>
+      </Row>
+      <Row RNo="5">
+        <specialTerrainS stayTime="1-X-1">Firewall_L-X-Firewall_R</specialTerrainS>
+      </Row>
+      <Row RNo="6">
+        <specialTerrainS stayTime="1-1-X">Firewall_L-Firewall-X</specialTerrainS>
+      </Row>
+    </Colum>
+    <Colum CNo="34">
+      <Row RNo="5">
+        <specialTerrainS stayTime="1-1-X">Firewall_L-Firewall-X</specialTerrainS>
+      </Row>
+      <Row RNo="6">
+        <specialTerrainS stayTime="1-1-X">Firewall_L-Firewall-X</specialTerrainS>
+      </Row>
+      <Row RNo="7">
+        <specialTerrainS stayTime="1-1-X">Firewall_L-Firewall-X</specialTerrainS>
+      </Row>
+    </Colum>
+    <Colum CNo="35">
+      <Row RNo="7">
+        <specialTerrainS stayTime="1-1-X">Firewall_L-Firewall-X</specialTerrainS>
+      </Row>
+    </Colum>
+  </Map>
+</MapData>

@@ -15,6 +15,13 @@ public class Support
                 !(x.Data.Item1 == typeof(SpecialFacility))
             )
         ).ToList();
+        if(lands.Count <= 0) lands = FixGameData.FGD.SpecialFacilityList.Where(
+            x => x.Id == facId &&
+            (
+                x.Data.Item1 == typeof(SpecialFacility) && x.active ||
+                !(x.Data.Item1 == typeof(SpecialFacility))
+            )
+        ).ToList();
 
         XmlNode pieceType;
         FixSystemData.HumanOrganizationList.TryGetValue(troopId, out pieceType);

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TurnData>
+  <Turn No="0" startFrom="Human" isSave="true">
+    <MaxActiveBarrierAmmount>0</MaxActiveBarrierAmmount>
+    <MaxActiveFissureAmmount>0</MaxActiveFissureAmmount>
+    <CrashBundith>114514</CrashBundith>
+    <StartStage>ZeroTurn</StartStage>
+    <MobilizationRate>50</MobilizationRate>
+    <TrainedTroopMount>10</TrainedTroopMount>
+    <CurrentResult GovGone="False" GovExit="False" RetreatCiv="0" />
+    <reinforceList-Human />
+    <reinforceList-Crash />
+    <BegianSupportList>
+      <HumanList>
+        <Item TroopName="RiseSun.AtkAir" UseableTime="2" />
+        <Item TroopName="RiseSun.Bomer" UseableTime="2" />
+        <Item TroopName="RiseSun.Fight" UseableTime="2" />
+        <Item TroopName="RiseSun.UAV" UseableTime="2" />
+      </HumanList>
+      <CrashList>
+        <Item TroopName="Crash.SNet" UseableTime="0" />
+        <Item TroopName="Crash.SStay" UseableTime="3" />
+        <Item TroopName="Crash.GAtk" UseableTime="3" />
+      </CrashList>
+    </BegianSupportList>
+  </Turn>
+</TurnData>

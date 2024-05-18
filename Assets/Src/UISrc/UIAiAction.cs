@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 
 public class UIAiAction : MonoBehaviour
 {
@@ -22,18 +20,19 @@ public class UIAiAction : MonoBehaviour
                 ActiveEvent();
                 AddSupport();
                 ActiveSpecialFac();
+                gameObject.SetActive(false);
                 break;
             case TurnStage.ModBattle:
                 ModeBattleMove();
-                ModeAttack();
+//                ModeAttack();
                 break;
             case TurnStage.Action:
                 ActionMove();
-                ActionSpecial();
+                //ActionSpecial();
                 break;
         }
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -101,14 +100,20 @@ public class UIAiAction : MonoBehaviour
         for(int i = 0; i < FixGameData.FGD.CrashPieceParent.childCount; i++)
         {
             OB_Piece pic = FixGameData.FGD.CrashPieceParent.GetChild(i).GetComponent<OB_Piece>();
+            Debug.Log(pic.name);
             if (pic.getPieceData().canFixMod)
             {
+                Debug.Log("行");
                 CommandControl.CC.ToActionPiece.Enqueue(pic);
             }
         }
 
         //依次行动
-        StartCoroutine(AIAgentWork(false));
+        StartCoroutine(AIAgentWork(false, x =>
+        {
+            ModeAttack();
+            gameObject.SetActive(false);
+        }));
 
     }
 
@@ -151,7 +156,11 @@ public class UIAiAction : MonoBehaviour
         }
 
         //依次行动
-        StartCoroutine(AIAgentWork(true));
+        StartCoroutine(AIAgentWork(true, x =>
+        {
+            gameObject.SetActive(false);
+            //ActionSpecial();
+        }));
     }
 
     void ActionSpecial()
@@ -168,7 +177,10 @@ public class UIAiAction : MonoBehaviour
         }
 
         //执行特殊行动
-        StartCoroutine(SpecialAction());
+        StartCoroutine(SpecialAction(x =>
+        {
+            gameObject.SetActive(false);
+        }));
 
 
     }
@@ -203,7 +215,7 @@ public class UIAiAction : MonoBehaviour
     }
     #endregion
 
-    IEnumerator AIAgentWork(bool canAttack)
+    IEnumerator AIAgentWork(bool canAttack,Action<int> callback)
     {
         CommandControl.CC.AttackList.Clear();
         CommandControl.CC.EndMovePiece.Clear();
@@ -214,8 +226,12 @@ public class UIAiAction : MonoBehaviour
         {
             while (CommandControl.CC.ToActionPiece.Count > 0)
             {
+                
                 //提取棋子
                 OB_Piece currentPiece = CommandControl.CC.ToActionPiece.Dequeue();
+
+                Debug.Log(currentPiece.name);
+
                 string command = "N/A";
                 currentPiece.gameObject.SetActive(true);
 
@@ -246,9 +262,11 @@ public class UIAiAction : MonoBehaviour
             CommandControl.CC.AttackCauclate();
             while (isHttpWait) yield return null;
         }
+
+        if (callback != null) callback(0);
     }
 
-    IEnumerator SpecialAction()
+    IEnumerator SpecialAction(Action<int> callback)
     {
         while (CommandControl.CC.ToActionPiece.Count > 0)
         {
@@ -268,6 +286,8 @@ public class UIAiAction : MonoBehaviour
             if(currentPiece.SpecialActPoint > 0) CommandControl.CC.ToActionPiece.Enqueue(currentPiece);
 
             yield return null;
+
+            if(callback != null) callback(0);
         }
     }
 }

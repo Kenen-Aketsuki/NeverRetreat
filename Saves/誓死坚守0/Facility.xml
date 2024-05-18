@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MapData>
+  <Size>42*42</Size>
+  <Map>
+    <Colum CNo="0">
+      <Row RNo="2">
+        <facilityS stayTime="X-2147483647-X">X-Runway-X</facilityS>
+      </Row>
+    </Colum>
+    <Colum CNo="1">
+      <Row RNo="2">
+        <facilityS stayTime="X-2147483647-X">X-Runway-X</facilityS>
+      </Row>
+    </Colum>
+    <Colum CNo="2">
+      <Row RNo="2">
+        <facilityS stayTime="X-2147483647-2147483647">X-Runway-Runway_R</facilityS>
+      </Row>
+      <Row RNo="4">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="3">
+      <Row RNo="2">
+        <facilityS stayTime="X-2147483647-X">X-Runway-X</facilityS>
+      </Row>
+      <Row RNo="3">
+        <facilityC stayTime="2147483647" active="True">Airpot</facilityC>
+        <facilityS stayTime="2147483647-X-X">Runway_L-X-X</facilityS>
+      </Row>
+      <Row RNo="6">
+        <facilityC stayTime="2147483647" active="True">HunterGuild</facilityC>
+      </Row>
+      <Row RNo="41">
+        <facilityC stayTime="2147483647" active="False">DimensionFissure</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="4">
+      <Row RNo="8">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+      <Row RNo="14">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="25">
+        <facilityC stayTime="2147483647" active="True">HunterGuild</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="6">
+      <Row RNo="23">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="8">
+      <Row RNo="4">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="31">
+        <facilityC stayTime="2147483647" active="True">Runway</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="9">
+      <Row RNo="30">
+        <facilityC stayTime="2147483647" active="True">Airpot</facilityC>
+        <facilityS stayTime="X-X-2147483647">X-X-Runway_R</facilityS>
+      </Row>
+      <Row RNo="31">
+        <facilityC stayTime="2147483647" active="True">Runway</facilityC>
+        <facilityS stayTime="2147483647-X-X">Runway_L-X-X</facilityS>
+      </Row>
+    </Colum>
+    <Colum CNo="10">
+      <Row RNo="29">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="31">
+        <facilityC stayTime="2147483647" active="True">Runway</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="11">
+      <Row RNo="18">
+        <facilityC stayTime="2147483647" active="False">StaticBarrierNode</facilityC>
+      </Row>
+      <Row RNo="23">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+      <Row RNo="31">
+        <facilityC stayTime="2147483647" active="True">Runway</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="12">
+      <Row RNo="26">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="13">
+      <Row RNo="16">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="20">
+        <facilityC stayTime="2147483647" active="True">HunterGuild</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="15">
+      <Row RNo="11">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="17">
+      <Row RNo="18">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="19">
+      <Row RNo="0">
+        <facilityC stayTime="2147483647" active="False">DimensionFissure</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="20">
+      <Row RNo="24">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="21">
+      <Row RNo="8">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="22">
+      <Row RNo="16">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="25">
+      <Row RNo="19">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+      <Row RNo="21">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="28">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="26">
+      <Row RNo="13">
+        <facilityC stayTime="2147483647" active="False">StaticBarrierNode</facilityC>
+      </Row>
+      <Row RNo="32">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="27">
+      <Row RNo="12">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="28">
+      <Row RNo="11">
+        <facilityC stayTime="2147483647" active="True">HunterGuild</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="29">
+      <Row RNo="12">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="42">
+        <facilityC stayTime="2147483647" active="False">DimensionFissure</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="30">
+      <Row RNo="4">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="17">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="31">
+      <Row RNo="34">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="32">
+      <Row RNo="33">
+        <facilityC stayTime="2147483647" active="False">StaticBarrierNode</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="33">
+      <Row RNo="0">
+        <facilityC stayTime="2147483647" active="False">DimensionFissure</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="35">
+      <Row RNo="29">
+        <facilityC stayTime="2147483647" active="True">HunterGuild</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="36">
+      <Row RNo="9">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="27">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="37">
+      <Row RNo="21">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+      <Row RNo="22">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="39">
+      <Row RNo="14">
+        <facilityC stayTime="2147483647" active="True">MetroStation</facilityC>
+      </Row>
+    </Colum>
+    <Colum CNo="40">
+      <Row RNo="9">
+        <facilityC stayTime="2147483647" active="True">Shelter</facilityC>
+      </Row>
+    </Colum>
+  </Map>
+</MapData>
