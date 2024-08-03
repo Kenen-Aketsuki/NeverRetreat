@@ -354,7 +354,6 @@ public class PVETurn : ITurnControl
     #region//策略阶段
     public void StrategyStageStart()
     {
-        Debug.Log("StraStart");
         if (GameManager.GM.ActionSide == ArmyBelong.Human) FixGameData.FGD.uiIndex.StrategyUISet.SetActive(true);
         else
         {
@@ -390,9 +389,7 @@ public class PVETurn : ITurnControl
             }
 
         }
-
         FixGameData.FGD.uiIndex.StrategyUISet.SetActive(false);
-        //FixGameData.FGD.uiIndex.AIActiveUISet.SetActive(false);
         Map.UpdateCrashBindwith();
     }
     #endregion
@@ -400,10 +397,10 @@ public class PVETurn : ITurnControl
     #region //模组战阶段
     public void ModeBattleStageStart()
     {
-        if (GameManager.GM.ActionSide == ArmyBelong.Human) FixGameData.FGD.uiIndex.ModBattleUISet.SetActive(true);
+        if (GameManager.GM.ActionSide == ArmyBelong.Human) FixGameData.FGD.uiIndex.StrategyUISet.SetActive(true);
         else
         {
-            UIAiAction.currentStage = TurnStage.ModBattle;
+            UIAiAction.currentStage = TurnStage.Strategy;
             FixGameData.FGD.uiIndex.AIActiveUISet.SetActive(true);
         }
     }
@@ -418,19 +415,12 @@ public class PVETurn : ITurnControl
     #region//行动阶段
     public void ActionStageStart()
     {
-        if (GameManager.GM.ActionSide == ArmyBelong.Human) FixGameData.FGD.uiIndex.ActionUISet.SetActive(true);
-        else
-        {
-            UIAiAction.currentStage = TurnStage.Action;
-            FixGameData.FGD.uiIndex.AIActiveUISet.SetActive(true);
-        }
-        
+        FixGameData.FGD.uiIndex.ActionUISet.SetActive(true);
     }
 
     public void ActionStageEnd(bool isTurnChange)
     {
         FixGameData.FGD.uiIndex.ActionUISet.SetActive(false);
-        FixGameData.FGD.uiIndex.AIActiveUISet.SetActive(false);
     }
 
     #endregion

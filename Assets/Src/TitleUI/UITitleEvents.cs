@@ -56,18 +56,6 @@ public class UITitleEvents : MonoBehaviour
         }
         else if (isNew)
         {
-            //…˙≥…¥Êµµ√˚≥∆
-            if (saveName == "")
-            {
-                saveName = $" ƒÀ¿º· ÿ{UnNamedCount}";
-                while (Directory.Exists(FixSystemData.SaveDirectory + saveName))
-                {
-                    UnNamedCount++;
-                    saveName = $" ƒÀ¿º· ÿ{UnNamedCount}";
-                }
-            }
-
-            Debug.Log(saveName);
             GameUtility.fromSave = false;
             GameUtility.Save = "";
             GameUtility.saveData = new SaveData(saveName, faceAI ? "PVE" : "PVP");
@@ -108,6 +96,15 @@ public class UITitleEvents : MonoBehaviour
     {
         Debug.Log(change.text);
         saveName = change.text;
+        if (saveName == "")
+        {
+            saveName = $" ƒÀ¿º· ÿ{UnNamedCount}";
+            while (!Directory.Exists(FixSystemData.SaveDirectory + saveName))
+            {
+                UnNamedCount++;
+                saveName = $" ƒÀ¿º· ÿ{UnNamedCount}";
+            }
+        }
     }
 
     public void gameModeChange(TMP_Text txt)

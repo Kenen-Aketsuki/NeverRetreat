@@ -471,17 +471,10 @@ public static class GameUtility
 
     public static void 保存游戏()
     {
-        string savePath = FixSystemData.SaveDirectory + saveData.SaveID;
-
-        if (!Directory.Exists(savePath))
-        {
-            Directory.CreateDirectory(savePath);
-        }
-        
-        BasicUtility.saveTurnData(savePath + "\\Turns.xml");
-        BasicUtility.saveFacillitys(savePath + "\\Facility.xml");
-        BasicUtility.savePiece(savePath + "\\Piece.xml");
-        BasicUtility.saveSaveData(savePath + "\\SaveInfo.xml");
+        BasicUtility.saveTurnData(FixSystemData.SaveDirectory + Save + "\\Turns.xml");
+        BasicUtility.saveFacillitys(FixSystemData.SaveDirectory + Save + "\\Facility.xml");
+        BasicUtility.savePiece(FixSystemData.SaveDirectory + Save + "\\Piece.xml");
+        BasicUtility.saveSaveData(FixSystemData.SaveDirectory + Save + "\\SaveInfo.xml");
     }
     //生成行目录
     static public void GenColumIndex(List<Tuple<string, int, int>> childList,ref Dictionary<int, Tuple<int, int>> listIndex)

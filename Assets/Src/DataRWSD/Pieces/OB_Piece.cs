@@ -311,7 +311,7 @@ public class OB_Piece : MonoBehaviour
     public void EndMove()
     {
         needCheckGround = true;
-        if(Path != null) Path.Clear();
+        Path.Clear();
         if (invisiableDmg != 0)
         {
             TakeDemage(-invisiableDmg);

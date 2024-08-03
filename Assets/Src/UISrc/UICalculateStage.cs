@@ -19,24 +19,7 @@ public class UICalculateStage : MonoBehaviour
 
     IEnumerator Delay()
     {
-        FixGameData.FGD.ZoneMap.ClearAllTiles();
-        yield return new WaitForSeconds(0.5f);
-        
-        foreach(FacilityDataCell fac in FixGameData.FGD.SpecialFacilityList)
-        {
-            if (fac.active) fac.ChangeActive();
-        }
-        yield return new WaitForSeconds(0.5f);
-
-        for(int i = 0; i < FixGameData.FGD.FacilityList.Count; i++)
-        {
-            if (FixGameData.FGD.FacilityList[i].PassTime())
-            {
-                FixGameData.FGD.FacilityList[i].RemoveSelf();
-            }
-        }
-        yield return new WaitForSeconds(0.5f);
-
+        yield return new WaitForSeconds(1);
         GameManager.GM.NextStage();
     }
 }
