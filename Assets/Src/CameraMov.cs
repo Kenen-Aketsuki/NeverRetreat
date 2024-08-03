@@ -23,6 +23,7 @@ public class CameraMov : MonoBehaviour
     {
         borderRT = new Vector2(2.16f * GameUtility.mapSize.x / 2, 2.16f * GameUtility.mapSize.y / 2);
         borderLD = borderRT * new Vector2(-1, -1);
+        Debug.Log("RUA");
     }
 
     // Update is called once per frame
