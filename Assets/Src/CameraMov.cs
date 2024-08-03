@@ -18,7 +18,7 @@ public class CameraMov : MonoBehaviour
 
     bool needCul = true;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame updatesadfsadf 
     void Start()
     {
         borderRT = new Vector2(2.16f * GameUtility.mapSize.x / 2, 2.16f * GameUtility.mapSize.y / 2);

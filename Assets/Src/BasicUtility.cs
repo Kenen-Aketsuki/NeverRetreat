@@ -13,7 +13,7 @@ public static class BasicUtility
     {
         XmlDocument XmlDoc = new XmlDocument();
         XmlNodeList child;
-        //初始化固定数据
+        //初始化固定数据fsdfasdf ad as 
         FixSystemData.InitPath();
         //读取地形、设施等地图信息信息
         foreach(string file in Directory.GetFiles(FixSystemData.TerrainDirectory, "*.xml", SearchOption.AllDirectories))
