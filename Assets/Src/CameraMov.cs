@@ -25,6 +25,7 @@ public class CameraMov : MonoBehaviour
         borderLD = borderRT * new Vector2(-1, -1);
         Debug.Log("RUA");
         Debug.Log("YEE");
+        Debug.Log("1!5!");
     }
 
     // Update is called once per frame
@@ -69,7 +70,7 @@ public class CameraMov : MonoBehaviour
             needCul = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             FixGameData.FGD.uiIndex.PauseGameWindow.SetActive(true);
         }
